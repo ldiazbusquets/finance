@@ -224,6 +224,8 @@ def fundamentals(facts):
     dei = facts.get('facts', {}).get('dei', {})
     so = dei.get('EntityCommonStockSharesOutstanding', {}).get('units', {}).get('shares', [])
     shares = None
+    if so and max(r['end'] for r in so) < (date.today() - timedelta(days=730)).isoformat():
+        so = []   # the company stopped tagging it; a years-old count would be wrong
     if so:
         last = max(r['end'] for r in so)
         shares = sum(r['val'] for r in so if r['end'] == last and r.get('form', '').startswith(('10-', '20-', '40-'))) or so[-1]['val']
@@ -264,11 +266,13 @@ def model_of(sector, sub):
 # ticker -> [older CIKs] under predecessorCik; their filings are merged in.
 EXTRA = {}
 SHAREFAC = {}
+SHARESOV = {}
 FVER = 2   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
-    return json.dumps([EXTRA.get(t), SHAREFAC.get(t)]) if (EXTRA.get(t) or SHAREFAC.get(t)) else ''
+    v = [EXTRA.get(t), SHAREFAC.get(t), SHARESOV.get(t)]
+    return json.dumps(v) if any(v) else ''
 
 
 def merge(into, facts):
@@ -287,6 +291,8 @@ def update_fundamentals(cos, ua, limit):
     ov = load(os.path.join(DATA, 'overrides.json'), {})
     EXTRA = ov.get('predecessorCik', {})
     SHAREFAC = ov.get('shareClassFactor', {})
+    global SHARESOV
+    SHARESOV = ov.get('sharesOutstanding', {})
     hdr = {'User-Agent': ua, 'Accept-Encoding': 'identity'}
     due = []
     for t, name, sec, sub, cik in cos:
@@ -326,6 +332,13 @@ def update_fundamentals(cos, ua, limit):
                 for k in ('eps', 'dps'):
                     f[k] = [None if x is None else round(x / fac, 4) for x in f[k]]
                 f['dil'] = [None if x is None else int(x * fac) for x in f['dil']]
+            so = SHARESOV.get(t)
+            if so:
+                # the company doesn't tag its share count in XBRL (Berkshire); use the
+                # count from its latest 10-Q cover page, in listed-share equivalents
+                shares = so['shares']
+                f['eps'] = [None if x is None else round(x / shares, 4) for x in f['ni']]
+                f['dil'] = [shares if x is not None else None for x in f['ni']]
             dil = last(f['dil'])
             if shares and dil and not 0.33 < shares / dil < 3:
                 shares = dil   # cover-page count is off (share classes); use diluted count

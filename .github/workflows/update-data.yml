@@ -1,0 +1,38 @@
+name: Update data
+
+on:
+  schedule:
+    - cron: '30 22 * * 1-5'   # weekdays, 22:30 UTC (6:30 pm New York in summer, 5:30 pm in winter)
+  workflow_dispatch:          # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download market and company data
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python scripts/update_data.py
+      - name: Save the new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898268+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Update market and company data"
+            git push
+          fi

@@ -8,13 +8,14 @@
   /* ---------- theme toggle (initial theme is set in <head>) ---------- */
   var sun = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
   var moon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>';
+  var tileRedraw = function () {};
   var tg = $('#tg'), meta = $('meta[name="theme-color"]');
   function paint() { var lt = d.classList.contains('lt'); if (tg) tg.innerHTML = lt ? sun : moon; if (meta) meta.content = lt ? '#F7F2E9' : '#0C0A08'; }
   if (tg) tg.onclick = function () {
     d.classList.toggle('lt');
     var h = new Date().getHours(), byHour = h >= 7 && h < 19;
     try { sessionStorage.setItem('theme', (d.classList.contains('lt') ? 'light' : 'dark') + '|' + byHour); } catch (e) {}
-    paint(); redraw();
+    paint(); redraw(); tileRedraw();
   };
   paint();
 
@@ -28,13 +29,49 @@
   var icX = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
   if (mb) mb.innerHTML = icM;
 
-  /* ---------- tower windows (home) ---------- */
-  var wins = $('#wins');
-  if (wins) {
-    var out = '';
-    for (var y = 160; y < 500; y += 14) for (var x = 100; x < 205; x += 13) out += '<rect class="w" x="' + x + '" y="' + y + '" width="9" height="6" style="animation-delay:' + (-((x * 7 + y * 13) % 70) / 10) + 's"/>';
-    for (var y2 = 70; y2 < 145; y2 += 12) for (var x2 = 120; x2 < 182; x2 += 12) out += '<rect class="w" x="' + x2 + '" y="' + y2 + '" width="8" height="5" style="animation-delay:' + (-((x2 * 5 + y2 * 11) % 70) / 10) + 's"/>';
-    wins.innerHTML = out;
+  /* ---------- window tiles behind the home hero ----------
+     A grid of small "windows" that light up and dim at their own pace.
+     Canvas, ~24 frames a second, paused when off screen or the tab is hidden. */
+  var cv = $('#tilebg');
+  if (cv && cv.getContext) {
+    var ctx = cv.getContext('2d'), tiles = [], W = 0, H = 0, run = false, vis = true, last = 0, t0 = performance.now();
+    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SX = 16, SY = 15, TW = 10, TH = 6;
+    function seed(i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+    function size() {
+      var r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      tiles = []; var cols = Math.ceil(W / SX) + 1, rows = Math.ceil(H / SY) + 1, k = 0;
+      for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++, k++) {
+        var a = seed(k), b = seed(k + 9973), c = seed(k + 19997);
+        tiles.push({ x: x * SX + 3, y: y * SY + 4, base: .05 + a * .07, peak: c < .22 ? .55 + b * .4 : .14 + b * .12, sp: .05 + b * .16, ph: a * 6.283 });
+      }
+      draw(performance.now());
+    }
+    function draw(now) {
+      var lt = d.classList.contains('lt'), t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = lt ? 'rgb(122,69,38)' : 'rgb(232,170,110)';
+      var k = lt ? .55 : 1;
+      for (var i = 0; i < tiles.length; i++) {
+        var p = tiles[i], s = still ? .5 : Math.max(0, Math.sin(t * p.sp * 6.283 + p.ph));
+        ctx.globalAlpha = (p.base + (p.peak - p.base) * s * s * s) * k;
+        ctx.fillRect(p.x, p.y, TW, TH);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop(now) {
+      if (!run) return;
+      if (now - last > 41) { last = now; draw(now); }
+      requestAnimationFrame(loop);
+    }
+    function go() { var want = vis && !document.hidden && !still; if (want && !run) { run = true; requestAnimationFrame(loop); } else if (!want) run = false; }
+    size();
+    var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(size, 150); });
+    document.addEventListener('visibilitychange', go);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; go(); }).observe(cv); else go();
+    tileRedraw = function () { draw(performance.now()); };
   }
 
   /* ---------- formatting ---------- */
@@ -175,7 +212,7 @@
       if (!m.updated) return waiting(el);
       el.innerHTML = '<div class="tiles">' + ['SP500', 'DGS10', 'DFF', 'CPI_YOY'].map(function (k) { return tile(m.series[k], k); }).join('') + '</div>' +
         '<div class="asof"><span class="mono">' + stamp() + ' &middot; Source: FRED</span><a class="mono" href="markets.html" style="color:var(--acc)">Full dashboard &rarr;</a></div>';
-      var s = m.series.SP500; if (s && s.last) { $('#tagv').textContent = comma(s.last.v, 2); $('#tagd').textContent = 'S&P 500 · ' + fmt(s).c(s) + ' on ' + fdate(s.last.d); }
+      var s = m.series.SP500; if (s && s.last && $('#tagv')) { $('#tagv').textContent = comma(s.last.v, 2); $('#tagd').textContent = 'S&P 500 · ' + fmt(s).c(s) + ' on ' + fdate(s.last.d); }
     }).catch(function () { waiting($('#strip')); });
   }
 

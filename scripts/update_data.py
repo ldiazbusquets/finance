@@ -275,7 +275,11 @@ def update_companies(ua):
                     filings.append({'form': form, 'date': rec['filingDate'][i],
                                     'url': f'https://www.sec.gov/Archives/edgar/data/{cik}/{acc}/{rec["primaryDocument"][i]}',
                                     'desc': rec.get('primaryDocDescription', [''] * (i + 1))[i]})
-            tenk = next((f for f in filings if f['form'] == '10-K'), None)
+            tenk = None
+            for i, form in enumerate(rec.get('form', [])):
+                if form == '10-K':
+                    tenk = {'url': f'https://www.sec.gov/Archives/edgar/data/{cik}/{rec["accessionNumber"][i].replace("-", "")}/{rec["primaryDocument"][i]}'}
+                    break
             name = sub.get('name') or t
             save(os.path.join(DATA, 'companies', f'{t}.json'), {'ticker': t, 'name': name, 'cik': cik, 'sic': sub.get('sicDescription'),
                                                                 'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),

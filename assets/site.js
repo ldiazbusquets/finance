@@ -60,7 +60,8 @@
     level: { v: function (v) { return v.toFixed(2); }, t: function (v) { return v.toFixed(2); }, c: function (x) { return sgn(x) + Math.abs(x).toFixed(2); } }
   };
   function fmt(s) { var f = F[s.fmt] || F.level; return { v: f.v, t: f.t, c: function (s2) { var x = rc(s2); return x == null ? '' : f.c(x); } }; }
-  function dir(s) { var x = rc(s); return x > 0 ? 'up' : x < 0 ? 'dn' : ''; }
+  /* green/red only where up is plainly good (stock index); a rising yield or inflation rate is not "good" */
+  function dir(s) { if (s.fmt !== 'index') return ''; var x = rc(s); return x > 0 ? 'up' : x < 0 ? 'dn' : ''; }
   function money(v) { if (v == null) return '—'; var a = Math.abs(v), s = v < 0 ? '−' : ''; return a >= 1e12 ? s + '$' + (a / 1e12).toFixed(2) + 'T' : a >= 1e9 ? s + '$' + (a / 1e9).toFixed(1) + 'B' : a >= 1e6 ? s + '$' + (a / 1e6).toFixed(0) + 'M' : s + '$' + comma(a, 0); }
   function pct(v, dp) { return v == null ? '—' : sgn(v) + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }

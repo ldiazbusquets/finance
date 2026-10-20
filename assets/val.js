@@ -120,7 +120,7 @@
       price: price, shares: shares, debt: debt, cash: cash
     };
     if (a.model === 'dcf') {
-      var g1 = cagr(f.rev, 3, i); a.g1 = isn(g1) ? clip(g1, -0.05, 0.25) : 0.04;
+      var g1 = cagr(f.rev, 3, i); a.g1 = isn(g1) ? clip(g1, -0.05, c.model === 'reit' ? 0.10 : 0.25) : 0.04;
       var m0 = isn(f.ebit[i]) && f.rev[i] ? f.ebit[i] / f.rev[i] : null, mT = avgRatio(f.ebit, f.rev, 3, i);
       a.flagMargin = false;
       if (!isn(mT) || mT <= 0.02) { mT = 0.10; a.flagMargin = true; }
@@ -130,7 +130,13 @@
       var nwc = null;
       if (isn(f.ca[i]) && isn(f.cl[i]) && f.rev[i]) nwc = ((f.ca[i] - (f.cash[i] || 0)) - (f.cl[i] - (f.debtcur[i] || 0))) / f.rev[i];
       a.nwc = isn(nwc) ? clip(nwc, -0.15, 0.3) : 0;
-      a.ronic = 0.15;
+      /* return on new capital for the terminal value: the company's own recent return on capital, kept in a sensible band */
+      var roic = [];
+      for (var j2 = i; j2 > i - 3 && j2 >= 0; j2--) {
+        var ic = (f.debt[j2] || 0) + (f.eq[j2] || 0) - (f.cash[j2] || 0);
+        if (isn(f.ebit[j2]) && ic > 0) roic.push(f.ebit[j2] * (1 - tax) / ic);
+      }
+      a.ronic = roic.length ? clip(roic.reduce(function (x, y) { return x + y; }, 0) / roic.length, 0.10, 0.30) : 0.15;
       a.rev0 = f.rev[i];
     } else {
       var roe = [], j;
@@ -158,7 +164,8 @@
       var r0 = rev; rev = rev * (1 + g);
       var m = t <= 5 ? a.m0 + (mT - a.m0) * t / 5 : mT;
       var ebit = rev * m, nopat = ebit > 0 ? ebit * (1 - a.tax) : ebit;
-      var da = rev * a.da, cx = rev * a.capex, dn = a.nwc * (rev - r0);
+      var cxp = a.capex > a.da + 0.01 ? a.capex + (a.da + 0.01 - a.capex) * t / 10 : a.capex;
+      var da = rev * a.da, cx = rev * cxp, dn = a.nwc * (rev - r0);
       var fcff = nopat + da - cx - dn, df = Math.pow(1 + W, t);
       pv += fcff / df;
       rows.push({ t: t, g: g, rev: rev, m: m, ebit: ebit, nopat: nopat, reinv: cx - da + dn, fcff: fcff, pv: fcff / df });
@@ -182,7 +189,7 @@
     var f = c.f, i = lastIdx(f.dps); if (i < 4) return null;
     for (var j = i; j > i - 5; j--) if (!(f.dps[j] > 0)) return null;
     var ni = f.ni[i], div = f.div[i] || f.dps[i] * (c.sh || last(f.dil));
-    if (!(ni > 0) || !(div / ni >= 0.2)) return null;
+    if (!(ni > 0) || !(div / ni >= 0.4)) return null;   /* the model only suits companies that pay out much of what they earn */
     var d0 = f.dps[i], gD = clip(cagr(f.dps, 5, i) || 0, 0, 0.10), K = ke(a), gT = a.gT;
     function val(k) {
       var v = 0, d = d0; for (var t = 1; t <= 5; t++) { d *= 1 + gD; v += d / Math.pow(1 + k, t); }
@@ -205,8 +212,9 @@
       if (v.length < 3 || !isn(metric) || metric <= 0) return;
       out.push({ key: key, name: name, n: v.length, med: median(v), lo: toPrice(q(v, 0.25)), base: toPrice(median(v)), hi: toPrice(q(v, 0.75)) });
     }
-    add('pe', 'P/E', eps, function (m) { return m * eps; });
+    if (c.model !== 'reit') add('pe', 'P/E', eps, function (m) { return m * eps; });
     if (a.model === 'dcf') {
+      if (c.model === 'reit') add('pb', 'P/B', bv, function (m) { return m * bv / sh; });
       add('evEbitda', 'EV/EBITDA', ebitda, function (m) { return (m * ebitda - D + C) / sh; });
       add('evSales', 'EV/Sales', rev, function (m) { return (m * rev - D + C) / sh; });
     } else {
@@ -244,7 +252,8 @@
     var lines = [];
     if (a.model === 'dcf') {
       res = dcf(a);
-      var bear = dcf(a, { dg: -0.03, dm: -0.02, w: res.W + 0.01 }), bull = dcf(a, { dg: 0.03, dm: 0.02, w: Math.max(res.gT + 0.01, res.W - 0.01) });
+      var dm = Math.max(0.005, Math.abs(a.mT) * 0.15);
+      var bear = dcf(a, { dg: -0.03, dm: -dm, w: res.W + 0.01 }), bull = dcf(a, { dg: 0.03, dm: dm, w: Math.max(res.gT + 0.01, res.W - 0.01) });
       lines.push({ name: 'Discounted cash flow', lo: Math.min(bear.ps, bull.ps), base: res.ps, hi: Math.max(bear.ps, bull.ps), main: true });
     } else {
       res = bank(a);
@@ -252,17 +261,34 @@
       lines.push({ name: 'Excess return (bank)', lo: Math.min(b1.ps, b2.ps), base: res.ps, hi: Math.max(b1.ps, b2.ps), main: true });
     }
     var dd = ddm(c, a);
-    if (dd && isn(dd.base) && dd.base > 0) lines.push({ name: 'Dividend discount', lo: Math.min(dd.lo, dd.hi), base: dd.base, hi: Math.max(dd.lo, dd.hi) });
+    if (dd && isn(dd.base) && dd.base > 0) {
+      var dl = { name: 'Dividend discount', lo: Math.min(dd.lo, dd.hi), base: dd.base, hi: Math.max(dd.lo, dd.hi) };
+      if (c.model === 'reit') { lines[0].main = false; dl.main = true; lines.unshift(dl); } else lines.push(dl);
+    }
     var ps = peers(c.row), cp = comps(c, a, ps);
     cp.forEach(function (x) { if (isn(x.base) && x.base > 0) lines.push({ name: x.name + ' vs peers', lo: Math.min(x.lo, x.hi), base: x.base, hi: Math.max(x.lo, x.hi) }); });
     if (c.p && isn(c.p.lo)) lines.push({ name: '52-week range', lo: c.p.lo, base: null, hi: c.p.hi, ref: true });
+
+    /* what the price implies */
+    var implied = '';
+    if (price && a.model === 'dcf' && !(c.model === 'reit' && dd)) {
+      var f0 = function (dg) { return dcf(a, { dg: dg }).ps - price; }, lo = -0.4, hi = 1.0;
+      if (isn(f0(lo)) && isn(f0(hi)) && f0(lo) < 0 && f0(hi) > 0) {
+        for (var it = 0; it < 50; it++) { var mid = (lo + hi) / 2; if (f0(mid) > 0) hi = mid; else lo = mid; }
+        var gi = a.g1 + (lo + hi) / 2, gh = cagr(c.f.rev, 3, lastIdx(c.f.rev));
+        implied = 'At ' + usd(price) + ', the market is pricing in revenue growth of about <b>' + pc(gi) + ' a year</b> for five years' + (isn(gh) ? ', against ' + pc(gh) + ' over the last three.' : '.');
+      } else if (isn(f0(hi)) && f0(hi) < 0) implied = 'Even very fast growth doesn\u2019t reach today\u2019s price with these margins and this discount rate; the market expects more than the model allows.';
+    } else if (price && a.model === 'bank' && isn(res.bvps) && res.bvps > 0) {
+      var roeI = res.g + price / res.bvps * (res.K - res.g);
+      implied = 'At ' + usd(price) + ', the market is pricing in a lasting return on equity of about <b>' + pc(roeI) + '</b>, against ' + pc(AUTO.roe) + ' recently.';
+    }
 
     /* verdict */
     var v = lines[0].base, up = isn(v) && price ? v / price - 1 : null;
     $('#verdict').innerHTML =
       '<div class="vd"><div><div class="mono">' + esc(lines[0].name) + ' &middot; base case</div><div class="big num">' + (isn(v) && v > 0 ? usd(v) : 'n/a') + '</div><p>' +
-      (isn(up) && v > 0 ? 'Estimated value per share is <b class="' + (up >= 0 ? 'up' : 'dn') + '">' + (up >= 0 ? sp(up) + ' above' : sp(up).replace('−', '') + ' below') + '</b> the last close of ' + usd(price) + '.' : 'Not enough data to compare with the share price.') +
-      '</p></div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
+      (isn(up) && v > 0 ? 'Estimated value per share is <b class="' + (up >= 0 ? 'up' : 'dn') + '">' + (up >= 0 ? sp(up) + ' above' : sp(up).replace('−', '') + ' below') + '</b> the last close of ' + usd(price) + '.' : isn(v) && v <= 0 ? 'With these assumptions the cash flows don\u2019t cover the company\u2019s debt, so there is no positive value. Try a recovery in margins or growth below.' : 'Not enough data to compare with the share price.') +
+      '</p>' + (implied ? '<p class="impl">' + implied + '</p>' : '') + '</div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
       (a.flagMargin ? ' <b>Its recent operating margin is near or below zero, so the model assumes it reaches 10%.</b> Adjust this below.' : '') + '</div></div>';
 
     /* football field */
@@ -276,7 +302,7 @@
         inputRow('g1', 'Revenue growth', a.g1, 0.005, '%', 'Years 1–5, then fades') +
         inputRow('mT', 'Operating margin', a.mT, 0.005, '%', 'Reached by year 5 (now ' + pc(a.m0) + ')') +
         inputRow('tax', 'Tax rate', a.tax, 0.005, '%') +
-        inputRow('capex', 'Capex', a.capex, 0.0025, '%', '% of revenue') +
+        inputRow('capex', 'Capex', a.capex, 0.0025, '%', a.capex > a.da + 0.01 ? '% of revenue, eases toward depreciation' : '% of revenue') +
         inputRow('da', 'Depreciation', a.da, 0.0025, '%', '% of revenue') +
         inputRow('nwc', 'Working capital', a.nwc, 0.005, '%', '% of revenue added') +
         inputRow('gT', 'Terminal growth', a.gT, 0.0025, '%', 'After year 10') +
@@ -329,7 +355,7 @@
   function compsTable(ps, cp) {
     if (!ps.length) return '';
     var r = CO.row, ci = function (k) { return IX.cols.indexOf(k); }, bank = A.model === 'bank';
-    var keys = bank ? [['pe', 'P/E'], ['pb', 'P/B']] : [['pe', 'P/E'], ['evEbitda', 'EV/EBITDA'], ['evSales', 'EV/Sales']];
+    var keys = bank ? [['pe', 'P/E'], ['pb', 'P/B']] : CO.model === 'reit' ? [['evEbitda', 'EV/EBITDA'], ['evSales', 'EV/Sales'], ['pb', 'P/B']] : [['pe', 'P/E'], ['evEbitda', 'EV/EBITDA'], ['evSales', 'EV/Sales']];
     var h = '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Peers</h3><p>Closest in size within ' + esc(r[3]) + (ps.some(function (p) { return p[3] !== r[3]; }) ? ' and the wider ' + esc(r[2]) + ' sector' : '') + '. Multiples on the latest fiscal year.</p></div></div><div class="scroll"><table class="tbl"><thead><tr><th>Company</th><th>Market value</th>' + keys.map(function (k) { return '<th>' + k[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
     h += '<tr class="me"><td>' + esc(r[1]) + '<small>' + esc(r[0]) + '</small></td><td>' + big(r[4]) + '</td>' + keys.map(function (k) { return '<td>' + mx(r[ci(k[0])]) + '</td>'; }).join('') + '</tr>';
     ps.forEach(function (p) { h += '<tr><td><a href="?t=' + encodeURIComponent(p[0]) + '" data-open="' + esc(p[0]) + '">' + esc(p[1]) + '</a><small>' + esc(p[0]) + '</small></td><td>' + big(p[4]) + '</td>' + keys.map(function (k) { return '<td>' + mx(p[ci(k[0])]) + '</td>'; }).join('') + '</tr>'; });

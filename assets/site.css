@@ -268,6 +268,8 @@ html.lt .sug { box-shadow: 0 24px 60px rgba(60,35,15,.14); }
 .vd .big { font-size: 56px; }
 .vd p { margin: 6px 0 0; color: rgba(255,248,239,.85); font-size: 14.5px; }
 .vd b.up, .vd b.dn { color: #FFF8EF !important; font-weight: 600; }
+.vd .impl { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,248,239,.22); font-size: 14px; }
+.vd .impl b { color: #FFF8EF; font-weight: 600; }
 .vnote { font-size: 14px; color: rgba(255,248,239,.82); max-width: 60ch; position: relative; z-index: 1; }
 .vnote b { color: #FFF8EF; font-weight: 500; }
 .ff { position: relative; padding: 8px 0 30px; }

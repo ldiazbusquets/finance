@@ -259,7 +259,34 @@ def model_of(sector, sub):
     return 'dcf'
 
 
+# Companies that moved to a new SEC registrant (a new holding company or a
+# redomicile) keep their history under the old CIK. data/overrides.json maps
+# ticker -> [older CIKs] under predecessorCik; their filings are merged in.
+EXTRA = {}
+SHAREFAC = {}
+FVER = 2   # bump when the extraction rules change, so every file is rebuilt
+
+
+def sig(t):
+    return json.dumps([EXTRA.get(t), SHAREFAC.get(t)]) if (EXTRA.get(t) or SHAREFAC.get(t)) else ''
+
+
+def merge(into, facts):
+    for ns, tags in facts.get('facts', {}).items():
+        dst = into['facts'].setdefault(ns, {})
+        for tag, body in tags.items():
+            d = dst.setdefault(tag, {'units': {}})
+            for unit, rows in body.get('units', {}).items():
+                d['units'].setdefault(unit, []).extend(rows)
+    return into
+
+
 def update_fundamentals(cos, ua, limit):
+    global EXTRA
+    global SHAREFAC
+    ov = load(os.path.join(DATA, 'overrides.json'), {})
+    EXTRA = ov.get('predecessorCik', {})
+    SHAREFAC = ov.get('shareClassFactor', {})
     hdr = {'User-Agent': ua, 'Accept-Encoding': 'identity'}
     due = []
     for t, name, sec, sub, cik in cos:
@@ -267,6 +294,8 @@ def update_fundamentals(cos, ua, limit):
         age = 99
         if d.get('fupd'):
             age = (NOW - datetime.fromisoformat(d['fupd'].replace('Z', '+00:00'))).days
+        if d.get('fver') != FVER or d.get('ovsig', '') != sig(t):
+            age = max(age, 50)   # the extraction rules or a hand correction changed
         if age >= 7:
             due.append((age, t, name, sec, sub, cik))
     due.sort(reverse=True)
@@ -275,13 +304,35 @@ def update_fundamentals(cos, ua, limit):
         path = os.path.join(CO, f'{fn(t)}.json')
         d = load(path, {})
         try:
-            facts = json.loads(get(f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json', hdr, tries=2, timeout=60)); time.sleep(.12)
+            facts = {'facts': {}}
+            for k in [cik] + [x for x in EXTRA.get(t, []) if x != cik]:
+                try:
+                    merge(facts, json.loads(get(f'https://data.sec.gov/api/xbrl/companyfacts/CIK{k:010d}.json', hdr, tries=2, timeout=60)))
+                except Exception as e:
+                    if k == cik and not EXTRA.get(t):
+                        raise
+                time.sleep(.12)
             sub_ = json.loads(get(f'https://data.sec.gov/submissions/CIK{cik:010d}.json', hdr, tries=2, timeout=30)); time.sleep(.12)
+            fil = filings_of(sub_, cik)
+            if not any(x['form'] == '10-K' for x in fil) and EXTRA.get(t):
+                old = EXTRA[t][0]
+                fil += [x for x in filings_of(json.loads(get(f'https://data.sec.gov/submissions/CIK{old:010d}.json', hdr, tries=2, timeout=30)), old) if x['form'] == '10-K']
             ends, f, shares = fundamentals(facts)
+            fac = SHAREFAC.get(t)
+            if fac:
+                # e.g. Berkshire reports per Class A share; the listed B share is 1/1500 of one
+                ni_, eps_ = last(f['ni']), last(f['eps'])
+                shares = ni_ / eps_ * fac if ni_ and eps_ else shares
+                for k in ('eps', 'dps'):
+                    f[k] = [None if x is None else round(x / fac, 4) for x in f[k]]
+                f['dil'] = [None if x is None else int(x * fac) for x in f['dil']]
+            dil = last(f['dil'])
+            if shares and dil and not 0.33 < shares / dil < 3:
+                shares = dil   # cover-page count is off (share classes); use diluted count
             if not ends:
-                raise ValueError('no annual figures')
+                raise ValueError('no annual figures yet (new listing or new holding company; add its predecessor to data/overrides.json)')
             d.update({'t': t, 'n': name, 'sec': sec, 'sub': sub, 'cik': cik, 'model': model_of(sec, sub),
-                      'ends': ends, 'f': f, 'sh': shares, 'filings': filings_of(sub_, cik), 'fupd': STAMP})
+                      'ends': ends, 'f': f, 'sh': shares, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)
             done += 1
         except Exception as e:
@@ -387,8 +438,8 @@ def build_index(cos):
         r = lambda x, k=2: None if x is None or not math.isfinite(x) else round(x, k)
         rows.append([t, name, sec, sub, r(mcap, 0), r(p),
                      r(mcap / ni) if mcap and ni and ni > 0 else None,
-                     r(ev / ebitda) if ev and ebitda and ebitda > 0 and d.get('model') == 'dcf' else None,
-                     r(ev / rev) if ev and rev and rev > 0 and d.get('model') == 'dcf' else None,
+                     r(ev / ebitda) if ev and ebitda and ebitda > 0 and d.get('model') in ('dcf', 'reit') else None,
+                     r(ev / rev) if ev and rev and rev > 0 and d.get('model') in ('dcf', 'reit') else None,
                      r(mcap / eq) if mcap and eq and eq > 0 else None,
                      d.get('model')])
     rows.sort(key=lambda x: -(x[4] or 0))

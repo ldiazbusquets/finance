@@ -1,0 +1,11 @@
+{
+  "_note": "Hand corrections for the company data job. predecessorCik: older SEC registrants whose history should be merged in (ExxonMobil Holdings Corp took over the XOM listing in 2026; its history is under Exxon Mobil Corp). shareClassFactor: how many listed shares make one reporting share (Berkshire reports per Class A share; one A equals 1,500 B).",
+  "predecessorCik": {
+    "XOM": [
+      34088
+    ]
+  },
+  "shareClassFactor": {
+    "BRK.B": 1500
+  }
+}

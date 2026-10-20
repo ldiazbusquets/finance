@@ -167,6 +167,21 @@ a.card:hover .go { color: var(--acc); }
 .co .lk a { font: 400 11.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--t3); }
 .co .lk a:hover { color: var(--acc); }
 
+/* the $100 note */
+.bill { position: relative; margin: 0 32px; border-radius: 26px; overflow: hidden; min-height: 500px; aspect-ratio: 2.35 / 1; max-height: 620px; background: radial-gradient(80% 120% at 70% 40%, #1C140E, #0D0A08 70%); border: 1px solid rgba(236,176,116,.16); display: flex; align-items: center; isolation: isolate; }
+html.lt .bill { background: radial-gradient(80% 120% at 70% 40%, #FBF6EC, #F1E8D8 75%); border-color: rgba(84,48,26,.18); }
+.bill canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.billtx { position: relative; max-width: 440px; margin-left: clamp(40px, 6vw, 88px); padding: 30px 0; }
+.billtx::before { content: ""; position: absolute; inset: -40px -60px -40px -80px; z-index: -1; background: radial-gradient(closest-side, rgba(13,10,8,.88), rgba(13,10,8,.6) 60%, transparent); }
+html.lt .billtx::before { background: radial-gradient(closest-side, rgba(247,242,233,.92), rgba(247,242,233,.65) 60%, transparent); }
+.billtx h2 { max-width: 14ch; color: #FFF8EF; }
+.billtx h2 em { color: #E1A66E; }
+.billtx p { color: rgba(255,248,239,.72); font-size: 16px; margin: 18px 0 0; max-width: 38ch; }
+.billtx .mono { color: rgba(236,176,116,.85); }
+.billtx .pill { margin-top: 28px; background: linear-gradient(135deg, var(--cu1) 0%, var(--cu2) 55%, var(--cu3) 100%); color: #FFF8EF; border-color: rgba(255,248,239,.14); box-shadow: 0 10px 28px rgba(114,63,32,.32); }
+.billtx .pill .ic { background: #FFF8EF; color: var(--cu2); }
+html.lt .billtx h2 { color: var(--ink); } html.lt .billtx h2 em { color: var(--acc); } html.lt .billtx p { color: var(--t2); } html.lt .billtx .mono { color: var(--acc); }
+
 /* steps + band */
 .steps { margin-top: 56px; border-top: 1px solid var(--line); }
 .step { display: grid; grid-template-columns: 90px 1fr 1.4fr; gap: 24px; padding: 30px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
@@ -220,6 +235,9 @@ footer .fl { display: flex; gap: 18px; flex-wrap: wrap; }
   .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
   .step { grid-template-columns: 52px 1fr; } .step p { grid-column: 2; }
   .band { margin: 0 16px; padding: 56px 26px; }
+  .bill { margin: 0 16px; aspect-ratio: auto; min-height: 640px; max-height: none; align-items: flex-end; }
+  .billtx { margin: 0 24px; padding: 0 0 34px; }
+  .billtx::before { inset: -60px -40px -20px -40px; }
   section { padding: 80px 0; } section.tight { padding: 50px 0; }
   .ph { padding: 70px 0 50px; }
   .tower { height: 380px; } .tower .tag { left: 52%; width: 176px; }

@@ -1,0 +1,35 @@
+{
+  "_note": "Companies covered on the Research page. Add or remove tickers here; the nightly update fetches their SEC figures. status: live (published), build (in progress) or plan (planned).",
+  "companies": [
+    {
+      "ticker": "COST",
+      "name": "Costco Wholesale",
+      "sector": "Consumer staples",
+      "status": "build"
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sector": "Banks",
+      "status": "plan"
+    },
+    {
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sector": "Investment banking",
+      "status": "plan"
+    },
+    {
+      "ticker": "MS",
+      "name": "Morgan Stanley",
+      "sector": "Wealth & investment banking",
+      "status": "plan"
+    },
+    {
+      "ticker": "SCHW",
+      "name": "Charles Schwab",
+      "sector": "Brokerage",
+      "status": "plan"
+    }
+  ]
+}

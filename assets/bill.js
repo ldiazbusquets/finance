@@ -59,11 +59,12 @@
     }
     /* "100" in the corners, and a large faint one behind */
     var nh = narrow ? 9 : 12, nw = nh * 3;
-    corner(bx + 6, by + 6); corner(cols - bx - 6 - nw, by + 6);
-    if (!narrow) { corner(bx + 6, rows - by - 6 - nh); corner(cols - bx - 6 - nw, rows - by - 6 - nh); }
+    /* the left of the note carries the text, so its numerals sit right of the portrait on wide screens */
+    if (narrow) { corner(bx + 6, by + 6); corner(cols - bx - 6 - nw, by + 6); }
+    else { corner(cols - bx - 7 - nw, by + 7); corner(cols - bx - 7 - nw, rows - by - 7 - nh); }
     function corner(x0, y0) { var m = glyphMask('100', nw, nh, true); for (var i = 0; i < nw * nh; i++) if (m[i] > .35) set(x0 + i % nw, y0 + Math.floor(i / nw), .30 + m[i] * .45, 3); }
     if (!narrow) {
-      var bh = Math.round(rows * .42), bw = bh * 3, bx0 = Math.round(cols * .62 + pw * .5 + 2), by0 = Math.round(rows * .55 - bh / 2);
+      var bh = Math.round(rows * .34), bw = bh * 3, bx0 = Math.round(cols * .62 + pw * .5 + 4), by0 = Math.round(rows * .5 - bh / 2);
       if (bx0 + bw * .4 < cols) { var m2 = glyphMask('100', bw, bh, true); for (var j = 0; j < bw * bh; j++) if (m2[j] > .4) { var X = bx0 + j % bw, Y = by0 + Math.floor(j / bw); if (X < cols - bx - 5) set(X, Y, Math.max(grid[Y * cols + X], .12), 3); } }
     }
     function set(x, y, v, k, over) { if (x < 0 || y < 0 || x >= cols || y >= rows) return; var i = y * cols + x; if (over || v > grid[i]) { grid[i] = v; kind[i] = k; } }

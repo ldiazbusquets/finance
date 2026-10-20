@@ -1,11 +1,16 @@
 {
-  "_note": "Hand corrections for the company data job. predecessorCik: older SEC registrants whose history should be merged in (ExxonMobil Holdings Corp took over the XOM listing in 2026; its history is under Exxon Mobil Corp). shareClassFactor: how many listed shares make one reporting share (Berkshire reports per Class A share; one A equals 1,500 B).",
+  "_note": "Hand corrections for the company data job. predecessorCik: older SEC registrants whose history should be merged in (ExxonMobil Holdings Corp took over the XOM listing in 2026; its history is under Exxon Mobil Corp). sharesOutstanding: for companies that don't tag their share count in XBRL, the count from the latest 10-Q cover page in listed-share equivalents (Berkshire: 488,450 Class A x 1,500 + 1,408,035,161 Class B, as of July 29, 2026). Update it when a new 10-Q comes out. shareClassFactor: listed shares per reporting share, if a company reports per-share figures in another class.",
   "predecessorCik": {
     "XOM": [
       34088
     ]
   },
-  "shareClassFactor": {
-    "BRK.B": 1500
-  }
+  "sharesOutstanding": {
+    "BRK.B": {
+      "shares": 2140710161,
+      "asOf": "2026-07-29",
+      "source": "Berkshire Hathaway 10-Q for the quarter ended June 30, 2026, cover page"
+    }
+  },
+  "shareClassFactor": {}
 }

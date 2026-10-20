@@ -252,7 +252,7 @@ def update_companies(ua):
     rows, ok = [], 0
     for w in wl:
         t = w['ticker'].upper()
-        row = dict(old.get(t, {}), ticker=t, sector=w.get('sector', ''), status=w.get('status', 'plan'))
+        row = dict(old.get(t, {}), ticker=t, sector=w.get('sector', ''), status=w.get('status', 'plan'), page=w.get('page'))
         try:
             cik = cik_of[t]
             facts = json.loads(get(f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json', hdr)); time.sleep(.25)

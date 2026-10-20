@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bond pricer and rate shock | LDB Finance</title>
+<meta name="description" content="Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Bond pricer and rate shock | LDB Finance">
+<meta property="og:description" content="Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/bonds.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bond pricer and rate shock | LDB Finance">
+<meta name="twitter:description" content="Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=8">
+</head>
+<body data-page="bonds">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html" class=on>Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html" class=on>Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Models &middot; Fixed income</div>
+  <h1>Bonds, <em>priced and shocked</em></h1>
+  <p class="sub">Price any fixed-coupon bond, see its duration and convexity, then hit a portfolio with a rate move. Yields start at today&rsquo;s Treasury curve.</p><div class="cta"><a class="pill cu" href="#pricer"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bond pricer</a><a class="pill gh" href="#shock">Rate shock</a></div>
+</div></header>
+
+<section class="tight" id="pricer">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">MOD-07</div><h3 class="sec">Bond pricer</h3></div><p>Enter a yield to get the price, or a price to get the yield. Everything else follows from the cash flows.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div id="bIn"></div></div>
+      <div class="panel"><div id="bOut"></div></div>
+    </div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Price against yield</h3><p>The copper curve is the real price. The dashed line is what duration alone predicts; the gap between them is convexity, and it always works in the holder&rsquo;s favor.</p></div></div><svg class="chart" id="cPY"></svg></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Where the value comes from</h3><p>Today&rsquo;s value of each payment: coupons in copper, the face value at the end in grey. Duration is the average date, weighted by value.</p></div></div><svg class="chart cf" id="cCF"></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="tight" id="shock" style="padding-top:30px">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">MOD-08</div><h3 class="sec">Rate shock</h3></div><p>Build a bond portfolio, then move the curve. The short and long ends can move separately, so you can test twists as well as parallel shifts.</p></div>
+    <div class="panel">
+      <div class="hd"><div><h3 class="sec">Your bonds</h3><p>Edit any cell. Coupons are paid twice a year.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="pfAdd">+ Add a bond</button><button type="button" class="reset" id="pfLad">Treasury ladder</button></div></div>
+      <div id="pfT"></div>
+    </div>
+    <div class="cols2 shk">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The shock</h3><p>Moves between 2 and 30 years are filled in on a straight line.</p></div></div><div id="sIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Gain or loss by size of move</h3><p>Parallel shifts from &minus;300 to +500 bp. Dashed: duration alone.</p></div></div><svg class="chart" id="cSh"></svg><p class="fine" id="cShNote"></p></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div id="sOut"></div></div>
+    <p class="disc">Prices assume settlement on a coupon date, so there is no accrued interest. Yields are compounded at the coupon frequency. For education only, not investment advice.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=8"></script>
+<script src="assets/bonds.js?v=1"></script>
+</body>
+</html>

@@ -239,6 +239,27 @@
     }).catch(function () { waiting($('#mwait')); });
   }
 
+  /* ---------- research report: the report's numbers against today's close ---------- */
+  if (page === 'report') {
+    var R = { t: document.body.getAttribute('data-ticker'), then: +document.body.getAttribute('data-then'), val: +document.body.getAttribute('data-val') };
+    getJSON('data/co/prices.json').then(function (j) {
+      var q = j && j.px && j.px[R.t]; if (!q) return;
+      var m2 = function (v) { return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+      var sg = function (v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(1) + '%'; };
+      $('#nPx').textContent = m2(q.p); $('#nPxD').textContent = 'Last close, ' + fdate(q.d, true);
+      var c = q.p / R.then - 1, g = q.p / R.val - 1;
+      $('#nChg').textContent = sg(c); $('#nChg').className = c >= 0 ? 'up' : 'dn';
+      $('#nGap').textContent = (g >= 0 ? sg(g) + ' above' : sg(g).replace('−', '') + ' below');
+      if (q.lo && q.hi) $('#nRg').textContent = '$' + Math.round(q.lo).toLocaleString('en-US') + ' – $' + Math.round(q.hi).toLocaleString('en-US');
+      $$('.cnow').forEach(function (ln) { var x = +ln.getAttribute('data-x0') + Math.min(q.p, 1400) / 1400 * +ln.getAttribute('data-span'); ln.setAttribute('d', 'M' + x.toFixed(1) + ' 6V' + ln.getAttribute('data-bot')); ln.style.display = ''; }); if ($('.nowkey')) $('.nowkey').style.display = 'inline';
+    }).catch(function () {});
+    var toc = $$('.toc a'), chs = $$('.chap');
+    if (toc.length && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) toc.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-30% 0px -60% 0px' });
+      chs.forEach(function (c) { io.observe(c); });
+    }
+  }
+
   if (page === 'research') {
     $$('.chip').forEach(function (c) {
       c.onclick = function () {
@@ -247,6 +268,7 @@
         $$('[data-cat]').forEach(function (b) { b.style.display = f === 'all' || b.getAttribute('data-cat') === f ? '' : 'none'; });
       };
     });
+    var REPORTS = { COST: 'costco.html' };
     getJSON('data/companies/index.json').then(function (ix) {
       var el = $('#cov');
       if (!ix.updated || !ix.companies || !ix.companies.length) return el.innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures come straight from SEC filings and appear here after the update runs for the first time.</div>';
@@ -254,12 +276,14 @@
       el.innerHTML = ix.companies.map(function (c) {
         var st = { live: ['live', 'Published'], build: ['build', 'In progress'], plan: ['plan', 'Planned'] }[c.status] || ['plan', 'Planned'];
         var g = c.revGrowth;
-        return '<div class="co"><div class="nm"><b>' + esc(c.name) + '</b><span>' + esc(c.ticker) + ' &middot; ' + esc(c.sector || '') + '</span><div style="margin-top:10px"><span class="st ' + st[0] + '">' + st[1] + '</span></div></div>' +
+        var pg = c.page || REPORTS[c.ticker];
+        if (pg) st = ['live', 'Published'];
+        return '<div class="co"><div class="nm"><b>' + (pg ? '<a href="' + esc(pg) + '">' + esc(c.name) + ' &rarr;</a>' : esc(c.name)) + '</b><span>' + esc(c.ticker) + ' &middot; ' + esc(c.sector || '') + '</span><div style="margin-top:10px"><span class="st ' + st[0] + '">' + st[1] + '</span></div></div>' +
           '<div class="m"><span class="mono">Revenue FY' + esc(String(c.fy || '').slice(-2)) + '</span><b>' + money(c.revenue) + '</b><small class="' + (g > 0 ? 'up' : g < 0 ? 'dn' : '') + '">' + (g == null ? '&nbsp;' : pct(g) + ' y/y') + '</small></div>' +
           '<div class="m"><span class="mono">Net income</span><b>' + money(c.netIncome) + '</b><small>' + (c.margin == null ? '&nbsp;' : pct(c.margin).replace('+', '') + ' margin') + '</small></div>' +
           '<div class="m hide-md"><span class="mono">Diluted EPS</span><b>' + (c.eps == null ? '—' : '$' + c.eps.toFixed(2)) + '</b><small>&nbsp;</small></div>' +
           '<div class="m"><span class="mono">Free cash flow</span><b>' + money(c.fcf) + '</b><small>' + (c.fcf == null ? 'n/a for financials' : '&nbsp;') + '</small></div>' +
-          '<div class="lk">' + (c.filing ? '<a href="' + esc(c.filing) + '" target="_blank" rel="noopener">10-K &#8599;</a>' : '') + '</div></div>';
+          '<div class="lk">' + (pg ? '<a href="' + esc(pg) + '">Report</a>' : '') + (c.filing ? '<a href="' + esc(c.filing) + '" target="_blank" rel="noopener">10-K &#8599;</a>' : '') + '</div></div>';
       }).join('');
     }).catch(function () { $('#cov').innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures appear here after the update runs for the first time.</div>'; });
   }

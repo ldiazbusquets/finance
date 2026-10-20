@@ -1,11 +1,12 @@
 {
-  "_note": "Companies covered on the Research page. Add or remove tickers here; the nightly update fetches their SEC figures. status: live (published), build (in progress) or plan (planned).",
+  "_note": "Companies covered on the Research page. Add or remove tickers here; the nightly update fetches their SEC figures. status: live (published), build (in progress) or plan (planned). page: optional link to the published report.",
   "companies": [
     {
       "ticker": "COST",
       "name": "Costco Wholesale",
       "sector": "Consumer staples",
-      "status": "build"
+      "status": "live",
+      "page": "costco.html"
     },
     {
       "ticker": "JPM",

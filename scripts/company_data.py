@@ -232,6 +232,100 @@ def fundamentals(facts):
     return ends, f, shares
 
 
+# ------------------------------------------------------------------ latest quarter
+QFORMS = ('10-K', '10-K/A', '10-KT', '10-Q', '10-Q/A', '20-F', '40-F', '6-K')
+
+
+def _days(a, b):
+    return (date.fromisoformat(b) - date.fromisoformat(a)).days
+
+
+def _rows(g, tag, unit, instant):
+    out = []
+    for r in _units(g, tag, unit):
+        if r.get('form') not in QFORMS or 'end' not in r or (not instant and 'start' not in r):
+            continue
+        out.append(r)
+    return out
+
+
+def _pick(rows, ok):
+    """the latest-filed row that passes ok()"""
+    best = None
+    for r in rows:
+        if ok(r) and (best is None or r.get('filed', '') > best.get('filed', '')):
+            best = r
+    return best
+
+
+def _ttm_one(rows, E, fye):
+    """trailing twelve months ending E: last fiscal year + this year to date - last year to date"""
+    full = _pick(rows, lambda r: r['end'] == E and 330 <= _days(r['start'], r['end']) <= 400)
+    if full:
+        return full['val']
+    ytd = _pick(rows, lambda r: r['end'] == E and abs(_days(fye, r['start']) - 1) <= 7)
+    if not ytd:
+        return None
+    n = _days(ytd['start'], E)
+    ann = _pick(rows, lambda r: abs(_days(r['end'], fye)) <= 7 and 330 <= _days(r['start'], r['end']) <= 400)
+    prev = _pick(rows, lambda r: abs(_days(r['end'], E) - 365) <= 10 and abs(_days(r['start'], r['end']) - n) <= 10)
+    if not ann or not prev:
+        return None
+    return ann['val'] + ytd['val'] - prev['val']
+
+
+def quarterly(facts, ends):
+    """Figures from the latest 10-Q when it is newer than the last 10-K:
+    trailing-twelve-month flows and the latest balance sheet."""
+    if not ends:
+        return None
+    g = facts.get('facts', {}).get('us-gaap', {})
+    fye = ends[-1]
+    E = None
+    for tag in FLOW['rev'] + FLOW['ni']:
+        for r in _rows(g, tag, 'USD', False):
+            if r['form'].startswith('10-Q') and r['end'] > fye and (E is None or r['end'] > E):
+                E = r['end']
+    if not E or _days(fye, E) > 300:
+        return None
+    ttm = {}
+    for key, tags, unit in [(k, v, 'USD') for k, v in FLOW.items()] + [(k, v, 'USD/shares') for k, v in PERSHARE.items()]:
+        val = None
+        for tag in tags:                       # first tag with a usable value at E wins
+            val = _ttm_one(_rows(g, tag, unit, False), E, fye)
+            if val is not None:
+                break
+        ttm[key] = val
+    if ttm.get('ebit') is None and ttm.get('pretax') is not None:
+        ttm['ebit'] = ttm['pretax'] + (ttm.get('intexp') or 0)
+    dil = None
+    for tag in SHARES['dil']:
+        r = _pick(_rows(g, tag, 'shares', False), lambda r: r['end'] == E and 80 <= _days(r['start'], r['end']) <= 100)
+        if r:
+            dil = r['val']; break
+    s = {}
+    for k, tags in STOCK.items():
+        s[k] = None
+        for tag in tags:
+            r = _pick(_rows(g, tag, 'USD', True), lambda r: r['end'] == E)
+            if r:
+                s[k] = r['val']; break
+    if s['ltd'] is not None:
+        debt, cur = s['ltd'] + (s['stb'] or 0), (s['ltdc'] or 0) + (s['stb'] or 0)
+    elif s['ltdnc'] is not None or s['debtc'] is not None or s['ltdc'] is not None:
+        cur = s['debtc'] if s['debtc'] is not None else (s['ltdc'] or 0) + (s['stb'] or 0)
+        debt = (s['ltdnc'] or 0) + cur
+    else:
+        debt = cur = None
+    bs = {'debt': debt, 'debtcur': cur, 'cash': None if s['cash'] is None else s['cash'] + (s['stinv'] or 0),
+          'eq': s['eq'], 'assets': s['assets'], 'ca': s['ca'], 'cl': s['cl']}
+    if ttm.get('rev') is None and ttm.get('ni') is None:
+        return None
+    rnd = lambda k, x: None if x is None else (round(x, 4) if k in ('eps', 'dps') else int(round(x)))
+    return {'end': E, 'ttm': {k: rnd(k, v) for k, v in ttm.items()}, 'bs': {k: rnd(k, v) for k, v in bs.items()},
+            'dil': None if dil is None else int(dil)}
+
+
 def filings_of(sub, cik):
     """latest 10-K and the three latest 10-Qs"""
     rec = sub.get('filings', {}).get('recent', {})
@@ -267,7 +361,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 2   # bump when the extraction rules change, so every file is rebuilt
+FVER = 3   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -344,8 +438,14 @@ def update_fundamentals(cos, ua, limit):
                 shares = dil   # cover-page count is off (share classes); use diluted count
             if not ends:
                 raise ValueError('no annual figures yet (new listing or new holding company; add its predecessor to data/overrides.json)')
+            try:
+                qd = quarterly(facts, ends)
+            except Exception as e:      # the quarter is a bonus; never lose the annual figures over it
+                print(f'  note quarter {t:6} {str(e)[:80]}', file=sys.stderr); qd = None
+            if qd and (fac or so):
+                qd = None               # share-class adjusted companies keep annual figures only
             d.update({'t': t, 'n': name, 'sec': sec, 'sub': sub, 'cik': cik, 'model': model_of(sec, sub),
-                      'ends': ends, 'f': f, 'sh': shares, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
+                      'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)
             done += 1
         except Exception as e:
@@ -446,6 +546,16 @@ def build_index(cos):
         ni, rev, eq = last(f['ni']), last(f['rev']), last(f['eq'])
         ebit, da = last(f['ebit']), last(f['da'])
         debt, cash = last(f['debt']) or 0, last(f['cash']) or 0
+        qd = d.get('q') or {}
+        tt, bs = qd.get('ttm') or {}, qd.get('bs') or {}
+        if tt.get('rev') is not None or tt.get('ni') is not None:    # trailing twelve months, when a 10-Q is newer
+            ni = tt['ni'] if tt.get('ni') is not None else ni
+            rev = tt['rev'] if tt.get('rev') is not None else rev
+            ebit = tt['ebit'] if tt.get('ebit') is not None else ebit
+            da = tt['da'] if tt.get('da') is not None else da
+        if bs.get('eq') is not None: eq = bs['eq']
+        if bs.get('debt') is not None: debt = bs['debt']
+        if bs.get('cash') is not None: cash = bs['cash']
         ev = mcap + debt - cash if mcap else None
         ebitda = ebit + (da or 0) if ebit is not None else None
         r = lambda x, k=2: None if x is None or not math.isfinite(x) else round(x, k)

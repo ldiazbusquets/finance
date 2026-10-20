@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tools | LDB Finance</title>
-<meta name="description" content="Interactive finance tools that run in the browser.">
+<meta name="description" content="Position sizing, a portfolio x-ray and more finance tools that run in the browser.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LDB Finance">
 <meta property="og:title" content="Tools | LDB Finance">
-<meta property="og:description" content="Interactive finance tools that run in the browser.">
+<meta property="og:description" content="Position sizing, a portfolio x-ray and more finance tools that run in the browser.">
 <meta property="og:url" content="https://ldiazbusquets.github.io/finance/tools.html">
 <meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
 <meta property="og:image:width" content="1200">
@@ -16,7 +16,7 @@
 <meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tools | LDB Finance">
-<meta name="twitter:description" content="Interactive finance tools that run in the browser.">
+<meta name="twitter:description" content="Position sizing, a portfolio x-ray and more finance tools that run in the browser.">
 <meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
 <meta name="theme-color" content="#0C0A08">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=8">
 </head>
 <body data-page="tools">
 <nav class="top"><div class="wrap">
@@ -49,28 +49,41 @@
 <header class="ph"><div class="wrap">
   <div class="eyebrow mono">Tools</div>
   <h1>Tools you can <em>use</em></h1>
-  <p class="sub">Interactive finance tools that run in your browser. The first five live in LDB Lab; more finance tools are being built here.</p>
+  <p class="sub">Interactive finance tools that run in your browser. Company data comes from the same nightly update as the rest of the site.</p><div class="cta"><a class="pill cu" href="#sizer"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Position sizer</a><a class="pill gh" href="#xray">Portfolio x-ray</a></div>
 </div></header>
 
-<section class="tight">
+<section class="tight" id="sizer">
   <div class="wrap">
-    <div class="eyebrow mono">Live now &middot; in LDB Lab</div><h3 class="sec">Ready to try</h3>
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-06</div><h3 class="sec">Position sizer</h3></div><p>Decide the loss you can accept first; the number of shares follows from the distance to your stop.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div id="zIn"></div></div>
+      <div class="panel"><div id="zOut"></div><svg class="chart lad" id="zCh"></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="tight" id="xray" style="padding-top:30px">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-07</div><h3 class="sec">Portfolio x-ray</h3></div><p>List what you own. S&amp;P 500 index funds (SPY, VOO, IVV, SPLG, RSP) are opened up into their companies, so overlap with your single stocks shows.</p></div>
+    <div class="panel">
+      <div class="hd"><div><h3 class="sec">Your holdings</h3><p>Ticker and current value in dollars. Saved in this browser only.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="xAdd">+ Add a holding</button><button type="button" class="reset" id="xEx">Example</button><button type="button" class="reset" id="xClr">Clear</button></div></div>
+      <div id="xT"></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div id="xOut"></div></div>
+    <p class="disc">S&amp;P 500 weights here are by total market value, which is close to, but not exactly, the index&rsquo;s float-adjusted weights. Companies outside the S&amp;P 500 are counted as &ldquo;not covered&rdquo;.</p>
+  </div>
+</section>
+
+<section class="tight" style="padding-top:20px">
+  <div class="wrap">
+    <div class="eyebrow mono">More tools &middot; in LDB Lab</div><h3 class="sec">Ready to try</h3>
     <div class="grid3" style="margin-top:30px">
       <a class="card" href="https://ldiazbusquets.github.io/lab/options.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-01</span><span class="st live">Live</span></div><h3>Options builder</h3><p>Build spreads, straddles and condors. Payoff at expiry and today, Black-Scholes prices and the Greeks.</p><span class="go">Open &#8599;</span></a>
       <a class="card" href="https://ldiazbusquets.github.io/lab/kelly.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-02</span><span class="st live">Live</span></div><h3>Kelly challenge</h3><p>How much to bet when you have an edge, and what happens when you bet too much.</p><span class="go">Open &#8599;</span></a>
       <a class="card" href="https://ldiazbusquets.github.io/lab/market-maker.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-03</span><span class="st live">Live</span></div><h3>Market-making game</h3><p>Quote a bid and ask against traders who know more than you, with Bayesian updating.</p><span class="go">Open &#8599;</span></a>
       <a class="card" href="https://ldiazbusquets.github.io/lab/montecarlo.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-04</span><span class="st live">Live</span></div><h3>Monte Carlo planner</h3><p>Thousands of simulated lifetimes, and a planner that learns how much stock to hold.</p><span class="go">Open &#8599;</span></a>
       <a class="card" href="https://ldiazbusquets.github.io/lab/models.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-05</span><span class="st live">Live</span></div><h3>Model Playground</h3><p>FinBERT, BERT, Qwen3 and Llama 3.2 read the same financial headline side by side.</p><span class="go">Open &#8599;</span></a>
-    </div>
-  </div>
-</section>
-<section class="tight" style="padding-top:20px">
-  <div class="wrap">
-    <div class="eyebrow mono">Coming here</div><h3 class="sec">In the works</h3>
-    <div class="grid3" style="margin-top:30px">
-      <div class="card"><div class="top"><span class="n">TOOL-06</span><span class="st plan">Planned</span></div><h3>Position sizer</h3><p>How many shares to buy for a given risk, stop and account size.</p></div>
-      <div class="card"><div class="top"><span class="n">TOOL-07</span><span class="st plan">Planned</span></div><h3>Portfolio x-ray</h3><p>Sector weights, overlap between ETFs and concentration risk for a list of holdings.</p></div>
-      <div class="card"><div class="top"><span class="n">TOOL-08</span><span class="st plan">Planned</span></div><h3>Puerto Rico tax estimator</h3><p>After-tax returns under Puerto Rico’s capital gains rules for island residents.</p></div>
+      <div class="card"><div class="top"><span class="n">TOOL-08</span><span class="st build">In build</span></div><h3>Puerto Rico tax estimator</h3><p>After-tax returns under Puerto Rico&rsquo;s capital gains rules for island residents.</p></div>
     </div>
   </div>
 </section>
@@ -78,6 +91,7 @@
   <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=7"></script>
+<script src="assets/site.js?v=8"></script>
+<script src="assets/tools.js?v=1"></script>
 </body>
 </html>

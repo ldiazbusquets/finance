@@ -155,7 +155,7 @@
     return '<tr><td>' + esc(s.name) + '<small>' + (s.note ? esc(s.note) + ' &middot; ' : '') + fdate(s.last.d) + '</small></td><td>' + f.t(s.last.v) + '</td><td class="' + dr + '">' + (f.c(s) || '—') + '</td><td>' + spark(s.y1, dr) + '</td></tr>';
   }
   function table(keys) {
-    return '<div class="scroll"><table class="tbl"><thead><tr><th>Series</th><th>Latest</th><th>Change</th><th>1 year</th></tr></thead><tbody>' +
+    return '<div class="scroll"><table class="tbl mkt"><thead><tr><th>Series</th><th>Latest</th><th>Change</th><th>1 year</th></tr></thead><tbody>' +
       keys.map(function (k) { return row(M.series[k]); }).join('') + '</tbody></table></div>';
   }
   function waiting(el) {

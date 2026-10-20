@@ -18,35 +18,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=3">
 </head>
 <body data-page="models">
 <nav class="top"><div class="wrap">
   <a class="brand" href="./"><div class="mk">LDB</div>LDB <span>Finance</span></a>
-  <div class="links"><a href="research.html">Research</a><a href="models.html" class=on>Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html" class=on>Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
   <div class="right">
     <button class="tg" id="tg" aria-label="Switch theme"></button>
     <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
     <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
   </div>
 </div></nav>
-<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="models.html" class=on>Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html" class=on>Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
 <header class="ph"><div class="wrap">
   <div class="eyebrow mono">Models</div>
   <h1>Valuation <em>models</em></h1>
-  <p class="sub">Every model shows its inputs on the page. Change an assumption and the value updates, so you can see what the price is really betting on.</p>
+  <p class="sub">Every model shows its inputs on the page. The live ones run inside the <a href="valuation.html" style="color:var(--acc)">Valuation</a> tool for any S&amp;P 500 company.</p>
 </div></header>
 
 <section class="tight">
   <div class="wrap">
     <div class="eyebrow mono">Equity</div><h3 class="sec">Valuing a company</h3>
     <div class="grid3" style="margin-top:30px">
-      <div class="card"><div class="top"><span class="n">MOD-01</span><span class="st build">In build</span></div><h3>Discounted cash flow</h3><p>Forecast free cash flow, pick a discount rate and terminal value, and see the value per share with a sensitivity table.</p></div>
-      <div class="card"><div class="top"><span class="n">MOD-02</span><span class="st plan">Planned</span></div><h3>Trading comparables</h3><p>Value a company against its peers on EV/EBITDA, P/E and EV/Sales, using figures straight from filings.</p></div>
+      <a class="card" href="valuation.html"><div class="top"><span class="n">MOD-01</span><span class="st live">Live</span></div><h3>Discounted cash flow</h3><p>Ten years of free cash flow and a terminal value, filled in from filings, with a sensitivity table.</p><span class="go">Open &rarr;</span></a>
+      <a class="card" href="valuation.html"><div class="top"><span class="n">MOD-02</span><span class="st live">Live</span></div><h3>Trading comparables</h3><p>Value a company against its closest peers on P/E, EV/EBITDA and EV/Sales.</p><span class="go">Open &rarr;</span></a>
       <div class="card"><div class="top"><span class="n">MOD-03</span><span class="st plan">Planned</span></div><h3>Bull, base and bear</h3><p>Three scenarios with probabilities, ending in one probability-weighted value.</p></div>
-      <div class="card"><div class="top"><span class="n">MOD-04</span><span class="st build">In build</span></div><h3>Bank valuation</h3><p>Banks are valued on book value and return on equity, not cash flow. A JPMorgan- and Goldman-style bank model.</p></div>
+      <a class="card" href="valuation.html?t=JPM"><div class="top"><span class="n">MOD-04</span><span class="st live">Live</span></div><h3>Bank valuation</h3><p>Banks and insurers are valued on book value and return on equity, not cash flow.</p><span class="go">Open &rarr;</span></a>
       <div class="card"><div class="top"><span class="n">MOD-05</span><span class="st plan">Planned</span></div><h3>Growth-company DCF</h3><p>For businesses that are not profitable yet: revenue paths, margin ramps and dilution.</p></div>
-      <div class="card"><div class="top"><span class="n">MOD-06</span><span class="st plan">Planned</span></div><h3>Dividend discount</h3><p>Value from dividends alone, for steady payers like utilities and consumer staples.</p></div>
+      <a class="card" href="valuation.html?t=KO"><div class="top"><span class="n">MOD-06</span><span class="st live">Live</span></div><h3>Dividend discount</h3><p>Value from dividends alone, shown automatically for steady payers.</p><span class="go">Open &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -64,6 +64,6 @@
   <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=2"></script>
+<script src="assets/site.js?v=3"></script>
 </body>
 </html>

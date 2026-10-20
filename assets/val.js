@@ -1,0 +1,398 @@
+/* LDB Finance valuation tool: search an S&P 500 company, get a DCF (or a
+   bank model), a dividend model where it fits, peer multiples and a summary
+   chart. All maths runs in the browser from the nightly data files. */
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var fn = function (t) { return t.replace(/\./g, '-'); };
+  var bust = '?t=' + Math.floor(Date.now() / 600000);
+  function getJSON(p) { return fetch(p + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var clip = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+  var isn = function (v) { return typeof v === 'number' && isFinite(v); };
+  function last(a) { if (!a) return null; for (var i = a.length - 1; i >= 0; i--) if (isn(a[i])) return a[i]; return null; }
+  function lastIdx(a) { if (!a) return -1; for (var i = a.length - 1; i >= 0; i--) if (isn(a[i])) return i; return -1; }
+  function median(a) { a = a.filter(isn).sort(function (x, y) { return x - y; }); if (!a.length) return null; var m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; }
+  function q(a, p) { a = a.filter(isn).sort(function (x, y) { return x - y; }); if (!a.length) return null; var i = (a.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i); return a[lo] + (a[hi] - a[lo]) * (i - lo); }
+  function avgRatio(num, den, n, idx) {
+    var out = [];
+    for (var i = idx; i > idx - n && i >= 0; i--) if (isn(num[i]) && isn(den[i]) && den[i] !== 0) out.push(num[i] / den[i]);
+    return out.length ? out.reduce(function (a, b) { return a + b; }, 0) / out.length : null;
+  }
+  function cagr(a, n, idx) {
+    for (var k = Math.min(n, idx); k >= 1; k--) { var x0 = a[idx - k], x1 = a[idx]; if (isn(x0) && isn(x1) && x0 > 0 && x1 > 0) return Math.pow(x1 / x0, 1 / k) - 1; }
+    return null;
+  }
+
+  /* ---------- formatting ---------- */
+  function usd(v, dp) { if (!isn(v)) return '—'; var s = v < 0 ? '−' : ''; return s + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: dp == null ? 2 : dp, maximumFractionDigits: dp == null ? 2 : dp }); }
+  function big(v) { if (!isn(v)) return '—'; var a = Math.abs(v), s = v < 0 ? '−' : ''; return a >= 1e12 ? s + '$' + (a / 1e12).toFixed(2) + 'T' : a >= 1e9 ? s + '$' + (a / 1e9).toFixed(1) + 'B' : a >= 1e6 ? s + '$' + (a / 1e6).toFixed(0) + 'M' : s + '$' + a.toFixed(0); }
+  function pc(v, dp) { if (!isn(v)) return '—'; return (v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
+  function sp(v, dp) { if (!isn(v)) return '—'; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
+  function mx(v) { return isn(v) ? v.toFixed(1) + '×' : '—'; }
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function fd(s) { if (!s) return ''; var p = s.split('-'); return MON[+p[1] - 1] + ' ' + (+p[2]) + ', ' + p[0]; }
+
+  /* ---------- state ---------- */
+  var IX = null, PX = {}, RF = null, RFd = null, CO = null, A = null, AUTO = null;
+  var ERP_DEFAULT = 0.045;
+
+  /* ---------- search ---------- */
+  var inp = $('#q'), list = $('#sug'), sel = -1, hits = [];
+  function search(s) {
+    s = s.trim().toUpperCase(); if (!s || !IX) return [];
+    var a = [], b = [];
+    IX.rows.forEach(function (r) {
+      var t = r[0], n = r[1].toUpperCase();
+      if (t === s || t.replace('.', '') === s.replace('.', '')) a.unshift(r);
+      else if (t.indexOf(s) === 0) a.push(r);
+      else if (n.indexOf(s) === 0 || n.indexOf(' ' + s) >= 0) b.push(r);
+    });
+    return a.concat(b).slice(0, 8);
+  }
+  function showSug() {
+    hits = search(inp.value); sel = hits.length ? 0 : -1;
+    if (!hits.length) { list.classList.remove('open'); list.innerHTML = inp.value.trim() && IX ? '<div class="none">No S&amp;P 500 company matches “' + esc(inp.value.trim()) + '”</div>' : ''; if (inp.value.trim() && IX) list.classList.add('open'); return; }
+    list.innerHTML = hits.map(function (r, i) { return '<button type="button" data-i="' + i + '"' + (i === sel ? ' class="on"' : '') + '><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span><em>' + esc(r[2]) + '</em></button>'; }).join('');
+    list.classList.add('open');
+  }
+  function pick(r) { list.classList.remove('open'); inp.value = ''; inp.blur(); open(r[0]); }
+  if (inp) {
+    inp.addEventListener('input', showSug);
+    inp.addEventListener('focus', function () { if (inp.value) showSug(); });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!hits.length) return; sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + hits.length) % hits.length; $$('button', list).forEach(function (b, i) { b.classList.toggle('on', i === sel); }); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (hits[sel]) pick(hits[sel]); }
+      else if (e.key === 'Escape') { list.classList.remove('open'); }
+    });
+    list.addEventListener('mousedown', function (e) { var b = e.target.closest('button'); if (b) { e.preventDefault(); pick(hits[+b.getAttribute('data-i')]); } });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.search')) list.classList.remove('open'); });
+  }
+  $$('[data-pick]').forEach(function (b) { b.onclick = function () { open(b.getAttribute('data-pick')); }; });
+
+  /* ---------- load ---------- */
+  Promise.all([
+    getJSON('data/co/index.json').catch(function () { return null; }),
+    getJSON('data/co/prices.json').catch(function () { return {}; }),
+    getJSON('data/markets.json').catch(function () { return {}; })
+  ]).then(function (r) {
+    IX = r[0] && r[0].rows && r[0].rows.length ? r[0] : null;
+    PX = (r[1] && r[1].px) || {};
+    var s10 = r[2] && r[2].series && r[2].series.DGS10;
+    if (s10 && s10.last) { RF = s10.last.v / 100; RFd = s10.last.d; }
+    if (!IX) { $('#status').innerHTML = '<div class="wait"><b>Company data is on its way.</b> The S&amp;P 500 figures are collected by the nightly update. Once it has run, search any company here.</div>'; return; }
+    $('#count').textContent = IX.rows.length + ' companies · updated ' + fd(IX.updated.slice(0, 10));
+    var t = new URLSearchParams(location.search).get('t');
+    if (t) open(t.toUpperCase());
+  });
+
+  function open(t) {
+    if (!IX) return;
+    var row = IX.rows.find(function (r) { return r[0] === t || fn(r[0]) === fn(t); });
+    if (!row) { $('#status').innerHTML = '<div class="wait">' + esc(t) + ' is not in the S&amp;P 500 list yet.</div>'; return; }
+    $('#status').innerHTML = '<div class="wait">Loading ' + esc(row[1]) + '&hellip;</div>';
+    getJSON('data/co/' + fn(row[0]) + '.json').then(function (d) {
+      CO = d; CO.row = row; CO.p = PX[row[0]] || null;
+      try { history.replaceState(null, '', '?t=' + encodeURIComponent(row[0])); } catch (e) {}
+      document.title = row[1] + ' (' + row[0] + ') valuation | LDB Finance';
+      AUTO = assume(CO); A = JSON.parse(JSON.stringify(AUTO));
+      $('#status').innerHTML = '';
+      $('#out').hidden = false;
+      renderStatic(); renderModel();
+      $('#out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function () { $('#status').innerHTML = '<div class="wait">Figures for ' + esc(row[1]) + ' are still being collected. Check back after the next update.</div>'; });
+  }
+
+  /* ---------- automatic assumptions ---------- */
+  function assume(c) {
+    var f = c.f, i = lastIdx(f.rev) >= 0 ? lastIdx(f.rev) : lastIdx(f.ni), rf = RF || 0.043;
+    var price = c.p && c.p.p, shares = c.sh || last(f.dil);
+    var tax = avgRatio(f.tax, f.pretax, 3, i); tax = isn(tax) && tax > 0 ? clip(tax, 0.10, 0.30) : 0.21;
+    var beta = c.p && isn(c.p.b) ? clip(c.p.b, 0.4, 2.5) : 1.0;
+    var debt = last(f.debt) || 0, cash = last(f.cash) || 0;
+    var kd = null, di = lastIdx(f.debt);
+    if (isn(f.intexp[i]) && di >= 0 && f.debt[di] > 0) kd = f.intexp[i] / ((f.debt[di] + (isn(f.debt[di - 1]) ? f.debt[di - 1] : f.debt[di])) / 2);
+    kd = isn(kd) ? clip(kd, rf + 0.005, rf + 0.06) : rf + 0.015;
+    var gT = Math.max(0.01, Math.min(0.025, rf - 0.01));
+    var a = {
+      model: c.model === 'bank' ? 'bank' : 'dcf', rf: rf, beta: beta, erp: ERP_DEFAULT, kd: kd, tax: tax, gT: gT,
+      price: price, shares: shares, debt: debt, cash: cash
+    };
+    if (a.model === 'dcf') {
+      var g1 = cagr(f.rev, 3, i); a.g1 = isn(g1) ? clip(g1, -0.05, 0.25) : 0.04;
+      var m0 = isn(f.ebit[i]) && f.rev[i] ? f.ebit[i] / f.rev[i] : null, mT = avgRatio(f.ebit, f.rev, 3, i);
+      a.flagMargin = false;
+      if (!isn(mT) || mT <= 0.02) { mT = 0.10; a.flagMargin = true; }
+      a.m0 = isn(m0) ? clip(m0, -0.5, 0.7) : mT; a.mT = clip(mT, -0.1, 0.6);
+      a.da = clip(avgRatio(f.da, f.rev, 3, i) || 0.04, 0, 0.4);
+      a.capex = clip(avgRatio(f.capex, f.rev, 3, i) || a.da, 0, 0.5);
+      var nwc = null;
+      if (isn(f.ca[i]) && isn(f.cl[i]) && f.rev[i]) nwc = ((f.ca[i] - (f.cash[i] || 0)) - (f.cl[i] - (f.debtcur[i] || 0))) / f.rev[i];
+      a.nwc = isn(nwc) ? clip(nwc, -0.15, 0.3) : 0;
+      a.ronic = 0.15;
+      a.rev0 = f.rev[i];
+    } else {
+      var roe = [], j;
+      for (j = i; j > i - 3 && j >= 1; j--) if (isn(f.ni[j]) && isn(f.eq[j]) && isn(f.eq[j - 1])) roe.push(f.ni[j] / ((f.eq[j] + f.eq[j - 1]) / 2));
+      a.roe = roe.length ? clip(roe.reduce(function (x, y) { return x + y; }, 0) / roe.length, -0.05, 0.35) : 0.10;
+      a.bv = last(f.eq); a.gB = Math.min(0.03, rf - 0.005);
+    }
+    a.fy = (c.ends[i] || '').slice(0, 4); a.fyEnd = c.ends[i];
+    return a;
+  }
+
+  /* ---------- models ---------- */
+  function ke(a) { return a.rf + a.beta * a.erp; }
+  function wacc(a) {
+    var E = (a.price || 0) * (a.shares || 0), D = Math.max(0, a.debt || 0);
+    if (!E) return ke(a);
+    return E / (E + D) * ke(a) + D / (E + D) * a.kd * (1 - a.tax);
+  }
+  function dcf(a, o) {
+    o = o || {};
+    var g1 = a.g1 + (o.dg || 0), mT = a.mT + (o.dm || 0), W = (o.w != null ? o.w : wacc(a)), gT = o.gT != null ? o.gT : a.gT;
+    var rows = [], rev = a.rev0, pv = 0;
+    for (var t = 1; t <= 10; t++) {
+      var g = t <= 5 ? g1 : g1 + (gT - g1) * (t - 5) / 5;
+      var r0 = rev; rev = rev * (1 + g);
+      var m = t <= 5 ? a.m0 + (mT - a.m0) * t / 5 : mT;
+      var ebit = rev * m, nopat = ebit > 0 ? ebit * (1 - a.tax) : ebit;
+      var da = rev * a.da, cx = rev * a.capex, dn = a.nwc * (rev - r0);
+      var fcff = nopat + da - cx - dn, df = Math.pow(1 + W, t);
+      pv += fcff / df;
+      rows.push({ t: t, g: g, rev: rev, m: m, ebit: ebit, nopat: nopat, reinv: cx - da + dn, fcff: fcff, pv: fcff / df });
+    }
+    var L = rows[9];
+    var nopat11 = L.ebit * (1 + gT) * (1 - a.tax);
+    var reinvRate = clip(gT / Math.max(a.ronic, gT + 0.001), 0, 1);
+    var tvf = nopat11 * (1 - reinvRate);
+    var tv = W > gT ? tvf / (W - gT) : NaN, pvtv = tv / Math.pow(1 + W, 10);
+    var ev = pv + pvtv, eq = ev - (a.debt || 0) + (a.cash || 0), ps = a.shares ? eq / a.shares : NaN;
+    return { rows: rows, W: W, gT: gT, pv: pv, tv: tv, pvtv: pvtv, ev: ev, eq: eq, ps: ps, tvShare: pvtv / ev };
+  }
+  function bank(a, o) {
+    o = o || {};
+    var roe = a.roe + (o.droe || 0), K = (o.k != null ? o.k : ke(a)), g = o.g != null ? o.g : a.gB;
+    var bvps = a.bv && a.shares ? a.bv / a.shares : NaN;
+    var pb = K > g ? (roe - g) / (K - g) : NaN;
+    return { roe: roe, K: K, g: g, bvps: bvps, pb: pb, ps: bvps * pb };
+  }
+  function ddm(c, a) {
+    var f = c.f, i = lastIdx(f.dps); if (i < 4) return null;
+    for (var j = i; j > i - 5; j--) if (!(f.dps[j] > 0)) return null;
+    var ni = f.ni[i], div = f.div[i] || f.dps[i] * (c.sh || last(f.dil));
+    if (!(ni > 0) || !(div / ni >= 0.2)) return null;
+    var d0 = f.dps[i], gD = clip(cagr(f.dps, 5, i) || 0, 0, 0.10), K = ke(a), gT = a.gT;
+    function val(k) {
+      var v = 0, d = d0; for (var t = 1; t <= 5; t++) { d *= 1 + gD; v += d / Math.pow(1 + k, t); }
+      return k > gT ? v + d * (1 + gT) / (k - gT) / Math.pow(1 + k, 5) : NaN;
+    }
+    return { d0: d0, gD: gD, K: K, base: val(K), lo: val(K + 0.005), hi: val(Math.max(gT + 0.005, K - 0.005)), payout: div / ni };
+  }
+  function peers(row) {
+    var cols = IX.cols, same = IX.rows.filter(function (r) { return r[0] !== row[0] && r[3] === row[3] && isn(r[4]); });
+    if (same.length < 4) same = same.concat(IX.rows.filter(function (r) { return r[0] !== row[0] && r[2] === row[2] && r[3] !== row[3] && isn(r[4]); }));
+    var lm = Math.log(row[4] || 1e10);
+    same.sort(function (x, y) { return Math.abs(Math.log(x[4]) - lm) - Math.abs(Math.log(y[4]) - lm); });
+    return same.slice(0, 8).sort(function (x, y) { return y[4] - x[4]; });
+  }
+  function comps(c, a, ps) {
+    var f = c.f, sh = a.shares, D = a.debt || 0, C = a.cash || 0, out = [];
+    var eps = last(f.eps), rev = last(f.rev), ebitda = isn(last(f.ebit)) ? last(f.ebit) + (last(f.da) || 0) : null, bv = last(f.eq);
+    function add(key, name, metric, toPrice) {
+      var v = ps.map(function (r) { return r[IX.cols.indexOf(key)]; }).filter(function (x) { return isn(x) && x > 0 && x < 200; });
+      if (v.length < 3 || !isn(metric) || metric <= 0) return;
+      out.push({ key: key, name: name, n: v.length, med: median(v), lo: toPrice(q(v, 0.25)), base: toPrice(median(v)), hi: toPrice(q(v, 0.75)) });
+    }
+    add('pe', 'P/E', eps, function (m) { return m * eps; });
+    if (a.model === 'dcf') {
+      add('evEbitda', 'EV/EBITDA', ebitda, function (m) { return (m * ebitda - D + C) / sh; });
+      add('evSales', 'EV/Sales', rev, function (m) { return (m * rev - D + C) / sh; });
+    } else {
+      add('pb', 'P/B', bv, function (m) { return m * bv / sh; });
+    }
+    return out;
+  }
+
+  /* ---------- rendering ---------- */
+  function renderStatic() {
+    var c = CO, r = c.row, p = c.p, f = c.f;
+    var mcap = p && c.sh ? p.p * c.sh : r[4];
+    var tenk = (c.filings || []).find(function (x) { return x.form === '10-K'; });
+    var range = '';
+    if (p && isn(p.lo) && isn(p.hi) && p.hi > p.lo) {
+      var pos = clip((p.p - p.lo) / (p.hi - p.lo), 0, 1) * 100;
+      range = '<div class="rng"><span class="mono">52-week range</span><div class="bar"><i style="left:' + pos.toFixed(1) + '%"></i></div><div class="ends"><span>' + usd(p.lo) + '</span><span>' + usd(p.hi) + '</span></div></div>';
+    }
+    $('#co').innerHTML =
+      '<div class="cohd"><div><div class="mono">' + esc(r[0]) + ' &middot; ' + esc(r[2]) + '</div><h2 class="coname">' + esc(r[1]) + '</h2><p class="cosub">' + esc(r[3]) + '</p></div>' +
+      '<div class="copx"><div class="mono">Last close' + (p ? ' &middot; ' + fd(p.d) : '') + '</div><div class="big num">' + (p ? usd(p.p) : '—') + '</div>' +
+      '<div class="facts"><span><em>Market value</em>' + big(mcap) + '</span><span><em>Beta</em>' + (p && isn(p.b) ? p.b.toFixed(2) : '—') + '</span><span><em>Latest 10-K</em>' + (tenk ? '<a href="' + esc(tenk.url) + '" target="_blank" rel="noopener">FY' + esc((c.ends[lastIdx(f.rev)] || '').slice(0, 4)) + ' &#8599;</a>' : '—') + '</span></div>' + range + '</div></div>';
+    renderFinancials(); renderFilings();
+  }
+
+  function inputRow(key, label, val, step, unit, hint) {
+    var disp = unit === '%' ? (val * 100).toFixed(step < 0.001 ? 2 : 1) : unit === 'x' ? val.toFixed(2) : val;
+    return '<label class="in"><span>' + label + (hint ? '<small>' + hint + '</small>' : '') + '</span><div class="box"><button type="button" data-k="' + key + '" data-d="-' + step + '">−</button>' +
+      '<input data-k="' + key + '" data-u="' + unit + '" inputmode="decimal" value="' + disp + '"><i>' + (unit === '%' ? '%' : unit === 'x' ? '' : '') + '</i><button type="button" data-k="' + key + '" data-d="' + step + '">+</button></div></label>';
+  }
+
+  function renderModel() {
+    var a = A, c = CO, html = '', res, auto = AUTO;
+    var price = a.price;
+    var lines = [];
+    if (a.model === 'dcf') {
+      res = dcf(a);
+      var bear = dcf(a, { dg: -0.03, dm: -0.02, w: res.W + 0.01 }), bull = dcf(a, { dg: 0.03, dm: 0.02, w: Math.max(res.gT + 0.01, res.W - 0.01) });
+      lines.push({ name: 'Discounted cash flow', lo: Math.min(bear.ps, bull.ps), base: res.ps, hi: Math.max(bear.ps, bull.ps), main: true });
+    } else {
+      res = bank(a);
+      var b1 = bank(a, { droe: -0.02, k: res.K + 0.005 }), b2 = bank(a, { droe: 0.02, k: Math.max(res.g + 0.01, res.K - 0.005) });
+      lines.push({ name: 'Excess return (bank)', lo: Math.min(b1.ps, b2.ps), base: res.ps, hi: Math.max(b1.ps, b2.ps), main: true });
+    }
+    var dd = ddm(c, a);
+    if (dd && isn(dd.base) && dd.base > 0) lines.push({ name: 'Dividend discount', lo: Math.min(dd.lo, dd.hi), base: dd.base, hi: Math.max(dd.lo, dd.hi) });
+    var ps = peers(c.row), cp = comps(c, a, ps);
+    cp.forEach(function (x) { if (isn(x.base) && x.base > 0) lines.push({ name: x.name + ' vs peers', lo: Math.min(x.lo, x.hi), base: x.base, hi: Math.max(x.lo, x.hi) }); });
+    if (c.p && isn(c.p.lo)) lines.push({ name: '52-week range', lo: c.p.lo, base: null, hi: c.p.hi, ref: true });
+
+    /* verdict */
+    var v = lines[0].base, up = isn(v) && price ? v / price - 1 : null;
+    $('#verdict').innerHTML =
+      '<div class="vd"><div><div class="mono">' + esc(lines[0].name) + ' &middot; base case</div><div class="big num">' + (isn(v) && v > 0 ? usd(v) : 'n/a') + '</div><p>' +
+      (isn(up) && v > 0 ? 'Estimated value per share is <b class="' + (up >= 0 ? 'up' : 'dn') + '">' + (up >= 0 ? sp(up) + ' above' : sp(up).replace('−', '') + ' below') + '</b> the last close of ' + usd(price) + '.' : 'Not enough data to compare with the share price.') +
+      '</p></div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
+      (a.flagMargin ? ' <b>Its recent operating margin is near or below zero, so the model assumes it reaches 10%.</b> Adjust this below.' : '') + '</div></div>';
+
+    /* football field */
+    renderField(lines, price);
+
+    /* assumptions + workings */
+    var f = c.f;
+    if (a.model === 'dcf') {
+      html += '<div class="cols2"><div class="panel"><div class="hd"><div><h3 class="sec">Assumptions</h3><p>Filled in from the company’s last three years. Change any of them.</p></div><button class="reset" id="reset" type="button">Reset</button></div>' +
+        '<div class="ins">' +
+        inputRow('g1', 'Revenue growth', a.g1, 0.005, '%', 'Years 1–5, then fades') +
+        inputRow('mT', 'Operating margin', a.mT, 0.005, '%', 'Reached by year 5 (now ' + pc(a.m0) + ')') +
+        inputRow('tax', 'Tax rate', a.tax, 0.005, '%') +
+        inputRow('capex', 'Capex', a.capex, 0.0025, '%', '% of revenue') +
+        inputRow('da', 'Depreciation', a.da, 0.0025, '%', '% of revenue') +
+        inputRow('nwc', 'Working capital', a.nwc, 0.005, '%', '% of revenue added') +
+        inputRow('gT', 'Terminal growth', a.gT, 0.0025, '%', 'After year 10') +
+        inputRow('ronic', 'Return on new capital', a.ronic, 0.01, '%', 'Sets terminal reinvestment') +
+        '</div></div>' +
+        '<div class="panel"><div class="hd"><div><h3 class="sec">Discount rate</h3><p>Weighted cost of capital (WACC).</p></div></div><div class="ins">' +
+        inputRow('rf', 'Risk-free rate', a.rf, 0.0025, '%', RFd ? '10-year Treasury, ' + fd(RFd) : '10-year Treasury') +
+        inputRow('beta', 'Beta', a.beta, 0.05, 'x', c.p && c.p.bn ? 'Two years of weekly returns' : 'Market average') +
+        inputRow('erp', 'Equity risk premium', a.erp, 0.0025, '%') +
+        inputRow('kd', 'Cost of debt', a.kd, 0.0025, '%', 'Before tax') +
+        '</div><dl class="wacc"><dt>Cost of equity</dt><dd>' + pc(ke(a), 2) + '</dd><dt>Debt / capital</dt><dd>' + pc(a.debt / ((a.price || 0) * (a.shares || 0) + a.debt || 1)) + '</dd><dt>WACC</dt><dd class="hl">' + pc(res.W, 2) + '</dd></dl></div></div>';
+      html += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Projected free cash flow</h3><p>Fiscal year ' + esc(a.fy) + ' is the base year. Figures in billions.</p></div></div><div class="scroll"><table class="tbl proj"><thead><tr><th></th>' +
+        res.rows.map(function (r) { return '<th>Y' + r.t + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        [['Revenue', 'rev', 1e9], ['Growth', 'g', 0], ['Operating margin', 'm', 0], ['Operating income', 'ebit', 1e9], ['After-tax operating income', 'nopat', 1e9], ['Net reinvestment', 'reinv', 1e9], ['Free cash flow', 'fcff', 1e9], ['Present value', 'pv', 1e9]].map(function (row) {
+          return '<tr' + (row[1] === 'fcff' ? ' class="hl"' : '') + '><td>' + row[0] + '</td>' + res.rows.map(function (r) { var x = r[row[1]]; return '<td>' + (row[2] ? (x / row[2]).toFixed(1) : pc(x)) + '</td>'; }).join('') + '</tr>';
+        }).join('') + '</tbody></table></div>' +
+        '<div class="bridge">' + [['PV of 10 years', res.pv], ['PV of terminal value', res.pvtv], ['Enterprise value', res.ev], ['Less debt', -(a.debt || 0)], ['Plus cash', a.cash || 0], ['Equity value', res.eq]].map(function (x) { return '<div><span class="mono">' + x[0] + '</span><b class="num">' + big(x[1]) + '</b></div>'; }).join('') +
+        '<div class="res"><span class="mono">Per share</span><b class="num">' + usd(res.ps) + '</b></div></div>' +
+        (res.tvShare > 0.8 ? '<p class="warn">The terminal value is ' + pc(res.tvShare, 0) + ' of the total, so the result leans heavily on long-run assumptions.</p>' : '') + '</div>';
+      /* sensitivity */
+      var ws = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.W + d; }), gs = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.gT + d; });
+      html += sens('Value per share: WACC against terminal growth', 'WACC', 'Terminal growth', ws, gs, function (w, g) { return w > g + 0.002 ? dcf(a, { w: w, gT: g }).ps : NaN; }, price);
+    } else {
+      html += '<div class="cols2"><div class="panel"><div class="hd"><div><h3 class="sec">Assumptions</h3><p>Return on equity is the average of the last three years.</p></div><button class="reset" id="reset" type="button">Reset</button></div><div class="ins">' +
+        inputRow('roe', 'Return on equity', a.roe, 0.005, '%', 'Sustainable level') +
+        inputRow('gB', 'Long-run growth', a.gB, 0.0025, '%') +
+        inputRow('rf', 'Risk-free rate', a.rf, 0.0025, '%', RFd ? '10-year Treasury, ' + fd(RFd) : '') +
+        inputRow('beta', 'Beta', a.beta, 0.05, 'x') +
+        inputRow('erp', 'Equity risk premium', a.erp, 0.0025, '%') +
+        '</div></div><div class="panel"><div class="hd"><div><h3 class="sec">Workings</h3><p>Justified price-to-book = (ROE − g) ÷ (cost of equity − g).</p></div></div>' +
+        '<div class="bridge">' + [['Book value per share', usd(res.bvps)], ['Cost of equity', pc(res.K, 2)], ['Justified P/B', mx(res.pb)]].map(function (x) { return '<div><span class="mono">' + x[0] + '</span><b class="num">' + x[1] + '</b></div>'; }).join('') +
+        '<div class="res"><span class="mono">Per share</span><b class="num">' + usd(res.ps) + '</b></div></div></div></div>';
+      var roes = [-0.02, -0.01, 0, 0.01, 0.02].map(function (d) { return res.roe + d; }), ks = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.K + d; });
+      html += sens('Value per share: cost of equity against return on equity', 'Cost of equity', 'Return on equity', ks, roes, function (k, r) { return k > res.g + 0.002 ? bank(a, { k: k, droe: r - a.roe }).ps : NaN; }, price);
+    }
+    if (dd) html += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Dividend discount</h3><p>Last dividend ' + usd(dd.d0) + ' a share, growing ' + pc(dd.gD) + ' a year for five years (its recent pace), then ' + pc(a.gT) + '. Payout ratio ' + pc(dd.payout, 0) + '.</p></div><div class="big num" style="font-size:28px">' + usd(dd.base) + '</div></div></div>';
+    html += compsTable(ps, cp);
+    $('#model').innerHTML = html;
+    wire();
+  }
+
+  function sens(title, rl, cl, rows, cols, fnv, price) {
+    var h = '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">' + title + '</h3><p>Green is above the last close, red below. The middle cell is the base case.</p></div></div><div class="scroll"><table class="tbl sens"><thead><tr><th>' + rl + ' ↓ / ' + cl + ' →</th>' + cols.map(function (g) { return '<th>' + pc(g) + '</th>'; }).join('') + '</tr></thead><tbody>';
+    rows.forEach(function (w, i) {
+      h += '<tr><td>' + pc(w, 1) + '</td>' + cols.map(function (g, j) { var v = fnv(w, g); return '<td class="' + (i === 2 && j === 2 ? 'base ' : '') + (isn(v) && price ? (v >= price ? 'up' : 'dn') : '') + '">' + (isn(v) && v > 0 ? usd(v, 0) : '—') + '</td>'; }).join('') + '</tr>';
+    });
+    return h + '</tbody></table></div></div>';
+  }
+
+  function compsTable(ps, cp) {
+    if (!ps.length) return '';
+    var r = CO.row, ci = function (k) { return IX.cols.indexOf(k); }, bank = A.model === 'bank';
+    var keys = bank ? [['pe', 'P/E'], ['pb', 'P/B']] : [['pe', 'P/E'], ['evEbitda', 'EV/EBITDA'], ['evSales', 'EV/Sales']];
+    var h = '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Peers</h3><p>Closest in size within ' + esc(r[3]) + (ps.some(function (p) { return p[3] !== r[3]; }) ? ' and the wider ' + esc(r[2]) + ' sector' : '') + '. Multiples on the latest fiscal year.</p></div></div><div class="scroll"><table class="tbl"><thead><tr><th>Company</th><th>Market value</th>' + keys.map(function (k) { return '<th>' + k[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
+    h += '<tr class="me"><td>' + esc(r[1]) + '<small>' + esc(r[0]) + '</small></td><td>' + big(r[4]) + '</td>' + keys.map(function (k) { return '<td>' + mx(r[ci(k[0])]) + '</td>'; }).join('') + '</tr>';
+    ps.forEach(function (p) { h += '<tr><td><a href="?t=' + encodeURIComponent(p[0]) + '" data-open="' + esc(p[0]) + '">' + esc(p[1]) + '</a><small>' + esc(p[0]) + '</small></td><td>' + big(p[4]) + '</td>' + keys.map(function (k) { return '<td>' + mx(p[ci(k[0])]) + '</td>'; }).join('') + '</tr>'; });
+    h += '<tr class="med"><td>Peer median</td><td></td>' + keys.map(function (k) { return '<td>' + mx(median(ps.map(function (p) { return p[ci(k[0])]; }).filter(function (x) { return isn(x) && x > 0 && x < 200; }))) + '</td>'; }).join('') + '</tr>';
+    h += '<tr class="med"><td>Implied value per share</td><td></td>' + keys.map(function (k) { var x = cp.find(function (y) { return y.key === k[0]; }); return '<td>' + (x && x.base > 0 ? usd(x.base) : '—') + '</td>'; }).join('') + '</tr>';
+    return h + '</tbody></table></div></div>';
+  }
+
+  function renderField(lines, price) {
+    var vals = [];
+    lines.forEach(function (l) { [l.lo, l.base, l.hi].forEach(function (v) { if (isn(v) && v > 0) vals.push(v); }); });
+    if (isn(price)) vals.push(price);
+    if (!vals.length) { $('#field').innerHTML = ''; return; }
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), pad = (hi - lo) * 0.08 || hi * 0.1;
+    lo = Math.max(0, lo - pad); hi += pad;
+    var X = function (v) { return ((v - lo) / (hi - lo) * 100).toFixed(2) + '%'; };
+    var h = '<div class="ff">';
+    lines.forEach(function (l) {
+      if (!(isn(l.lo) && isn(l.hi)) || l.hi <= 0) return;
+      var a = Math.max(lo, Math.min(l.lo, l.hi)), b = Math.max(l.lo, l.hi);
+      h += '<div class="ffr' + (l.main ? ' main' : '') + (l.ref ? ' ref' : '') + '"><span class="lab">' + esc(l.name) + '</span><div class="trk"><i class="rg" style="left:' + X(a) + ';width:calc(' + X(b) + ' - ' + X(a) + ')"></i>' +
+        (isn(l.base) && l.base > 0 ? '<b class="bs" style="left:' + X(l.base) + '"></b>' : '') + '<em style="left:' + X(a) + '">' + usd(a, 0) + '</em><em class="r" style="left:' + X(b) + '">' + usd(b, 0) + '</em></div></div>';
+    });
+    if (isn(price)) h += '<div class="ffo"><div class="pxl" style="left:' + X(price) + '"><span>Last close ' + usd(price) + '</span></div></div>';
+    h += '</div>';
+    $('#field').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Value per share, by method</h3><p>Bars show the low-to-high range for each method; the dot is the base case. The line is today’s price.</p></div></div>' + h + '</div>';
+  }
+
+  function renderFinancials() {
+    var c = CO, f = c.f, n = c.ends.length, k = Math.min(5, n), idx = [];
+    for (var i = n - k; i < n; i++) idx.push(i);
+    var bank = c.model === 'bank';
+    var rows = [
+      ['Revenue', function (i) { return big(f.rev[i]); }],
+      ['Revenue growth', function (i) { return i > 0 && f.rev[i] && f.rev[i - 1] ? sp(f.rev[i] / f.rev[i - 1] - 1) : '—'; }],
+    ];
+    if (!bank) rows.push(['Gross margin', function (i) { return f.gp[i] && f.rev[i] ? pc(f.gp[i] / f.rev[i]) : '—'; }], ['Operating margin', function (i) { return isn(f.ebit[i]) && f.rev[i] ? pc(f.ebit[i] / f.rev[i]) : '—'; }]);
+    rows.push(['Net income', function (i) { return big(f.ni[i]); }], ['Diluted EPS', function (i) { return usd(f.eps[i]); }]);
+    if (!bank) rows.push(['Free cash flow', function (i) { return isn(f.cfo[i]) && isn(f.capex[i]) ? big(f.cfo[i] - f.capex[i]) : '—'; }], ['Net debt', function (i) { return isn(f.debt[i]) ? big(f.debt[i] - (f.cash[i] || 0)) : '—'; }]);
+    rows.push(['Return on equity', function (i) { return i > 0 && isn(f.ni[i]) && f.eq[i] > 0 && f.eq[i - 1] > 0 ? pc(f.ni[i] / ((f.eq[i] + f.eq[i - 1]) / 2)) : '—'; }], ['Dividend per share', function (i) { return f.dps[i] ? usd(f.dps[i]) : '—'; }]);
+    $('#fin').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Five years of results</h3><p>From the company’s 10-K annual reports on SEC EDGAR.</p></div></div><div class="scroll"><table class="tbl"><thead><tr><th>Fiscal year</th>' +
+      idx.map(function (i) { return '<th>FY' + c.ends[i].slice(0, 4) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function (r) { return '<tr><td>' + r[0] + '</td>' + idx.map(function (i) { return '<td>' + r[1](i) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div></div>';
+  }
+
+  function renderFilings() {
+    var fl = CO.filings || [];
+    $('#filings').innerHTML = fl.length ? '<div class="eyebrow mono" style="margin-top:40px">Filings</div><div class="fil">' + fl.map(function (x) { return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener"><b>' + esc(x.form) + '</b><span>' + fd(x.date) + '</span><i>&#8599;</i></a>'; }).join('') + '</div>' : '';
+  }
+
+  /* ---------- inputs ---------- */
+  function wire() {
+    $$('#model input[data-k]').forEach(function (el) {
+      el.addEventListener('change', function () {
+        var k = el.getAttribute('data-k'), u = el.getAttribute('data-u'), v = parseFloat(el.value.replace(/[^0-9.\-]/g, ''));
+        if (!isn(v)) return renderModel();
+        A[k] = u === '%' ? v / 100 : v; renderModel();
+      });
+    });
+    $$('#model button[data-k]').forEach(function (b) {
+      b.onclick = function () { var k = b.getAttribute('data-k'); A[k] = +(A[k] + parseFloat(b.getAttribute('data-d'))).toFixed(5); renderModel(); };
+    });
+    $$('#model [data-open]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); open(a.getAttribute('data-open')); }; });
+    var r = $('#reset'); if (r) r.onclick = function () { A = JSON.parse(JSON.stringify(AUTO)); renderModel(); };
+  }
+})();

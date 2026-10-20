@@ -326,6 +326,13 @@ if __name__ == '__main__':
             print(f'  FAIL companies {e}', file=sys.stderr)
     else:
         print('Companies skipped: add an SEC_USER_AGENT secret like "Your Name you@email.com"')
-    print(f'done: {m} market items, {c} companies')
-    if not m and not c:
+    print('S&P 500 companies (valuation tool)')
+    k = 0
+    try:
+        import company_data
+        k = company_data.run(ua if ua and '@' in ua else '')
+    except Exception as e:
+        print(f'  FAIL valuation data {e}', file=sys.stderr)
+    print(f'done: {m} market items, {c} companies, {k} valuation updates')
+    if not m and not c and not k:
         sys.exit(1)

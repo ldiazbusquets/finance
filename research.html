@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research | LDB Finance</title>
+<meta name="description" content="Company deep dives and notes on bonds and the economy.">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238C593A'/%3E%3Cstop offset='.55' stop-color='%23723F20'/%3E%3Cstop offset='1' stop-color='%23855233'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FFF8EF'%3ELDB%3C/text%3E%3C/svg%3E">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+</head>
+<body data-page="research">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./"><div class="mk">LDB</div>LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html" class=on>Research</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html" class=on>Research<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Research</div>
+  <h1>Research</h1>
+  <p class="sub">Deep dives on single companies, plus notes on bonds and the economy. Company figures are pulled from SEC filings automatically, so the numbers stay current between reports.</p><div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>
+</div></header>
+
+<section class="tight" data-cat="eq">
+  <div class="wrap">
+    <div class="split" style="align-items:end;margin-bottom:34px">
+      <div><div class="eyebrow mono">Equities</div><h3 class="sec">Company coverage</h3></div>
+      <p class="mono" id="cstamp" style="font-size:11px">&nbsp;</p>
+    </div>
+    <div id="cov"><div class="wait">Loading coverage&hellip;</div></div>
+  </div>
+</section>
+
+<section class="tight" data-cat="fi">
+  <div class="wrap">
+    <div class="eyebrow mono">Fixed income</div><h3 class="sec">Bond notes</h3>
+    <div class="grid3" style="margin-top:30px">
+      <div class="card"><div class="top"><span class="n">FI-01</span><span class="st plan">Planned</span></div><h3>Reading the yield curve</h3><p>What the shape of the Treasury curve says about growth, inflation and the Fed.</p></div>
+      <div class="card"><div class="top"><span class="n">FI-02</span><span class="st plan">Planned</span></div><h3>Duration and convexity</h3><p>How much a bond moves when rates move, worked through with real Treasuries.</p></div>
+      <div class="card"><div class="top"><span class="n">FI-03</span><span class="st plan">Planned</span></div><h3>Credit spreads</h3><p>What investors demand to lend to riskier companies, and what that signals.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tight" data-cat="mac">
+  <div class="wrap">
+    <div class="eyebrow mono">Macro</div><h3 class="sec">Economy notes</h3>
+    <div class="grid3" style="margin-top:30px">
+      <div class="card"><div class="top"><span class="n">MAC-01</span><span class="st plan">Planned</span></div><h3>Inflation, measured three ways</h3><p>CPI, core CPI and core PCE: why they differ and which one the Fed watches.</p></div>
+      <div class="card"><div class="top"><span class="n">MAC-02</span><span class="st plan">Planned</span></div><h3>The policy rate path</h3><p>Where the fed funds rate is, where markets expect it to go, and why.</p></div>
+      <div class="card"><div class="top"><span class="n">MAC-03</span><span class="st plan">Planned</span></div><h3>Puerto Rico’s economy</h3><p>Growth, federal funds and the local tax picture for investors on the island.</p></div>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=1"></script>
+</body>
+</html>

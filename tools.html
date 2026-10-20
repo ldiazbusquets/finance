@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools | LDB Finance</title>
+<meta name="description" content="Interactive finance tools that run in the browser.">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238C593A'/%3E%3Cstop offset='.55' stop-color='%23723F20'/%3E%3Cstop offset='1' stop-color='%23855233'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FFF8EF'%3ELDB%3C/text%3E%3C/svg%3E">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+</head>
+<body data-page="tools">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./"><div class="mk">LDB</div>LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="models.html">Models</a><a href="tools.html" class=on>Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Tools</div>
+  <h1>Tools you can <em>use</em></h1>
+  <p class="sub">Interactive finance tools that run in your browser. The first five live in LDB Lab; more finance tools are being built here.</p>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow mono">Live now &middot; in LDB Lab</div><h3 class="sec">Ready to try</h3>
+    <div class="grid3" style="margin-top:30px">
+      <a class="card" href="https://ldiazbusquets.github.io/lab/options.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-01</span><span class="st live">Live</span></div><h3>Options builder</h3><p>Build spreads, straddles and condors. Payoff at expiry and today, Black-Scholes prices and the Greeks.</p><span class="go">Open &#8599;</span></a>
+      <a class="card" href="https://ldiazbusquets.github.io/lab/kelly.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-02</span><span class="st live">Live</span></div><h3>Kelly challenge</h3><p>How much to bet when you have an edge, and what happens when you bet too much.</p><span class="go">Open &#8599;</span></a>
+      <a class="card" href="https://ldiazbusquets.github.io/lab/market-maker.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-03</span><span class="st live">Live</span></div><h3>Market-making game</h3><p>Quote a bid and ask against traders who know more than you, with Bayesian updating.</p><span class="go">Open &#8599;</span></a>
+      <a class="card" href="https://ldiazbusquets.github.io/lab/montecarlo.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-04</span><span class="st live">Live</span></div><h3>Monte Carlo planner</h3><p>Thousands of simulated lifetimes, and a planner that learns how much stock to hold.</p><span class="go">Open &#8599;</span></a>
+      <a class="card" href="https://ldiazbusquets.github.io/lab/models.html" target="_blank" rel="noopener"><div class="top"><span class="n">TOOL-05</span><span class="st live">Live</span></div><h3>Model Playground</h3><p>FinBERT, BERT, Qwen3 and Llama 3.2 read the same financial headline side by side.</p><span class="go">Open &#8599;</span></a>
+    </div>
+  </div>
+</section>
+<section class="tight" style="padding-top:20px">
+  <div class="wrap">
+    <div class="eyebrow mono">Coming here</div><h3 class="sec">In the works</h3>
+    <div class="grid3" style="margin-top:30px">
+      <div class="card"><div class="top"><span class="n">TOOL-06</span><span class="st plan">Planned</span></div><h3>Position sizer</h3><p>How many shares to buy for a given risk, stop and account size.</p></div>
+      <div class="card"><div class="top"><span class="n">TOOL-07</span><span class="st plan">Planned</span></div><h3>Portfolio x-ray</h3><p>Sector weights, overlap between ETFs and concentration risk for a list of holdings.</p></div>
+      <div class="card"><div class="top"><span class="n">TOOL-08</span><span class="st plan">Planned</span></div><h3>Puerto Rico tax estimator</h3><p>After-tax returns under Puerto Rico’s capital gains rules for island residents.</p></div>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=1"></script>
+</body>
+</html>

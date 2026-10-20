@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Models | LDB Finance</title>
+<meta name="description" content="Interactive valuation models for companies and bonds.">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238C593A'/%3E%3Cstop offset='.55' stop-color='%23723F20'/%3E%3Cstop offset='1' stop-color='%23855233'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FFF8EF'%3ELDB%3C/text%3E%3C/svg%3E">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+</head>
+<body data-page="models">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./"><div class="mk">LDB</div>LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="models.html" class=on>Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="models.html" class=on>Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Models</div>
+  <h1>Valuation <em>models</em></h1>
+  <p class="sub">Every model shows its inputs on the page. Change an assumption and the value updates, so you can see what the price is really betting on.</p>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow mono">Equity</div><h3 class="sec">Valuing a company</h3>
+    <div class="grid3" style="margin-top:30px">
+      <div class="card"><div class="top"><span class="n">MOD-01</span><span class="st build">In build</span></div><h3>Discounted cash flow</h3><p>Forecast free cash flow, pick a discount rate and terminal value, and see the value per share with a sensitivity table.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-02</span><span class="st plan">Planned</span></div><h3>Trading comparables</h3><p>Value a company against its peers on EV/EBITDA, P/E and EV/Sales, using figures straight from filings.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-03</span><span class="st plan">Planned</span></div><h3>Bull, base and bear</h3><p>Three scenarios with probabilities, ending in one probability-weighted value.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-04</span><span class="st build">In build</span></div><h3>Bank valuation</h3><p>Banks are valued on book value and return on equity, not cash flow. A JPMorgan- and Goldman-style bank model.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-05</span><span class="st plan">Planned</span></div><h3>Growth-company DCF</h3><p>For businesses that are not profitable yet: revenue paths, margin ramps and dilution.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-06</span><span class="st plan">Planned</span></div><h3>Dividend discount</h3><p>Value from dividends alone, for steady payers like utilities and consumer staples.</p></div>
+    </div>
+  </div>
+</section>
+<section class="tight" style="padding-top:20px">
+  <div class="wrap">
+    <div class="eyebrow mono">Fixed income</div><h3 class="sec">Valuing a bond</h3>
+    <div class="grid3" style="margin-top:30px">
+      <div class="card"><div class="top"><span class="n">MOD-07</span><span class="st plan">Planned</span></div><h3>Bond pricer</h3><p>Price, yield to maturity, duration and convexity for any fixed-coupon bond.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-08</span><span class="st plan">Planned</span></div><h3>Rate shock</h3><p>What a portfolio of bonds loses or gains if rates jump or fall, using the live Treasury curve.</p></div>
+      <div class="card"><div class="top"><span class="n">MOD-09</span><span class="st plan">Planned</span></div><h3>Loan and mortgage</h3><p>Payments, amortisation and the true cost of borrowing at today’s rates.</p></div>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=1"></script>
+</body>
+</html>

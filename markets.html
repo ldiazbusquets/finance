@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markets | LDB Finance</title>
+<meta name="description" content="Rates, the yield curve, inflation and credit, refreshed every weekday.">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238C593A'/%3E%3Cstop offset='.55' stop-color='%23723F20'/%3E%3Cstop offset='1' stop-color='%23855233'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FFF8EF'%3ELDB%3C/text%3E%3C/svg%3E">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+</head>
+<body data-page="markets">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./"><div class="mk">LDB</div>LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html" class=on>Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html" class=on>Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Markets</div>
+  <h1>The markets, <em>in numbers</em></h1>
+  <p class="sub">Rates, the yield curve, inflation, credit and the S&amp;P 500, refreshed from the Federal Reserve every weekday evening.</p><div class="meta"><span class="mono" id="stamp">&nbsp;</span><span class="mono">Source: FRED, Federal Reserve Bank of St. Louis</span></div>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div id="mwait"></div>
+    <div class="tiles" id="mtiles" data-need></div>
+
+    <div class="cols" data-need>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Treasury yield curve</h3><p>Yield by maturity, today against a month and a year ago.</p></div><div class="legend" id="lg-curve"></div></div><svg class="chart" id="c-curve"></svg></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Rates</h3><p>Policy rate, Treasuries and mortgages.</p></div></div><div id="t-rates"></div></div>
+    </div>
+
+    <div class="cols" data-need>
+      <div class="panel"><div class="hd"><div><h3 class="sec">S&amp;P 500</h3><p>The past year, daily close.</p></div></div><svg class="chart" id="c-spx"></svg></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Economy</h3><p>Inflation, jobs and growth.</p></div></div><div id="t-macro"></div></div>
+    </div>
+
+    <div class="cols" data-need>
+      <div class="panel"><div class="hd"><div><h3 class="sec">10-year minus 2-year</h3><p>Below zero, the curve is inverted, which has come before most recessions.</p></div></div><svg class="chart" id="c-spread"></svg></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Credit, oil and currency</h3><p>Risk appetite and the dollar.</p></div></div><div id="t-cross"></div></div>
+    </div>
+
+    <div class="panel" style="margin-top:16px" data-need><div class="hd"><div><h3 class="sec">Policy rate against inflation</h3><p>Five years of the fed funds rate, the 10-year yield and CPI inflation.</p></div>
+      <div class="legend"><span><i style="background:var(--acc);height:2px"></i>Fed funds</span><span><i style="background:var(--t3)"></i>10-year</span><span><i style="background:var(--t2);height:1px"></i>CPI inflation</span></div></div><svg class="chart" id="c-policy" style="height:300px"></svg></div>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=1"></script>
+</body>
+</html>

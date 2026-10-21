@@ -649,6 +649,14 @@ def beta(h, mkt):
     return round(0.67 * raw + 0.33, 3), len(ra)
 
 
+def prevclose(new, old):
+    """keep the previous close (pp, pd) so the site can show the day's move"""
+    if old.get('d') and old.get('d') < new['d'] and old.get('p'):
+        new['pp'], new['pd'] = old['p'], old['d']
+    elif old.get('pp') and old.get('pd', '') < new['d']:
+        new['pp'], new['pd'] = old['pp'], old['pd']
+
+
 def update_prices(cos):
     """closing prices + beta for everyone in one small file, so daily runs
     don't rewrite 500 company files"""
@@ -657,7 +665,9 @@ def update_prices(cos):
     try:
         spx, mkt = yahoo('%5EGSPC')
         if spx.get('p'):
-            P['^GSPC'] = {'p': round(spx['p'], 2), 'd': spx['d']}   # the index's own close, for the track record
+            o = P.get('^GSPC') or {}
+            P['^GSPC'] = {'p': round(spx['p'], 2), 'd': spx['d']}   # the index's own close, for the track record and the tape
+            prevclose(P['^GSPC'], o)
     except Exception as e:
         print(f'  FAIL prices: S&P 500 history unavailable ({e}); keeping previous prices', file=sys.stderr)
         return 0
@@ -668,7 +678,9 @@ def update_prices(cos):
             if not px.get('p'):
                 raise ValueError('no price')
             b, n = beta(hist, mkt)
+            o = P.get(t) or {}
             P[t] = {'p': round(px['p'], 4), 'd': px['d'], 'hi': px['hi'], 'lo': px['lo'], 'b': b, 'bn': n}
+            prevclose(P[t], o)
             ok += 1
         except Exception as e:
             fails += 1

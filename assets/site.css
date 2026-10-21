@@ -754,3 +754,25 @@ details.sched[open] summary { margin-bottom: 16px; }
   .erow { grid-template-columns: 44px 1fr; } .ex, .el { grid-column: 2; text-align: left; } .ex small { display: inline; margin-left: 8px; }
   .kv.four { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---------- market tape ---------- */
+.tape { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--s1) 70%, transparent); height: 0; overflow: hidden; transition: height .4s ease; }
+.tape.on { height: 36px; }
+.tape .wrap { display: flex; align-items: center; height: 36px; gap: 14px; }
+.tape .tl { flex: none; font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--acc); padding-right: 14px; border-right: 1px solid var(--line); white-space: nowrap; }
+.tape .tl::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--acc); margin-right: 8px; vertical-align: 1px; opacity: .8; }
+.tv { flex: 1; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.tt { display: inline-flex; align-items: center; white-space: nowrap; animation: tape var(--tdur, 60s) linear infinite; will-change: transform; }
+.tt .tcopy { display: inline-flex; align-items: center; }
+.tape:hover .tt, .tape:focus-within .tt { animation-play-state: paused; }
+@keyframes tape { to { transform: translateX(-50%); } }
+.ti { display: inline-flex; align-items: baseline; gap: 7px; padding: 0 2px; font: 400 12px var(--mono); color: var(--t2); transition: color .2s; }
+.ti span { color: var(--t3); font-family: var(--sans); font-size: 12px; }
+.ti b { font-weight: 500; color: var(--ink); font-feature-settings: "tnum"; }
+.ti em { font-style: normal; font-size: 11.5px; color: var(--t3); }
+.ti em.up { color: var(--up); } .ti em.dn { color: var(--dn); }
+.ti:hover b, .ti:hover span { color: var(--acc); }
+.th { font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--acc); opacity: .85; padding: 2px 8px; border: 1px solid color-mix(in srgb, var(--acc) 35%, transparent); border-radius: 999px; }
+.tdot { display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--line2); margin: 0 16px; flex: none; }
+@media (prefers-reduced-motion: reduce) { .tt { animation: none; } .tv { overflow-x: auto; scrollbar-width: none; } .tv::-webkit-scrollbar { display: none; } .tt .tcopy { display: none; } }
+@media (max-width: 640px) { .tape .tl { font-size: 9.5px; padding-right: 10px; } .tape .wrap { gap: 10px; } }

@@ -206,6 +206,63 @@
 
   var page = document.body.getAttribute('data-page');
 
+  /* ---------- market tape: the last close, holdings, upcoming earnings and the newest calls ---------- */
+  (function () {
+    var nav = $('nav.top'); if (!nav) return;
+    var tape = document.createElement('div');
+    tape.className = 'tape'; tape.setAttribute('role', 'region'); tape.setAttribute('aria-label', 'Market tape');
+    nav.parentNode.insertBefore(tape, nav.nextSibling);
+    var M3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var dd = function (s) { var p = s.split('-'); return M3[+p[1] - 1] + ' ' + (+p[2]); };
+    var sg = function (v, s) { return v > 0 ? 'up' : v < 0 ? 'dn' : ''; };
+    var pctS = function (v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(2) + '%'; };
+    var opt = function (p) { return getJSON(p).catch(function () { return null; }); };
+    Promise.all([opt('data/markets.json'), opt('data/co/prices.json'), opt('data/watchlist.json'), opt('data/earnings.json'), opt('data/calls.json')]).then(function (r) {
+      var S = (r[0] && r[0].series) || {}, P = (r[1] && r[1].px) || {}, W = (r[2] && r[2].companies) || [], E = (r[3] && r[3].rows) || [], C = (r[4] && r[4].calls) || [];
+      var it = [], when = null;
+      function item(href, label, val, chg, cls) { it.push('<a class="ti" href="' + base + href + '"><span>' + label + '</span><b>' + val + '</b>' + (chg ? '<em class="' + (cls || '') + '">' + chg + '</em>' : '') + '</a>'); }
+      function head(t) { it.push('<span class="th">' + t + '</span>'); }
+      // markets, from the Federal Reserve's FRED (the S&P uses the index's own close when it is newer)
+      head('Markets');
+      var spx = P['^GSPC'], s5 = S.SP500;
+      if (spx && spx.p) { var c = spx.pp ? (spx.p / spx.pp - 1) * 100 : null; item('markets.html', 'S&amp;P 500', spx.p.toLocaleString('en-US', { maximumFractionDigits: 2 }), c == null ? '' : pctS(c), sg(c)); when = spx.d; }
+      else if (s5 && s5.last) { item('markets.html', 'S&amp;P 500', s5.last.v.toLocaleString('en-US', { maximumFractionDigits: 2 }), pctS(s5.chgPct), sg(s5.chgPct)); when = s5.last.d; }
+      [['DGS10', '10Y Treasury'], ['DGS2', '2Y Treasury'], ['DFF', 'Fed funds']].forEach(function (x) { var v = S[x[0]]; if (v && v.last) { var bp = Math.round((v.chg || 0) * 100); item('markets.html', x[1], v.last.v.toFixed(2) + '%', x[0] === 'DFF' ? '' : (bp > 0 ? '+' : bp < 0 ? '−' : '') + Math.abs(bp) + ' bp', sg(bp)); } });
+      var vx = S.VIXCLS; if (vx && vx.last) item('markets.html', 'VIX', vx.last.v.toFixed(2), (vx.chg > 0 ? '+' : vx.chg < 0 ? '−' : '') + Math.abs(vx.chg || 0).toFixed(2), vx.chg > 0 ? 'dn' : vx.chg < 0 ? 'up' : '');
+      var oil = S.DCOILWTICO; if (oil && oil.last) item('markets.html', 'Oil (WTI)', '$' + oil.last.v.toFixed(2), pctS(oil.chgPct || 0), sg(oil.chgPct));
+      var fx = S.DEXUSEU; if (fx && fx.last) item('markets.html', 'EUR/USD', fx.last.v.toFixed(4), pctS(fx.chgPct || 0), sg(fx.chgPct));
+      var mg = S.MORTGAGE30US; if (mg && mg.last) item('loans.html', '30Y mortgage', mg.last.v.toFixed(2) + '%');
+      // holdings
+      var H = W.filter(function (c) { return c.holding && !c.private && P[c.ticker] && P[c.ticker].p; });
+      if (H.length) {
+        head('Holdings');
+        H.forEach(function (c) { var q = P[c.ticker], ch = q.pp ? (q.p / q.pp - 1) * 100 : null; item(c.page || 'snapshot.html?t=' + c.ticker, c.ticker, '$' + q.p.toFixed(2), ch == null ? '' : pctS(ch), sg(ch)); if (!when || q.d > when) when = q.d; });
+      }
+      // earnings in the next seven days
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var soon = E.filter(function (e) { if (!e.date || e.src !== 'Nasdaq') return false; var d = (new Date(e.date + 'T12:00:00') - today) / 864e5; return d >= -0.5 && d < 7.5; });
+      if (soon.length) {
+        head('Earnings');
+        soon.forEach(function (e) { var d = Math.round((new Date(e.date + 'T12:00:00') - today) / 864e5 - .5); item('earnings.html', e.t, d <= 0 ? 'today' : d === 1 ? 'tomorrow' : dd(e.date), e.when || ''); });
+      }
+      // newest calls
+      if (C.length) {
+        var last = C[C.length - 1].date, nw = C.filter(function (c) { return c.date === last; }).slice(-3);
+        head('New calls');
+        nw.forEach(function (c) { item(c.page, c.name, c.call, '$' + c.value + ' value'); });
+      }
+      if (it.length < 4) { tape.remove(); return; }
+      var row = it.join('<i class="tdot" aria-hidden="true"></i>');
+      tape.innerHTML = '<div class="wrap"><span class="tl">' + (when ? 'As of ' + dd(when) : 'Latest') + '</span><div class="tv"><div class="tt">' + row + '<i class="tdot" aria-hidden="true"></i></div></div></div>';
+      var tt = tape.querySelector('.tt');
+      tt.insertAdjacentHTML('beforeend', '<span class="tcopy" aria-hidden="true">' + tt.innerHTML + '</span>');
+      $$('.tcopy a', tape).forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+      var w = tt.scrollWidth / 2;
+      tt.style.setProperty('--tdur', Math.max(30, w / 38).toFixed(0) + 's');
+      tape.classList.add('on');
+    });
+  })();
+
   if (page === 'home') {
     getJSON('data/markets.json').then(function (m) {
       M = m; var el = $('#strip');

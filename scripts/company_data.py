@@ -354,12 +354,17 @@ def _discrete(rows):
     return out
 
 
-def _fix_year_as_quarter(d):
+def _fix_year_as_quarter(d, only=None):
     """Some filers tag the full-year figure with the fourth quarter's dates (L3Harris, FY2025). A quarter
     more than twice the size of its neighbours, with the three quarters before it known, is the year:
     subtract those three quarters."""
     ks = sorted(d)
+    fixed = set()
     for i, e in enumerate(ks):
+        if only is not None and not any(abs(_days(e, x)) <= 7 for x in only):
+            continue
+        if e not in d:
+            continue
         others = sorted(abs(d[k]) for k in ks if k != e and k in d and abs(_days(k, e)) <= 200)   # the quarters around it
         if len(others) < 2 or d[e] <= 0:
             continue
@@ -370,6 +375,8 @@ def _fix_year_as_quarter(d):
                 d[e] = d[e] - sum(d[k] for k in last3[-3:])
             else:
                 del d[e]
+            fixed.add(e)
+    return fixed
 
 
 def _qlabel(e, fye):
@@ -390,6 +397,7 @@ def quarters(facts, ends, n=8, frev=None):
         return None
     g = facts.get('facts', {}).get('us-gaap', {})
     ser = {}
+    yearq = set()
     for key in QKEYS:
         per = []
         for pri, tag in enumerate(FLOW[key]):
@@ -400,8 +408,10 @@ def quarters(facts, ends, n=8, frev=None):
         for _, _, d in sorted(per, reverse=True):
             for k, v in d.items():
                 out.setdefault(k, v)
-        if key in ('rev', 'gp'):
-            _fix_year_as_quarter(out)
+        if key == 'rev':
+            yearq = _fix_year_as_quarter(out)
+        elif yearq:               # the same filing glitch usually hits the other lines of that quarter
+            _fix_year_as_quarter(out, only=yearq)
         ser[key] = out
     eps = {}
     for tag in PERSHARE['eps']:
@@ -501,7 +511,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 8   # bump when the extraction rules change, so every file is rebuilt
+FVER = 9   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):

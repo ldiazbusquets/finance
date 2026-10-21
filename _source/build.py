@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=16">
+<link rel="stylesheet" href="assets/site.css?v=17">
 </head>
 '''
 
@@ -364,7 +364,7 @@ def build():
   </div>
 </section>
 '''
-        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=1"></script>')
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=3"></script>')
 
     tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
               'Every call this site publishes is logged on the day it is made and never edited. Here is how each one has done since, against the S&amp;P 500 over the same days.', 'track',
@@ -394,7 +394,7 @@ def build():
               'When each covered company reports next, and what its latest quarter changed. Dates come from the Nasdaq calendar; quarters come straight from the 10-Q filings.', 'earnings',
               '''<div class="panel"><div class="hd"><div><h3 class="sec">Coming up</h3><p id="estamp">Holdings first, then the rest of the watchlist.</p></div></div><div id="ecal"></div></div>
     <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What the latest quarter changed</h3><p>Each company&rsquo;s most recent quarter against the same quarter a year earlier, newest filing first.</p></div></div><div class="scroll"><table class="tbl" id="eq"></table></div></div>
-    <p class="disc">Dates marked &ldquo;estimated&rdquo; are projected from the company&rsquo;s past filing pattern until it announces a date. Not investment advice.</p>''',
+    <p class="disc">Dates marked &ldquo;estimated&rdquo; are about 13 weeks after the company&rsquo;s last report, or projected from its filing pattern, until it announces a date. Not investment advice.</p>''',
               'Earnings hub', 'Upcoming earnings dates and what each latest quarter changed, for every company covered on LDB Finance.')
 
     tool_page('insiders.html', 'research.html', 'Research', 'Insiders <em>and funds</em>',

@@ -655,7 +655,9 @@ def update_prices(cos):
     path = os.path.join(CO, 'prices.json')
     P = load(path, {}).get('px', {})
     try:
-        _, mkt = yahoo('%5EGSPC')
+        spx, mkt = yahoo('%5EGSPC')
+        if spx.get('p'):
+            P['^GSPC'] = {'p': round(spx['p'], 2), 'd': spx['d']}   # the index's own close, for the track record
     except Exception as e:
         print(f'  FAIL prices: S&P 500 history unavailable ({e}); keeping previous prices', file=sys.stderr)
         return 0

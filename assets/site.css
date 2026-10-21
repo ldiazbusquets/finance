@@ -678,6 +678,7 @@ details.sched[open] summary { margin-bottom: 16px; }
 .tbl td a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
 .tbl td a:hover { color: var(--acc); }
 .tbl td small a { color: var(--acc); text-decoration: none; }
+.tbl.scr td small, #eq td small, #isum td small, #ttab td small, .tbl td small.blk { display: block; color: var(--t3); font-size: 12px; font-family: var(--sans); white-space: normal; margin-top: 2px; }
 .tbl tfoot td { text-align: left; padding-top: 16px; border: 0; }
 /* compare */
 .tbl.cmpt th small { display: block; font: 400 11px var(--sans); text-transform: none; letter-spacing: 0; color: var(--t3); margin-top: 3px; white-space: normal; max-width: 160px; margin-left: auto; }

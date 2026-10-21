@@ -16,6 +16,7 @@
   function pc(v, dp) { if (!isn(v)) return '—'; return (v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
   function sp(v, dp) { if (!isn(v)) return '—'; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
   function pts(v) { if (!isn(v)) return '—'; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(1) + ' pts'; }
+  function wpc(v) { return isn(v) && v > 0 && v < 0.001 ? '<0.1%' : pc(v); }
   function mx(v) { return isn(v) ? v.toFixed(1) + '×' : '—'; }
   function cls(v) { return isn(v) ? (v > 0 ? 'up' : v < 0 ? 'dn' : '') : ''; }
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -95,7 +96,8 @@
   if (page === 'track') {
     Promise.all([getJSON('data/calls.json'), opt('data/co/prices.json'), opt('data/markets.json')]).then(function (r) {
       var calls = r[0].calls || [], P = (r[1] && r[1].px) || {}, spx = r[2] && r[2].series && r[2].series.SP500;
-      var hist = (spx && (spx.y1 || [])) || [], spNow = spx && spx.last && spx.last.v, spNowD = spx && spx.last && spx.last.d;
+      var hist = (spx && (spx.y1 || [])) || [], spNow = spx && spx.last && spx.last.v;
+      if (P['^GSPC'] && P['^GSPC'].p) { spNow = P['^GSPC'].p; hist = hist.filter(function (x) { return x[0] < P['^GSPC'].d; }).concat([[P['^GSPC'].d, P['^GSPC'].p]]); }
       function spAt(d) { var v = null; hist.forEach(function (x) { if (x[0] <= d) v = x[1]; }); return v; }
       var latest = {};
       calls.forEach(function (c) { latest[c.t] = latest[c.t] && latest[c.t].date > c.date ? latest[c.t] : c; });
@@ -315,7 +317,7 @@
         $('#fstamp').textContent = 'Latest 13F filings, read ' + fd(Fd.updated.slice(0, 10)) + '. Filed 45 days after each quarter; U.S. stock positions only.';
         var mine = Object.keys(W).filter(function (t) { return Fd.held[t]; });
         var own = mine.length ? '<h3 class="sec sm">Who owns the companies covered here</h3><div class="scroll"><table class="tbl"><thead><tr><th>Company</th><th>Held by</th></tr></thead><tbody>' + mine.map(function (t) {
-          return '<tr><td>' + esc(W[t].name) + '<small>' + esc(t) + (W[t].holding ? ' · held' : '') + '</small></td><td style="white-space:normal;text-align:left">' + Fd.held[t].map(function (h) { return esc(h.fund) + ' <small style="display:inline">' + big(h.val) + ', ' + pc(h.pct) + ' of fund</small>'; }).join(' · ') + '</td></tr>';
+          return '<tr><td>' + esc(W[t].name) + '<small>' + esc(t) + (W[t].holding ? ' · held' : '') + '</small></td><td style="white-space:normal;text-align:left">' + Fd.held[t].map(function (h) { return esc(h.fund) + ' <small style="display:inline">' + big(h.val) + ', ' + wpc(h.pct) + ' of fund</small>'; }).join(' · ') + '</td></tr>';
         }).join('') + '</tbody></table></div>' : '';
         $('#funds').innerHTML = own + '<div class="fgrid">' + Fd.funds.map(function (f) {
           var mxp = f.top.length ? f.top[0].pct : 1;
@@ -416,7 +418,7 @@
         }
         if (k === 'why' && q && isn(q.ebit) && isn(q.prevEbit) && q.prevRev) {
           var m0 = q.prevEbit / q.prevRev, m1 = q.ebit / q.rev, dE = q.ebit - q.prevEbit, volume = (q.rev - q.prevRev) * m0, mix = q.rev * (m1 - m0);
-          P.push('Operating income moved from ' + big(q.prevEbit) + ' to ' + big(q.ebit) + ' over the year (' + (dE >= 0 ? '+' : '−') + big(Math.abs(dE)).replace('−', '') + '). Splitting that change: about <b>' + big(volume) + '</b> came from ' + (q.rev >= q.prevRev ? 'higher' : 'lower') + ' revenue at last year&rsquo;s margin, and about <b>' + big(mix) + '</b> from the margin itself moving ' + pts(m1 - m0) + '. ' +
+          P.push('Operating income moved from ' + big(q.prevEbit) + ' to ' + big(q.ebit) + ' over the year (' + (dE >= 0 ? '+' : '−') + big(Math.abs(dE)).replace('−', '') + '). ' + (m0 > 0.02 ? 'Splitting that change: about <b>' + big(volume) + '</b> came from ' + (q.rev >= q.prevRev ? 'higher' : 'lower') + ' revenue at last year&rsquo;s margin, and about <b>' + big(mix) + '</b> from the margin itself moving ' + pts(m1 - m0) + '. ' : 'The operating margin went from ' + pc(m0) + ' to <b>' + pc(m1) + '</b>, so ' + (m1 > m0 ? 'costs grew more slowly than revenue. ' : 'costs grew faster than revenue. ')) +
             (isn(q.gm) && isn(q.gmY) ? 'Gross margin went from ' + pc(q.gmY) + ' to ' + pc(q.gm) + ', so ' + (Math.abs(q.gm - q.gmY) >= Math.abs(m1 - m0) * .6 ? 'most of the margin change came from the cost of what it sells (pricing, mix or input costs).' : 'most of the margin change came from operating expenses such as R&amp;D, selling and overhead, not from the cost of goods.') : 'The filings do not split out gross margin, so the cause inside costs cannot be separated here.') + cite('quarter') +
             ' <i>The filings give the numbers; for the reasons management gives, read the 10-Q&rsquo;s discussion section.</i>');
         }

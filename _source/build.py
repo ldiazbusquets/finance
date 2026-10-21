@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=24">
+<link rel="stylesheet" href="assets/site.css?v=25">
 </head>
 '''
 
@@ -81,10 +81,10 @@ def nav(cur):
   <div class="right">
     <button class="tg" id="tg" aria-label="Switch theme"></button>
     <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
-    <a class="pill" href="{MAIN}"><span class="ic">{ARROW}</span>Main site</a>
+    <span class="sites" role="navigation" aria-label="Luis Diaz Busquets sites"><a href="{MAIN}">Portfolio</a><b aria-current="page">Finance</b><a href="{LAB}">Lab</a></span>
   </div>
 </div></nav>
-<div class="menu" id="menu">{mlinks}<a href="{MAIN}">Main site<span>&#8599;</span></a></div>
+<div class="menu" id="menu">{mlinks}<div class="msites"><a href="{MAIN}">Portfolio</a><b aria-current="page">Finance</b><a href="{LAB}">Lab</a></div></div>
 '''
 
 

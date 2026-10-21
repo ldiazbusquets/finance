@@ -384,7 +384,7 @@ def _qlabel(e, fye):
     return f'Q{k} FY{str(fy)[-2:]}'
 
 
-def quarters(facts, ends, n=8):
+def quarters(facts, ends, n=8, frev=None):
     """The last n fiscal quarters: income statement and cash flow per quarter, balance sheet at each quarter end."""
     if not ends:
         return None
@@ -448,7 +448,22 @@ def quarters(facts, ends, n=8):
     rnd = lambda k, x: None if x is None else (round(x, 4) if k == 'eps' else int(round(x)))
     f = {k: [rnd(k, x) for x in v] for k, v in f.items()}
     f.update({k: [rnd(k, x) for x in v] for k, v in bs.items()})
-    return {'ends': qe, 'lab': [_qlabel(e, ends[-1]) for e in qe], 'f': f}
+    # revenue can't be negative; a negative quarter is a tagging mix-up, so leave it blank
+    f['rev'] = [None if x is not None and x < 0 else x for x in f['rev']]
+    # reconcile: the four quarters of each fiscal year should add up to the 10-K year
+    warn = False
+    if frev:
+        for i, e in enumerate(ends):
+            a = frev[i]
+            idx = [j for j, x in enumerate(qe) if 0 <= _days(x, e) <= 300]
+            if a and len(idx) == 4 and any(abs(_days(qe[j], e)) <= 7 for j in idx):
+                vals = [f['rev'][j] for j in idx]
+                if None in vals or abs(sum(vals) / a - 1) > 0.03:
+                    warn = True
+    out = {'ends': qe, 'lab': [_qlabel(e, ends[-1]) for e in qe], 'f': f}
+    if warn:
+        out['warn'] = 1
+    return out
 
 
 def filings_of(sub, cik, nk=3, nq=8):
@@ -486,7 +501,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 7   # bump when the extraction rules change, so every file is rebuilt
+FVER = 8   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -568,7 +583,7 @@ def update_fundamentals(cos, ua, limit):
             except Exception as e:      # the quarter is a bonus; never lose the annual figures over it
                 print(f'  note quarter {t:6} {str(e)[:80]}', file=sys.stderr); qd = None
             try:
-                qs = None if (fac or so) else quarters(facts, ends)
+                qs = None if (fac or so) else quarters(facts, ends, frev=f['rev'])
             except Exception as e:
                 print(f'  note quarters {t:6} {str(e)[:80]}', file=sys.stderr); qs = None
             if qd and (fac or so):

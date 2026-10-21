@@ -627,6 +627,7 @@ details.sched[open] summary { margin-bottom: 16px; }
 /* ---------- quarterly financials ---------- */
 #fin .seg { margin: 0; }
 #fin .seg button { height: 30px; font-size: 12.5px; }
+.qwarn { margin: 0 0 14px; padding: 10px 14px; border-radius: 10px; background: color-mix(in srgb, var(--dn) 8%, transparent); color: var(--t2); font-size: 13px; line-height: 1.5; }
 .qsum { margin: 0 0 22px; max-width: 78ch; color: var(--t2); font-size: 14.5px; line-height: 1.6; }
 .qsum b { color: var(--ink); font-weight: 500; }
 .qsum a { color: var(--acc); white-space: nowrap; }

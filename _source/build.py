@@ -374,7 +374,7 @@ def build():
   </div>
 </section>
 '''
-        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=5"></script>')
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=6"></script>')
 
     tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
               'Every call this site publishes is logged on the day it is made and never edited, then scored the same way: total return against the S&amp;P 500 over exactly the same days.', 'track',

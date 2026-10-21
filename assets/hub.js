@@ -13,8 +13,9 @@
   var fn = function (t) { return t.replace(/\./g, '-'); };
   function big(v) { if (!isn(v)) return '—'; var a = Math.abs(v), s = v < 0 ? '−' : ''; return a >= 1e12 ? s + '$' + (a / 1e12).toFixed(2) + 'T' : a >= 1e9 ? s + '$' + (a / 1e9).toFixed(1) + 'B' : a >= 1e6 ? s + '$' + (a / 1e6).toFixed(0) + 'M' : a >= 1e3 ? s + '$' + (a / 1e3).toFixed(0) + 'K' : s + '$' + a.toFixed(0); }
   function usd(v, dp) { if (!isn(v)) return '—'; return (v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: dp == null ? 2 : dp, maximumFractionDigits: dp == null ? 2 : dp }); }
-  function pc(v, dp) { if (!isn(v)) return '—'; return (v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
-  function sp(v, dp) { if (!isn(v)) return '—'; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(dp == null ? 1 : dp) + '%'; }
+  function rnd(v, dp) { var t = Math.abs(v * 100).toFixed(dp == null ? 1 : dp); return [+t === 0 ? 0 : v, t]; }   /* no "−0.0%" */
+  function pc(v, dp) { if (!isn(v)) return '—'; var r = rnd(v, dp); return (r[0] < 0 ? '−' : '') + r[1] + '%'; }
+  function sp(v, dp) { if (!isn(v)) return '—'; var r = rnd(v, dp); return (r[0] > 0 ? '+' : r[0] < 0 ? '−' : '') + r[1] + '%'; }
   function pts(v) { if (!isn(v)) return '—'; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(1) + ' pts'; }
   function wpc(v) { return isn(v) && v > 0 && v < 0.001 ? '<0.1%' : pc(v); }
   function mx(v) { return isn(v) ? v.toFixed(1) + '×' : '—'; }

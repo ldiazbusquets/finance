@@ -266,7 +266,8 @@
      EARNINGS HUB
      ===================================================================================== */
   if (page === 'earnings') {
-    Promise.all([opt('data/earnings.json'), getJSON('data/watchlist.json')]).then(function (r) {
+    Promise.all([opt('data/earnings.json'), getJSON('data/watchlist.json'), opt('data/co/index.json')]).then(function (r) {
+      var have = {}; ((r[2] && r[2].rows) || []).forEach(function (x) { have[x[0]] = 1; });
       var E = r[0], wl = (r[1].companies || []).filter(function (c) { return !c.private; }), W = {};
       wl.forEach(function (c) { W[c.ticker] = c; });
       var today = new Date().toISOString().slice(0, 10);
@@ -280,6 +281,7 @@
             '<div class="el">' + (w.page ? '<a href="' + esc(w.page) + '">Report</a>' : '') + '<a href="snapshot.html?t=' + encodeURIComponent(x.t) + '&amp;view=q">Quarters</a></div></div>';
         }).join('') + '</div>' : '<p class="mono">No dates in the next few weeks.</p>';
       } else wait($('#ecal'), 'Earnings dates appear after the next nightly update.');
+      wl = wl.filter(function (c) { return have[c.ticker]; });   // companies with SEC figures (SpaceX gets them after its first 10-K)
       return Promise.all(wl.map(function (c) { return opt('data/co/' + fn(c.ticker) + '.json'); })).then(function (ds) {
         var rows = [];
         ds.forEach(function (d, i) { var q = lastQ(d); if (q) rows.push({ c: wl[i], q: q }); });

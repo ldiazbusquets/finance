@@ -165,6 +165,24 @@
       if (a.model === 'bank' && isn(bs.eq)) a.bv = bs.eq;
       a.ttm = Q.end;
     }
+    if (a.model === 'dcf') {
+      /* high-growth inputs: the fastest of the 3-year pace, last year, and the run-rate since the last 10-K */
+      var g3 = cagr(f.rev, 3, i), gl = i > 0 && f.rev[i] > 0 && f.rev[i - 1] > 0 ? f.rev[i] / f.rev[i - 1] - 1 : null, gq = null;
+      if (Q && Q.ttm.rev > 0 && f.rev[i] > 0) { var mo = (new Date(Q.end) - new Date(c.ends[i])) / 2629800000; if (mo >= 5.5) gq = Math.pow(Q.ttm.rev / f.rev[i], 12 / mo) - 1; }
+      var gs = [g3, gl, gq].filter(isn), gx = gs.length ? Math.max.apply(null, gs) : 0.04;
+      a.g0 = clip(gx, 0, 0.6); a.hold = a.g0 > 0.3 ? 2 : 3;
+      a.gm = c.model !== 'reit' && (Math.max(isn(g3) ? g3 : 0, isn(gl) ? gl : 0) > 0.15 || gq > 0.25) ? 'growth' : 'std';
+      if (a.gm === 'growth' && a.m0 > a.mT) a.mT = a.m0;   /* a fast grower's margin is usually still rising, so start from today's */
+      var eqN = Q && Q.bs && isn(Q.bs.eq) ? Q.bs.eq : last(f.eq), ic = (a.debt || 0) + (eqN || 0) - (a.cash || 0);
+      a.s2c = ic > 0 && a.rev0 > 0 ? clip(a.rev0 / ic, 0.8, 4) : 4;
+    }
+    /* bull, base and bear: the same model with growth, margin and discount rate moved together */
+    var r05 = function (x) { return Math.round(x * 200) / 200; };
+    if (a.model === 'dcf') {
+      var gb = a.gm === 'growth' ? a.g0 : a.g1, sg = r05(clip(Math.abs(gb) * 0.3, 0.02, 0.10)), sm = r05(clip(Math.abs(a.mT) * 0.15, 0.01, 0.05));
+      a.bearDg = -sg; a.bullDg = sg; a.bearDm = -sm; a.bullDm = sm; a.bearDw = 0.01; a.bullDw = -0.01;
+    } else { a.bearDg = -0.02; a.bullDg = 0.02; a.bearDm = 0; a.bullDm = 0; a.bearDw = 0.005; a.bullDw = -0.005; }
+    a.pBear = 0.25; a.pBase = 0.5; a.pBull = 0.25;
     return a;
   }
 
@@ -197,6 +215,40 @@
     var tv = W > gT ? tvf / (W - gT) : NaN, pvtv = tv / Math.pow(1 + W, 10);
     var ev = pv + pvtv, eq = ev - (a.debt || 0) + (a.cash || 0), ps = a.shares ? eq / a.shares : NaN;
     return { rows: rows, W: W, gT: gT, pv: pv, tv: tv, pvtv: pvtv, ev: ev, eq: eq, ps: ps, tvShare: pvtv / ev };
+  }
+  /* high growth: starting growth holds for a few years, then fades in a straight line to the terminal rate by year 10;
+     margin moves to its target by year 7; reinvestment is the new revenue divided by sales-to-capital */
+  function dcfG(a, o) {
+    o = o || {};
+    var g0 = a.g0 + (o.dg || 0), mT = a.mT + (o.dm || 0), W = (o.w != null ? o.w : wacc(a)), gT = o.gT != null ? o.gT : a.gT;
+    var H = clip(Math.round(a.hold), 0, 9), s2c = Math.max(0.2, a.s2c), rows = [], rev = a.rev0, pv = 0;
+    for (var t = 1; t <= 10; t++) {
+      var g = t <= H ? g0 : g0 + (gT - g0) * (t - H) / (10 - H);
+      var r0 = rev; rev = rev * (1 + g);
+      var m = a.m0 + (mT - a.m0) * Math.min(1, t / 7);
+      var ebit = rev * m, nopat = ebit > 0 ? ebit * (1 - a.tax) : ebit;
+      var reinv = (rev - r0) / s2c, fcff = nopat - reinv, df = Math.pow(1 + W, t);
+      pv += fcff / df;
+      rows.push({ t: t, g: g, rev: rev, m: m, ebit: ebit, nopat: nopat, reinv: reinv, fcff: fcff, pv: fcff / df });
+    }
+    var L = rows[9], nopat11 = L.ebit * (1 + gT) * (1 - a.tax);
+    var tvf = nopat11 * (1 - clip(gT / Math.max(a.ronic, gT + 0.001), 0, 1));
+    var tv = W > gT ? tvf / (W - gT) : NaN, pvtv = tv / Math.pow(1 + W, 10);
+    var ev = pv + pvtv, eq = ev - (a.debt || 0) + (a.cash || 0), ps = a.shares ? eq / a.shares : NaN;
+    return { rows: rows, W: W, gT: gT, pv: pv, tv: tv, pvtv: pvtv, ev: ev, eq: eq, ps: ps, tvShare: pvtv / ev };
+  }
+  function model(a, o) { return a.gm === 'growth' ? dcfG(a, o) : dcf(a, o); }
+  function scen(a, k) {
+    var d = k === 'base' ? { g: 0, m: 0, w: 0 } : { g: a[k + 'Dg'] || 0, m: a[k + 'Dm'] || 0, w: a[k + 'Dw'] || 0 }, r;
+    if (a.model === 'dcf') { var W = Math.max(a.gT + 0.005, wacc(a) + d.w); r = model(a, { dg: d.g, dm: d.m, w: W }); return { ps: Math.max(0, r.ps), g: (a.gm === 'growth' ? a.g0 : a.g1) + d.g, m: a.mT + d.m, w: W }; }
+    var K = Math.max(a.gB + 0.005, ke(a) + d.w); r = bank(a, { droe: d.g, k: K }); return { ps: Math.max(0, r.ps), g: a.roe + d.g, w: K };
+  }
+  function scenarios(a) {
+    var o = { bear: scen(a, 'bear'), base: scen(a, 'base'), bull: scen(a, 'bull') };
+    var pw = [a.pBear, a.pBase, a.pBull].map(function (x) { return Math.max(0, x || 0); }), tot = pw[0] + pw[1] + pw[2];
+    o.tot = tot; o.wt = tot > 0 && [o.bear, o.base, o.bull].every(function (x) { return isn(x.ps); }) ? (pw[0] * o.bear.ps + pw[1] * o.base.ps + pw[2] * o.bull.ps) / tot : NaN;
+    o.p = pw.map(function (x) { return tot > 0 ? x / tot : 0; });
+    return o;
   }
   function bank(a, o) {
     o = o || {};
@@ -269,7 +321,7 @@
   }
 
   function inputRow(key, label, val, step, unit, hint) {
-    var disp = unit === '%' ? (val * 100).toFixed(step < 0.001 ? 2 : 1) : unit === 'x' ? val.toFixed(2) : val;
+    var disp = unit === '%' ? (val * 100).toFixed(step < 0.001 ? 2 : 1) : unit === 'x' ? val.toFixed(2) : unit === 'n' ? String(Math.round(val)) : val;
     return '<label class="in"><span>' + label + (hint ? '<small>' + hint + '</small>' : '') + '</span><div class="box"><button type="button" data-k="' + key + '" data-d="-' + step + '">−</button>' +
       '<input data-k="' + key + '" data-u="' + unit + '" inputmode="decimal" value="' + disp + '"><i>' + (unit === '%' ? '%' : unit === 'x' ? '' : '') + '</i><button type="button" data-k="' + key + '" data-d="' + step + '">+</button></div></label>';
   }
@@ -278,16 +330,9 @@
     var a = A, c = CO, html = '', res, auto = AUTO;
     var price = a.price;
     var lines = [];
-    if (a.model === 'dcf') {
-      res = dcf(a);
-      var dm = Math.max(0.005, Math.abs(a.mT) * 0.15);
-      var bear = dcf(a, { dg: -0.03, dm: -dm, w: res.W + 0.01 }), bull = dcf(a, { dg: 0.03, dm: dm, w: Math.max(res.gT + 0.01, res.W - 0.01) });
-      lines.push({ name: 'Discounted cash flow', lo: Math.min(bear.ps, bull.ps), base: res.ps, hi: Math.max(bear.ps, bull.ps), main: true });
-    } else {
-      res = bank(a);
-      var b1 = bank(a, { droe: -0.02, k: res.K + 0.005 }), b2 = bank(a, { droe: 0.02, k: Math.max(res.g + 0.01, res.K - 0.005) });
-      lines.push({ name: 'Excess return (bank)', lo: Math.min(b1.ps, b2.ps), base: res.ps, hi: Math.max(b1.ps, b2.ps), main: true });
-    }
+    var G = a.model === 'dcf' && a.gm === 'growth', SC = scenarios(a);
+    res = a.model === 'dcf' ? model(a) : bank(a);
+    lines.push({ name: a.model === 'dcf' ? (G ? 'Cash flow, high growth' : 'Discounted cash flow') : 'Excess return (bank)', lo: Math.min(SC.bear.ps, SC.bull.ps), base: res.ps, hi: Math.max(SC.bear.ps, SC.bull.ps), main: true });
     var dd = ddm(c, a);
     if (dd && isn(dd.base) && dd.base > 0) {
       var dl = { name: 'Dividend discount', lo: Math.min(dd.lo, dd.hi), base: dd.base, hi: Math.max(dd.lo, dd.hi) };
@@ -300,11 +345,11 @@
     /* what the price implies */
     var implied = '';
     if (price && a.model === 'dcf' && !(c.model === 'reit' && dd)) {
-      var f0 = function (dg) { return dcf(a, { dg: dg }).ps - price; }, lo = -0.4, hi = 1.0;
+      var f0 = function (dg) { return model(a, { dg: dg }).ps - price; }, lo = -0.4, hi = 1.0;
       if (isn(f0(lo)) && isn(f0(hi)) && f0(lo) < 0 && f0(hi) > 0) {
         for (var it = 0; it < 50; it++) { var mid = (lo + hi) / 2; if (f0(mid) > 0) hi = mid; else lo = mid; }
-        var gi = a.g1 + (lo + hi) / 2, gh = cagr(c.f.rev, 3, lastIdx(c.f.rev));
-        implied = 'At ' + usd(price) + ', the market is pricing in revenue growth of about <b>' + pc(gi) + ' a year</b> for five years' + (isn(gh) ? ', against ' + pc(gh) + ' over the last three.' : '.');
+        var gi = (G ? a.g0 : a.g1) + (lo + hi) / 2, gh = cagr(c.f.rev, 3, lastIdx(c.f.rev));
+        implied = 'At ' + usd(price) + ', the market is pricing in revenue growth of about <b>' + pc(gi) + ' a year</b> ' + (G ? 'for ' + Math.round(a.hold) + ' years before it fades' : 'for five years') + (isn(gh) ? ', against ' + pc(gh) + ' over the last three.' : '.');
       } else if (isn(f0(hi)) && f0(hi) < 0) implied = 'Even very fast growth doesn\u2019t reach today\u2019s price with these margins and this discount rate; the market expects more than the model allows.';
     } else if (price && a.model === 'bank' && isn(res.bvps) && res.bvps > 0) {
       var roeI = res.g + price / res.bvps * (res.K - res.g);
@@ -316,7 +361,7 @@
     $('#verdict').innerHTML =
       '<div class="vd"><div><div class="mono">' + esc(lines[0].name) + ' &middot; base case</div><div class="big num">' + (isn(v) && v > 0 ? usd(v) : 'n/a') + '</div><p>' +
       (isn(up) && v > 0 ? 'Estimated value per share is <b class="' + (up >= 0 ? 'up' : 'dn') + '">' + (up >= 0 ? sp(up) + ' above' : sp(up).replace('−', '') + ' below') + '</b> the last close of ' + usd(price) + '.' : isn(v) && v <= 0 ? 'With these assumptions the cash flows don\u2019t cover the company\u2019s debt, so there is no positive value. Try a recovery in margins or growth below.' : 'Not enough data to compare with the share price.') +
-      '</p>' + (implied ? '<p class="impl">' + implied + '</p>' : '') + '</div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
+      '</p>' + (isn(SC.wt) && SC.wt > 0 && price ? '<p class="impl">Weighting bear, base and bull ' + SC.p.map(function (x) { return Math.round(x * 100); }).join('/') + ' gives <b>' + usd(SC.wt) + '</b>, ' + (SC.wt >= price ? sp(SC.wt / price - 1) + ' above' : sp(SC.wt / price - 1).replace('−', '') + ' below') + ' the last close.</p>' : '') + (implied ? '<p class="impl">' + implied + '</p>' : '') + '</div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : G ? 'Built for fast growers: growth starts high, holds for a few years, then fades to the long-run rate by year 10, and reinvestment grows with each new dollar of revenue.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
       (a.flagMargin ? ' <b>Its recent operating margin is near or below zero, so the model assumes it reaches 10%.</b> Adjust this below.' : '') + '</div></div>';
 
     /* football field */
@@ -326,15 +371,23 @@
     var f = c.f;
     if (a.model === 'dcf') {
       html += '<div class="cols2"><div class="panel"><div class="hd"><div><h3 class="sec">Assumptions</h3><p>Filled in from the company’s last three years. Change any of them.</p></div><button class="reset" id="reset" type="button">Reset</button></div>' +
+        '<div class="gmr"><div class="seg gm" role="group" aria-label="Model"><button type="button" data-gm="std" class="' + (G ? '' : 'on') + '" aria-pressed="' + !G + '">Steady</button><button type="button" data-gm="growth" class="' + (G ? 'on' : '') + '" aria-pressed="' + G + '">High growth</button></div><p class="sx">' + (AUTO.gm === 'growth' ? 'Recent growth is fast, so high growth is the default.' : 'High growth suits companies growing well above 15% a year.') + '</p></div>' +
         '<div class="ins">' +
-        inputRow('g1', 'Revenue growth', a.g1, 0.005, '%', 'Years 1–5, then fades') +
+        (G ? inputRow('g0', 'Starting growth', a.g0, 0.01, '%', 'Year 1, then fades to terminal') +
+          inputRow('hold', 'Years at full growth', a.hold, 1, 'n', 'Before the fade starts') +
+          inputRow('mT', 'Operating margin', a.mT, 0.005, '%', 'Reached by year 7 (now ' + pc(a.m0) + ')') +
+          inputRow('s2c', 'Sales to capital', a.s2c, 0.1, 'x', 'New revenue per $1 reinvested') +
+          inputRow('tax', 'Tax rate', a.tax, 0.005, '%') +
+          inputRow('gT', 'Terminal growth', a.gT, 0.0025, '%', 'After year 10') +
+          inputRow('ronic', 'Return on new capital', a.ronic, 0.01, '%', 'Sets terminal reinvestment')
+        : inputRow('g1', 'Revenue growth', a.g1, 0.005, '%', 'Years 1–5, then fades') +
         inputRow('mT', 'Operating margin', a.mT, 0.005, '%', 'Reached by year 5 (now ' + pc(a.m0) + ')') +
         inputRow('tax', 'Tax rate', a.tax, 0.005, '%') +
         inputRow('capex', 'Capex', a.capex, 0.0025, '%', a.capex > a.da + 0.01 ? '% of revenue, eases toward depreciation' : '% of revenue') +
         inputRow('da', 'Depreciation', a.da, 0.0025, '%', '% of revenue') +
         inputRow('nwc', 'Working capital', a.nwc, 0.005, '%', '% of revenue added') +
         inputRow('gT', 'Terminal growth', a.gT, 0.0025, '%', 'After year 10') +
-        inputRow('ronic', 'Return on new capital', a.ronic, 0.01, '%', 'Sets terminal reinvestment') +
+        inputRow('ronic', 'Return on new capital', a.ronic, 0.01, '%', 'Sets terminal reinvestment')) +
         '</div></div>' +
         '<div class="panel"><div class="hd"><div><h3 class="sec">Discount rate</h3><p>Weighted cost of capital (WACC).</p></div></div><div class="ins">' +
         inputRow('rf', 'Risk-free rate', a.rf, 0.0025, '%', RFd ? '10-year Treasury, ' + fd(RFd) : '10-year Treasury') +
@@ -342,7 +395,8 @@
         inputRow('erp', 'Equity risk premium', a.erp, 0.0025, '%') +
         inputRow('kd', 'Cost of debt', a.kd, 0.0025, '%', 'Before tax') +
         '</div><dl class="wacc"><dt>Cost of equity</dt><dd>' + pc(ke(a), 2) + '</dd><dt>Debt / capital</dt><dd>' + pc(a.debt / ((a.price || 0) * (a.shares || 0) + a.debt || 1)) + '</dd><dt>WACC</dt><dd class="hl">' + pc(res.W, 2) + '</dd></dl></div></div>';
-      html += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Projected free cash flow</h3><p>' + (a.ttm ? 'The twelve months to ' + fd(a.ttm) + ', from the latest 10-Q, are the base year.' : 'Fiscal year ' + esc(a.fy) + ' is the base year.') + ' Figures in billions.</p></div></div><div class="scroll"><table class="tbl proj"><thead><tr><th></th>' +
+      html += scenPanel(a, SC, price);
+      html += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Projected free cash flow</h3><p>' + (G ? 'Net reinvestment is each year’s new revenue divided by sales to capital. ' : '') + (a.ttm ? 'The twelve months to ' + fd(a.ttm) + ', from the latest 10-Q, are the base year.' : 'Fiscal year ' + esc(a.fy) + ' is the base year.') + ' Figures in billions.</p></div></div><div class="scroll"><table class="tbl proj"><thead><tr><th></th>' +
         res.rows.map(function (r) { return '<th>Y' + r.t + '</th>'; }).join('') + '</tr></thead><tbody>' +
         [['Revenue', 'rev', 1e9], ['Growth', 'g', 0], ['Operating margin', 'm', 0], ['Operating income', 'ebit', 1e9], ['After-tax operating income', 'nopat', 1e9], ['Net reinvestment', 'reinv', 1e9], ['Free cash flow', 'fcff', 1e9], ['Present value', 'pv', 1e9]].map(function (row) {
           return '<tr' + (row[1] === 'fcff' ? ' class="hl"' : '') + '><td>' + row[0] + '</td>' + res.rows.map(function (r) { var x = r[row[1]]; return '<td>' + (row[2] ? (x / row[2]).toFixed(1) : pc(x)) + '</td>'; }).join('') + '</tr>';
@@ -352,7 +406,7 @@
         (res.tvShare > 0.8 ? '<p class="warn">The terminal value is ' + pc(res.tvShare, 0) + ' of the total, so the result leans heavily on long-run assumptions.</p>' : '') + '</div>';
       /* sensitivity */
       var ws = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.W + d; }), gs = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.gT + d; });
-      html += sens('Value per share: WACC against terminal growth', 'WACC', 'Terminal growth', ws, gs, function (w, g) { return w > g + 0.002 ? dcf(a, { w: w, gT: g }).ps : NaN; }, price);
+      html += sens('Value per share: WACC against terminal growth', 'WACC', 'Terminal growth', ws, gs, function (w, g) { return w > g + 0.002 ? model(a, { w: w, gT: g }).ps : NaN; }, price);
     } else {
       html += '<div class="cols2"><div class="panel"><div class="hd"><div><h3 class="sec">Assumptions</h3><p>Return on equity is the average of the last three years.</p></div><button class="reset" id="reset" type="button">Reset</button></div><div class="ins">' +
         inputRow('roe', 'Return on equity', a.roe, 0.005, '%', 'Sustainable level') +
@@ -363,6 +417,7 @@
         '</div></div><div class="panel"><div class="hd"><div><h3 class="sec">Workings</h3><p>Justified price-to-book = (ROE − g) ÷ (cost of equity − g).</p></div></div>' +
         '<div class="bridge">' + [['Book value per share', usd(res.bvps)], ['Cost of equity', pc(res.K, 2)], ['Justified P/B', mx(res.pb)]].map(function (x) { return '<div><span class="mono">' + x[0] + '</span><b class="num">' + x[1] + '</b></div>'; }).join('') +
         '<div class="res"><span class="mono">Per share</span><b class="num">' + usd(res.ps) + '</b></div></div></div></div>';
+      html += scenPanel(a, SC, price);
       var roes = [-0.02, -0.01, 0, 0.01, 0.02].map(function (d) { return res.roe + d; }), ks = [-0.01, -0.005, 0, 0.005, 0.01].map(function (d) { return res.K + d; });
       html += sens('Value per share: cost of equity against return on equity', 'Cost of equity', 'Return on equity', ks, roes, function (k, r) { return k > res.g + 0.002 ? bank(a, { k: k, droe: r - a.roe }).ps : NaN; }, price);
     }
@@ -370,6 +425,24 @@
     html += compsTable(ps, cp);
     $('#model').innerHTML = html;
     wire();
+  }
+
+  function scenPanel(a, SC, price) {
+    var dcfm = a.model === 'dcf', gl = dcfm ? 'Revenue growth' : 'Return on equity', wl = dcfm ? 'WACC' : 'Cost of equity';
+    var col = function (k, name) {
+      var s = SC[k], up = price && isn(s.ps) ? s.ps / price - 1 : null, K = k.charAt(0).toUpperCase() + k.slice(1);
+      var ins = k === 'base' ? '<p class="sx">Uses the assumptions above.</p>' :
+        inputRow(k + 'Dg', gl + ', vs base', a[k + 'Dg'], dcfm ? 0.005 : 0.0025, '%') + (dcfm ? inputRow(k + 'Dm', 'Margin, vs base', a[k + 'Dm'], 0.005, '%') : '') + inputRow(k + 'Dw', wl + ', vs base', a[k + 'Dw'], 0.0025, '%');
+      return '<div class="sc ' + k + '"><div class="sh"><span class="mono">' + name + '</span><span class="pr">' + Math.round(SC.p[['bear', 'base', 'bull'].indexOf(k)] * 100) + '% weight</span></div>' +
+        '<b class="num sv">' + (isn(s.ps) ? usd(s.ps, 0) : '—') + '</b><span class="su ' + (up >= 0 ? 'up' : 'dn') + '">' + (isn(up) ? sp(up) + ' vs last close' : '') + '</span>' +
+        '<dl class="sk"><dt>' + gl + '</dt><dd>' + pc(s.g) + '</dd>' + (dcfm ? '<dt>' + (a.gm === 'growth' ? 'Target margin' : 'Operating margin') + '</dt><dd>' + pc(s.m) + '</dd>' : '') + '<dt>' + wl + '</dt><dd>' + pc(s.w, 2) + '</dd></dl>' +
+        '<div class="ins one">' + inputRow('p' + K, 'Probability', a['p' + K], 0.05, '%') + ins + '</div></div>';
+    };
+    var wt = SC.wt, up = price && isn(wt) ? wt / price - 1 : null;
+    return '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Bear, base and bull</h3><p>The same model run three ways: ' + (dcfm ? 'growth, margin and the discount rate' : 'return on equity and the cost of equity') + ' move together. Set how likely you think each one is.</p></div>' +
+      '<div class="pw"><span class="mono">Probability-weighted</span><b class="num">' + (isn(wt) ? usd(wt) : '—') + '</b><small class="' + (up >= 0 ? 'up' : 'dn') + '">' + (isn(up) ? sp(up) + ' vs ' + usd(price) : '') + '</small></div></div>' +
+      '<div class="scn">' + col('bear', 'Bear') + col('base', 'Base') + col('bull', 'Bull') + '</div>' +
+      (Math.abs(SC.tot - 1) > 0.001 ? '<p class="warn">The probabilities add up to ' + pc(SC.tot, 0) + ', so they are scaled to 100%.</p>' : '') + '</div>';
   }
 
   function sens(title, rl, cl, rows, cols, fnv, price) {
@@ -407,7 +480,7 @@
       h += '<div class="ffr' + (l.main ? ' main' : '') + (l.ref ? ' ref' : '') + '"><span class="lab">' + esc(l.name) + '</span><div class="trk"><i class="rg" style="left:' + X(a) + ';width:calc(' + X(b) + ' - ' + X(a) + ')"></i>' +
         (isn(l.base) && l.base > 0 ? '<b class="bs" style="left:' + X(l.base) + '"></b>' : '') + '<em style="left:' + X(a) + '">' + usd(a, 0) + '</em><em class="r" style="left:' + X(b) + '">' + usd(b, 0) + '</em></div></div>';
     });
-    if (isn(price)) h += '<div class="ffo"><div class="pxl" style="left:' + X(price) + '"><span>Last close ' + usd(price) + '</span></div></div>';
+    if (isn(price)) h += '<div class="ffo"><div class="pxl' + ((price - lo) / (hi - lo) > 0.6 ? ' r' : '') + '" style="left:' + X(price) + '"><span>Last close ' + usd(price) + '</span></div></div>';
     h += '</div>';
     $('#field').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Value per share, by method</h3><p>Bars show the low-to-high range for each method; the dot is the base case. The line is today’s price.</p></div></div>' + h + '</div>';
   }
@@ -441,17 +514,23 @@
   }
 
   /* ---------- inputs ---------- */
+  function tidy() {
+    if (isn(A.hold)) A.hold = clip(Math.round(A.hold), 0, 9);
+    if (isn(A.s2c)) A.s2c = Math.max(0.2, A.s2c);
+    ['pBear', 'pBase', 'pBull'].forEach(function (k) { if (isn(A[k])) A[k] = clip(A[k], 0, 1); });
+  }
   function wire() {
     $$('#model input[data-k]').forEach(function (el) {
       el.addEventListener('change', function () {
         var k = el.getAttribute('data-k'), u = el.getAttribute('data-u'), v = parseFloat(el.value.replace(/[^0-9.\-]/g, ''));
         if (!isn(v)) return renderModel();
-        A[k] = u === '%' ? v / 100 : v; renderModel();
+        A[k] = u === '%' ? v / 100 : v; tidy(); renderModel();
       });
     });
     $$('#model button[data-k]').forEach(function (b) {
-      b.onclick = function () { var k = b.getAttribute('data-k'); A[k] = +(A[k] + parseFloat(b.getAttribute('data-d'))).toFixed(5); renderModel(); };
+      b.onclick = function () { var k = b.getAttribute('data-k'); A[k] = +(A[k] + parseFloat(b.getAttribute('data-d'))).toFixed(5); tidy(); renderModel(); };
     });
+    $$('#model [data-gm]').forEach(function (b) { b.onclick = function () { A.gm = b.getAttribute('data-gm'); renderModel(); }; });
     $$('#model [data-open]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); open(a.getAttribute('data-open')); }; });
     var r = $('#reset'); if (r) r.onclick = function () { A = JSON.parse(JSON.stringify(AUTO)); renderModel(); };
   }

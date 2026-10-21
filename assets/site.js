@@ -249,9 +249,9 @@
       $('#nPx').textContent = m2(q.p); $('#nPxD').textContent = 'Last close, ' + fdate(q.d, true);
       var c = q.p / R.then - 1, g = q.p / R.val - 1;
       $('#nChg').textContent = sg(c); $('#nChg').className = c >= 0 ? 'up' : 'dn';
-      $('#nGap').textContent = (g >= 0 ? sg(g) + ' above' : sg(g).replace('−', '') + ' below');
+      $('#nGap').textContent = sg(g);
       if (q.lo && q.hi) $('#nRg').textContent = '$' + Math.round(q.lo).toLocaleString('en-US') + ' – $' + Math.round(q.hi).toLocaleString('en-US');
-      $$('.cnow').forEach(function (ln) { var x = +ln.getAttribute('data-x0') + Math.min(q.p, 1400) / 1400 * +ln.getAttribute('data-span'); ln.setAttribute('d', 'M' + x.toFixed(1) + ' 6V' + ln.getAttribute('data-bot')); ln.style.display = ''; }); if ($('.nowkey')) $('.nowkey').style.display = 'inline';
+      $$('.cnow').forEach(function (ln) { var x = +ln.getAttribute('data-x0') + Math.min(q.p, +(ln.getAttribute('data-max') || 1400)) / +(ln.getAttribute('data-max') || 1400) * +ln.getAttribute('data-span'); ln.setAttribute('d', 'M' + x.toFixed(1) + ' 6V' + ln.getAttribute('data-bot')); ln.style.display = ''; }); if ($('.nowkey')) $('.nowkey').style.display = 'inline';
     }).catch(function () {});
     var toc = $$('.toc a'), chs = $$('.chap');
     if (toc.length && 'IntersectionObserver' in window) {
@@ -268,7 +268,7 @@
         $$('[data-cat]').forEach(function (b) { b.style.display = f === 'all' || b.getAttribute('data-cat') === f ? '' : 'none'; });
       };
     });
-    var REPORTS = { COST: 'costco.html' };
+    var REPORTS = { COST: 'costco.html', GEV: 'gev.html' };
     getJSON('data/companies/index.json').then(function (ix) {
       var el = $('#cov');
       if (!ix.updated || !ix.companies || !ix.companies.length) return el.innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures come straight from SEC filings and appear here after the update runs for the first time.</div>';

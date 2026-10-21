@@ -9,6 +9,13 @@
       "page": "costco.html"
     },
     {
+      "ticker": "GEV",
+      "name": "GE Vernova",
+      "sector": "Industrials",
+      "status": "live",
+      "page": "gev.html"
+    },
+    {
       "ticker": "JPM",
       "name": "JPMorgan Chase",
       "sector": "Banks",

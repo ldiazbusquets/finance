@@ -781,11 +781,11 @@ details.sched[open] summary { margin-bottom: 16px; }
 html.lt {
   --bg: #F3EBDD; --s1: #FBF7F0; --s2: #FFFCF7;
   --line: rgba(92,52,28,.11); --line2: rgba(92,52,28,.2);
-  --ink: #2A160C; --t2: #6A5345; --t3: #958981; --acc: #A0522A;
-  --cu1: #D08A55; --cu2: #8E4421; --cu3: #B86B3A;
+  --ink: #26150C; --t2: #6A5345; --t3: #958981; --acc: #7A4526;
+  --cu1: #8C593A; --cu2: #723F20; --cu3: #855233;
   --up: #3E7552; --dn: #B4472B;
-  --win: rgba(196,112,62,.62);
-  --metal: linear-gradient(160deg, #D79865 0%, #B9693A 30%, #96491F 62%, #7C3819 82%, #9A532B 100%);
+  --win: rgba(150,90,52,.6);
+  --metal: linear-gradient(160deg, #A56E48 0%, #8C593A 28%, #723F20 60%, #5C3017 82%, #865334 100%);
   --brush: repeating-linear-gradient(90deg, rgba(255,232,206,.018) 0 1px, transparent 1px 2px, rgba(70,25,8,.016) 2px 3px, transparent 3px 5px);
 }
 /* paper grain over the whole page, and a soft copper and stone glow behind it */
@@ -793,15 +793,15 @@ html.lt body {
   background-color: var(--bg);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .2 0 0 0 0 .11 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-html.lt .hero::before, html.lt .ph::before { background: radial-gradient(55% 50% at 74% 26%, rgba(205,125,72,.18), transparent 70%), radial-gradient(45% 45% at 8% 92%, rgba(140,138,132,.10), transparent 70%); }
+html.lt .hero::before, html.lt .ph::before { background: radial-gradient(55% 50% at 74% 26%, rgba(140,89,58,.16), transparent 70%), radial-gradient(45% 45% at 8% 92%, rgba(140,138,132,.10), transparent 70%); }
 /* copper surfaces become brushed metal */
 html.lt .pill.cu, html.lt .billtx .pill, html.lt .band, html.lt .vd, html.lt .snapv .call, html.lt .verdict .call {
   background: var(--brush), var(--metal); color: #FFF8EF; border-color: rgba(255,214,176,.35);
-  box-shadow: inset 0 1px 0 rgba(255,226,196,.45), inset 0 -1px 0 rgba(60,20,5,.2), 0 14px 32px -12px rgba(110,49,23,.45);
+  box-shadow: inset 0 1px 0 rgba(255,226,196,.45), inset 0 -1px 0 rgba(60,20,5,.2), 0 14px 32px -12px rgba(90,45,22,.42);
   text-shadow: 0 1px 0 rgba(60,20,5,.25);
 }
-html.lt .pill.cu .ic, html.lt .billtx .pill .ic { background: #FFF6EA; color: #8E4421; box-shadow: inset 0 -1px 0 rgba(110,49,23,.15); }
-html.lt .band .pill { background: #FFF8EF; color: #8E4421; text-shadow: none; }
+html.lt .pill.cu .ic, html.lt .billtx .pill .ic { background: #FFF6EA; color: #723F20; box-shadow: inset 0 -1px 0 rgba(110,49,23,.15); }
+html.lt .band .pill { background: #FFF8EF; color: #723F20; text-shadow: none; }
 /* cards: brighter cream on sand, with a warm hairline and a soft shadow */
 html.lt .panel, html.lt .card, html.lt .kv, html.lt .tools6 a, html.lt .fund, html.lt .sfl label, html.lt .snapcta {
   border-color: rgba(92,52,28,.12);
@@ -814,7 +814,7 @@ html.lt h1 em, html.lt h2 em, html.lt .h em { color: var(--acc); }
 html.lt .eyebrow.mono, html.lt .tape .tl, html.lt .th { color: var(--acc); }
 html.lt nav.top { background: color-mix(in srgb, #F7F0E4 82%, transparent); }
 html.lt .tape { background: color-mix(in srgb, #FBF6EE 80%, transparent); }
-html.lt ::selection { background: rgba(196,112,62,.25); }
+html.lt ::selection { background: rgba(140,89,58,.22); }
 
 /* text on copper stays cream in light mode too */
 html.lt .band h2 em, html.lt .vd h2 em { color: rgba(255,244,232,.68); }

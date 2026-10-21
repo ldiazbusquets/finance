@@ -26,7 +26,7 @@ SITE = 'https://ldiazbusquets.github.io/finance/'
 
 
 def head(title, desc, fn='index.html', root=''):
-    t = NAME if title is None else f'{title} | {NAME}'
+    t = 'Finance | Luis Diaz Busquets' if title is None else f'{title} | {NAME}'   # the home page is named like the Lab's
     url = SITE + ('' if fn == 'index.html' else fn)
     ogf = fn.replace('.html', '.jpg')
     own = os.path.exists(os.path.join(OUT, 'og', ogf))
@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=21">
+<link rel="stylesheet" href="assets/site.css?v=22">
 </head>
 '''
 

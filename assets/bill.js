@@ -23,7 +23,8 @@
     var r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = r.width; H = r.height; if (!W || !H) return;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var narrow = W < 720, S = narrow ? 5 : 5, cols = Math.floor(W / S), rows = Math.floor(H / S);
+    var narrow = W < 720, S = 5, cols = Math.floor(W / S), rows = Math.floor(H / S);
+    var offX = (W - cols * S) / 2, offY = (H - rows * S) / 2;   /* the leftover pixels split evenly, so the frame sits centred */
     var grid = new Float32Array(cols * rows), kind = new Uint8Array(cols * rows), inkv = new Float32Array(cols * rows);
     /* faint guilloche-like background: interfering waves, like the fine lines on a note */
     for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++) {
@@ -39,7 +40,7 @@
     for (var y3 = by + 4; y3 < rows - by - 4; y3++) { set(bx + 4, y3, .22, 1); set(cols - 1 - bx - 4, y3, .22, 1); }
     /* portrait in an oval: right side on wide screens, top centre on phones */
     var ph = narrow ? Math.round(rows * .56) : rows - 20, pw = Math.round(ph * PC / PR);
-    var px0 = narrow ? Math.round((cols - pw) / 2) : Math.round(cols * .62 - pw / 2), py0 = narrow ? 11 : 10;
+    var px0 = Math.round((cols - pw) / 2), py0 = narrow ? 11 : Math.round((rows - ph) / 2);
     var cx = px0 + pw / 2, cy = py0 + ph / 2, rx = pw * .47, ry = ph * .49;
     for (var yy = 0; yy < ph; yy++) for (var xx = 0; xx < pw; xx++) {
       var gx = px0 + xx, gy = py0 + yy, e = Math.pow((gx - cx) / rx, 2) + Math.pow((gy - cy) / ry, 2);
@@ -64,49 +65,56 @@
     else { corner(cols - bx - 7 - nw, by + 7); corner(cols - bx - 7 - nw, rows - by - 7 - nh); }
     function corner(x0, y0) { var m = glyphMask('100', nw, nh, true); for (var i = 0; i < nw * nh; i++) if (m[i] > .35) set(x0 + i % nw, y0 + Math.floor(i / nw), .30 + m[i] * .45, 3); }
     if (!narrow) {
-      var bh = Math.round(rows * .34), bw = bh * 3, bx0 = Math.round(cols * .62 + pw * .5 + 4), by0 = Math.round(rows * .5 - bh / 2);
+      var bh = Math.round(rows * .30), bw = bh * 3, bx0 = Math.round(cols * .5 + pw * .5 + 6), by0 = Math.round(rows * .5 - bh / 2);
       if (bx0 + bw * .4 < cols) { var m2 = glyphMask('100', bw, bh, true); for (var j = 0; j < bw * bh; j++) if (m2[j] > .4) { var X = bx0 + j % bw, Y = by0 + Math.floor(j / bw); if (X < cols - bx - 5) set(X, Y, Math.max(grid[Y * cols + X], .12), 3); } }
     }
     function set(x, y, v, k, over) { if (x < 0 || y < 0 || x >= cols || y >= rows) return; var i = y * cols + x; if (over || v > grid[i]) { grid[i] = v; kind[i] = k; } }
     tiles = [];
     for (var i2 = 0; i2 < cols * rows; i2++) {
       var s1 = seed(i2), s2 = seed(i2 + 7919);
-      tiles.push({ x: (i2 % cols) * S + 1, y: Math.floor(i2 / cols) * S + 1, v: grid[i2], ink: kind[i2] === 2 ? inkv[i2] : grid[i2], k: kind[i2], ph: s1 * 6.283, sp: .08 + s2 * .2, sparkle: s2 < .05 });
+      var tx = i2 % cols, ty = Math.floor(i2 / cols), s3 = seed(i2 + 15731);
+      var dc = Math.sqrt(Math.pow((tx - cx) / cols, 2) + Math.pow((ty - cy) / rows, 2));
+      tiles.push({ x: offX + tx * S + 1, y: offY + ty * S + 1, v: grid[i2], ink: kind[i2] === 2 ? inkv[i2] : grid[i2], k: kind[i2], ph: s1 * 6.283, sp: .05 + s2 * .16,
+        tw: kind[i2] === 0 && s3 < .2, pk: .22 + s2 * .3, dl: Math.min(1, dc * 1.5 + s3 * .35) });
     }
-    TW = S - 1; TH = Math.max(2, S - 2); baseLt = null;
+    TW = S - 1; TH = Math.max(2, S - 2); baseLt = null; NT = tiles.length; for (var bq = 0; bq <= NB; bq++) bk[bq] = new Int32Array(NT);
     draw(performance.now());
   }
-  var TW = 4, TH = 3, base = document.createElement('canvas'), baseLt = null, sparks = [];
-  function paintBase() {
-    var lt = d.classList.contains('lt'), dpr = Math.min(window.devicePixelRatio || 1, 2), g;
-    base.width = cv.width; base.height = cv.height; g = base.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.fillStyle = lt ? 'rgb(84,48,26)' : 'rgb(236,176,116)';
-    sparks = [];
-    for (var i = 0; i < tiles.length; i++) {
-      var p = tiles[i], a = lt ? p.ink : p.v;
-      if (p.sparkle && p.k !== 2) sparks.push(p);
-      if (a < .015) continue;
-      g.globalAlpha = Math.min(1, a * (lt ? .9 : 1)); g.fillRect(p.x, p.y, TW, TH);
-    }
-    baseLt = lt;
-  }
-  /* the note itself is drawn once; each frame only adds a few glinting tiles */
+  var TW = 4, TH = 3, baseLt = null, NB = 28, NT = 0, bk = [], bn = new Int32Array(29), shown = 0;
+  /* every tile is drawn each frame, like the hero's windows: background cells twinkle on and off,
+     the engraving breathes, a band of light sweeps across the note, and on first view the note
+     assembles from the portrait outward. Tiles are grouped by brightness so each frame is a few fills. */
   function draw(now) {
-    var lt = d.classList.contains('lt'), t = (now - t0) / 1000;
-    if (baseLt !== lt || base.width !== cv.width) paintBase();
-    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(base, 0, 0);
-    var dpr = Math.min(window.devicePixelRatio || 1, 2); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (still) return;
-    ctx.fillStyle = lt ? 'rgb(84,48,26)' : 'rgb(255,214,160)';
-    for (var i = 0; i < sparks.length; i++) {
-      var p = sparks[i], s = Math.max(0, Math.sin(t * p.sp * 3.1 + p.ph)), a = s * s * s * s * .7;
-      if (a < .03) continue;
-      ctx.globalAlpha = a; ctx.fillRect(p.x, p.y, TW, TH);
+    var lt = d.classList.contains('lt'), t = (now - t0) / 1000, tin = shown ? (now - shown) / 1000 : 0;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = lt ? 'rgb(84,48,26)' : 'rgb(236,176,116)';
+    var cyc = 8, sw = (t % cyc) / cyc, pos = -0.35 * W + sw * (W * 1.7 + H), band = Math.max(60, W * .07);
+    for (var q = 0; q <= NB; q++) bn[q] = 0;
+    for (var i = 0; i < NT; i++) {
+      var p = tiles[i], a = lt ? p.ink : p.v;
+      if (!still) {
+        var s = Math.sin(t * p.sp * 6.283 + p.ph);
+        if (p.k === 0) { if (p.tw) { var u = Math.max(0, s); a += (p.pk * (lt ? .55 : 1) - a) * u * u * u; } }
+        else a *= .84 + .16 * s;
+        if (p.k) { var dd = (p.x * .55 + p.y - pos) / band; if (dd > -3 && dd < 3) a += Math.exp(-dd * dd) * (lt ? .25 : .38) * (p.k === 2 ? .7 : 1); }
+        var r = still ? 1 : Math.max(0, Math.min(1, (tin - p.dl * 1.4) / .45));
+        a *= r;
+      }
+      if (a < .02) continue;
+      var b = Math.min(NB, Math.round(a * NB)); bk[b][bn[b]++] = i;
+    }
+    for (var b2 = 1; b2 <= NB; b2++) {
+      var n = bn[b2]; if (!n) continue;
+      ctx.globalAlpha = b2 / NB; ctx.beginPath();
+      var arr = bk[b2];
+      for (var j = 0; j < n; j++) { var tl = tiles[arr[j]]; ctx.rect(tl.x, tl.y, TW, TH); }
+      ctx.fill();
     }
     ctx.globalAlpha = 1;
   }
-  function loop(now) { if (!run) return; if (now - last > 50) { last = now; draw(now); } requestAnimationFrame(loop); }
-  function go() { var want = vis && !document.hidden && !still; if (want && !run) { run = true; requestAnimationFrame(loop); } else if (!want) run = false; }
+  function loop(now) { if (!run) return; if (now - last > 41) { last = now; draw(now); } requestAnimationFrame(loop); }
+  function go() { var want = vis && !document.hidden && !still; if (want && !shown) shown = performance.now(); if (want && !run) { run = true; requestAnimationFrame(loop); } else if (!want) run = false; }
   build();
   var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(build, 150); });
   document.addEventListener('visibilitychange', go);

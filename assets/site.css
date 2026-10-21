@@ -623,3 +623,29 @@ details.sched[open] summary { margin-bottom: 16px; }
 .tbl.lgrid tr.me td { background: color-mix(in srgb, var(--acc) 9%, transparent); }
 #lChart { height: 280px; }
 @media (max-width: 600px) { .sleg { grid-template-columns: 1fr; } }
+
+/* ---------- quarterly financials ---------- */
+#fin .seg { margin: 0; }
+#fin .seg button { height: 30px; font-size: 12.5px; }
+.qsum { margin: 0 0 22px; max-width: 78ch; color: var(--t2); font-size: 14.5px; line-height: 1.6; }
+.qsum b { color: var(--ink); font-weight: 500; }
+.qsum a { color: var(--acc); white-space: nowrap; }
+.qbars { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; height: 190px; align-items: end; margin-bottom: 26px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+.qbars div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; min-width: 0; }
+.qbars i { display: block; width: 100%; max-width: 54px; border-radius: 6px 6px 2px 2px; background: color-mix(in srgb, var(--acc) 30%, transparent); order: 2; min-height: 2px; }
+.qbars div:last-child i { background: var(--acc); }
+.qbars b { order: 1; font: 500 11px var(--mono); color: var(--t2); margin-bottom: 6px; white-space: nowrap; }
+.qbars span { order: 3; font: 500 11px var(--mono); color: var(--t2); margin-top: 8px; white-space: nowrap; }
+.qbars small { display: none; order: 3; font: 500 9px var(--mono); color: var(--t2); margin-top: 6px; white-space: nowrap; }
+.qbars em { order: 4; font: 500 10.5px var(--mono); font-style: normal; color: var(--t3); }
+.tbl.fin th small { display: block; font: 400 10.5px var(--mono); color: var(--t3); margin-top: 2px; letter-spacing: 0; text-transform: none; }
+.tbl.fin th a { color: inherit; text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
+.tbl.fin th a:hover { color: var(--acc); }
+.fil a b small { color: var(--t3); font-size: 11px; margin-left: 4px; }
+@media (max-width: 640px) {
+  .qbars { gap: 4px; height: 150px; }
+  .qbars b { font-size: 0; margin: 0; }
+  .qbars span { display: none; }
+  .qbars small { display: block; }
+  .qbars em { font-size: 9px; }
+}

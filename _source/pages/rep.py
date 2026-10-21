@@ -134,7 +134,7 @@ def body(R):
         f'<div><span class="mono">Price at writing</span><b>${P:,.2f}</b><small>{R.get("pricenote", "Close, " + R["date"])}</small></div>'
         f'<div><span class="mono">Implied return</span><b class="{"up" if imp >= 0 else "dn"}">{"+" if imp >= 0 else "&minus;"}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>')
     now = '' if R.get('private') else f'''<div class="panel now" id="now">
-        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday.</p></div>{'' if R.get('noauto') else f'<a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a>'}</div>
+        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday.</p></div>{'' if R.get('noauto') else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
         <div class="kv four"><div><b id="nPx">&mdash;</b><span id="nPxD">Last close</span></div><div><b id="nChg">&mdash;</b><span>Since the report&rsquo;s ${P:,.2f}</span></div><div><b id="nGap">&mdash;</b><span>Price against {d(B)} value</span></div><div><b id="nRg">&mdash;</b><span>52-week range</span></div></div>
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')

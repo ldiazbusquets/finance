@@ -63,7 +63,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=13">
+<link rel="stylesheet" href="assets/site.css?v=14">
 </head>
 '''
 
@@ -243,7 +243,7 @@ def build():
                   '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>') + f'''
 <section class="tight" data-cat="eq">
   <div class="wrap">
-    <a class="snapcta" href="snapshot.html"><div><span class="mono">Any S&amp;P 500 company</span><b>Search a company for an instant research snapshot</b><p>Growth, margins, cash, debt, a bear-to-bull valuation and peers, written from its filings in seconds.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Search</span></a>
+    <a class="snapcta" href="snapshot.html"><div><span class="mono">Any S&amp;P 500 company</span><b>Search a company for an instant research snapshot</b><p>Growth, margins, cash, debt, a bear-to-bull valuation and peers, with annual 10-K and quarterly 10-Q figures, written from its filings in seconds.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Search</span></a>
     <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Holdings</h3></div><p>Every stock in the portfolio, valued with the same method. Written October 20, 2026 and refreshed after each quarter&rsquo;s results.</p></div>
     <div class="grid3 rcards">{holding_cards}</div>
     <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Private companies</h3></div><p>Companies on the watchlist that are not listed yet. Values are for the whole company, set against the latest private funding round.</p></div>
@@ -301,7 +301,7 @@ def build():
   </div>
 </section>
 '''
-    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=10"></script>')
+    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=12"></script>')
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
@@ -321,7 +321,7 @@ def build():
   </div>
 </section>
 '''
-    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=10"></script>')
+    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=12"></script>')
 
     # ---------------- models ----------------
     models = ph('Models', 'Valuation <em>models</em>', 'Every model shows its inputs on the page. The live ones run inside the <a href="valuation.html" style="color:var(--acc)">Valuation</a> tool for any S&amp;P 500 company.') + f'''

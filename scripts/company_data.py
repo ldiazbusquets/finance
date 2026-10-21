@@ -326,17 +326,122 @@ def quarterly(facts, ends):
             'dil': None if dil is None else int(dil)}
 
 
-def filings_of(sub, cik):
-    """latest 10-K and the three latest 10-Qs"""
+QKEYS = ['rev', 'gp', 'ebit', 'ni', 'cfo', 'capex', 'sbc', 'da']
+
+
+def _discrete(rows):
+    """{quarter end: value} for one tag. 10-Qs give three-month figures for the income statement but
+    year-to-date figures for cash flow, and the 10-K gives only the year; a quarter is a ~3-month
+    row, or a cumulative row minus the cumulative row one quarter shorter with the same start."""
+    best = {}
+    for r in rows:
+        k = (r['start'], r['end'])
+        if k not in best or r.get('filed', '') > best[k].get('filed', ''):
+            best[k] = r
+    by_start = {}
+    for (a, b), r in best.items():
+        by_start.setdefault(a, []).append((b, r['val']))
+    out = {}
+    for (a, b), r in best.items():
+        n = _days(a, b)
+        if 80 <= n <= 100:
+            out[b] = r['val']
+    for a, lst in by_start.items():
+        lst.sort()
+        for (b0, v0), (b1, v1) in zip(lst, lst[1:]):
+            if 80 <= _days(b0, b1) <= 100 and _days(a, b0) >= 80 and b1 not in out:
+                out[b1] = v1 - v0
+    return out
+
+
+def _qlabel(e, fye):
+    """fiscal quarter label for a quarter ending e, given a fiscal-year end date"""
+    de, df = date.fromisoformat(e), date.fromisoformat(fye)
+    if de.day <= 7: de -= timedelta(days=de.day)       # 52/53-week years ending in early January
+    if df.day <= 7: df -= timedelta(days=df.day)
+    m = (de.month - df.month) % 12
+    k = round(m / 3) % 4 or 4
+    fy = de.year if de.month <= df.month else de.year + 1
+    if df.month == 12: fy = de.year
+    return f'Q{k} FY{str(fy)[-2:]}'
+
+
+def quarters(facts, ends, n=8):
+    """The last n fiscal quarters: income statement and cash flow per quarter, balance sheet at each quarter end."""
+    if not ends:
+        return None
+    g = facts.get('facts', {}).get('us-gaap', {})
+    ser = {}
+    for key in QKEYS:
+        per = []
+        for pri, tag in enumerate(FLOW[key]):
+            d = _discrete(_rows(g, tag, 'USD', False))
+            if d:
+                per.append((max(d), -pri, d))
+        out = {}
+        for _, _, d in sorted(per, reverse=True):
+            for k, v in d.items():
+                out.setdefault(k, v)
+        ser[key] = out
+    eps = {}
+    for tag in PERSHARE['eps']:
+        for k, v in _discrete(_rows(g, tag, 'USD/shares', False)).items():
+            eps.setdefault(k, v)
+    ser['eps'] = eps
+    qe = sorted(e for e in set(ser['rev']) | set(ser['ni']) if e >= (date.today() - timedelta(days=365 * 4)).isoformat())
+    keep = []
+    for e in qe:                               # one end per quarter: drop restated stubs within 30 days
+        if keep and _days(keep[-1], e) < 30:
+            keep[-1] = e
+        else:
+            keep.append(e)
+    qe = keep[-(n + 4):]                       # four extra so the first shown quarter has a year-ago comparison
+    if len(qe) < 2:
+        return None
+
+    def near(d, e):
+        if e in d:
+            return d[e]
+        for k, v in d.items():
+            if abs(_days(k, e)) <= 7:
+                return v
+        return None
+    f = {k: [near(ser[k], e) for e in qe] for k in QKEYS + ['eps']}
+    bs = {'cash': [], 'debt': [], 'eq': []}
+    for e in qe:
+        s = {}
+        for k, tags in STOCK.items():
+            s[k] = None
+            for tag in tags:
+                r = _pick(_rows(g, tag, 'USD', True), lambda r: abs(_days(r['end'], e)) <= 3)
+                if r:
+                    s[k] = r['val']; break
+        if s['ltd'] is not None:
+            debt = s['ltd'] + (s['stb'] or 0)
+        elif s['ltdnc'] is not None or s['debtc'] is not None or s['ltdc'] is not None:
+            debt = (s['ltdnc'] or 0) + (s['debtc'] if s['debtc'] is not None else (s['ltdc'] or 0) + (s['stb'] or 0))
+        else:
+            debt = None
+        bs['cash'].append(None if s['cash'] is None else s['cash'] + (s['stinv'] or 0))
+        bs['debt'].append(debt)
+        bs['eq'].append(s['eq'])
+    rnd = lambda k, x: None if x is None else (round(x, 4) if k == 'eps' else int(round(x)))
+    f = {k: [rnd(k, x) for x in v] for k, v in f.items()}
+    f.update({k: [rnd(k, x) for x in v] for k, v in bs.items()})
+    return {'ends': qe, 'lab': [_qlabel(e, ends[-1]) for e in qe], 'f': f}
+
+
+def filings_of(sub, cik, nk=3, nq=8):
+    """the latest 10-Ks and 10-Qs, newest first, with the period each one covers"""
     rec = sub.get('filings', {}).get('recent', {})
     out, tenk, tenq = [], 0, 0
     for i, form in enumerate(rec.get('form', [])):
-        if (form == '10-K' and not tenk) or (form == '10-Q' and tenq < 3):
+        if (form == '10-K' and tenk < nk) or (form == '10-Q' and tenq < nq):
             acc = rec['accessionNumber'][i].replace('-', '')
-            out.append({'form': form, 'date': rec['filingDate'][i],
+            out.append({'form': form, 'date': rec['filingDate'][i], 'per': (rec.get('reportDate') or [''] * (i + 1))[i],
                         'url': f'https://www.sec.gov/Archives/edgar/data/{cik}/{acc}/{rec["primaryDocument"][i]}'})
             tenk += form == '10-K'; tenq += form == '10-Q'
-        if tenk and tenq >= 3:
+        if tenk >= nk and tenq >= nq:
             break
     return out
 
@@ -361,7 +466,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 4   # bump when the extraction rules change, so every file is rebuilt
+FVER = 5   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -442,6 +547,10 @@ def update_fundamentals(cos, ua, limit):
                 qd = quarterly(facts, ends)
             except Exception as e:      # the quarter is a bonus; never lose the annual figures over it
                 print(f'  note quarter {t:6} {str(e)[:80]}', file=sys.stderr); qd = None
+            try:
+                qs = None if (fac or so) else quarters(facts, ends)
+            except Exception as e:
+                print(f'  note quarters {t:6} {str(e)[:80]}', file=sys.stderr); qs = None
             if qd and (fac or so):
                 qd = None               # share-class adjusted companies keep annual figures only
             if qd:                      # sanity check against the last 10-K: twelve months can't be half or double a year
@@ -449,7 +558,7 @@ def update_fundamentals(cos, ua, limit):
                 if fy and tr and not 0.6 < tr / fy < 1.7:
                     print(f'  note quarter {t:6} twelve-month revenue {tr} vs last year {fy}; keeping annual figures', file=sys.stderr); qd = None
             d.update({'t': t, 'n': name, 'sec': sec, 'sub': sub, 'cik': cik, 'model': model_of(sec, sub),
-                      'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
+                      'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'qs': qs, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)
             done += 1
         except Exception as e:

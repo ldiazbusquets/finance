@@ -86,7 +86,8 @@
     if (s10 && s10.last) { RF = s10.last.v / 100; RFd = s10.last.d; }
     if (!IX) { $('#status').innerHTML = '<div class="wait"><b>Company data is on its way.</b> The S&amp;P 500 figures are collected by the nightly update. Once it has run, search any company here.</div>'; return; }
     $('#count').textContent = IX.rows.length + ' companies · updated ' + fd(IX.updated.slice(0, 10));
-    var t = new URLSearchParams(location.search).get('t');
+    var qp = new URLSearchParams(location.search), t = qp.get('t');
+    if (qp.get('view') === 'q') FINMODE = 'q';
     if (t) open(t.toUpperCase());
   });
 
@@ -581,7 +582,49 @@
     $('#field').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Value per share, by method</h3><p>Bars show the low-to-high range for each method; the dot is the base case. The line is today’s price.</p></div></div>' + h + '</div>';
   }
 
+  var FINMODE = 'a';
+  function filingFor(end, form) {
+    var best = null;
+    (CO.filings || []).forEach(function (x) { if (x.per && (!form || x.form === form) && Math.abs((new Date(x.per) - new Date(end)) / 864e5) <= 7) best = best || x; });
+    return best;
+  }
+  function finToggle(qok) {
+    return qok ? '<div class="seg" role="tablist"><button type="button" data-fm="a" class="' + (FINMODE === 'a' ? 'on' : '') + '">Annual · 10-K</button><button type="button" data-fm="q" class="' + (FINMODE === 'q' ? 'on' : '') + '">Quarterly · 10-Q</button></div>' : '';
+  }
+  function wireFin() { $$('#fin [data-fm]').forEach(function (b) { b.onclick = function () { FINMODE = b.getAttribute('data-fm'); renderFinancials(); }; }); }
+  function renderQuarterly() {
+    var c = CO, Q = c.qs, f = Q.f, n = Q.ends.length, k = Math.min(8, n), idx = [], bank = c.model === 'bank';
+    for (var i = n - k; i < n; i++) idx.push(i);
+    var yo = function (key, i) { return i >= 4 && isn(f[key][i]) && f[key][i - 4] ? (f[key][i] - f[key][i - 4]) / Math.abs(f[key][i - 4]) : null; };
+    var rows = [
+      ['Revenue', function (i) { return big(f.rev[i]); }],
+      ['Growth vs year-ago quarter', function (i) { var v = yo('rev', i); return isn(v) ? '<span class="' + (v >= 0 ? 'up' : 'dn') + '">' + sp(v) + '</span>' : '—'; }]
+    ];
+    if (!bank) rows.push(['Gross margin', function (i) { return f.gp[i] && f.rev[i] ? pc(f.gp[i] / f.rev[i]) : '—'; }], ['Operating margin', function (i) { return isn(f.ebit[i]) && f.rev[i] ? pc(f.ebit[i] / f.rev[i]) : '—'; }]);
+    rows.push(['Net income', function (i) { return big(f.ni[i]); }], ['Diluted EPS', function (i) { return usd(f.eps[i]); }],
+      ['EPS vs year-ago quarter', function (i) { var v = yo('eps', i); return isn(v) && f.eps[i - 4] > 0 ? '<span class="' + (v >= 0 ? 'up' : 'dn') + '">' + sp(v) + '</span>' : '—'; }]);
+    if (!bank) rows.push(['Operating cash flow', function (i) { return big(f.cfo[i]); }], ['Free cash flow', function (i) { return isn(f.cfo[i]) && isn(f.capex[i]) ? big(f.cfo[i] - f.capex[i]) : '—'; }],
+      ['Cash and investments', function (i) { return big(f.cash[i]); }], ['Net debt', function (i) { return isn(f.debt[i]) ? big(f.debt[i] - (f.cash[i] || 0)) : '—'; }]);
+    var L = n - 1, lr = yo('rev', L), le = yo('eps', L), om = isn(f.ebit[L]) && f.rev[L] ? f.ebit[L] / f.rev[L] : null, om0 = L >= 4 && isn(f.ebit[L - 4]) && f.rev[L - 4] ? f.ebit[L - 4] / f.rev[L - 4] : null;
+    var sum = 'In ' + Q.lab[L] + ' (the quarter to ' + fd(Q.ends[L]) + ') revenue was <b>' + big(f.rev[L]) + '</b>' + (isn(lr) ? ', ' + (lr >= 0 ? 'up ' : 'down ') + pc(Math.abs(lr)) + ' from a year earlier' : '') +
+      (isn(f.eps[L]) ? '; diluted EPS was <b>' + usd(f.eps[L]) + '</b>' + (isn(le) && f.eps[L - 4] > 0 ? ' (' + sp(le) + ')' : '') : '') +
+      (!bank && isn(om) ? '; operating margin ' + pc(om) + (isn(om0) ? ' against ' + pc(om0) + ' a year ago' : '') : '') + '.';
+    var fq = filingFor(Q.ends[L]);
+    var bars = (function () {
+      var v = idx.map(function (i) { return f.rev[i]; }), mxv = Math.max.apply(null, v.filter(isn).concat([1]));
+      return '<div class="qbars">' + idx.map(function (i) { var h = isn(f.rev[i]) && f.rev[i] > 0 ? f.rev[i] / mxv * 100 : 0, g = yo('rev', i); return '<div><i style="height:' + h.toFixed(1) + '%"></i><b>' + big(f.rev[i]) + '</b><span>' + esc(Q.lab[i]) + '</span><small>' + esc(Q.lab[i].replace(' FY', '·')) + '</small>' + (isn(g) ? '<em class="' + (g >= 0 ? 'up' : 'dn') + '">' + sp(g, 0) + '</em>' : '<em>&nbsp;</em>') + '</div>'; }).join('') + '</div>';
+    })();
+    $('#fin').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Quarter by quarter</h3><p>Each quarter on its own, from the company’s 10-Q filings. The fourth quarter is the 10-K year minus the first nine months, and cash flow is worked out from the year-to-date figures the filings report.</p></div>' + finToggle(true) + '</div>' +
+      '<p class="qsum">' + sum + (fq ? ' <a href="' + esc(fq.url) + '" target="_blank" rel="noopener">Read the ' + esc(fq.form) + ' &#8599;</a>' : '') + '</p>' + bars +
+      '<div class="scroll"><table class="tbl fin"><thead><tr><th>Fiscal quarter</th>' +
+      idx.map(function (i) { var x = filingFor(Q.ends[i]); return '<th>' + (x ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener" title="' + esc(x.form) + ' filed ' + fd(x.date) + '">' + esc(Q.lab[i]) + '</a>' : esc(Q.lab[i])) + '<small>' + mon(Q.ends[i]) + '</small></th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function (r) { return '<tr><td>' + r[0] + '</td>' + idx.map(function (i) { return '<td>' + r[1](i) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div></div>';
+    wireFin();
+  }
+
   function renderFinancials() {
+    var qok = CO.qs && CO.qs.ends && CO.qs.ends.length >= 2;
+    if (FINMODE === 'q' && qok) return renderQuarterly();
     var c = CO, f = c.f, n = c.ends.length, k = Math.min(5, n), idx = [], Q = newQ(c);
     for (var i = n - k; i < n; i++) idx.push(i);
     if (Q) {                       /* add the trailing twelve months as one more column */
@@ -599,14 +642,15 @@
     rows.push(['Net income', function (i) { return big(f.ni[i]); }], ['Diluted EPS', function (i) { return usd(f.eps[i]); }]);
     if (!bank) rows.push(['Free cash flow', function (i) { return isn(f.cfo[i]) && isn(f.capex[i]) ? big(f.cfo[i] - f.capex[i]) : '—'; }], ['Net debt', function (i) { return isn(f.debt[i]) ? big(f.debt[i] - (f.cash[i] || 0)) : '—'; }]);
     rows.push(['Return on equity', function (i) { return i > 0 && isn(f.ni[i]) && f.eq[i] > 0 && f.eq[i - 1] > 0 ? pc(f.ni[i] / ((f.eq[i] + f.eq[i - 1]) / 2)) : '—'; }], ['Dividend per share', function (i) { return f.dps[i] ? usd(f.dps[i]) : '—'; }]);
-    $('#fin').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Five years of results</h3><p>From the company’s 10-K annual reports on SEC EDGAR' + (Q ? ', plus the twelve months to ' + fd(Q.end) + ' from its latest 10-Q. Balance-sheet figures in that column are as of the quarter end.' : '.') + '</p></div></div><div class="scroll"><table class="tbl fin' + (Q ? ' ttm' : '') + '"><thead><tr><th>Fiscal year</th>' +
+    $('#fin').innerHTML = '<div class="panel"><div class="hd"><div><h3 class="sec">Five years of results</h3><p>From the company’s 10-K annual reports on SEC EDGAR' + (Q ? ', plus the twelve months to ' + fd(Q.end) + ' from its latest 10-Q. Balance-sheet figures in that column are as of the quarter end.' : '.') + '</p></div>' + finToggle(qok) + '</div><div class="scroll"><table class="tbl fin' + (Q ? ' ttm' : '') + '"><thead><tr><th>Fiscal year</th>' +
       idx.map(function (i) { return '<th>' + (i === n ? 'TTM ' + mon(Q.end) : 'FY' + c.ends[i].slice(0, 4)) + '</th>'; }).join('') + '</tr></thead><tbody>' +
       rows.map(function (r) { return '<tr><td>' + r[0] + '</td>' + idx.map(function (i) { return '<td>' + r[1](i) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div></div>';
+    wireFin();
   }
 
   function renderFilings() {
     var fl = CO.filings || [];
-    $('#filings').innerHTML = fl.length ? '<div class="eyebrow mono" style="margin-top:40px">Filings</div><div class="fil">' + fl.map(function (x) { return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener"><b>' + esc(x.form) + '</b><span>' + fd(x.date) + '</span><i>&#8599;</i></a>'; }).join('') + '</div>' : '';
+    $('#filings').innerHTML = fl.length ? '<div class="eyebrow mono" style="margin-top:40px">Filings</div><div class="fil">' + fl.map(function (x) { var lab = ''; if (x.per && CO.qs) { var j = CO.qs.ends.findIndex(function (e) { return Math.abs((new Date(e) - new Date(x.per)) / 864e5) <= 7; }); if (j >= 0) lab = x.form === '10-K' ? 'FY' + CO.qs.lab[j].slice(-2) : CO.qs.lab[j]; } if (!lab && x.per) lab = 'Period to ' + mon(x.per); return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener"><b>' + esc(x.form) + (lab ? ' <small>' + esc(lab) + '</small>' : '') + '</b><span>Filed ' + fd(x.date) + '</span><i>&#8599;</i></a>'; }).join('') + '</div>' : '';
   }
 
   /* ---------- inputs ---------- */

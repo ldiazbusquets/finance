@@ -361,7 +361,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 3   # bump when the extraction rules change, so every file is rebuilt
+FVER = 4   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -444,6 +444,10 @@ def update_fundamentals(cos, ua, limit):
                 print(f'  note quarter {t:6} {str(e)[:80]}', file=sys.stderr); qd = None
             if qd and (fac or so):
                 qd = None               # share-class adjusted companies keep annual figures only
+            if qd:                      # sanity check against the last 10-K: twelve months can't be half or double a year
+                fy, tr = last(f['rev']), qd['ttm'].get('rev')
+                if fy and tr and not 0.6 < tr / fy < 1.7:
+                    print(f'  note quarter {t:6} twelve-month revenue {tr} vs last year {fy}; keeping annual figures', file=sys.stderr); qd = None
             d.update({'t': t, 'n': name, 'sec': sec, 'sub': sub, 'cik': cik, 'model': model_of(sec, sub),
                       'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)

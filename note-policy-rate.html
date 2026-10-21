@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The policy rate path | Research note | LDB Finance</title>
+<meta name="description" content="Where the fed funds rate is, where markets expect it to go, and why.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="The policy rate path | Research note | LDB Finance">
+<meta property="og:description" content="Where the fed funds rate is, where markets expect it to go, and why.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/note-policy-rate.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The policy rate path | Research note | LDB Finance">
+<meta name="twitter:description" content="Where the fed funds rate is, where markets expect it to go, and why.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=11">
+</head>
+<body data-page="note">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html" class=on>Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html" class=on>Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph rp">
+  <div class="wrap">
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Macro &middot; MAC-02 &middot; October 21, 2026</div>
+    <h1>The policy <em>rate path</em></h1>
+    <p class="sub">The federal funds rate is the Fed&rsquo;s main tool: the rate banks charge each other overnight. In September 2026 the Fed raised it for the first time in more than three years. This note covers where it is, what the Fed says comes next, and what markets are pricing.</p>
+  </div>
+</header>
+<section class="tight rbody">
+  <div class="wrap"><article class="note"><div class="ntiles" data-tiles="DFF,DGS3MO,DGS2,CORE_PCE_YOY"></div><h2 class="nh">Where the rate is</h2><p>On September 16, 2026 the Federal Open Market Committee voted 12&ndash;0 to raise the target range by a quarter point, to <b>3.75&ndash;4.00%</b>, its first increase since July 2023. The effective rate is <b class="lv" data-v="DFF" data-f="v">&mdash;</b>. The statement said inflation &ldquo;remains elevated&rdquo; and that the move would support a &ldquo;timelier return&rdquo; to the 2% goal. It was the first hike under Chair Kevin Warsh, who took office in May.</p><div class="panel" style="margin:22px 0"><div class="hd"><div><h3 class="sec">The policy rate, the 2-year and inflation</h3><p>Five years of the effective fed funds rate, the 2-year Treasury and core PCE inflation.</p></div><div class="legend" data-legend='[["DFF", "acc", 2], ["DGS2", "t2", 1.4], ["CORE_PCE_YOY", "t3", 1.2, "4 4"]]'></div></div><svg class="chart" style="height:280px" data-chart='{"lines": [["DFF", "acc", 2], ["DGS2", "t2", 1.4], ["CORE_PCE_YOY", "t3", 1.2, "4 4"]], "r": "y5", "zero": 0, "dp": 0}'></svg><p class="fine" data-stamp></p></div><h2 class="nh">What the Fed projects</h2><p>In September, officials&rsquo; median projection (the &ldquo;dot plot&rdquo;) put the rate at <b>4.1% at the end of 2026</b>, implying one more quarter-point increase, and 4.1% at the end of 2027 before easing to 3.9% in 2028. Their estimate of the long-run neutral rate rose to 3.2%. Sixteen of eighteen officials expected at least one more hike this year.</p><h2 class="nh">What markets are pricing</h2><div data-calc="path"></div><h2 class="nh">Why it matters for investors</h2><p>Higher policy rates raise the discount rate used to value every stock and bond. They hit long-duration assets hardest: growth stocks, long bonds and utilities. That is a large part of why the cash-flow values in the holdings reports come in below today&rsquo;s prices, since the 10-year Treasury is <b class="lv" data-v="DGS10" data-f="v">&mdash;</b>. The next decision is due on October 27&ndash;28.</p><p class="key"><b>Takeaway.</b> The Fed has turned from pausing to tightening. Until core inflation clearly falls back toward 2%, the burden of proof is on rate cuts, not hikes.</p><div class="srcs"><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm" target="_blank" rel="noopener">FOMC statement, Sept 16, 2026<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="https://www.chase.com/personal/investments/learning-and-insights/article/federal-reserve-raises-rates-officials-signal-one-more-hike-in-2026" target="_blank" rel="noopener">Projections summary<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="https://fred.stlouisfed.org/series/DFF" target="_blank" rel="noopener">FRED: fed funds<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+  <p class="fine" style="margin-top:34px">Figures in copper come straight from FRED and update every weekday; other figures are as of October 21, 2026. For education only, not investment advice.</p></article></div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=10"></script>
+</body>
+</html>

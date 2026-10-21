@@ -41,7 +41,7 @@ SERIES = {
     'T10YIE':       ('T10YIE', '10-year breakeven inflation', 'Breakeven', 'rate', 'Inflation priced into Treasuries', None),
     'BAMLC0A0CM':   ('BAMLC0A0CM', 'Investment-grade spread', 'IG spread', 'rate', 'Over Treasuries', None),
     'PR_UNRATE':    ('PRUR', 'Puerto Rico unemployment', 'PR unemployment', 'macro', 'Monthly', None),
-    'PR_JOBS_YOY':  ('PRNA', 'Puerto Rico job growth', 'PR jobs', 'macro', 'Nonfarm payrolls, year over year', 'yoy'),
+    'PR_JOBS_YOY':  ('SMS72000000000000001', 'Puerto Rico job growth', 'PR jobs', 'macro', 'Nonfarm payrolls, year over year', 'yoy'),
 }
 CURVE = [('1M', 'DGS1MO'), ('3M', 'DGS3MO'), ('6M', 'DGS6MO'), ('1Y', 'DGS1'), ('2Y', 'DGS2'), ('3Y', 'DGS3'),
          ('5Y', 'DGS5'), ('7Y', 'DGS7'), ('10Y', 'DGS10'), ('20Y', 'DGS20'), ('30Y', 'DGS30')]

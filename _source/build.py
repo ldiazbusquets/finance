@@ -5,6 +5,7 @@ import costco
 import gev
 import rep
 import holdings
+import notes
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Inside the repo (this file in _source/), the site's own folders are the source: assets, scripts and
@@ -61,7 +62,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=10">
+<link rel="stylesheet" href="assets/site.css?v=11">
 </head>
 '''
 
@@ -87,7 +88,7 @@ def foot(extra=''):
   <span>{NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=9"></script>{extra}
+<script src="assets/site.js?v=10"></script>{extra}
 </body>
 </html>
 '''
@@ -255,9 +256,7 @@ def build():
   <div class="wrap">
     <div class="eyebrow mono">Fixed income</div><h3 class="sec">Bond notes</h3>
     <div class="grid3" style="margin-top:30px">
-      {card('', 'FI-01', 'Reading the yield curve', 'What the shape of the Treasury curve says about growth, inflation and the Fed.', '', 'plan')}
-      {card('', 'FI-02', 'Duration and convexity', 'How much a bond moves when rates move, worked through with real Treasuries.', '', 'plan')}
-      {card('', 'FI-03', 'Credit spreads', 'What investors demand to lend to riskier companies, and what that signals.', '', 'plan')}
+      {''.join(card(n['slug'] + '.html', n['code'], n['name'], n['card'], 'Read the note &rarr;', 'live') for n in notes.NOTES if n['cat'] == 'fi')}
     </div>
   </div>
 </section>
@@ -266,9 +265,7 @@ def build():
   <div class="wrap">
     <div class="eyebrow mono">Macro</div><h3 class="sec">Economy notes</h3>
     <div class="grid3" style="margin-top:30px">
-      {card('', 'MAC-01', 'Inflation, measured three ways', 'CPI, core CPI and core PCE: why they differ and which one the Fed watches.', '', 'plan')}
-      {card('', 'MAC-02', 'The policy rate path', 'Where the fed funds rate is, where markets expect it to go, and why.', '', 'plan')}
-      {card('', 'MAC-03', 'Puerto Rico’s economy', 'Growth, federal funds and the local tax picture for investors on the island.', '', 'plan')}
+      {''.join(card(n['slug'] + '.html', n['code'], n['name'], n['card'], 'Read the note &rarr;', 'live') for n in notes.NOTES if n['cat'] == 'mac')}
     </div>
   </div>
 </section>
@@ -492,6 +489,8 @@ def build():
     page('costco.html', 'research.html', 'Costco Wholesale (COST) research', 'A full fundamental analysis of Costco against Walmart, Target and BJ\u2019s, ending in a cash-flow value of $831.50 a share and a Hold / Wait.', 'report', costco.body(), attrs=' data-ticker="COST" data-then="970.31" data-val="831.50"')
     for t, r in holdings.R.items():
         page(r['slug'] + '.html', 'research.html', f"{r['name']} ({t}) research", f"{r['name']} valued with a cash-flow, bank or dividend model: ${r['base']:,} a share against ${r['price']:,.2f} at writing. {r['call']}.", 'report', rep.body(r), attrs=f' data-ticker="{t}" data-then="{r["price"]}" data-val="{r["base"]}"')
+    for n in notes.NOTES:
+        page(n['slug'] + '.html', 'research.html', re.sub('<[^>]+>', '', n['name']).replace('&rsquo;', '\u2019') + ' | Research note', re.sub('<[^>]+>', '', n['card']), 'note', notes.body(n))
     page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book, a cash-flow value of $442 a share and a Hold.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="890.33" data-val="442"')
 
     # ---------------- 404 ----------------

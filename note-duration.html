@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duration and convexity | Research note | LDB Finance</title>
+<meta name="description" content="How much a bond moves when rates move, worked through with real Treasuries.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Duration and convexity | Research note | LDB Finance">
+<meta property="og:description" content="How much a bond moves when rates move, worked through with real Treasuries.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/note-duration.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Duration and convexity | Research note | LDB Finance">
+<meta name="twitter:description" content="How much a bond moves when rates move, worked through with real Treasuries.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=11">
+</head>
+<body data-page="note">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html" class=on>Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html" class=on>Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph rp">
+  <div class="wrap">
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Fixed income &middot; FI-02 &middot; October 21, 2026</div>
+    <h1>Duration and <em>convexity</em></h1>
+    <p class="sub">A bond&rsquo;s price falls when interest rates rise. Duration measures by how much; convexity explains why the loss on a rise is smaller than the gain on an equal fall. Both are worked through below with today&rsquo;s Treasury yields.</p>
+  </div>
+</header>
+<section class="tight rbody">
+  <div class="wrap"><article class="note"><h2 class="nh">Duration in one sentence</h2><p><b>Modified duration</b> is the percentage a bond&rsquo;s price changes for a one-point change in its yield. A duration of 8 means a rise in yields from 5% to 6% costs about 8% of the price.</p><p>It grows with maturity, because the money comes back later and is discounted for longer, and it shrinks with a higher coupon, because more of the money comes back sooner. A zero-coupon bond&rsquo;s duration roughly equals its maturity.</p><div class="panel" style="margin:22px 0"><div class="hd"><div><h3 class="sec">Today&rsquo;s Treasuries, priced at par</h3><p>Each bond pays a coupon equal to today&rsquo;s yield for its maturity, twice a year. Price change for a one-point move in either direction.</p></div></div><div data-calc="dur"></div><p class="fine" data-stamp></p></div><h2 class="nh">Convexity: why the two columns are not equal</h2><p>Look across each row: the gain when yields fall is larger than the loss when they rise. That asymmetry is <b>convexity</b>. A bond&rsquo;s price is a curve, not a straight line, so duration (the slope at today&rsquo;s yield) overstates the loss and understates the gain for large moves.</p><p>Convexity matters most for long bonds and big moves. For a 30-year Treasury, the difference between the duration estimate and the true price change runs to several percentage points on a two-point move.</p><h2 class="nh">How investors use it</h2><p><b>Matching:</b> a pension fund that owes payments in 15 years holds bonds with a duration near 15, so a change in rates moves its assets and its liabilities together.</p><p><b>Positioning:</b> a manager who expects rates to fall lengthens duration to gain more; one who expects them to rise shortens it. <b>DV01</b>, the dollar change for a one-basis-point move, turns duration into money.</p><p class="key"><b>Takeaway.</b> Duration tells you how much rate risk you own; convexity tells you that owning long bonds pays you a little for big moves in either direction.</p><p class="cta2"><a class="pill cu" href="bonds.html"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Price any bond in the bond pricer</a></p>
+  <p class="fine" style="margin-top:34px">Figures in copper come straight from FRED and update every weekday; other figures are as of October 21, 2026. For education only, not investment advice.</p></article></div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=10"></script>
+</body>
+</html>

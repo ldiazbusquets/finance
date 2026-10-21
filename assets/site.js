@@ -216,6 +216,76 @@
     }).catch(function () { waiting($('#strip')); });
   }
 
+  /* ---------- research notes: live figures and charts written into the prose ---------- */
+  if (page === 'note') {
+    getJSON('data/markets.json').then(function (m) {
+      M = m; var S = m.series || {};
+      var pct2 = function (v) { return v.toFixed(2) + '%'; };
+      $$('[data-v]').forEach(function (e) {
+        var s = S[e.getAttribute('data-v')], how = e.getAttribute('data-f') || 'v';
+        if (!s || !s.last) return;
+        var f = fmt(s), first = (s.y1 && s.y1[0]) || null;
+        if (how === 'v') e.textContent = f.t(s.last.v);
+        else if (how === 'd') e.textContent = fdate(s.last.d, true);
+        else if (how === 'm') e.textContent = fmon(s.last.d);
+        else if (how === 'y1' && first) e.textContent = f.t(first[1]);
+        else if (how === 'c1' && first) { var x = s.last.v - first[1]; e.textContent = (s.fmt === 'rate' ? sgn(x) + Math.abs(Math.round(x * 100)) + ' bp' : sgn(x) + Math.abs(x).toFixed(1) + ' pp'); }
+      });
+      $$('[data-tiles]').forEach(function (e) { e.innerHTML = '<div class="tiles">' + e.getAttribute('data-tiles').split(',').map(function (k) { return tile(S[k], k); }).join('') + '</div>'; });
+      $$('[data-calc]').forEach(function (e) { var k = e.getAttribute('data-calc'); if (CALC[k]) e.innerHTML = CALC[k](m); });
+      function draw() {
+        $$('svg[data-chart]').forEach(function (el) {
+          var c = JSON.parse(el.getAttribute('data-chart'));
+          if (c.curve) { if (m.curve) curve(el, m.curve); return; }
+          var sets = c.lines.map(function (l) { var s = S[l[0]]; return s ? { pts: s[c.r || 'y5'] || s.y1 || [], color: css('--' + (l[1] || 'acc')), w: l[2] || 1.6, dash: l[3] || '', area: !!l[4] } : null; }).filter(Boolean);
+          line(el, sets, { zero: !!c.zero, yf: function (v) { return v.toFixed(c.dp || 0) + '%'; } });
+        });
+      }
+      redrawers.push(draw); draw();
+      $$('[data-legend]').forEach(function (e) {
+        e.innerHTML = JSON.parse(e.getAttribute('data-legend')).map(function (l) { var s = S[l[0]]; return s ? '<span><i style="background:var(--' + (l[1] || 'acc') + ')' + (l[3] ? ';height:1px' : '') + '"></i>' + esc(s.name) + '</span>' : ''; }).join('');
+      });
+      $$('[data-stamp]').forEach(function (e) { e.textContent = stamp() + ' · Source: FRED'; });
+      if (m.curve) $$('[data-curvelegend]').forEach(function (e) { e.innerHTML = m.curve.sets.map(function (s, i) { var c = ['var(--acc)', 'var(--t2)', 'var(--t3)'][i]; return '<span><i style="background:' + c + (i ? ';height:1px' : '') + '"></i>' + esc(s.label) + ' &middot; ' + fdate(s.date) + '</span>'; }).join(''); });
+    }).catch(function () {});
+  }
+  /* small calculators used inside notes */
+  var CALC = {
+    /* how much a par Treasury moves when yields rise or fall one point, at today's yields */
+    dur: function (m) {
+      if (!m.curve) return '';
+      var cur = m.curve.sets[0], ten = { '2Y': 2, '5Y': 5, '10Y': 10, '30Y': 30 };
+      function price(c, y, n) { var p = 0, k = n * 2; for (var i = 1; i <= k; i++) p += c / 2 / Math.pow(1 + y / 2, i); return p + 100 / Math.pow(1 + y / 2, k); }
+      var rows = Object.keys(ten).map(function (t) {
+        var y = cur.v[m.curve.tenors.indexOf(t)] / 100, n = ten[t], c = y * 100;
+        var up = price(c, y + .01, n) - 100, dn = price(c, y - .01, n) - 100, dm = (dn - up) / 2 / .01 / 100;
+        return '<tr><td>' + n + '-year Treasury</td><td>' + (y * 100).toFixed(2) + '%</td><td>' + dm.toFixed(1) + '</td><td class="dn">' + up.toFixed(1) + '%</td><td class="up">+' + dn.toFixed(1) + '%</td></tr>';
+      }).join('');
+      return '<div class="scroll"><table class="tbl allr"><thead><tr><th>Bond, priced at par</th><th>Yield today</th><th>Duration</th><th>Yields +1 point</th><th>Yields &minus;1 point</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    },
+    /* how the curve has moved over the past year: steepening or flattening, and whether yields rose or fell */
+    shape: function (m) {
+      if (!m.curve) return '';
+      var c = m.curve, i2 = c.tenors.indexOf('2Y'), i10 = c.tenors.indexOf('10Y'), now = c.sets[0].v, ago = c.sets[2].v;
+      if (now[i2] == null || ago[i2] == null) return '';
+      var d2 = now[i2] - ago[i2], d10 = now[i10] - ago[i10], bp = function (x) { return (x >= 0 ? '+' : '&minus;') + Math.abs(Math.round(x * 100)) + ' bp'; };
+      var up = d2 + d10 > 0, steep = d10 > d2;
+      var name = (up ? 'bear ' : 'bull ') + (steep ? 'steepening' : 'flattening');
+      var why = up ? (steep ? 'Long yields rose more than short ones: investors want more pay for inflation and for lending long to a government that borrows heavily.' : 'Short yields rose more than long ones: the market moved to price a tighter Fed, while long-run expectations moved less.')
+        : (steep ? 'Short yields fell more than long ones: the market expects the Fed to cut.' : 'Long yields fell more than short ones: investors expect slower growth or lower inflation ahead.');
+      return '<p>Over the past year the 2-year moved <b>' + bp(d2) + '</b> and the 10-year <b>' + bp(d10) + '</b>, a <b>' + name + '</b>. ' + why + '</p>';
+    },
+    /* the yield curve's slope and the 2-year against the policy rate */
+    path: function (m) {
+      var s = m.series, ff = s.DFF && s.DFF.last.v, t2 = s.DGS2 && s.DGS2.last.v, t3m = s.DGS3MO && s.DGS3MO.last.v;
+      if (!ff || !t2) return '';
+      var gap = t2 - ff;
+      return '<p>The 2-year Treasury yields <b>' + t2.toFixed(2) + '%</b> against an effective fed funds rate of <b>' + ff.toFixed(2) + '%</b>, a gap of <b>' + (gap >= 0 ? '+' : '&minus;') + Math.abs(Math.round(gap * 100)) + ' bp</b>. ' +
+        (gap > .25 ? 'Investors lending for two years want more than the Fed pays overnight, which usually means they expect <b>higher</b> policy rates ahead.' : gap < -.25 ? 'Investors accept less for two years than the Fed pays overnight, which usually means they expect <b>cuts</b>.' : 'The two are close, which suggests investors expect the policy rate to stay <b>roughly where it is</b>.') +
+        (t3m ? ' The 3-month bill, at ' + t3m.toFixed(2) + '%, shows where the market sees rates over the next few months.' : '') + '</p>';
+    }
+  };
+
   if (page === 'markets') {
     getJSON('data/markets.json').then(function (m) {
       M = m;

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inflation, measured three ways | Research note | LDB Finance</title>
+<meta name="description" content="CPI, core CPI and core PCE: why they differ and which one the Fed watches.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Inflation, measured three ways | Research note | LDB Finance">
+<meta property="og:description" content="CPI, core CPI and core PCE: why they differ and which one the Fed watches.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/note-inflation.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Inflation, measured three ways | Research note | LDB Finance">
+<meta name="twitter:description" content="CPI, core CPI and core PCE: why they differ and which one the Fed watches.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=11">
+</head>
+<body data-page="note">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html" class=on>Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html" class=on>Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph rp">
+  <div class="wrap">
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Macro &middot; MAC-01 &middot; October 21, 2026</div>
+    <h1>Inflation, <em>measured three ways</em></h1>
+    <p class="sub">The U.S. publishes several inflation measures, and they rarely agree. The differences come from what each one counts and how it weights it, and they matter because the Fed targets one measure in particular.</p>
+  </div>
+</header>
+<section class="tight rbody">
+  <div class="wrap"><article class="note"><div class="ntiles" data-tiles="CPI_YOY,CORE_CPI_YOY,CORE_PCE_YOY,T10YIE"></div><h2 class="nh">The three measures</h2><p><b>CPI</b>, from the Bureau of Labor Statistics, tracks the prices urban households pay for a fixed basket of goods and services. It rose <b class="lv" data-v="CPI_YOY" data-f="v">&mdash;</b> in the year to <b class="lv" data-v="CPI_YOY" data-f="m">&mdash;</b>.</p><p><b>Core CPI</b> removes food and energy, whose prices swing with weather and oil, to show the underlying trend: <b class="lv" data-v="CORE_CPI_YOY" data-f="v">&mdash;</b>.</p><p><b>Core PCE</b>, from the Bureau of Economic Analysis, measures prices across all consumer spending, including what is paid on households&rsquo; behalf such as employer health insurance. It rose <b class="lv" data-v="CORE_PCE_YOY" data-f="v">&mdash;</b> in the year to <b class="lv" data-v="CORE_PCE_YOY" data-f="m">&mdash;</b>. This is the measure the Federal Reserve targets at 2%.</p><div class="panel" style="margin:22px 0"><div class="hd"><div><h3 class="sec">Inflation, year over year</h3><p>Monthly readings over five years.</p></div><div class="legend" data-legend='[["CPI_YOY", "acc", 2], ["CORE_CPI_YOY", "t2", 1.4], ["CORE_PCE_YOY", "t3", 1.4, "4 4"]]'></div></div><svg class="chart" style="height:280px" data-chart='{"lines": [["CPI_YOY", "acc", 2], ["CORE_CPI_YOY", "t2", 1.4], ["CORE_PCE_YOY", "t3", 1.4, "4 4"]], "r": "y5", "zero": 0, "dp": 0}'></svg><p class="fine" data-stamp></p></div><h2 class="nh">Why the measures differ</h2><p><b>Weights:</b> housing is roughly a third of CPI but a much smaller share of PCE, so rents move CPI more. <b>Scope:</b> PCE includes spending that households do not pay directly, like medical care paid by insurers. <b>Formula:</b> PCE adjusts as people switch to cheaper goods when prices rise, which CPI does more slowly. Over long periods those differences have left CPI running a few tenths of a point above PCE, though the gap can flip for months at a time when items weighted more heavily in PCE, such as health care, rise faster.</p><h2 class="nh">What the bond market expects</h2><p>The <b>10-year breakeven</b>, the gap between ordinary and inflation-protected Treasury yields, shows the average inflation investors are pricing for the next decade: <b class="lv" data-v="T10YIE" data-f="v">&mdash;</b>. When it rises, investors think inflation will last; when it stays near 2&ndash;2.5%, they trust the Fed to bring it back.</p><p class="key"><b>Takeaway.</b> Watch core PCE for what the Fed will do, CPI for what households feel, and the breakeven for whether markets believe the Fed.</p><div class="srcs"><a href="https://fred.stlouisfed.org/series/CPIAUCSL" target="_blank" rel="noopener">FRED: CPI<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="https://fred.stlouisfed.org/series/PCEPILFE" target="_blank" rel="noopener">FRED: core PCE prices<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="https://fred.stlouisfed.org/series/T10YIE" target="_blank" rel="noopener">FRED: 10-year breakeven<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+  <p class="fine" style="margin-top:34px">Figures in copper come straight from FRED and update every weekday; other figures are as of October 21, 2026. For education only, not investment advice.</p></article></div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=10"></script>
+</body>
+</html>

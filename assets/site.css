@@ -589,3 +589,13 @@ svg.chart.lad text { font: 400 11.5px var(--mono); fill: var(--t2); }
 @media (max-width: 600px) { .xb { grid-template-columns: 110px 1fr 46px; } .xb em { display: none; } }
 .tbl th.l { text-align: left; padding-left: 20px; }
 .co .lk { flex-direction: column; align-items: flex-end; } .co .lk a { white-space: nowrap; } .co .nm b a:hover { color: var(--acc); }
+
+/* ---------- research notes ---------- */
+.note { max-width: 820px; }
+.note .nh { max-width: none; font: 400 clamp(24px, 3vw, 30px)/1.2 var(--sans); letter-spacing: -.02em; margin: 44px 0 14px; }
+.note p:not(.key):not(.fine):not(.cta2) { color: var(--t2); font-size: 16px; line-height: 1.7; margin: 0 0 14px; max-width: 70ch; }
+.note p b { color: var(--ink); font-weight: 500; }
+.note .lv { color: var(--acc); font-weight: 500; white-space: nowrap; }
+.ntiles { margin: 6px 0 10px; }
+.cta2 { margin-top: 26px; }
+.tbl.allr td:not(:first-child), .tbl.allr th:not(:first-child) { text-align: right; font-family: var(--mono); }

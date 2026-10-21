@@ -115,10 +115,10 @@ R['AMZN'] = dict(
          table(['Assumption', 'Base case', 'Basis'], [
              ['Revenue, 2026', '$810B', 'First half plus Q3 guidance'],
              ['Growth, 2027 and 2028', '12%, then 11%', 'AWS in the 20s, retail high single digits'],
-             ['Growth after that', 'Fades to 3% by year 10', ''],
+             ['Growth after that', 'Fades to 3% by year 10', 'A straight glide to long-run economic growth'],
              ['Operating margin', '13% rising to 18% by 2031', 'More AWS and advertising in the mix'],
              ['Net investment', '$130B, $100B, $70B, $50B, then $1 per $2 of new revenue', 'The data-center build peaks, then normalises'],
-             ['Tax rate', '19%', ''],
+             ['Tax rate', '19%', 'Below the 21% federal rate after credits'],
              ['Discount rate', '10.8%', 'Beta 1.33, 4.5% premium, a little debt'],
              ['Terminal growth', '3.0%', 'With a 20% return on new capital'],
          ], 'mid')
@@ -278,7 +278,7 @@ R['VRT'] = dict(
              ['Sales, 2026', '$14.0B', 'Guidance midpoint'],
              ['Growth, 2027 and 2028', '25%, then 16%', 'AI build-out continues, then slows'],
              ['Operating margin', '22.5% rising to 24.5%', 'Adjusted margin less acquisition amortization'],
-             ['Reinvestment', '$1 for every $3 of new sales', ''],
+             ['Reinvestment', '$1 for every $3 of new sales', 'Factories, working capital and acquisitions to add capacity'],
              ['Discount rate', '13.1%', 'Beta 1.83, 4.5% premium'],
              ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
          ], 'mid')
@@ -331,9 +331,9 @@ R['LHX'] = dict(
              ['Revenue, 2026', '$23.45B', 'Guidance midpoint'],
              ['Growth, 2027 and 2028', '7.5% a year', 'Reaches the $27B 2028 target'],
              ['Cash flow to the firm', '$3.65B, then $3.95B, then 14.6% of revenue', '$3.0&ndash;3.5B free cash flow plus after-tax interest'],
-             ['Growth after 2028', 'Fades to 3% by year 10', ''],
+             ['Growth after 2028', 'Fades to 3% by year 10', 'A straight glide to long-run economic growth'],
              ['Discount rate', '7.9%', 'Beta 0.80 (defense peers; the measured 0.61 understates risk after this year), about 19% debt'],
-             ['Terminal growth', '3.0%', ''],
+             ['Terminal growth', '3.0%', 'In line with long-run economic growth'],
          ], 'mid')
          + bridge([('PV of 10 years of cash flow', '$32.7B'), ('PV of terminal value', '$59.3B'), ('Enterprise value', '$92.1B'), ('Less net debt and preferred', '$10.5B'), ('Equity value', '$81.6B'), ('Shares', '187M')], '$436')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
@@ -432,7 +432,7 @@ R['BA'] = dict(
          prose('Boeing&rsquo;s profits are still distorted by the recovery, so the model works from a free cash flow path.')
          + table(['Assumption', 'Base case', 'Basis'], [
              ['Free cash flow, 2026&ndash;2030', '$2B, $6B, $9B, $10.5B, $11.5B', '2026 guidance, then production ramps toward 47&ndash;52 a month'],
-             ['Then', 'Grows 6%, fading to 3% by year 10', ''],
+             ['Then', 'Grows 6%, fading to 3% by year 10', 'Deliveries level off, then long-run economic growth'],
              ['Discount rate', '9.7%', 'Beta 1.35, about 23% debt at 6%'],
              ['Net debt', '$25.6B', 'June 30, 2026'],
          ], 'mid')

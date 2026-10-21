@@ -274,6 +274,18 @@ def _ttm_one(rows, E, fye):
     return ann['val'] + ytd['val'] - prev['val']
 
 
+def _ttm_from_quarters(qd, qs):
+    """L3Harris and a few others tag the year to date in a way the twelve-month formula can't use; when the
+    last four quarters are all known and end on the same date as the 10-Q, their sum is the twelve months."""
+    e, f = qs.get('ends') or [], qs.get('f') or {}
+    if len(e) < 4 or abs(_days(e[-1], qd['end'])) > 7:
+        return
+    for k in ('rev', 'gp', 'ebit', 'ni', 'cfo', 'capex'):
+        v = (f.get(k) or [])[-4:]
+        if qd['ttm'].get(k) is None and len(v) == 4 and None not in v:
+            qd['ttm'][k] = sum(v)
+
+
 def quarterly(facts, ends):
     """Figures from the latest 10-Q when it is newer than the last 10-K:
     trailing-twelve-month flows and the latest balance sheet."""
@@ -511,7 +523,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 9   # bump when the extraction rules change, so every file is rebuilt
+FVER = 10   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -598,6 +610,8 @@ def update_fundamentals(cos, ua, limit):
                 print(f'  note quarters {t:6} {str(e)[:80]}', file=sys.stderr); qs = None
             if qd and (fac or so):
                 qd = None               # share-class adjusted companies keep annual figures only
+            if qd and qs:               # a twelve-month line the 10-Q tags can't give: add up the last four quarters
+                _ttm_from_quarters(qd, qs)
             if qd:                      # sanity check against the last 10-K: twelve months can't be half or double a year
                 fy, tr = last(f['rev']), qd['ttm'].get('rev')
                 if fy and tr and not 0.6 < tr / fy < 1.7:

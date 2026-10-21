@@ -50,6 +50,25 @@ def pct(v):
     return '&mdash;' if v is None else ('&minus;' if v < 0 else '') + f'{abs(v) * 100:.1f}%'
 
 
+def since(t, P, B):
+    """The report against the latest close, written into the page so it reads without the script."""
+    try:
+        q = json.load(open(os.path.join(DATA, 'prices.json')))['px'][t]
+    except Exception:
+        q = None
+    sg = lambda v: ('+' if v > 0 else '&minus;' if v < 0 else '') + f'{abs(v) * 100:.1f}%'
+    if q and q.get('p'):
+        y, mth, dd = q['d'].split('-')
+        dt = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][int(mth) - 1] + f' {int(dd)}, {y}'
+        c, g = q['p'] / P - 1, q['p'] / B - 1
+        px, pxd, chg, cc, gap = f"${q['p']:,.2f}", 'Last close, ' + dt, sg(c), ' class="up"' if c >= 0 else ' class="dn"', sg(g)
+        rg = f"${round(q['lo']):,} &ndash; ${round(q['hi']):,}" if q.get('lo') and q.get('hi') else '&mdash;'
+    else:
+        px, pxd, chg, cc, gap, rg = '&mdash;', 'Last close', '&mdash;', '', '&mdash;', '&mdash;'
+    return (f'<div class="kv four"><div><b id="nPx">{px}</b><span id="nPxD">{pxd}</span></div><div><b id="nChg"{cc}>{chg}</b><span>Since the report&rsquo;s ${P:,.2f}</span></div>'
+            f'<div><b id="nGap">{gap}</b><span>Price against {d(B)} value</span></div><div><b id="nRg">{rg}</b><span>52-week range</span></div></div>')
+
+
 def fin_table(t, years=5, bank=False):
     """Five fiscal years plus the trailing twelve months, straight from the SEC data."""
     d = json.load(open(os.path.join(DATA, t + '.json')))
@@ -64,7 +83,14 @@ def fin_table(t, years=5, bank=False):
         return 'FY' + (str(int(e[:4]) - 1) if e[5:7] == '01' and int(e[8:10]) <= 7 else e[:4])
     cols = [(fy(ends[i]), {k: f[k][i] for k in f}) for i in idx]
     if q and q.get('ttm') and q['end'] > ends[-1]:
-        m = q['ttm']
+        m = dict(q['ttm'])
+        qs = d.get('qs') or {}
+        qe, qf = qs.get('ends') or [], qs.get('f') or {}
+        if len(qe) >= 4 and qe[-1][:7] == q['end'][:7]:   # fill gaps from the last four quarters
+            for k in ('rev', 'gp', 'ebit', 'ni', 'cfo', 'capex'):
+                v = (qf.get(k) or [])[-4:]
+                if m.get(k) is None and len(v) == 4 and None not in v:
+                    m[k] = sum(v)
         cols.append(('TTM ' + {'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'}[q['end'][5:7]] + ' ' + q['end'][:4], m))
     def g(c, k):
         return c[1].get(k)
@@ -152,7 +178,7 @@ def body(R):
         f'<div><span class="mono">Implied return</span><b class="{"up" if imp >= 0 else "dn"}">{"+" if imp >= 0 else "&minus;"}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>')
     now = '' if R.get('private') else f'''<div class="panel now" id="now">
         <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday. The analysis and the call are as of {R['date']} and change only when the report is revised.</p></div>{'' if R.get('noauto') else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
-        <div class="kv four"><div><b id="nPx">&mdash;</b><span id="nPxD">Last close</span></div><div><b id="nChg">&mdash;</b><span>Since the report&rsquo;s ${P:,.2f}</span></div><div><b id="nGap">&mdash;</b><span>Price against {d(B)} value</span></div><div><b id="nRg">&mdash;</b><span>52-week range</span></div></div>
+        {since(R['t'], P, B)}
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
     toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))

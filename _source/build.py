@@ -72,6 +72,27 @@ def head(title, desc, fn='index.html', root=''):
 '''
 
 
+def mk_static():
+    """Latest readings as plain text, for readers without JavaScript; the charts replace nothing here."""
+    try:
+        m = json.load(open(os.path.join(SRC, 'data', 'markets.json')))['series']
+    except Exception:
+        return ''
+    MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    rows = []
+    for k, v in m.items():
+        l = v.get('last') or {}
+        if l.get('v') is None:
+            continue
+        y, mo, dd = l['d'].split('-')
+        val = f"{l['v']:,.2f}" if k in ('SP500', 'VIXCLS', 'DCOILWTICO', 'DEXUSEU') else f"{l['v']:.2f}%"
+        if k == 'DCOILWTICO':
+            val = '$' + val
+        rows.append(f"<tr><td>{v['name']}</td><td>{val}</td><td>{MO[int(mo) - 1]} {int(dd)}, {y}</td></tr>")
+    return ('<noscript><div class="panel"><div class="hd"><div><h3 class="sec">Latest readings</h3><p>The charts need JavaScript. These are the latest values when this page was built.</p></div></div>'
+            '<table class="tbl"><thead><tr><th>Series</th><th>Latest</th><th>As of</th></tr></thead><tbody>' + ''.join(rows) + '</tbody></table></div></noscript>')
+
+
 def nav(cur):
     links = ''.join(f'<a href="{h}"{" class=on" if h == cur else ""}>{n}</a>' for h, n in NAV)
     mlinks = ''.join(f'<a href="{h}"{" class=on" if h == cur else ""}>{n}<span>&rarr;</span></a>' for h, n in NAV)
@@ -500,6 +521,7 @@ def build():
                  '<div class="meta"><span class="mono" id="stamp">&nbsp;</span><span class="mono">Source: FRED, Federal Reserve Bank of St. Louis</span></div>') + '''
 <section class="tight">
   <div class="wrap">
+    ''' + mk_static() + '''
     <div id="mwait"></div>
     <div class="tiles" id="mtiles" data-need></div>
 

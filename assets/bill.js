@@ -82,14 +82,13 @@
   }
   var TW = 4, TH = 3, baseLt = null, NB = 28, NT = 0, bk = [], bn = new Int32Array(29), shown = 0;
   /* every tile is drawn each frame, like the hero's windows: background cells twinkle on and off,
-     the engraving breathes, a band of light sweeps across the note, and on first view the note
+     the engraving breathes, and on first view the note
      assembles from the portrait outward. Tiles are grouped by brightness so each frame is a few fills. */
   function draw(now) {
     var lt = d.classList.contains('lt'), t = (now - t0) / 1000, tin = shown ? (now - shown) / 1000 : 0;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = lt ? 'rgb(84,48,26)' : 'rgb(236,176,116)';
-    var cyc = 8, sw = (t % cyc) / cyc, pos = -0.35 * W + sw * (W * 1.7 + H), band = Math.max(60, W * .07);
     for (var q = 0; q <= NB; q++) bn[q] = 0;
     for (var i = 0; i < NT; i++) {
       var p = tiles[i], a = lt ? p.ink : p.v;
@@ -97,7 +96,6 @@
         var s = Math.sin(t * p.sp * 6.283 + p.ph);
         if (p.k === 0) { if (p.tw) { var u = Math.max(0, s); a += (p.pk * (lt ? .55 : 1) - a) * u * u * u; } }
         else a *= .84 + .16 * s;
-        if (p.k) { var dd = (p.x * .55 + p.y - pos) / band; if (dd > -3 && dd < 3) a += Math.exp(-dd * dd) * (lt ? .25 : .38) * (p.k === 2 ? .7 : 1); }
         var r = still ? 1 : Math.max(0, Math.min(1, (tin - p.dl * 1.4) / .45));
         a *= r;
       }

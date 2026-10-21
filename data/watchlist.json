@@ -1,25 +1,84 @@
 {
-  "_note": "Companies covered on the Research page. Add or remove tickers here; the nightly update fetches their SEC figures. status: live (published), build (in progress) or plan (planned). page: optional link to the published report.",
+  "_note": "Companies covered on the Research page. Add or remove tickers here; the nightly update fetches their SEC figures. status: live (published), build (in progress) or plan (planned). page: optional link to the published report. holding: true for positions in the author's portfolio.",
   "companies": [
     {
-      "ticker": "COST",
-      "name": "Costco Wholesale",
-      "sector": "Consumer staples",
+      "ticker": "LHX",
+      "name": "L3Harris",
+      "sector": "Aerospace & defense",
       "status": "live",
-      "page": "costco.html"
+      "page": "l3harris.html",
+      "holding": true
+    },
+    {
+      "ticker": "VRT",
+      "name": "Vertiv",
+      "sector": "Electrical equipment",
+      "status": "live",
+      "page": "vertiv.html",
+      "holding": true
+    },
+    {
+      "ticker": "AWK",
+      "name": "American Water Works",
+      "sector": "Water utilities",
+      "status": "live",
+      "page": "american-water.html",
+      "holding": true
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sector": "Consumer & cloud",
+      "status": "live",
+      "page": "amazon.html",
+      "holding": true
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sector": "Communication services",
+      "status": "live",
+      "page": "meta.html",
+      "holding": true
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "sector": "Banks",
+      "status": "live",
+      "page": "jpmorgan.html",
+      "holding": true
     },
     {
       "ticker": "GEV",
       "name": "GE Vernova",
       "sector": "Industrials",
       "status": "live",
-      "page": "gev.html"
+      "page": "gev.html",
+      "holding": true
     },
     {
-      "ticker": "JPM",
-      "name": "JPMorgan Chase",
-      "sector": "Banks",
-      "status": "plan"
+      "ticker": "NVDA",
+      "name": "Nvidia",
+      "sector": "Semiconductors",
+      "status": "live",
+      "page": "nvidia.html",
+      "holding": true
+    },
+    {
+      "ticker": "BA",
+      "name": "Boeing",
+      "sector": "Aerospace & defense",
+      "status": "live",
+      "page": "boeing.html",
+      "holding": true
+    },
+    {
+      "ticker": "COST",
+      "name": "Costco Wholesale",
+      "sector": "Consumer staples",
+      "status": "live",
+      "page": "costco.html"
     },
     {
       "ticker": "GS",

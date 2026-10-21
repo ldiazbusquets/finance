@@ -22,3 +22,8 @@ show('FLY', {'bear': (0.7e9, 0, 2, .15, 4, 0, 200e6, 'ps'), 'base': (1.2e9, 0, 5
 show('Anthropic', {'bear': (120e9, .15, 20, .15, 4, 0, 1), 'base': (250e9, .30, 25, .15, 4, 0, 1), 'bull': (450e9, .40, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')
 show('OpenAI', {'bear': (150e9, .10, 20, .15, 4, 0, 1), 'base': (280e9, .25, 25, .15, 4, 0, 1), 'bull': (450e9, .35, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')
 show('Anduril', {'bear': (8e9, .05, 20, .13, 4, 0, 1), 'base': (14e9, .12, 25, .13, 4, 0, 1), 'bull': (22e9, .18, 35, .13, 4, 0, 1)}, unit=1e9, label='$B')
+# Kratos: 187.7M shares now, ~200M by 2030 (stock pay); net cash ~$1.3B (cash $1.44B less leases), less ~$0.1B 2026 burn
+# discount 10% (CAPM: 5.15% + 1.1 beta x 4.5%)
+show('KTOS', {'bear': (2.6e9, .06, 18, .10, 4, 1.2e9, 200e6), 'base': (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6), 'bull': (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6)}, 38.81)
+# Bloomberg LP: ~$15B revenue (Forbes/BCG estimates), mature, discount 9% (beta ~0.8)
+show('Bloomberg', {'bear': (16e9, .22, 18, .09, 4, 0, 1), 'base': (18e9, .28, 22, .09, 4, 0, 1), 'bull': (20e9, .33, 26, .09, 4, 0, 1)}, unit=1e9, label='$B')

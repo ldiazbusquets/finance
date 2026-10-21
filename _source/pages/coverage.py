@@ -245,3 +245,93 @@ R['ANDURIL'] = dict(
          prose('Anduril is growing like a top software company, but our scenarios value it far below the $61&ndash;90 billion private marks. For the plan to buy on IPO day, the numbers argue for patience: early public prices are likely to start from those marks, and the base case does not support them. L3Harris, rated Buy in its own report, offers defense exposure at a much lower price in the meantime.')
          + band('Watch it, <em>don&rsquo;t chase it.</em>', 'The business is excellent; the valuation already assumes it stays that way for a decade.')),
     ])
+
+# ================================================================ Kratos (watchlist, not held)
+KQ = 'https://www.stocktitan.net/news/KTOS/kratos-reports-second-quarter-2026-financial-iz9i8yyotxfi.html'
+R['KTOS'] = dict(
+    t='KTOS', slug='kratos', name='Kratos Defense', h1='Kratos <em>Defense</em>', sector='Defense', date=DATE, timing=', ahead of its third-quarter results in early November',
+    sub='Kratos makes low-cost drones, hypersonic test rockets, small jet engines and satellite ground systems. It is the closest listed company to Anduril. Revenue is growing about 20% a year, but the shares are down more than 70% from their January high because the price had run far ahead of the profits.',
+    call='Watch', method='Scenario model', price=38.81, pricenote='Midday, Oct 21, 2026', noauto=True, base=23, max=140, tick=20,
+    disclosure='The author holds no KTOS shares.',
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Scenario model', 14, 42, 23, '$14 to $42, base $23'), ('Probability-weighted', None, None, 26, '$26'),
+           ('Price at writing', None, None, 38.81, '$38.81'), ('52-week range', 38, 134, None, '$38 to $134'), ('Analyst average', None, None, 98, '$98')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Cheap drones, rockets <em>and engines.</em>',
+         prose('Kratos, based in San Diego, sells to the Pentagon in two segments. <b>Government Solutions</b> (about 83% of revenue) includes hypersonic and rocket systems such as Zeus and Erinyes, small turbojet and turbofan engines for missiles and drones, microwave electronics, and satellite ground networks. <b>Unmanned Systems</b> builds target drones and the <b>XQ-58 Valkyrie</b>, a low-cost jet drone designed to fly alongside crewed fighters, which the Marine Corps is buying.',
+               'Its strategy is the same as Anduril&rsquo;s: spend its own money to build cheap, &ldquo;attritable&rdquo; weapons before the government asks for them. The difference is that Kratos is public, so you can see the cost of that strategy every quarter.')),
+        ('results', 'Latest results', 'Revenue up 31%, <em>guidance raised, cash still going out.</em>',
+         stats([('$458.8M', 'Revenue, Q2 2026, +30.5%'), ('19.1%', 'Organic growth'), ('$38.2M', 'Adjusted EBITDA, 8.3% margin'), ('$2.08B', 'Backlog'), ('$15.0B', 'Bid pipeline'), ('$1.75&ndash;1.81B', '2026 revenue guidance, raised')])
+         + prose('Second-quarter revenue beat guidance, led by rocket systems (+50% organic) and engines (+43%). Net income was only $4.4 million ($0.02 a share) and the company had a small operating loss, because it is spending heavily on new factories. Management raised 2026 revenue guidance to $1.75&ndash;1.81 billion and expects free cash flow of <b>minus $85&ndash;105 million</b> this year, with $250&ndash;275 million of investment, including the Prometheus rocket-motor joint venture and capacity for about 40 Valkyries a year from 2028.')
+         + src([('Q2 2026 results', KQ), ('Earnings call', 'https://www.fool.com/earnings/call-transcripts/2026/08/11/kratos-ktos-q2-2026-earnings-call-transcript/')])),
+        ('fin', 'The numbers', 'Fast growth, <em>thin profit.</em>',
+         table(['', 'Value'], [['Revenue, last twelve months', '$1.52B (+25%)'], ['Net income, last twelve months', '$31M'], ['Adjusted EBITDA guidance, 2026', '$173&ndash;176M (about 10%)'],
+                                ['Free cash flow guidance, 2026', '&minus;$85 to &minus;105M'], ['Stock-based pay guidance, 2026', '$60&ndash;64M'], ['Trailing P/E', 'About 230&times;']], 'mid')
+         + prose('Margins are low because much of the work is cost-plus or fixed-price government contracting and because development spending runs through the income statement. Management expects the 2027 EBITDA margin to rise about one percentage point; 2027 guidance comes with the third-quarter results.')),
+        ('capital', 'Balance sheet and ownership', '$1.4 billion of cash, <em>paid for with new shares.</em>',
+         prose('Kratos held $1.44 billion of cash in June and almost no borrowings beyond about $140 million of finance leases, after raising roughly $1 billion by selling stock earlier in 2026. The share count is about 188 million. The cash covers the factory build-out, but stock-based pay of about $60 million a year keeps adding shares.')),
+        ('value', 'Valuation', 'Our scenarios give <em>$23 a share.</em>',
+         prose('Valued the same way as the other fast-growing companies here: 2030 revenue, operating margin after stock pay, and a multiple of after-tax profit, discounted back at 10% a year (Kratos&rsquo;s cost of equity from its beta of about 1.1).')
+         + scen([['Revenue in 2030', '$2.6B', '$3.2B', '$4.0B'], ['Operating margin', '6%', '9%', '12%'], ['Exit multiple', '18&times;', '22&times;', '28&times;'],
+                 ['Value per share', '$14', '$23', '$42'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$26</b>. Net cash of about $1.2 billion and 200 million shares by 2030 are included. The base case already assumes revenue grows about 16% a year and the operating margin more than triples.')),
+        ('implied', 'What the price assumes', 'At $39, <em>about $6 billion of revenue by 2030.</em>',
+         implied([['About $6.1 billion of revenue in 2030 at the base margin and multiple', '$1.75&ndash;1.81 billion guided for 2026'], ['Or roughly 35% growth a year for four years', '18&ndash;23% organic growth guided']])
+         + prose('Even after a 70% fall, the price sits near the bull case. At the January high of $134 it implied revenue several times larger. The analysts&rsquo; average target of $98 assumes faster growth and higher margins than this model does.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Valuation', 'Still about 4&times; sales and 40&times; next year&rsquo;s earnings for a contractor with 10% EBITDA margins.'],
+             ['Cash burn and dilution', 'Negative free cash flow and heavy stock pay; another share sale is possible.'],
+             ['Program wins', 'The Air Force&rsquo;s main collaborative combat aircraft awards went to rivals; Valkyrie depends on the Marines and new customers.'],
+             ['Competition', 'Anduril, General Atomics and the large primes chase the same drone and missile budgets.'],
+         ]) + prose('<b>Upside:</b> hypersonic testing, engines for low-cost cruise missiles, a second-source role on JASSM, Golden Dome and a larger Valkyrie order could all lift growth.')),
+        ('rec', 'Recommendation', 'Watch. <em>Not an Anduril substitute at this price.</em>',
+         prose('Kratos is a real, growing business with many of the same products as Anduril, but at $38.81 it trades well above our base case of $23 ($26 weighted) and earns very little today. Your earlier instinct to skip it still holds on the numbers. A price in the mid-$20s, or proof that margins are rising in the 2027 guidance, would change the view.')
+         + band('Same idea as Anduril, <em>at a fraction of the margin.</em>', 'Revenue growth is real; the profits that would justify the price are not here yet.')),
+    ])
+
+# ================================================================ Bloomberg LP (private)
+SEM = 'https://www.semafor.com/article/07/28/2026/bloombergs-post-mike-moves-are-in-motion'
+R['BLOOMBERG'] = dict(
+    t='BLOOMBERG', slug='bloomberg', name='Bloomberg LP', h1='Bloomberg <em>LP</em>', sector='Financial data (private)', date=DATE, timing='',
+    sub='Bloomberg LP rents the Terminal to more than 300,000 finance professionals and runs one of the world&rsquo;s largest newsrooms. It has never published its financials. In July it held early talks with bankers about an IPO or a stake sale, while saying Michael Bloomberg has no plans to sell.',
+    call='IPO watch', private=True, price=80, base=62, max=110, tick=10, suffix='B', disclosure=PRIV,
+    cells=[('Bankers&rsquo; estimate', '$80B+', 'Reported by Semafor, July 2026'), ('Revenue', '~$15B', 'Outside estimates, not disclosed'), ('Model value', '$62B', 'Base case; $64B weighted')],
+    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, bankers&rsquo; estimate and the price Bloomberg paid to buy back Merrill Lynch&rsquo;s stake in 2008.',
+    field=[('Scenario model', 35, 96, 62, '$35B to $96B, base $62B'), ('Probability-weighted', None, None, 64, '$64B'),
+           ('Bankers&rsquo; estimate', None, None, 80, '$80B'), ('Merrill buyback, 2008', None, None, 22, '$22B')],
+    toc=TOCV, chapters=[
+        ('overview', 'The business', 'The Terminal, <em>and everything around it.</em>',
+         prose('Founded in 1981 to sell bond prices to traders, Bloomberg LP now makes most of its money from the <b>Terminal</b>, which costs about $30,000 a year per user and is found on almost every trading desk. Around it sit enterprise data feeds, indices, trading and risk software, and <b>Bloomberg Media</b>: Bloomberg News (about 2,700 journalists), Businessweek, television, radio and Bloomberg.com.',
+               'The pieces reinforce each other: the news makes the Terminal more useful, and Terminal revenue pays for the newsroom. Decades of proprietary prices and articles are also valuable training data for AI models, which is one reason an AI lab or exchange could want a stake.')),
+        ('growth', 'Growth', 'About $15 billion of revenue, <em>growing slowly and steadily.</em>',
+         stats([('~$15B', 'Annual revenue (Forbes)'), ('~74%', 'Share from Terminals (BCG Expand)'), ('~67%', 'Share of the terminal market'), ('300,000+', 'Terminal users'), ('~$30,000', 'Price per Terminal per year'), ('~26,000', 'Employees')])
+         + prose('Bloomberg does not report results, so all figures are outside estimates. Revenue has grown slowly for years, mostly through annual price increases rather than more users. The Terminal&rsquo;s closest rival is LSEG&rsquo;s Workspace (formerly Refinitiv Eikon); FactSet, S&amp;P Global and newer AI research tools compete in parts of the market.')
+         + src([('Semafor, July 2026', SEM), ('Bloomberg&rsquo;s response', 'https://www.thewrap.com/industry-news/business/bloomberg-responds-semafor-ipo-report/'), ('IPO explainer', 'https://www.forex.com/en-us/news-and-analysis/bloomberg-ipo-everything-you-need-to-know-about-bloomberg/')])),
+        ('fin', 'The numbers', 'Almost nothing <em>is public.</em>',
+         table(['', 'Figure', 'Status'], [['Revenue', 'About $14.4&ndash;15B', 'Outside estimates'], ['Profit margins', 'Not disclosed; widely described as highly profitable', 'Unknown'],
+                                          ['Debt', 'Not disclosed', 'Unknown'], ['Terminal renewal rate', 'Not disclosed', 'Unknown']])
+         + prose('A prospectus would be the first look at margins, renewal rates and how much the newsroom costs. Those numbers decide the value far more than any estimate here.')),
+        ('capital', 'Funding and ownership', 'Owned 88% <em>by its founder.</em>',
+         prose('Michael Bloomberg, now 84, owns an estimated 88% and has said the company will eventually pass to Bloomberg Philanthropies. He recently moved some shares to the foundation, which would reduce taxes if the company listed or sold a stake. In 2008 Bloomberg bought back Merrill Lynch&rsquo;s 20% stake for $4.4 billion, which valued the whole company at about $22 billion.',
+               'In July 2026 Semafor reported early, informal talks with bankers about an IPO or another transaction. The company replied that &ldquo;Mike controls the firm&rdquo; and has no plans to sell. There is no filing, date or exchange. A minority stake sold to an AI lab, exchange or asset manager is as likely as a public listing, and might never reach retail investors.')
+         + src([('Merrill Lynch buyback, 2008', 'https://www.willkie.com/news/2008/07/willkie-advises-bloomberg-in-buyback-agreement-w__')])),
+        ('value', 'Valuation', 'Our scenarios give <em>about $62 billion.</em>',
+         prose('A mature, stable business, so a lower discount rate than the other private companies: 9% a year. Margins are an assumption, because Bloomberg has never disclosed them.')
+         + scen([['Revenue in 2030', '$16B', '$18B', '$20B'], ['Operating margin', '22%', '28%', '33%'], ['Exit multiple', '18&times;', '22&times;', '26&times;'],
+                 ['Company value today', '$35B', '$62B', '$96B'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>about $64 billion</b>. The multiple matters most. Quality data companies such as S&amp;P Global and MSCI have often traded near 30&times; earnings; at 30&times; the base case gives about <b>$85 billion</b>.')),
+        ('implied', 'What the valuation assumes', 'At $80 billion, <em>a premium multiple or faster growth.</em>',
+         implied([['$80B: about $23B of revenue in 2030 at a 28% margin and 22&times;', 'About $15B today'], ['Or the base case at about 28&times; earnings', 'Near what top data companies trade at']])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['No deal', 'Bloomberg says there are no plans to sell; it may never list.'],
+             ['Retail access', 'A stake sale to an AI lab or exchange would leave nothing for individual investors.'],
+             ['Control', 'Even after a listing, the founder and foundation would likely control the vote.'],
+             ['AI tools', 'Cheaper AI research tools could slow Terminal price increases.'],
+             ['Unknown numbers', 'Margins, debt and renewal rates are unpublished.'],
+         ]) + prose('<b>Upside:</b> pricing power, recurring revenue and a data archive that AI developers would pay to use.')),
+        ('rec', 'Our view', 'A KO-like business, <em>but price still matters.</em>',
+         prose('Your view that Bloomberg is a buy-and-hold business, more like Coca-Cola or Costco than SpaceX, fits what is known: dominant, recurring and slow-changing. Even so, the IPO price decides the return. Near the $80 billion bankers mention, the base case needs a multiple close to the best data companies, which is fair but not cheap. Much above $100 billion it would assume the bull case. The prospectus&rsquo;s margins and renewal rates are the numbers to read first.')
+         + band('The Coca-Cola of financial data, <em>if it ever lists.</em>', 'Worth owning at a fair price; there is no deal yet.')),
+    ])

@@ -158,7 +158,7 @@ def body(R):
       <div class="panel" style="margin-top:{'0' if R.get('private') else '16px'}">
         <div class="hd"><div><h3 class="sec">Where each method lands, {'company value' if R.get('private') else 'per share'}</h3><p>{R['fieldnote']} <span class="nowkey">The copper line marks the base case{'.' if R.get('private') else '; the fine dotted line is today&rsquo;s close.'}</span></p></div></div>
         {field(R)}{field(R, True)}
-        <p class="fine">Written on {R['date']}{R.get('timing', '')}. Figures are from the company&rsquo;s filings and releases unless noted. Not investment advice. {disc}</p>
+        <p class="fine">Written on {R['date']}{R.get('timing', '')}. {'Figures are from company statements and news reports, as linked; they are not audited.' if R.get('private') else 'Figures are from the company&rsquo;s filings and releases unless noted.'} Not investment advice. {disc}</p>
       </div>
 '''
     chs = ''.join(chap(n, c[0], c[1], c[2], c[3]) for n, c in enumerate(R['chapters'], 1))

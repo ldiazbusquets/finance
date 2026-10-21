@@ -153,6 +153,26 @@
       "date": "2026-10-21"
     },
     {
+      "ticker": "BLOOMBERG",
+      "name": "Bloomberg LP",
+      "sector": "Financial data (private)",
+      "status": "live",
+      "page": "bloomberg.html",
+      "private": true,
+      "call": "IPO watch",
+      "date": "2026-10-21"
+    },
+    {
+      "ticker": "KTOS",
+      "name": "Kratos Defense",
+      "sector": "Defense",
+      "status": "live",
+      "page": "kratos.html",
+      "call": "Watch",
+      "value": 23,
+      "date": "2026-10-21"
+    },
+    {
       "ticker": "COST",
       "name": "Costco Wholesale",
       "sector": "Consumer staples",

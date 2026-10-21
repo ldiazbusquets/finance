@@ -89,7 +89,7 @@ def foot(extra=''):
   <span>{NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=12"></script>{extra}
+<script src="assets/site.js?v=13"></script>{extra}
 </body>
 </html>
 '''
@@ -234,11 +234,11 @@ def build():
         up = r['base'] / r['price'] - 1
         return card(href, f"{t} &middot; {r['call']}", r['name'], CARDS[t] + f" Value ${r['base']:,} against ${r['price']:,.0f}.", 'Read the report &rarr;', 'live')
     holding_cards = ''.join(hcard(t) for t in ORDER)
-    PCARDS = {'ANTHROPIC': 'The maker of Claude, growing more than tenfold a year ahead of a November IPO.', 'OPENAI': 'ChatGPT&rsquo;s billion weekly users, and hundreds of billions to spend before profit.', 'ANDURIL': 'Autonomous weapons growing like software, valued like it too.'}
+    PCARDS = {'ANTHROPIC': 'The maker of Claude, growing more than tenfold a year ahead of a November IPO.', 'OPENAI': 'ChatGPT&rsquo;s billion weekly users, and hundreds of billions to spend before profit.', 'ANDURIL': 'Autonomous weapons growing like software, valued like it too.', 'BLOOMBERG': 'The Terminal and its newsroom: a cash machine that has never published its numbers.'}
     def pcard(t):
         r = coverage.R[t]
         return card(r['slug'] + '.html', f"Private &middot; {r['call']}", r['name'], PCARDS[t] + f" Model value ${r['base']:,}B against ${r['price']:,}B.", 'Read the report &rarr;', 'live')
-    priv_cards = ''.join(pcard(t) for t in ('ANTHROPIC', 'OPENAI', 'ANDURIL'))
+    priv_cards = ''.join(pcard(t) for t in ('ANTHROPIC', 'OPENAI', 'ANDURIL', 'BLOOMBERG'))
     research = ph('Research', 'Research', 'Deep dives on single companies, plus notes on bonds and the economy. Company figures are pulled from SEC filings automatically, so the numbers stay current between reports.',
                   '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>') + f'''
 <section class="tight" data-cat="eq">
@@ -250,6 +250,7 @@ def build():
     <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
+      {card('kratos.html', 'KTOS &middot; Watch', 'Kratos Defense', 'Drones, hypersonics and engines: the listed company closest to Anduril. Value $23 against $39.', 'Read the report &rarr;', 'live')}
       {card('costco.html', 'COST &middot; Hold / Wait', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}
     </div>
     <div class="split" style="align-items:end;margin-bottom:34px">

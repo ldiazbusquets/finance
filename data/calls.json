@@ -1,0 +1,135 @@
+{
+ "_note": "Every published call, appended when a report is written or its call changes. Never edit past rows.",
+ "calls": [
+  {
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "amazon.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 153,
+   "price": 262.63,
+   "held": true
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "american-water.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 100,
+   "price": 135.79,
+   "held": true
+  },
+  {
+   "t": "BA",
+   "name": "Boeing",
+   "page": "boeing.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 197,
+   "price": 190.47,
+   "held": true
+  },
+  {
+   "t": "GEV",
+   "name": "GE Vernova",
+   "page": "gev.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 442,
+   "price": 890.33,
+   "held": true
+  },
+  {
+   "t": "JPM",
+   "name": "JPMorgan Chase",
+   "page": "jpmorgan.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 284,
+   "price": 335.26,
+   "held": true
+  },
+  {
+   "t": "LHX",
+   "name": "L3Harris",
+   "page": "l3harris.html",
+   "date": "2026-10-20",
+   "call": "Buy",
+   "value": 436,
+   "price": 248.77,
+   "held": true
+  },
+  {
+   "t": "META",
+   "name": "Meta Platforms",
+   "page": "meta.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 516,
+   "price": 694.25,
+   "held": true
+  },
+  {
+   "t": "NVDA",
+   "name": "Nvidia",
+   "page": "nvidia.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 166,
+   "price": 216.47,
+   "held": true
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "vertiv.html",
+   "date": "2026-10-20",
+   "call": "Hold",
+   "value": 117,
+   "price": 203.56,
+   "held": true
+  },
+  {
+   "t": "AXON",
+   "name": "Axon Enterprise",
+   "page": "axon.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 289,
+   "price": 396.3,
+   "held": false
+  },
+  {
+   "t": "FLY",
+   "name": "Firefly Aerospace",
+   "page": "firefly.html",
+   "date": "2026-10-21",
+   "call": "Hold",
+   "value": 20,
+   "price": 17.41,
+   "held": true
+  },
+  {
+   "t": "KTOS",
+   "name": "Kratos Defense",
+   "page": "kratos.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 23,
+   "price": 38.81,
+   "held": false
+  },
+  {
+   "t": "SPCX",
+   "name": "SpaceX",
+   "page": "spacex.html",
+   "date": "2026-10-21",
+   "call": "Hold",
+   "value": 118,
+   "price": 162.57,
+   "held": true
+  }
+ ]
+}

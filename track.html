@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track record | LDB Finance</title>
+<meta name="description" content="Every call published on LDB Finance, scored against the S&P 500 since the day it was made.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Track record | LDB Finance">
+<meta property="og:description" content="Every call published on LDB Finance, scored against the S&P 500 since the day it was made.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/track.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/og/track.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Track record | LDB Finance">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Track record | LDB Finance">
+<meta name="twitter:description" content="Every call published on LDB Finance, scored against the S&P 500 since the day it was made.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/og/track.jpg">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=16">
+</head>
+<body data-page="track">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html" class=on>Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html" class=on>Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Research</div>
+  <h1>Track <em>record</em></h1>
+  <p class="sub">Every call this site publishes is logged on the day it is made and never edited. Here is how each one has done since, against the S&amp;P 500 over the same days.</p>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div id="tsum" class="kv four"></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Every call</h3><p>Return from the price on the day of the report to the last close, against the S&amp;P 500 over the same period. A Buy is right if it beats the index; a Hold or Watch is judged on whether the price moved toward the report&rsquo;s value.</p></div></div><div class="scroll"><table class="tbl" id="ttab"></table></div></div>
+    <p class="disc">The log started on October 20, 2026, so early results mostly reflect a few days of noise. Private-company views are not scored because they have no market price. Costco (FIN 370 coursework) is left out because its sections were priced on different dates. Not investment advice.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=13"></script>
+<script src="assets/hub.js?v=1"></script>
+</body>
+</html>

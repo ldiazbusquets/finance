@@ -28,6 +28,10 @@ SITE = 'https://ldiazbusquets.github.io/finance/'
 def head(title, desc, fn='index.html', root=''):
     t = NAME if title is None else f'{title} | {NAME}'
     url = SITE + ('' if fn == 'index.html' else fn)
+    ogf = fn.replace('.html', '.jpg')
+    own = os.path.exists(os.path.join(OUT, 'og', ogf))
+    img = f'{SITE}og/{ogf}' if own else f'{SITE}preview.png'
+    alt = t if own else 'LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles'
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,14 +44,14 @@ def head(title, desc, fn='index.html', root=''):
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}preview.png">
+<meta property="og:image" content="{img}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta property="og:image:alt" content="{alt}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{t}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="{SITE}preview.png">
+<meta name="twitter:image" content="{img}">
 <meta name="theme-color" content="#0C0A08">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
 <link rel="shortcut icon" href="/favicon.ico?v=3">
@@ -63,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=15">
+<link rel="stylesheet" href="assets/site.css?v=16">
 </head>
 '''
 
@@ -243,6 +247,14 @@ def build():
                   '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>') + f'''
 <section class="tight" data-cat="eq">
   <div class="wrap">
+    <div class="tools6">
+      <a href="ask.html"><span class="mono">AI</span><b>Ask the filings</b><p>Questions answered from 10-K and 10-Q figures, with sources.</p></a>
+      <a href="screener.html"><span class="mono">Screen</span><b>Screener</b><p>Filter the S&amp;P 500 by growth, margins, valuation and debt.</p></a>
+      <a href="compare.html"><span class="mono">Compare</span><b>Side by side</b><p>Two to four companies, figure by figure.</p></a>
+      <a href="track.html"><span class="mono">Scorecard</span><b>Track record</b><p>Every call, scored against the S&amp;P 500.</p></a>
+      <a href="earnings.html"><span class="mono">Calendar</span><b>Earnings hub</b><p>Upcoming reports and what the latest quarter changed.</p></a>
+      <a href="insiders.html"><span class="mono">Ownership</span><b>Insiders and funds</b><p>Executive trades and what famous investors own.</p></a>
+    </div>
     <a class="snapcta" href="snapshot.html"><div><span class="mono">Any S&amp;P 500 company</span><b>Search a company for an instant research snapshot</b><p>Growth, margins, cash, debt, a bear-to-bull valuation and peers, with annual 10-K and quarterly 10-Q figures, written from its filings in seconds.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Search</span></a>
     <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Holdings</h3></div><p>Every stock in the portfolio, valued with the same method. Written October 20, 2026 and refreshed after each quarter&rsquo;s results.</p></div>
     <div class="grid3 rcards">{holding_cards}</div>
@@ -323,6 +335,87 @@ def build():
 </section>
 '''
     page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=13"></script>')
+
+    # ---------------- calls ledger (track record) ----------------
+    MONTHS = {m: i + 1 for i, m in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])}
+    def iso(d):
+        m, day, y = re.match(r'([A-Za-z]+) (\d+), (\d{4})', d).groups()
+        return f'{y}-{MONTHS[m]:02d}-{int(day):02d}'
+    wlh = {c['ticker']: c for c in json.load(open(os.path.join(SRC, 'data', 'watchlist.json')))['companies']}
+    cur_calls = []
+    for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
+        cur_calls.append({'t': t, 'name': r['name'], 'page': r['slug'] + '.html', 'date': iso(r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
+    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': '2026-10-20', 'call': 'Hold', 'value': 442, 'price': 890.33, 'held': True})
+    lp = os.path.join(SRC, 'data', 'calls.json')
+    ledger = json.load(open(lp)) if os.path.exists(lp) else {'_note': 'Every published call, appended when a report is written or its call changes. Never edit past rows.', 'calls': []}
+    have = {(c['t'], c['date']) for c in ledger['calls']}
+    for c in cur_calls:
+        if (c['t'], c['date']) not in have:
+            ledger['calls'].append(c)
+    ledger['calls'].sort(key=lambda c: (c['date'], c['t']))
+    with open(lp, 'w') as f:
+        json.dump(ledger, f, indent=1)
+
+    def tool_page(fn, cur, eyebrow, h1, sub, kind, inner, title, desc, extra_head=''):
+        body = ph(eyebrow, h1, sub, extra_head) + f'''
+<section class="tight">
+  <div class="wrap">
+    {inner}
+  </div>
+</section>
+'''
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=1"></script>')
+
+    tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
+              'Every call this site publishes is logged on the day it is made and never edited. Here is how each one has done since, against the S&amp;P 500 over the same days.', 'track',
+              '''<div id="tsum" class="kv four"></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Every call</h3><p>Return from the price on the day of the report to the last close, against the S&amp;P 500 over the same period. A Buy is right if it beats the index; a Hold or Watch is judged on whether the price moved toward the report&rsquo;s value.</p></div></div><div class="scroll"><table class="tbl" id="ttab"></table></div></div>
+    <p class="disc">The log started on October 20, 2026, so early results mostly reflect a few days of noise. Private-company views are not scored because they have no market price. Costco (FIN 370 coursework) is left out because its sections were priced on different dates. Not investment advice.</p>''',
+              'Track record', 'Every call published on LDB Finance, scored against the S&P 500 since the day it was made.')
+
+    tool_page('screener.html', 'research.html', 'Research', 'Stock <em>screener</em>',
+              'Filter every S&amp;P 500 company, plus the companies covered here, by growth, profitability, valuation and debt. Figures come from SEC filings and the last close.', 'screener',
+              '''<div class="scrbar">
+      <div class="chips" id="presets" style="margin-top:0"></div>
+      <div class="sfl" id="filters"></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec" id="scount">Companies</h3><p>Click a column to sort; click a company for its full snapshot. Tick up to four to compare.</p></div><a class="pill gh sm" id="cmpgo" href="compare.html" hidden>Compare selected &rarr;</a></div><div class="scroll"><table class="tbl scr" id="stab"></table></div></div>
+    <p class="disc">Growth is the latest fiscal year; margins and returns use the latest twelve months where a newer 10-Q exists. Banks and insurers have no operating margin or net-debt figure. Not investment advice.</p>''',
+              'Stock screener', 'Screen the S&P 500 by growth, margins, valuation, debt and dividends, straight from SEC filings.')
+
+    tool_page('compare.html', 'research.html', 'Research', 'Compare <em>companies</em>',
+              'Put two to four companies side by side: growth, margins, cash, debt and valuation, from their annual and quarterly filings.', 'compare',
+              '''<div class="search" style="margin-top:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Add a company, like MSFT or Coca-Cola" autocomplete="off" spellcheck="false" aria-label="Add a company"><div class="sug" id="sug" role="listbox"></div></div>
+    <div class="chips" id="picked" style="margin-top:18px"></div>
+    <div id="cmp" style="margin-top:24px"></div>''',
+              'Compare companies', 'Compare up to four companies side by side from their SEC filings.')
+
+    tool_page('earnings.html', 'research.html', 'Research', 'Earnings <em>hub</em>',
+              'When each covered company reports next, and what its latest quarter changed. Dates come from the Nasdaq calendar; quarters come straight from the 10-Q filings.', 'earnings',
+              '''<div class="panel"><div class="hd"><div><h3 class="sec">Coming up</h3><p id="estamp">Holdings first, then the rest of the watchlist.</p></div></div><div id="ecal"></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What the latest quarter changed</h3><p>Each company&rsquo;s most recent quarter against the same quarter a year earlier, newest filing first.</p></div></div><div class="scroll"><table class="tbl" id="eq"></table></div></div>
+    <p class="disc">Dates marked &ldquo;estimated&rdquo; are projected from the company&rsquo;s past filing pattern until it announces a date. Not investment advice.</p>''',
+              'Earnings hub', 'Upcoming earnings dates and what each latest quarter changed, for every company covered on LDB Finance.')
+
+    tool_page('insiders.html', 'research.html', 'Research', 'Insiders <em>and funds</em>',
+              'Open-market buys and sells by executives and directors from SEC Form 4, and the latest holdings of well-known investors from their 13F filings.', 'insiders',
+              '''<div class="panel"><div class="hd"><div><h3 class="sec">Insider trading, past year</h3><p>Open-market purchases and sales only; stock grants, option exercises and shares withheld for tax are left out. Trades under a pre-arranged 10b5-1 plan are marked, since they say less about the insider&rsquo;s view.</p></div></div><div class="scroll"><table class="tbl" id="isum"></table></div><div id="idet" style="margin-top:22px"></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What famous investors own</h3><p id="fstamp">Latest 13F filings. 13Fs are filed 45 days after each quarter and show U.S. stock positions only.</p></div></div><div id="funds"></div></div>
+    <p class="disc">From SEC EDGAR. A 13F is a snapshot at quarter end and may have changed since. Not investment advice.</p>''',
+              'Insiders and funds', 'Insider buys and sells from SEC Form 4 and famous investors’ holdings from 13F filings, for the companies covered on LDB Finance.')
+
+    tool_page('ask.html', 'research.html', 'Research', 'Ask <em>the filings</em>',
+              'Ask a question about any covered company and get an answer built from its 10-K and 10-Q figures, with every number traced to its filing. On computers that support it, an AI model running privately in your browser can write the answer in plain English.', 'ask',
+              '''<div class="askbox panel">
+      <div class="askrow"><div class="search" style="margin:0;flex:1 1 220px;max-width:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Company, like NVDA or Costco" autocomplete="off" spellcheck="false" aria-label="Company"><div class="sug" id="sug" role="listbox"></div></div>
+      <span class="mono" id="acur">No company picked</span></div>
+      <form id="aform" class="askrow" autocomplete="off"><input id="aq" type="text" placeholder="Ask anything, like: Why did margins change last quarter?" aria-label="Your question"><button class="pill cu" type="submit"><span class="ic">&rarr;</span>Ask</button></form>
+      <div class="chips" id="asugg" style="margin-top:14px"></div>
+      <div class="aimode" id="aimode"></div>
+    </div>
+    <div id="alog" style="margin-top:16px"></div>
+    <p class="disc">Answers use only the company&rsquo;s reported figures and the last close; they do not include news, guidance or analyst estimates unless a report on this site covers them. The AI model runs on your device and nothing you type leaves your browser. Check important numbers against the linked filings. Not investment advice.</p>''',
+              'Ask the filings', 'Ask questions about any covered company, answered from its SEC 10-K and 10-Q figures with sources.')
 
     # ---------------- models ----------------
     models = ph('Models', 'Valuation <em>models</em>', 'Every model shows its inputs on the page. The live ones run inside the <a href="valuation.html" style="color:var(--acc)">Valuation</a> tool for any S&amp;P 500 company.') + f'''
@@ -524,6 +617,11 @@ def build():
         else:
             page(r['slug'] + '.html', 'research.html', f"{r['name']} ({t}) research", f"{r['name']} valued with a scenario model: ${r['base']:,} a share against ${r['price']:,.2f} at writing. {r['call']}.", 'report', rep.body(r), attrs=f' data-ticker="{t}" data-then="{r["price"]}" data-val="{r["base"]}"')
     page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book, a cash-flow value of $442 a share and a Hold.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="890.33" data-val="442"')
+
+    # ---------------- sitemap ----------------
+    pages = sorted(f for f in os.listdir(OUT) if f.endswith('.html') and f != '404.html')
+    with open(os.path.join(OUT, 'sitemap.xml'), 'w') as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{SITE}{"" if p == "index.html" else p}</loc></url>\n' for p in pages) + '</urlset>\n')
 
     # ---------------- 404 ----------------
     nf = ph('Error 404', 'Page <em>not found</em>', 'That page doesn\u2019t exist, or it has moved. Try one of these instead.',

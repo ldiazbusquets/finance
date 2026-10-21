@@ -302,9 +302,86 @@ def funds(ua):
     print(f'  ok   funds {len(out)} managers')
 
 
+# ------------------------------------------------------------------ track record
+def _daily(sym, start):
+    """{date: adjusted close} from start to today (dividends included)"""
+    p1 = int(datetime.fromisoformat(start + 'T00:00:00+00:00').timestamp()) - 6 * 86400
+    raw = json.loads(get(f'https://query1.finance.yahoo.com/v8/finance/chart/{sym}?period1={p1}&period2={int(NOW.timestamp())}&interval=1d&includeAdjustedClose=true',
+                         BROWSER, tries=2, timeout=20))
+    r = raw['chart']['result'][0]
+    adj = (r.get('indicators', {}).get('adjclose') or [{}])[0].get('adjclose') or r['indicators']['quote'][0]['close']
+    out = {}
+    for ts, c in zip(r.get('timestamp') or [], adj):
+        if c:
+            out[datetime.fromtimestamp(ts, timezone.utc).strftime('%Y-%m-%d')] = c
+    return out
+
+
+def _on_or_after(series, d):
+    for k in sorted(series):
+        if k >= d:
+            return k, series[k]
+    return None, None
+
+
+def _on_or_before(series, d):
+    best = (None, None)
+    for k in sorted(series):
+        if k <= d:
+            best = (k, series[k])
+    return best
+
+
+def _add_months(d, m):
+    y, mo, day = int(d[:4]), int(d[5:7]) + m, int(d[8:10])
+    y += (mo - 1) // 12; mo = (mo - 1) % 12 + 1
+    import calendar
+    return f'{y:04d}-{mo:02d}-{min(day, calendar.monthrange(y, mo)[1]):02d}'
+
+
+def track():
+    """every published call scored the same way: total return (dividends included) from the report date,
+    against the S&P 500 over exactly the same days, now and at 3, 6 and 12 months"""
+    calls = load(os.path.join(DATA, 'calls.json'), {}).get('calls', [])
+    if not calls:
+        return
+    first = min(c['date'] for c in calls)
+    spx = _daily('%5EGSPC', first); time.sleep(.3)
+    cache, out = {}, []
+    today = TODAY.isoformat()
+    for c in calls:
+        t = c['t']
+        try:
+            if t not in cache:
+                cache[t] = _daily(t.replace('.', '-'), first); time.sleep(.3)
+            px = cache[t]
+            d0, p0 = _on_or_before(px, c['date']); s0d, s0 = _on_or_before(spx, c['date'])
+            if not p0 or not s0:
+                continue
+            row = {**{k: c[k] for k in ('t', 'name', 'page', 'date', 'call', 'value', 'price', 'held') if k in c}, 'base': d0}
+            dn, pn = _on_or_before(px, today); sn = _on_or_before(spx, today)[1]
+            row.update(asof=dn, ret=round(pn / p0 - 1, 5), spx=round(sn / s0 - 1, 5))
+            row['ex'] = round(row['ret'] - row['spx'], 5)
+            cps = {}
+            for m in (3, 6, 12):
+                due = _add_months(c['date'], m)
+                if due <= today:
+                    dk, pk = _on_or_after(px, due); sk = _on_or_after(spx, due)[1]
+                    if pk and sk:
+                        cps[str(m)] = {'d': dk, 'ret': round(pk / p0 - 1, 5), 'spx': round(sk / s0 - 1, 5), 'ex': round(pk / p0 - sk / s0, 5)}
+                else:
+                    cps.setdefault('next', due) if 'next' not in cps else None
+            row['cp'] = cps
+            out.append(row)
+        except Exception as e:
+            print(f'  FAIL track {t} {str(e)[:60]}', file=sys.stderr)
+    save(os.path.join(DATA, 'track.json'), {'updated': STAMP, 'method': 'Total return including dividends (adjusted closes), from the close on the report date, against the S&P 500 over the same days.', 'calls': out})
+    print(f'  ok   track record {len(out)} calls scored')
+
+
 def run(ua):
     cos = covered()
-    for step, fn in (('earnings', lambda: earnings(cos)), ('insiders', lambda: insiders(cos, ua) if ua else None), ('funds', lambda: funds(ua) if ua else None)):
+    for step, fn in (('track record', track), ('earnings', lambda: earnings(cos)), ('insiders', lambda: insiders(cos, ua) if ua else None), ('funds', lambda: funds(ua) if ua else None)):
         try:
             fn()
         except Exception as e:

@@ -94,29 +94,27 @@
      TRACK RECORD
      ===================================================================================== */
   if (page === 'track') {
-    Promise.all([getJSON('data/calls.json'), opt('data/co/prices.json'), opt('data/markets.json')]).then(function (r) {
-      var calls = r[0].calls || [], P = (r[1] && r[1].px) || {}, spx = r[2] && r[2].series && r[2].series.SP500;
-      var hist = (spx && (spx.y1 || [])) || [], spNow = spx && spx.last && spx.last.v;
-      if (P['^GSPC'] && P['^GSPC'].p) { spNow = P['^GSPC'].p; hist = hist.filter(function (x) { return x[0] < P['^GSPC'].d; }).concat([[P['^GSPC'].d, P['^GSPC'].p]]); }
-      function spAt(d) { var v = null; hist.forEach(function (x) { if (x[0] <= d) v = x[1]; }); return v; }
-      var latest = {};
-      calls.forEach(function (c) { latest[c.t] = latest[c.t] && latest[c.t].date > c.date ? latest[c.t] : c; });
-      var rows = Object.keys(latest).map(function (t) {
-        var c = latest[t], px = P[t] && P[t].p, ret = px ? px / c.price - 1 : null, s0 = spAt(c.date), sret = s0 && spNow ? spNow / s0 - 1 : null;
-        var rel = isn(ret) && isn(sret) ? ret - sret : null, exp = c.value > c.price ? 1 : -1, age = days(c.date, (P[t] && P[t].d) || c.date);
-        var verdict = !isn(rel) ? '—' : age < 30 ? 'Too early' : (c.call === 'Buy' ? (rel > 0 ? 'Ahead' : 'Behind') : (rel * exp > 0 ? 'On track' : 'Off track'));
-        var prev = calls.filter(function (x) { return x.t === t && x.date < c.date; });
-        return { c: c, px: px, ret: ret, sret: sret, rel: rel, gap: px ? px / c.value - 1 : null, age: age, verdict: verdict, prev: prev };
-      }).sort(function (a, b) { return (b.c.held - a.c.held) || ((b.rel == null ? -9 : b.rel) - (a.rel == null ? -9 : a.rel)); });
-      var scored = rows.filter(function (x) { return isn(x.rel); }), mature = rows.filter(function (x) { return isn(x.rel) && x.age >= 30; });
-      var avg = function (a, k) { return a.length ? a.reduce(function (s, x) { return s + x[k]; }, 0) / a.length : null; };
-      var good = mature.filter(function (x) { return x.verdict === 'Ahead' || x.verdict === 'On track'; }).length;
-      $('#tsum').innerHTML = '<div><b>' + rows.length + '</b><span>Calls logged</span></div><div><b class="' + cls(avg(scored, 'ret')) + '">' + sp(avg(scored, 'ret')) + '</b><span>Average return since</span></div><div><b class="' + cls(avg(scored, 'rel')) + '">' + sp(avg(scored, 'rel')) + '</b><span>Average against the S&amp;P 500</span></div><div><b>' + (mature.length ? good + ' of ' + mature.length : '—') + '</b><span>' + (mature.length ? 'Calls on track (30+ days old)' : 'Hit rate starts after 30 days') + '</span></div>';
-      $('#ttab').innerHTML = '<thead><tr><th>Company</th><th>Date</th><th>Call</th><th>Price then</th><th>Value</th><th>Last close</th><th>Return</th><th>S&amp;P 500</th><th>Difference</th><th>Price vs value</th><th>Verdict</th></tr></thead><tbody>' +
-        rows.map(function (x) {
-          var c = x.c;
-          return '<tr><td><a href="' + esc(c.page) + '">' + esc(c.name) + '</a><small>' + esc(c.t) + (c.held ? ' · held' : ' · watchlist') + (x.prev.length ? ' · earlier: ' + x.prev.map(function (p) { return esc(p.call) + ' ' + fd(p.date, false); }).join(', ') : '') + '</small></td><td>' + fd(c.date) + '</td><td><span class="callb ' + esc(c.call.toLowerCase().replace(/\s.*/, '')) + '">' + esc(c.call) + '</span></td><td>' + usd(c.price) + '</td><td>' + usd(c.value, 0) + '</td><td>' + usd(x.px) + '</td><td class="' + cls(x.ret) + '">' + sp(x.ret) + '</td><td>' + sp(x.sret) + '</td><td class="' + cls(x.rel) + '">' + sp(x.rel) + '</td><td>' + sp(x.gap) + '</td><td>' + esc(x.verdict) + '</td></tr>';
+    Promise.all([opt('data/track.json'), getJSON('data/calls.json')]).then(function (r) {
+      var T = r[0], calls = (T && T.calls) || [];
+      if (!calls.length) { wait($('#ttab'), 'Scores appear after the next nightly data update.'); return; }
+      calls.sort(function (a, b) { return b.date.localeCompare(a.date) || a.name.localeCompare(b.name); });
+      function latest(c) { var k = ['12', '6', '3'].filter(function (m) { return c.cp && c.cp[m]; })[0]; return k ? { m: k, v: c.cp[k] } : null; }
+      function cpCell(c, m) { var x = c.cp && c.cp[m]; if (x) return '<span class="' + cls(x.ex) + '">' + sp(x.ex) + '</span><small>' + sp(x.ret) + ' vs ' + sp(x.spx) + '</small>'; var due = addM(c.date, +m); return '<span class="dim">' + fd(due, false) + '</span>'; }
+      function addM(d, m) { var y = +d.slice(0, 4), mo = +d.slice(5, 7) + m, dd = +d.slice(8, 10); y += Math.floor((mo - 1) / 12); mo = (mo - 1) % 12 + 1; var last = new Date(y, mo, 0).getDate(); return y + '-' + String(mo).padStart(2, '0') + '-' + String(Math.min(dd, last)).padStart(2, '0'); }
+      var scored = calls.filter(latest), ahead = scored.filter(function (c) { return latest(c).v.ex > 0; }).length;
+      var avg = function (a, f) { a = a.map(f).filter(isn); return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; };
+      var types = {}; calls.forEach(function (c) { (types[c.call] = types[c.call] || []).push(c); });
+      $('#tsum').innerHTML = '<div><b>' + calls.length + '</b><span>Calls logged since ' + fd(calls[calls.length - 1].date, false) + '</span></div>' +
+        '<div><b class="' + cls(avg(calls, function (c) { return c.ex; })) + '">' + sp(avg(calls, function (c) { return c.ex; })) + '</b><span>Average return against the S&amp;P 500 so far</span></div>' +
+        '<div><b>' + (scored.length ? ahead + ' of ' + scored.length : '&mdash;') + '</b><span>' + (scored.length ? 'Ahead of the S&amp;P 500 at their latest checkpoint' : 'First 3-month checkpoint: ' + fd(addM(calls[calls.length - 1].date, 3))) + '</span></div>' +
+        '<div><b class="tby">' + Object.keys(types).map(function (k) { var a = avg(types[k], function (c) { var l = latest(c); return l ? l.v.ex : c.ex; }); return esc(k) + ' <i class="' + cls(a) + '">' + sp(a) + '</i>'; }).join(' &middot; ') + '</b><span>Average against the index, by call</span></div>';
+      $('#ttab').innerHTML = '<thead><tr><th>Company</th><th>Date</th><th>Call</th><th>Price then</th><th>Value</th><th>Return</th><th>S&amp;P 500</th><th>Difference</th><th>3 months</th><th>6 months</th><th>12 months</th><th>Verdict</th></tr></thead><tbody>' +
+        calls.map(function (c) {
+          var l = latest(c), v = l ? (l.v.ex > 0 ? 'Ahead at ' + l.m + 'm' : 'Behind at ' + l.m + 'm') : 'First check ' + fd(addM(c.date, 3), false);
+          return '<tr><td><a href="' + esc(c.page) + '">' + esc(c.name) + '</a><small>' + esc(c.t) + (c.held ? ' &middot; held' : ' &middot; watchlist') + '</small></td><td>' + fd(c.date) + '</td><td><span class="callb ' + esc(c.call.toLowerCase().replace(/\s.*/, '')) + '">' + esc(c.call) + '</span></td><td>' + usd(c.price) + '</td><td>' + usd(c.value, 0) + '</td>' +
+            '<td class="' + cls(c.ret) + '">' + sp(c.ret) + '</td><td>' + sp(c.spx) + '</td><td class="' + cls(c.ex) + '">' + sp(c.ex) + '</td><td>' + cpCell(c, '3') + '</td><td>' + cpCell(c, '6') + '</td><td>' + cpCell(c, '12') + '</td><td>' + v + '</td></tr>';
         }).join('') + '</tbody>';
+      $('#tstamp').textContent = 'Prices to ' + fd(calls[0].asof || T.updated.slice(0, 10)) + '. ' + (T.method || '');
     }).catch(function () { wait($('#ttab'), 'The track record could not load. Try again in a moment.'); });
   }
 

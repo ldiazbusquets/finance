@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=23">
+<link rel="stylesheet" href="assets/site.css?v=24">
 </head>
 '''
 
@@ -374,14 +374,14 @@ def build():
   </div>
 </section>
 '''
-        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=4"></script>')
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=5"></script>')
 
     tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
-              'Every call this site publishes is logged on the day it is made and never edited. Here is how each one has done since, against the S&amp;P 500 over the same days.', 'track',
+              'Every call this site publishes is logged on the day it is made and never edited, then scored the same way: total return against the S&amp;P 500 over exactly the same days.', 'track',
               '''<div id="tsum" class="kv four"></div>
-    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Every call</h3><p>Return from the price on the day of the report to the last close, against the S&amp;P 500 over the same period. A Buy is right if it beats the index; a Hold or Watch is judged on whether the price moved toward the report&rsquo;s value.</p></div></div><div class="scroll"><table class="tbl" id="ttab"></table></div></div>
-    <p class="disc">The log started on October 20, 2026, so early results mostly reflect a few days of noise. Private-company views are not scored because they have no market price. Costco (FIN 370 coursework) is left out because its sections were priced on different dates. Not investment advice.</p>''',
-              'Track record', 'Every call published on LDB Finance, scored against the S&P 500 since the day it was made.')
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Every call</h3><p>Return includes dividends and runs from the close on the report date. Each call is checked against the S&amp;P 500 at three, six and twelve months; a call is <b>ahead</b> if it beat the index at its latest checkpoint. The call itself (Buy, Hold or Watch) is shown alongside and summarised separately above, so the method is the same for every recommendation.</p><p class="mono" id="tstamp" style="margin-top:8px">&nbsp;</p></div></div><div class="scroll"><table class="tbl" id="ttab"></table></div></div>
+    <p class="disc">Rows are never edited: when a report is revised, its new call is added as a new row and scored from its own date. The log started on October 20, 2026, so the first checkpoints arrive in January 2027 and results before then are mostly noise. Private-company views are not scored because they have no market price. Costco (FIN 370 coursework) is left out because its sections were priced on different dates. Not investment advice.</p>''',
+              'Track record', 'Every call published on LDB Finance, scored the same way against the S&P 500 at 3, 6 and 12 months.')
 
     tool_page('screener.html', 'research.html', 'Research<span class="kind auto" title="Generated from SEC filings and the last close by code, with no analyst review">Automated model</span>', 'Stock <em>screener</em>',
               'Filter every S&amp;P 500 company, plus the companies covered here, by growth, profitability, valuation and debt. Figures come from SEC filings and the last close.', 'screener',

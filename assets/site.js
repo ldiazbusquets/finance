@@ -204,6 +204,7 @@
     return 'Updated ' + MON[t.getMonth()] + ' ' + t.getDate() + ', ' + t.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   }
 
+  $$('footer .yr').forEach(function (e) { e.textContent = new Date().getFullYear(); });
   var page = document.body.getAttribute('data-page');
 
   /* ---------- market tape: the last close, holdings, upcoming earnings and the newest calls ---------- */

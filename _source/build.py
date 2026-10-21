@@ -1,5 +1,5 @@
 """Builds the LDB Finance static pages into ./out from shared pieces."""
-import os, re, shutil, json, sys
+import os, re, shutil, json, sys, datetime
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pages'))
 import costco
 import gev
@@ -90,10 +90,10 @@ def nav(cur):
 
 def foot(extra=''):
     return f'''<footer><div class="wrap">
-  <span>{NAME} &middot; For education only. Nothing here is investment advice.</span>
+  <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=14"></script>{extra}
+<script src="assets/site.js?v=15"></script>{extra}
 </body>
 </html>
 '''

@@ -389,6 +389,43 @@ html.lt .sug { box-shadow: 0 24px 60px rgba(60,35,15,.14); }
 .pw small { font: 400 12px var(--mono); }
 @media (max-width: 860px) { .scn { grid-template-columns: 1fr; } .pw { text-align: left; } }
 
+/* ---------- research snapshot ---------- */
+.snapcta { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; border-radius: 20px; border: 1px solid var(--line2); background: var(--s1); text-decoration: none; color: var(--ink); flex-wrap: wrap; }
+.snapcta:hover { border-color: color-mix(in srgb, var(--acc) 50%, transparent); }
+.snapcta .mono { font-size: 11px; color: var(--acc); } .snapcta b { display: block; font: 400 22px/1.25 var(--sans); letter-spacing: -.015em; margin-top: 6px; } .snapcta p { margin: 6px 0 0; color: var(--t2); font-size: 14px; max-width: 60ch; }
+.snapv { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 1px; margin-top: 26px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.snapv > div { background: var(--s1); padding: 18px 20px; min-width: 0; }
+.snapv .mono { display: block; font-size: 10.5px; color: var(--t2); }
+.snapv b { display: block; font: 300 30px/1.1 var(--sans); letter-spacing: -.02em; margin-top: 8px; white-space: nowrap; }
+.snapv b.num { font-family: var(--mono); font-weight: 400; font-size: 26px; }
+.snapv small { display: block; color: var(--t2); font-size: 12px; margin-top: 4px; }
+.snapv .call { background: linear-gradient(135deg, var(--cu1) 0%, var(--cu2) 55%, var(--cu3) 100%); color: #FFF8EF; }
+.snapv .call .mono, .snapv .call small { color: rgba(255,248,239,.75); }
+.snaprep { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 14px 18px; border: 1px solid color-mix(in srgb, var(--acc) 45%, transparent); border-radius: 14px; text-decoration: none; color: var(--ink); background: color-mix(in srgb, var(--acc) 8%, var(--s1)); }
+.snaprep .mono { display: block; font-size: 10.5px; color: var(--acc); } .snaprep b { display: block; font-weight: 500; font-size: 16px; margin-top: 4px; } .snaprep small { display: block; color: var(--t2); font-size: 12.5px; margin-top: 3px; } .snaprep .go { font: 500 13px var(--sans); color: var(--acc); white-space: nowrap; }
+.story { display: grid; grid-template-columns: 140px 1fr; gap: 0; margin: 0; }
+.story dt, .story dd { padding: 13px 0; border-top: 1px solid var(--line); margin: 0; }
+.story dt { font: 400 12px var(--mono); color: var(--t2); padding-top: 15px; }
+.story dd { font-size: 14.5px; color: var(--t2); line-height: 1.6; } .story dd b { color: var(--ink); font-weight: 500; }
+.snapc { position: relative; }
+.cplot { position: relative; display: flex; height: 230px; }
+.cc { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.cbar { flex: 1; width: 64%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.cbar span { font: 400 11px var(--mono); color: var(--t2); margin-bottom: 5px; white-space: nowrap; }
+.cbar i { display: block; width: 100%; border-radius: 4px 4px 0 0; background: color-mix(in srgb, var(--acc) 55%, transparent); }
+.cc em { font: 400 11px var(--mono); color: var(--ink); font-style: normal; margin-top: 8px; } .cc small { font: 400 11px var(--mono); color: var(--t3); margin-top: 2px; }
+.cplot svg { position: absolute; left: 0; top: 0; width: 100%; height: calc(100% - 44px); overflow: visible; pointer-events: none; }
+.cplot svg path { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.cplot > b { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--ink); transform: translateY(0); }
+@media (max-width: 600px) { .cbar span { font-size: 9px; } .cbar { width: 78%; } }
+.lgd { display: flex; gap: 16px; flex-wrap: wrap; font: 400 11px var(--mono); color: var(--t2); }
+.lgd i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.lgd i.b { background: color-mix(in srgb, var(--acc) 55%, transparent); } .lgd i.l { height: 2px; background: var(--ink); vertical-align: 3px; }
+.tbl.snapt td:not(:first-child), .tbl.snapt th:not(:first-child) { text-align: right; }
+.impl2 { margin: 16px 0 0; font-size: 14px; color: var(--t2); padding-left: 12px; border-left: 2px solid var(--acc); } .impl2 b { color: var(--ink); }
+@media (max-width: 860px) { .snapv { grid-template-columns: 1fr 1fr; } .story { grid-template-columns: 1fr; } .story dd { border-top: 0; padding-top: 0; } }
+@media (max-width: 420px) { .snapv b { font-size: 22px; white-space: normal; } .snapv b.num { font-size: 21px; } }
+
 /* ---------- research report ---------- */
 .rp .eyebrow a { color: var(--acc); }
 .rp .eyebrow a:hover { text-decoration: underline; }

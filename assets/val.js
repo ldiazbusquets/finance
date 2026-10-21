@@ -37,6 +37,7 @@
   /* ---------- state ---------- */
   var IX = null, PX = {}, RF = null, RFd = null, CO = null, A = null, AUTO = null;
   var ERP_DEFAULT = 0.045;
+  var SNAP = document.body.getAttribute('data-page') === 'snapshot', WL = {};
 
   /* ---------- search ---------- */
   var inp = $('#q'), list = $('#sug'), sel = -1, hits = [];
@@ -75,8 +76,10 @@
   Promise.all([
     getJSON('data/co/index.json').catch(function () { return null; }),
     getJSON('data/co/prices.json').catch(function () { return {}; }),
-    getJSON('data/markets.json').catch(function () { return {}; })
+    getJSON('data/markets.json').catch(function () { return {}; }),
+    getJSON('data/watchlist.json').catch(function () { return {}; })
   ]).then(function (r) {
+    ((r[3] && r[3].companies) || []).forEach(function (c) { if (c.page) WL[c.ticker] = c; });
     IX = r[0] && r[0].rows && r[0].rows.length ? r[0] : null;
     PX = (r[1] && r[1].px) || {};
     var s10 = r[2] && r[2].series && r[2].series.DGS10;
@@ -95,11 +98,11 @@
     getJSON('data/co/' + fn(row[0]) + '.json').then(function (d) {
       CO = d; CO.row = row; CO.p = PX[row[0]] || null;
       try { history.replaceState(null, '', '?t=' + encodeURIComponent(row[0])); } catch (e) {}
-      document.title = row[1] + ' (' + row[0] + ') valuation | LDB Finance';
+      document.title = row[1] + ' (' + row[0] + ') ' + (SNAP ? 'snapshot' : 'valuation') + ' | LDB Finance';
       AUTO = assume(CO); A = JSON.parse(JSON.stringify(AUTO));
       $('#status').innerHTML = '';
       $('#out').hidden = false;
-      renderStatic(); renderModel();
+      renderStatic(); if (SNAP) renderSnap(); else renderModel();
       $('#out').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }).catch(function () { $('#status').innerHTML = '<div class="wait">Figures for ' + esc(row[1]) + ' are still being collected. Check back after the next update.</div>'; });
   }
@@ -343,18 +346,7 @@
     if (c.p && isn(c.p.lo)) lines.push({ name: '52-week range', lo: c.p.lo, base: null, hi: c.p.hi, ref: true });
 
     /* what the price implies */
-    var implied = '';
-    if (price && a.model === 'dcf' && !(c.model === 'reit' && dd)) {
-      var f0 = function (dg) { return model(a, { dg: dg }).ps - price; }, lo = -0.4, hi = 1.0;
-      if (isn(f0(lo)) && isn(f0(hi)) && f0(lo) < 0 && f0(hi) > 0) {
-        for (var it = 0; it < 50; it++) { var mid = (lo + hi) / 2; if (f0(mid) > 0) hi = mid; else lo = mid; }
-        var gi = (G ? a.g0 : a.g1) + (lo + hi) / 2, gh = cagr(c.f.rev, 3, lastIdx(c.f.rev));
-        implied = 'At ' + usd(price) + ', the market is pricing in revenue growth of about <b>' + pc(gi) + ' a year</b> ' + (G ? 'for ' + Math.round(a.hold) + ' years before it fades' : 'for five years') + (isn(gh) ? ', against ' + pc(gh) + ' over the last three.' : '.');
-      } else if (isn(f0(hi)) && f0(hi) < 0) implied = 'Even very fast growth doesn\u2019t reach today\u2019s price with these margins and this discount rate; the market expects more than the model allows.';
-    } else if (price && a.model === 'bank' && isn(res.bvps) && res.bvps > 0) {
-      var roeI = res.g + price / res.bvps * (res.K - res.g);
-      implied = 'At ' + usd(price) + ', the market is pricing in a lasting return on equity of about <b>' + pc(roeI) + '</b>, against ' + pc(AUTO.roe) + ' recently.';
-    }
+    var implied = impliedTxt(c, a, res, G, price, dd);
 
     /* verdict */
     var v = lines[0].base, up = isn(v) && price ? v / price - 1 : null;
@@ -445,6 +437,23 @@
       (Math.abs(SC.tot - 1) > 0.001 ? '<p class="warn">The probabilities add up to ' + pc(SC.tot, 0) + ', so they are scaled to 100%.</p>' : '') + '</div>';
   }
 
+  function impliedTxt(c, a, res, G, price, dd) {
+    var implied = '';
+    if (price && a.model === 'dcf' && !(c.model === 'reit' && dd)) {
+      var f0 = function (dg) { return model(a, { dg: dg }).ps - price; }, lo = -0.4, hi = 1.0;
+      if (isn(f0(lo)) && isn(f0(hi)) && f0(lo) < 0 && f0(hi) > 0) {
+        for (var it = 0; it < 50; it++) { var mid = (lo + hi) / 2; if (f0(mid) > 0) hi = mid; else lo = mid; }
+        var gi = (G ? a.g0 : a.g1) + (lo + hi) / 2, gh = cagr(c.f.rev, 3, lastIdx(c.f.rev));
+        implied = 'At ' + usd(price) + ', the market is pricing in revenue growth of about <b>' + pc(gi) + ' a year</b> ' + (G ? 'for ' + Math.round(a.hold) + ' years before it fades' : 'for five years') + (isn(gh) ? ', against ' + pc(gh) + ' over the last three.' : '.');
+      } else if (isn(f0(hi)) && f0(hi) < 0) implied = 'Even very fast growth doesn\u2019t reach today\u2019s price with these margins and this discount rate; the market expects more than the model allows.';
+    } else if (price && a.model === 'bank' && isn(res.bvps) && res.bvps > 0) {
+      var roeI = res.g + price / res.bvps * (res.K - res.g);
+      implied = 'At ' + usd(price) + ', the market is pricing in a lasting return on equity of about <b>' + pc(roeI) + '</b>, against ' + pc(AUTO.roe) + ' recently.';
+    }
+
+    return implied;
+  }
+
   function sens(title, rl, cl, rows, cols, fnv, price) {
     var h = '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">' + title + '</h3><p>Green is above the last close, red below. The middle cell is the base case.</p></div></div><div class="scroll"><table class="tbl sens"><thead><tr><th>' + rl + ' ↓ / ' + cl + ' →</th>' + cols.map(function (g) { return '<th>' + pc(g) + '</th>'; }).join('') + '</tr></thead><tbody>';
     rows.forEach(function (w, i) {
@@ -463,6 +472,93 @@
     h += '<tr class="med"><td>Peer median</td><td></td>' + keys.map(function (k) { return '<td>' + mx(median(ps.map(function (p) { return p[ci(k[0])]; }).filter(function (x) { return isn(x) && x > 0 && x < 200; }))) + '</td>'; }).join('') + '</tr>';
     h += '<tr class="med"><td>Implied value per share</td><td></td>' + keys.map(function (k) { var x = cp.find(function (y) { return y.key === k[0]; }); return '<td>' + (x && x.base > 0 ? usd(x.base) : '—') + '</td>'; }).join('') + '</tr>';
     return h + '</tbody></table></div></div>';
+  }
+
+  /* ---------- research snapshot: the same model, written up as a short report ---------- */
+  function renderSnap() {
+    var c = CO, f = c.f, a = A, r = c.row, price = a.price, i = lastIdx(f.rev) >= 0 ? lastIdx(f.rev) : lastIdx(f.ni), Q = newQ(c);
+    var bankM = a.model === 'bank', G = !bankM && a.gm === 'growth', SC = scenarios(a), res = bankM ? bank(a) : model(a), dd = ddm(c, a);
+    var base = res.ps, wt = SC.wt, gap = isn(wt) && price ? wt / price - 1 : null;
+    var sig = !isn(gap) ? ['Not enough data', ''] : gap > 0.15 ? ['Below model value', 'up'] : gap < -0.15 ? ['Above model value', 'dn'] : ['Near model value', ''];
+    var yr = function (j) { var e = c.ends[j] || ''; return 'FY' + (e.slice(5, 7) === '01' && +e.slice(8, 10) <= 7 ? +e.slice(0, 4) - 1 : e.slice(0, 4)); };
+    var rep = WL[r[0]], h = '';
+    /* signal strip */
+    h += '<div class="snapv"><div class="call"><span class="mono">Model signal</span><b>' + sig[0] + '</b><small>Automatic, not a recommendation</small></div>' +
+      '<div><span class="mono">Base case</span><b class="num">' + (isn(base) && base > 0 ? usd(base, 0) : 'n/a') + '</b><small>' + (bankM ? 'Excess-return model' : G ? 'Cash-flow model, high growth' : 'Cash-flow model') + '</small></div>' +
+      '<div><span class="mono">Probability-weighted</span><b class="num">' + (isn(wt) && wt > 0 ? usd(wt, 0) : 'n/a') + '</b><small>Bear, base, bull at 25/50/25</small></div>' +
+      '<div><span class="mono">Gap to price</span><b class="num ' + (gap >= 0 ? 'up' : 'dn') + '">' + (isn(gap) ? sp(gap) : '—') + '</b><small>Weighted value vs ' + usd(price) + '</small></div></div>';
+    if (rep && rep.page) h += '<a class="snaprep" href="' + esc(rep.page) + '"><div><span class="mono">Published report' + (rep.date ? ' &middot; ' + esc(rep.date) : '') + '</span><b>' + (rep.call ? esc(rep.call) + (rep.value ? ', value ' + usd(rep.value, 0) + ' a share' : '') : 'Written research on ' + esc(r[1])) + '</b><small>The reviewed view, with sources. The automatic figures below use only reported numbers.</small></div><span class="go">Read it &rarr;</span></a>';
+    /* the story in the numbers */
+    var pts = [];
+    var g3 = cagr(f.rev, 3, i), gl = i > 0 && f.rev[i] > 0 && f.rev[i - 1] > 0 ? f.rev[i] / f.rev[i - 1] - 1 : null;
+    if (isn(f.rev[i])) {
+      var t = 'Revenue was <b>' + big(f.rev[i]) + '</b> in ' + yr(i) + (isn(g3) ? ', growing ' + pc(g3) + ' a year over three years' : '') + (isn(gl) ? ' and ' + sp(gl) + ' in the latest year' : '') + '.';
+      if (isn(g3) && isn(gl)) t += gl > g3 + 0.03 ? ' Growth is <b>speeding up</b>.' : gl < g3 - 0.03 ? ' Growth is <b>slowing</b>.' : ' Growth is <b>steady</b>.';
+      if (Q && isn(Q.ttm.rev)) t += ' Over the twelve months to ' + fd(Q.end) + ' it was ' + big(Q.ttm.rev) + '.';
+      pts.push(['Growth', t]);
+    }
+    if (!bankM) {
+      var mN = isn(f.ebit[i]) && f.rev[i] ? f.ebit[i] / f.rev[i] : null, m3 = i >= 3 && isn(f.ebit[i - 3]) && f.rev[i - 3] ? f.ebit[i - 3] / f.rev[i - 3] : null;
+      if (Q && isn(Q.ttm.ebit) && Q.ttm.rev) mN = Q.ttm.ebit / Q.ttm.rev;
+      if (isn(mN)) pts.push(['Margins', 'Operating margin is <b>' + pc(mN) + '</b>' + (isn(m3) ? (mN > m3 + 0.01 ? ', up from ' : mN < m3 - 0.01 ? ', down from ' : ', about the same as ') + pc(m3) + ' three years earlier' : '') + '.' + (mN < 0.05 ? ' That is thin, so small changes in costs move profit a lot.' : mN > 0.3 ? ' That is high, a sign of pricing power.' : '')]);
+      var cfo = Q && isn(Q.ttm.cfo) ? Q.ttm.cfo : f.cfo[i], cx = Q && isn(Q.ttm.capex) ? Q.ttm.capex : f.capex[i], ni = Q && isn(Q.ttm.ni) ? Q.ttm.ni : f.ni[i];
+      if (isn(cfo) && isn(cx)) {
+        var fcf = cfo - cx, conv = ni > 0 ? fcf / ni : null;
+        pts.push(['Cash', 'Free cash flow was <b>' + big(fcf) + '</b>' + (isn(conv) ? ', ' + pc(conv, 0) + ' of net income' : '') + '. ' + (fcf < 0 ? 'It spends more than it brings in, usually because of heavy investment.' : isn(conv) && conv >= 0.9 ? 'Reported profit is backed by cash.' : isn(conv) && conv < 0.6 ? 'Cash lags reported profit: heavy investment, working capital or one-off gains.' : 'Cash broadly tracks profit.')]);
+      }
+      var D = a.debt || 0, C = a.cash || 0, eb = (Q && isn(Q.ttm.ebit) ? Q.ttm.ebit : f.ebit[i]) + ((Q && isn(Q.ttm.da) ? Q.ttm.da : f.da[i]) || 0);
+      pts.push(['Balance sheet', C >= D ? 'It holds <b>more cash than debt</b> (' + big(C) + ' against ' + big(D) + ').' : 'Debt exceeds cash on hand by <b>' + big(D - C) + '</b>' + (eb > 0 ? ', about ' + ((D - C) / eb).toFixed(1) + ' times operating profit before depreciation' + ((D - C) / eb > 3 ? ', on the high side.' : ', a comfortable level.') : '.') + ' Marketable securities are not counted as cash here.']);
+    } else {
+      var roe = a.roe, bv0 = i >= 3 ? f.eq[i - 3] : null;
+      pts.push(['Returns', 'Return on equity has averaged <b>' + pc(roe) + '</b> over three years, against a cost of equity of about ' + pc(ke(a)) + '. ' + (roe > ke(a) ? 'It earns more than investors require, which justifies a price above book value.' : 'It earns less than investors require, which argues for a price below book value.')]);
+      if (isn(bv0) && bv0 > 0 && isn(f.eq[i])) pts.push(['Book value', 'Shareholders&rsquo; equity grew ' + pc(Math.pow(f.eq[i] / bv0, 1 / 3) - 1) + ' a year over three years, to ' + big(f.eq[i]) + '.']);
+    }
+    var s0 = i >= 3 ? f.dil[i - 3] : null, s1 = (Q && Q.dil) || f.dil[i];
+    var sh = isn(s0) && isn(s1) && s0 > 0 ? s1 / s0 - 1 : null, dps = Q && isn(Q.ttm.dps) ? Q.ttm.dps : f.dps[i];
+    var ret = [];
+    if (dps > 0) ret.push('pays ' + usd(dps) + ' a share in dividends' + (price ? ' (a ' + pc(dps / price) + ' yield)' : ''));
+    if (isn(sh)) ret.push(sh < -0.02 ? 'has cut its share count ' + pc(-sh) + ' in three years through buybacks' : sh > 0.02 ? 'has issued shares, ' + sp(sh) + ' in three years' : 'has kept its share count about flat');
+    if (ret.length) pts.push(['Shareholders', 'It ' + ret.join(' and ') + '.']);
+    h += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The story in the numbers</h3><p>Read straight from the 10-K and 10-Q filings.</p></div></div><dl class="story">' +
+      pts.map(function (p) { return '<dt>' + p[0] + '</dt><dd>' + p[1] + '</dd>'; }).join('') + '</dl></div>';
+    /* revenue and margin chart */
+    h += snapChart(c);
+    /* valuation */
+    var dcfm = !bankM, gl2 = dcfm ? 'Revenue growth' : 'Return on equity', wl = dcfm ? 'WACC' : 'Cost of equity';
+    var row = function (lab, fnv) { return '<tr><td>' + lab + '</td>' + ['bear', 'base', 'bull'].map(function (k) { return '<td>' + fnv(SC[k], k) + '</td>'; }).join('') + '</tr>'; };
+    h += '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Valuation: bear, base and bull</h3><p>' + (dcfm ? (G ? 'Ten years of cash flow with growth starting high and fading' : 'Ten years of cash flow plus a terminal value') + ', filled in from the company&rsquo;s own history.' : 'Value from what the bank earns on its equity against what investors require.') + '</p></div><a class="pill gh sm" href="valuation.html?t=' + encodeURIComponent(r[0]) + '">Change the assumptions &rarr;</a></div>' +
+      '<div class="scroll"><table class="tbl snapt"><thead><tr><th></th><th>Bear</th><th>Base</th><th>Bull</th></tr></thead><tbody>' +
+      row(gl2, function (s) { return pc(s.g); }) + (dcfm ? row(G ? 'Target margin' : 'Operating margin', function (s) { return pc(s.m); }) : '') + row(wl, function (s) { return pc(s.w, 1); }) +
+      row('Value per share', function (s) { return '<b>' + (isn(s.ps) && s.ps > 0 ? usd(s.ps, 0) : '—') + '</b>'; }) +
+      row('Against the price', function (s) { return isn(s.ps) && price ? '<span class="' + (s.ps >= price ? 'up' : 'dn') + '">' + sp(s.ps / price - 1) + '</span>' : '—'; }) +
+      '</tbody></table></div>';
+    var imp = impliedTxt(c, a, res, G, price, dd);
+    if (imp) h += '<p class="impl2">' + imp + '</p>';
+    if (dd && isn(dd.base) && dd.base > 0) h += '<p class="impl2">A dividend model, using its last dividend growing ' + pc(dd.gD) + ' a year, gives <b>' + usd(dd.base) + '</b>.</p>';
+    h += '</div>';
+    var ps = peers(r), cp = comps(c, a, ps);
+    h += compsTable(ps, cp);
+    $('#snap').innerHTML = h;
+    $$('#snap [data-open]').forEach(function (x) { x.onclick = function (e) { e.preventDefault(); open(x.getAttribute('data-open')); }; });
+  }
+
+  function snapChart(c) {
+    var f = c.f, n = c.ends.length, idx = [];
+    for (var i = Math.max(0, n - 6); i < n; i++) if (isn(f.rev[i]) && f.rev[i] > 0) idx.push(i);
+    if (idx.length < 3) return '';
+    var mx = Math.max.apply(null, idx.map(function (i) { return f.rev[i]; }));
+    var mg = idx.map(function (i) { return isn(f.ebit[i]) ? f.ebit[i] / f.rev[i] : null; }), ok = mg.filter(isn);
+    var lo = Math.min(0, Math.min.apply(null, ok)), hi = Math.max.apply(null, ok.concat([0.05])), k = idx.length;
+    var Y = function (v) { return 30 - (v - lo) / (hi - lo || 1) * 24; };   /* the margin line sits in the top band, above the bars */   /* percent from the top of the plot */
+    var pts = idx.map(function (_, j) { return isn(mg[j]) ? [(j + 0.5) / k * 100, Y(mg[j])] : null; });
+    var path = pts.filter(Boolean).map(function (p, j) { return (j ? 'L' : 'M') + p[0].toFixed(2) + ' ' + p[1].toFixed(2); }).join('');
+    var yr = function (e) { return e.slice(5, 7) === '01' && +e.slice(8, 10) <= 7 ? +e.slice(0, 4) - 1 : e.slice(0, 4); };
+    var cols = idx.map(function (i, j) {
+      return '<div class="cc"><div class="cbar"><span>' + big(f.rev[i]) + '</span><i style="height:' + (f.rev[i] / mx * 58).toFixed(1) + '%"></i></div><em>' + (isn(mg[j]) ? pc(mg[j], 0) : '') + '</em><small>' + yr(c.ends[i]) + '</small></div>';
+    }).join('');
+    var lastM = ok.length ? mg[mg.length - 1] : null;
+    return '<div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Revenue and operating margin</h3><p>Bars are revenue by fiscal year; the line and the figures under each bar are operating margin.</p></div><div class="lgd"><span><i class="b"></i>Revenue</span>' + (isn(lastM) ? '<span><i class="l"></i>Operating margin</span>' : '') + '</div></div>' +
+      '<div class="snapc"><div class="cplot">' + cols + (path ? '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="' + path + '" vector-effect="non-scaling-stroke"/></svg>' + pts.map(function (p) { return p ? '<b style="left:' + p[0].toFixed(2) + '%;top:calc((100% - 44px) * ' + (p[1] / 100).toFixed(4) + ')"></b>' : ''; }).join('') : '') + '</div></div></div>';
   }
 
   function renderField(lines, price) {

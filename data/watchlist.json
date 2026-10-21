@@ -7,7 +7,10 @@
       "sector": "Aerospace & defense",
       "status": "live",
       "page": "l3harris.html",
-      "holding": true
+      "holding": true,
+      "call": "Buy",
+      "value": 436,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "VRT",
@@ -15,7 +18,10 @@
       "sector": "Electrical equipment",
       "status": "live",
       "page": "vertiv.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 117,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "AWK",
@@ -23,7 +29,10 @@
       "sector": "Water utilities",
       "status": "live",
       "page": "american-water.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 100,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "AMZN",
@@ -31,7 +40,10 @@
       "sector": "Consumer & cloud",
       "status": "live",
       "page": "amazon.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 153,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "META",
@@ -39,7 +51,10 @@
       "sector": "Communication services",
       "status": "live",
       "page": "meta.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 516,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "JPM",
@@ -47,7 +62,10 @@
       "sector": "Banks",
       "status": "live",
       "page": "jpmorgan.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 284,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "GEV",
@@ -55,7 +73,10 @@
       "sector": "Industrials",
       "status": "live",
       "page": "gev.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 442,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "NVDA",
@@ -63,7 +84,10 @@
       "sector": "Semiconductors",
       "status": "live",
       "page": "nvidia.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 166,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "BA",
@@ -71,14 +95,20 @@
       "sector": "Aerospace & defense",
       "status": "live",
       "page": "boeing.html",
-      "holding": true
+      "holding": true,
+      "call": "Hold",
+      "value": 197,
+      "date": "Oct 20, 2026"
     },
     {
       "ticker": "COST",
       "name": "Costco Wholesale",
       "sector": "Consumer staples",
       "status": "live",
-      "page": "costco.html"
+      "page": "costco.html",
+      "call": "Hold / Wait",
+      "value": 831.5,
+      "date": "FIN 370"
     },
     {
       "ticker": "GS",

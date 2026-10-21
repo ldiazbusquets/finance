@@ -109,7 +109,11 @@
       "holding": true,
       "call": "Hold",
       "value": 118,
-      "date": "2026-10-21"
+      "date": "2026-10-21",
+      "gics": [
+        "Industrials",
+        "Aerospace & Defense"
+      ]
     },
     {
       "ticker": "FLY",
@@ -120,7 +124,11 @@
       "holding": true,
       "call": "Hold",
       "value": 20,
-      "date": "2026-10-21"
+      "date": "2026-10-21",
+      "gics": [
+        "Industrials",
+        "Aerospace & Defense"
+      ]
     },
     {
       "ticker": "ANTHROPIC",
@@ -170,6 +178,20 @@
       "page": "kratos.html",
       "call": "Watch",
       "value": 23,
+      "date": "2026-10-21",
+      "gics": [
+        "Industrials",
+        "Aerospace & Defense"
+      ]
+    },
+    {
+      "ticker": "AXON",
+      "name": "Axon Enterprise",
+      "sector": "Public safety technology",
+      "status": "live",
+      "page": "axon.html",
+      "call": "Watch",
+      "value": 289,
       "date": "2026-10-21"
     },
     {

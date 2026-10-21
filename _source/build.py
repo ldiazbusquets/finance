@@ -250,6 +250,7 @@ def build():
     <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
+      {card('axon.html', 'AXON &middot; Watch', 'Axon Enterprise', 'TASERs, body cameras and AI translation, down half from its peak. Value $289 against $396.', 'Read the report &rarr;', 'live')}
       {card('kratos.html', 'KTOS &middot; Watch', 'Kratos Defense', 'Drones, hypersonics and engines: the listed company closest to Anduril. Value $23 against $39.', 'Read the report &rarr;', 'live')}
       {card('costco.html', 'COST &middot; Hold / Wait', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}
     </div>

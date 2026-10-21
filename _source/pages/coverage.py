@@ -1,6 +1,6 @@
 """Reports on SpaceX and Firefly (holdings) and on OpenAI, Anthropic and Anduril (private, on the watchlist).
 Written October 21, 2026. Scenario values come from _source/models/new_coverage.py."""
-from rep import src, stats, table, prose, key, bridge
+from rep import src, stats, table, prose, key, bridge, fin_table
 
 DATE = 'October 21, 2026'
 
@@ -334,4 +334,53 @@ R['BLOOMBERG'] = dict(
         ('rec', 'Our view', 'A KO-like business, <em>but price still matters.</em>',
          prose('Your view that Bloomberg is a buy-and-hold business, more like Coca-Cola or Costco than SpaceX, fits what is known: dominant, recurring and slow-changing. Even so, the IPO price decides the return. Near the $80 billion bankers mention, the base case needs a multiple close to the best data companies, which is fair but not cheap. Much above $100 billion it would assume the bull case. The prospectus&rsquo;s margins and renewal rates are the numbers to read first.')
          + band('The Coca-Cola of financial data, <em>if it ever lists.</em>', 'Worth owning at a fair price; there is no deal yet.')),
+    ])
+
+# ================================================================ Axon (watchlist, not held)
+AQ = 'https://investor.axon.com/2026-08-05-Axon-reports-Q2-2026-revenue-of-904-million,-up-35-year-over-year'
+R['AXON'] = dict(
+    t='AXON', slug='axon', name='Axon Enterprise', h1='Axon', sector='Public safety technology', date=DATE, timing=', ahead of its third-quarter results on November 3',
+    sub='Axon makes the TASER, the body cameras most U.S. police wear, and the cloud software that stores and analyses the video. It is now adding AI on top: report writing, transcription and real-time translation through the camera. Revenue has grown more than 30% for ten straight quarters, yet the shares are down about half from their 2025 peak.',
+    call='Watch', method='Scenario model', price=396.30, pricenote='Midday, Oct 21, 2026', base=289, max=800, tick=100,
+    disclosure='The author holds no AXON shares.',
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Scenario model', 132, 531, 289, '$132 to $531, base $289'), ('Probability-weighted', None, None, 310, '$310'),
+           ('Price at writing', None, None, 396.30, '$396.30'), ('52-week range', 339, 764, None, '$339 to $764'), ('Analyst average', None, None, 691, '$691')],
+    toc=[('overview', 'The business'), ('results', 'Latest results'), ('fin', 'Five years'), ('ai', 'The translation thesis'), ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')], chapters=[
+        ('overview', 'The business', 'Devices that feed <em>a software subscription.</em>',
+         prose('Axon sells two things. <b>Connected Devices</b> (56% of revenue) are TASER energy weapons, Axon Body cameras, in-car and fixed cameras, drones and, since buying Dedrone in 2024, counter-drone systems. <b>Software &amp; Services</b> (44%) is Axon Evidence, the cloud where agencies store and share footage, plus records, dispatch and AI tools. Devices are sold inside five- to ten-year bundles, so about 95% of revenue is tied to subscription plans and customers rarely switch.',
+               'The <b>AI Era Plan</b>, an add-on of about $199 per officer a year, includes Draft One (police reports written from camera audio), transcription and <b>real-time translation</b>. Revenue from it grew almost 700% in the past year.')),
+        ('results', 'Latest results', 'Revenue up 35%, <em>margins under pressure.</em>',
+         stats([('$904M', 'Revenue, Q2 2026, +35%'), ('$1.64B', 'Annual recurring revenue, +39%'), ('126%', 'Net revenue retention'), ('$15.1B', 'Future contracted bookings, +41%'), ('26.8%', 'Adjusted EBITDA margin'), ('32&ndash;34%', '2026 revenue growth guidance, raised')])
+         + prose('Second-quarter revenue beat estimates by about $28 million. TASER grew 21%, and Platform Solutions (drones, counter-drone, fixed cameras) more than doubled, with Dedrone passing $100 million in the quarter. Management raised 2026 growth guidance to 32&ndash;34% and set 2028 targets of <b>$6 billion of revenue</b> and a 28% adjusted EBITDA margin.',
+                 'The shares fell anyway. The software gross margin dropped about four points to 71.3% as services and new products grew, memory chips raised camera costs, and free cash flow was roughly zero. In September Axon sold <b>$1 billion of 0% convertible notes</b>, which investors read as a sign of dilution ahead. Results for the third quarter come on <b>November 3</b>.')
+         + src([('Q2 2026 results', AQ), ('Q2 slides and reaction', 'https://www.investing.com/news/company-news/axon-q2-2026-slides-show-35-growth-but-shares-fall-on-margin-worries-93CH-4839831'), ('Convertible notes', 'https://finance.yahoo.com/markets/stocks/articles/1-billion-reason-why-axon-193446212.html')])),
+        ('fin', 'Five years', 'Revenue tripled <em>in four years.</em>',
+         fin_table('AXON') + prose('GAAP profit is small because stock-based pay is very large: guided at $590&ndash;620 million in 2026, about 16% of revenue, including a one-off CEO award. Adjusted EBITDA adds that back, which is why the two measures tell such different stories. The <a href="snapshot.html?t=AXON&amp;view=q">quarterly view</a> shows each quarter from the 10-Qs.')
+         + src([('Axon filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001069183&type=10-K')])),
+        ('ai', 'The translation thesis', 'Can AI translation <em>be a game changer?</em>',
+         prose('Real-time translation already ships. Through <b>Axon Assistant</b>, an officer presses a button on an Axon Body 4 or Body Mini camera, picks a language (or lets it detect one), and the camera speaks the translation aloud; the reply is translated back into English. It covers more than 50 languages and became generally available on August 1, 2025. Frederick, Maryland, ran 1,027 translated conversations in five weeks of testing; officers said quality varied by language, and certified interpreters are still used for investigations.',
+               'The economics are what matter for the stock. Translation is sold inside the AI Era Plan rather than as a separate device, so its value shows up as higher revenue per officer on a camera base Axon already owns. In the U.S. about one in five people speaks a language other than English at home, so the feature is useful on almost every shift, which helps agencies justify the upgrade.',
+               '<b>Military and federal use</b> is a real but early opportunity. Federal agencies added more than 22,000 body cameras and evidence licenses in 2026, the VA bought TASER 10s, and in October DHS selected Dedrone for counter-drone protection. Axon does not report military revenue separately, and armed forces have their own translation programs and suppliers, so this report treats military translation as upside rather than part of the base case.')
+         + key('Takeaway', 'Translation is a strong reason to upgrade, but it is a feature Axon sells to customers it already has, not a new product line. It supports the 2028 targets more than it changes them.')
+         + src([('Translation in Frederick, Md.', 'https://www.governing.com/artificial-intelligence/police-body-cameras-are-learning-to-speak-50-languages'), ('Renton police rollout', 'https://www.kiro7.com/news/local/renton-police-debut-bodycam-that-translates-over-50-languages-real-time/KMK2544CHBFZLAJTLTO7VVAKU4/'), ('Federal momentum', 'https://www.tikr.com/blog/axon-stock-fell-6-in-a-day-and-is-down-31-in-2026-time-to-sell-or-load-up')])),
+        ('value', 'Valuation', 'Our scenarios give <em>$289 a share.</em>',
+         prose('Valued on 2030 earning power like the other fast growers here, using operating margin <i>after</i> stock-based pay, discounted at 11% a year (beta 1.44 gives a CAPM cost of about 11.6%, trimmed slightly for the subscription base). Net debt of about $1.1 billion and 88 million shares by 2030 are included.')
+         + scen([['Revenue in 2030', '$6.5B', '$8.5B', '$10.5B'], ['Operating margin after stock pay', '15%', '20%', '25%'], ['Exit multiple', '25&times;', '30&times;', '35&times;'],
+                 ['Value per share', '$132', '$289', '$531'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$310</b>. The base case is close to management&rsquo;s own path: $6 billion in 2028, then about 19% growth a year.')),
+        ('implied', 'What the price assumes', 'At $396, <em>about $11.5 billion of revenue by 2030.</em>',
+         implied([['About $11.5 billion of revenue in 2030 at the base margin and multiple', 'Management&rsquo;s path reaches about $8.5 billion'], ['Or margins of about 27% after stock pay with base revenue', 'About 5% today, 20% in the base case']])
+         + prose('After a 50% fall the stock is far cheaper than it was, but it still prices in growth beyond the company&rsquo;s own targets. Analysts&rsquo; average target of $691 assumes faster growth and a higher multiple.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Stock-based pay', 'About 16% of revenue in 2026; dilution is the main cost to shareholders.'],
+             ['Margins', 'Software gross margin fell four points; memory costs hit cameras until about 2028.'],
+             ['Budgets and politics', 'Police budgets, federal policy and privacy debates (drones, licence-plate readers) can slow orders.'],
+             ['AI accuracy', 'Translation and report-writing errors could create legal problems in court.'],
+             ['Valuation', 'Still about 44&times; next year&rsquo;s earnings.'],
+         ]) + prose('<b>Upside:</b> AI Era Plan adoption across the installed base, counter-drone demand, international bookings (which tripled), enterprise customers and federal or military contracts.')),
+        ('rec', 'Recommendation', 'Watch. <em>A great business, close to a buy point.</em>',
+         prose('Axon is one of the best-positioned companies in public safety: a near-monopoly in U.S. police cameras, sticky subscriptions and an AI product line that is growing fast. Real-time translation strengthens that position. At $396.30, though, the price is above our base case of $289 ($310 weighted). A price nearer $300, or third-quarter results on November 3 that show margins recovering, would make it a Buy.')
+         + band('The right thesis, <em>a slightly early price.</em>', 'AI makes Axon&rsquo;s subscription more valuable; the stock already assumes much of that.')),
     ])

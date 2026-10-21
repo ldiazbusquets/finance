@@ -27,3 +27,6 @@ show('Anduril', {'bear': (8e9, .05, 20, .13, 4, 0, 1), 'base': (14e9, .12, 25, .
 show('KTOS', {'bear': (2.6e9, .06, 18, .10, 4, 1.2e9, 200e6), 'base': (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6), 'bull': (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6)}, 38.81)
 # Bloomberg LP: ~$15B revenue (Forbes/BCG estimates), mature, discount 9% (beta ~0.8)
 show('Bloomberg', {'bear': (16e9, .22, 18, .09, 4, 0, 1), 'base': (18e9, .28, 22, .09, 4, 0, 1), 'bull': (20e9, .33, 26, .09, 4, 0, 1)}, unit=1e9, label='$B')
+# Axon: 81.2M shares now, ~88M by 2030 (stock pay; target <2.5% a year); net debt ~$1.1B (Jun 30, before and after the $1B convert)
+# discount 11% (CAPM: 5.15% + 1.44 beta x 4.5% = 11.6%, rounded down for 95% recurring revenue); margins are operating margin after stock pay
+show('AXON', {'bear': (6.5e9, .15, 25, .11, 4, -1.1e9, 88e6), 'base': (8.5e9, .20, 30, .11, 4, -1.1e9, 88e6), 'bull': (10.5e9, .25, 35, .11, 4, -1.1e9, 88e6)}, 396.30)

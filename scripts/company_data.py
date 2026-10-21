@@ -722,12 +722,40 @@ def build_index(cos):
                      r(ev / ebitda) if ev and ebitda and ebitda > 0 and d.get('model') in ('dcf', 'reit') else None,
                      r(ev / rev) if ev and rev and rev > 0 and d.get('model') in ('dcf', 'reit') else None,
                      r(mcap / eq) if mcap and eq and eq > 0 else None,
-                     d.get('model')])
+                     d.get('model'), 1 if t in SP else 0])
     rows.sort(key=lambda x: -(x[4] or 0))
     save(os.path.join(CO, 'index.json'), {'updated': STAMP,
-          'cols': ['t', 'name', 'sector', 'sub', 'mcap', 'price', 'pe', 'evEbitda', 'evSales', 'pb', 'model'], 'rows': rows})
+          'cols': ['t', 'name', 'sector', 'sub', 'mcap', 'price', 'pe', 'evEbitda', 'evSales', 'pb', 'model', 'sp'], 'rows': rows})
     print(f'  ok   index {len(rows)} companies')
     return len(rows)
+
+
+def watch_extra(cos, ua):
+    """Watchlist companies outside the S&P 500 (Kratos, Firefly, SpaceX...) as universe rows. CIKs come from
+    SEC's ticker list, cached in data/extra.json; GICS sector and sub-industry from the watchlist's "gics" field."""
+    have = {c[0] for c in cos}
+    wl = [c for c in load(os.path.join(DATA, 'watchlist.json'), {}).get('companies', [])
+          if c.get('ticker') and c['ticker'] not in have and not c.get('private')]
+    if not wl:
+        return []
+    path = os.path.join(DATA, 'extra.json')
+    cache = load(path, {}).get('cik', {})
+    if ua and any(c['ticker'] not in cache for c in wl):
+        try:
+            tk = json.loads(get('https://www.sec.gov/files/company_tickers.json', {'User-Agent': ua, 'Accept-Encoding': 'identity'}, tries=2, timeout=30))
+            m = {v['ticker'].upper(): v['cik_str'] for v in tk.values()}
+            for c in wl:
+                if c['ticker'] in m:
+                    cache[c['ticker']] = m[c['ticker']]
+            save(path, {'updated': STAMP, 'source': 'SEC company_tickers.json', 'cik': cache})
+        except Exception as e:
+            print(f'  FAIL SEC ticker list {e}', file=sys.stderr)
+    out = []
+    for c in wl:
+        if c['ticker'] in cache:
+            sec, sub = (c.get('gics') or ['Industrials', 'Aerospace & Defense'])
+            out.append([c['ticker'], c.get('name') or c['ticker'], sec, sub, int(cache[c['ticker']])])
+    return out
 
 
 def run(ua):
@@ -737,12 +765,18 @@ def run(ua):
     if not cos:
         return 0
     n = 0
+    xs = watch_extra(cos, ua)                 # watchlist names outside the S&P 500 get the same treatment
+    SP.clear(); SP.update(c[0] for c in cos)
+    allc = list(cos) + xs
     if ua:
-        n += update_fundamentals(cos, ua, limit=600 if manual else 120)
-    # covered companies outside the S&P 500 (holdings such as SPCX and FLY) get daily prices too
-    have = {c[0] for c in cos}
+        n += update_fundamentals(allc, ua, limit=600 if manual else 120)
+    # covered companies without an SEC record (none today) still get daily prices
+    have = {c[0] for c in allc}
     extra = [(c['ticker'],) for c in load(os.path.join(DATA, 'watchlist.json'), {}).get('companies', [])
              if c.get('ticker') and c['ticker'] not in have and not c.get('private')]
-    n += update_prices(list(cos) + extra)
-    build_index(cos)
+    n += update_prices(allc + extra)
+    build_index(allc)
     return n
+
+
+SP = set()

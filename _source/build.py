@@ -322,9 +322,9 @@ def build():
     <div class="grid3" style="margin-top:30px">
       {card('valuation.html', 'MOD-01', 'Discounted cash flow', 'Ten years of free cash flow and a terminal value, filled in from filings, with a sensitivity table.', 'Open &rarr;', 'live')}
       {card('valuation.html', 'MOD-02', 'Trading comparables', 'Value a company against its closest peers on P/E, EV/EBITDA and EV/Sales.', 'Open &rarr;', 'live')}
-      {card('', 'MOD-03', 'Bull, base and bear', 'Three scenarios with probabilities, ending in one probability-weighted value.', '', 'plan')}
+      {card('valuation.html?t=JPM', 'MOD-03', 'Bull, base and bear', 'Three scenarios with probabilities, ending in one probability-weighted value. Built into every company in the Valuation tool.', 'Open &rarr;', 'live')}
       {card('valuation.html?t=JPM', 'MOD-04', 'Bank valuation', 'Banks and insurers are valued on book value and return on equity, not cash flow.', 'Open &rarr;', 'live')}
-      {card('', 'MOD-05', 'Growth-company DCF', 'For businesses that are not profitable yet: revenue paths, margin ramps and dilution.', '', 'plan')}
+      {card('valuation.html?t=PLTR', 'MOD-05', 'Growth-company DCF', 'For fast growers: growth that starts high and fades, margins that ramp, reinvestment tied to new revenue.', 'Open &rarr;', 'live')}
       {card('valuation.html?t=KO', 'MOD-06', 'Dividend discount', 'Value from dividends alone, shown automatically for steady payers.', 'Open &rarr;', 'live')}
     </div>
   </div>

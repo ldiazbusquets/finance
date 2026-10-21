@@ -203,9 +203,9 @@ JP = 'https://www.jpmorganchase.com/content/dam/jpmc/jpmorgan-chase-and-co/inves
 R['JPM'] = dict(
     t='JPM', slug='jpmorgan', name='JPMorgan Chase', h1='JPMorgan <em>Chase</em>', sector='Banks', date=DATE, timing=', a week after its third-quarter results on October 13',
     sub='JPMorgan is the largest U.S. bank and the most profitable of the big ones, earning about 20% on tangible equity. The question for a bank is what return on equity it can sustain and what multiple of book value that justifies. At 2.5 times book, the market already assumes today&rsquo;s exceptional returns last.',
-    call='Hold', method='Excess-return model', price=335.26, base=284, bear=226, bull=368, wt=291, max=500, tick=50,
+    call='Hold', method='Excess-return model', price=335.26, base=284, bear=226, bull=368, wt=290, max=500, tick=50,
     fieldnote='The excess-return model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Excess-return model', 226, 368, 284, '$226 to $368, base $284'), ('Probability-weighted', None, None, 291, '$291'),
+    field=[('Excess-return model', 226, 368, 284, '$226 to $368, base $284'), ('Probability-weighted', None, None, 290, '$290'),
            ('Price at writing', None, None, 335.26, '$335.26'), ('52-week range', 279, 367, None, '$279 to $367')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Four businesses, <em>one balance sheet.</em>',
@@ -234,7 +234,7 @@ R['JPM'] = dict(
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
              ['Return on equity', '14.5%', '16%', '18%'], ['Cost of equity', '10.4%', '9.9%', '9.4%'],
              ['Value per share', '$226', '$284', '$368'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$291</b>.') + sens('Cost of equity', ['9.0%', '9.5%', '10.0%'], ['$338', '$304', '$277'])),
+         + prose('Weighted 25/50/25: <b>$290</b>.') + sens('Cost of equity', ['9.0%', '9.5%', '10.0%'], ['$338', '$304', '$277'])),
         ('implied', 'What the price assumes', 'At $335, an 18% return <em>for good.</em>',
          implied([['A lasting return on equity of about 18%', '16%, and a 17% through-cycle ROTCE target'], ['A cost of equity near 9.0%', '9.9%']])
          + prose('That is achievable in good years, as 2026 shows, but it leaves no room for a credit cycle or lower rates.')),
@@ -246,7 +246,7 @@ R['JPM'] = dict(
              ['Succession', 'Jamie Dimon&rsquo;s eventual departure.'],
          ]) + prose('<b>Upside:</b> lighter capital rules releasing the $30 billion of excess capital, and continued strength in markets and investment banking.')),
         ('rec', 'Recommendation', 'Hold. <em>The best bank, at a full price.</em>',
-         prose('At $335.26 against a base case of $284 ($291 weighted), the shares need returns above the bank&rsquo;s own through-cycle target. The call is <b>Hold</b>; it would be a Buy below about 2.2 times book value, roughly $290.')
+         prose('At $335.26 against a base case of $284 ($290 weighted), the shares need returns above the bank&rsquo;s own through-cycle target. The call is <b>Hold</b>; it would be a Buy below about 2.2 times book value, roughly $290.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Quality you pay for.</h2><p>JPMorgan earns more than its peers; the premium is already in the price.</p></div>'),
     ])
 

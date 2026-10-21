@@ -1,0 +1,28 @@
+LDB Finance: Kratos Defense (KTOS)
+"Method: Scenario model: 2030 earning power, capitalised and discounted back four years"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash,For Firefly: revenue x EV/sales multiple
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),23.09
+
+SCENARIOS,Bear,Base,Bull
+Revenue in 2030 ($B),2.6,3.2,4.0
+Operating margin %,6.0,9.0,12.0
+"After-tax operating profit, 2030 ($B)",0.123,0.228,0.379
+Exit multiple of after-tax profit (x),18,22,28
+Value in 2030 ($B),2.218,5.005,10.618
+Discount rate %,10.0,10.0,10.0
+Years discounted,4,4,4
+Value today ($B),1.515,3.419,7.252
+Plus net cash ($B),1.2,1.2,1.2
+Shares by 2030 (millions),200.0,200.0,200.0
+Value ($ per share),13.58,23.09,42.26
+Probability,25,50,25
+Probability-weighted value ($ per share),,25.51,
+

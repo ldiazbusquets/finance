@@ -1,0 +1,27 @@
+LDB Finance: JPMorgan Chase (JPM)
+Method: Excess-return model: value = book value x (ROE - g) / (cost of equity - g)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/jpm.py
+
+INPUTS,Value,Basis
+Book value per share ($),132.3,Latest 10-Q
+"Return on equity, through the cycle %",16,Company target range
+Growth %,4.5,
+Cost of equity %,9.86,CAPM: beta 1.046
+
+BRIDGE (base case),Value
+Book value per share ($),132.3
+(ROE - g) / (cost of equity - g),2.1467
+Value per share ($),284.01
+
+SCENARIOS,Bear,Base,Bull
+Return on equity %,14.5,16,18
+Cost of equity %,10.36,9.86,9.36
+Value per share ($),225.88,284.01,367.73
+Probability,25,50,25
+Probability-weighted value ($),,290.41,
+
+SENSITIVITY,Input,Value per share
+,Cost of equity 9.0%,338.1
+,Cost of equity 9.5%,304.29
+,Cost of equity 10.0%,276.63

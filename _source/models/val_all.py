@@ -1,4 +1,5 @@
 RF, ERP = .0515, .045
+LAST = {}   # the last run's year-by-year detail, for export.py
 def ke(b): return RF + b*ERP
 def wacc(b, E, D, kd, tax=.21): return E/(E+D)*ke(b) + D/(E+D)*kd*(1-tax)
 def fade(gs, gT=.03, n=10):

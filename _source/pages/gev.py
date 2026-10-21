@@ -1,3 +1,4 @@
+import rep
 """GE Vernova deep dive for LDB Finance. Written October 20, 2026, before third-quarter results on October 28."""
 
 EXT = '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -82,7 +83,7 @@ def body():
         ('capital', 'Balance sheet'), ('value', 'Cash-flow value'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')], 1))
     head = f'''<header class="ph rp">
   <div class="wrap">
-    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; Industrials &middot; October 20, 2026</div>
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; Industrials &middot; October 20, 2026<span class="kind" title="Written and reviewed by Luis Diaz Busquets">Analyst report</span></div>
     <h1>GE <em>Vernova</em></h1>
     <p class="sub">GE Vernova (GEV) makes the gas turbines, grid equipment and wind turbines behind a large share of the world&rsquo;s electricity, and AI data centers have filled its order book for years ahead. This report values the business on the company&rsquo;s own 2028 targets. The conclusion: an exceptional order book, at a price that already assumes more than those targets.</p>
     <div class="verdict">
@@ -182,7 +183,7 @@ def body():
 <h3 class="sec sm">Sensitivity to the discount rate</h3>
 {table(['WACC', '8.5%', '9.0%', '9.5%', '10.0%', '10.7%'], [['Value per share', '$607', '$559', '$518', '$484', f'${BASE}']], 'allnum')}
 <p class="key"><b>Why the automatic model is lower.</b> The <a href="valuation.html?t=GEV">Valuation tool</a> sees only reported results, a 4% operating margin, and gives about $230. This report replaces that with the company&rsquo;s own margin targets. Switching the tool to High growth and setting a 17.5% operating margin gets close to these numbers.</p>
-{src(('q2', 'Q2 2026 guidance'), ('iu', '2028 framework'))}''')
+{src(('q2', 'Q2 2026 guidance'), ('iu', '2028 framework'))}{rep.checkit('gev')}''')
     c7 = chap('07', 'implied', 'What the price assumes', 'At $890, the market expects <em>much more than the plan.</em>', f'''
 <div class="prose"><p>Running the model backwards shows what has to be true to justify ${PRICE:,.2f}. Holding everything else at the base case, the price needs <b>one</b> of these:</p></div>
 {table(['To reach $890, you need', 'Instead of', 'How likely'], [

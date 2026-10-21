@@ -7,6 +7,7 @@ def ba(path=(2,6,9,10.5,11.5),gT=.03,W=None,show=False):
     for g in gs: f.append(f[-1]*(1+g))
     pv=sum(x/(1+W)**(t-.5) for t,x in enumerate(f,1)); tv=f[-1]*(1+gT)/(W-gT); pvtv=tv/(1+W)**9.5
     ev=pv+pvtv; eq=ev-25.6e9
+    LAST.clear(); LAST.update(W=W, gT=gT, flows=f, pv=pv, tv=tv, pvtv=pvtv, ev=ev, net=-25.6e9, eq=eq, sh=SH)
     if show: print(f'  W {W:.2%} pv {pv/1e9:.0f} pvtv {pvtv/1e9:.0f} ev {ev/1e9:.0f} eq {eq/1e9:.0f} tv% {pvtv/ev:.0%} y10 fcff {f[-1]/1e9:.1f}')
     return eq/SH
 b=ba(show=True); bear=ba((0.5,3,5,6.5,7.5),W=W0+.01); bull=ba((3,8,11,13,14),W=W0-.01)

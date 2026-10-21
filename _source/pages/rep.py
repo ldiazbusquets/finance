@@ -126,6 +126,23 @@ def bridge(items, ps):
     return '<div class="bridge rep">' + ''.join(f'<div><span class="mono">{k}</span><b class="num">{v}</b></div>' for k, v in items) + f'<div class="res"><span class="mono">Per share</span><b class="num">{ps}</b></div></div>'
 
 
+SCRIPT = {'amazon': 'amzn', 'meta': 'meta', 'nvidia': 'nvda', 'jpmorgan': 'jpm', 'vertiv': 'vrt', 'l3harris': 'lhx', 'american-water': 'awk',
+          'boeing': 'ba', 'gev': 'gev'}
+SRC_URL = 'https://github.com/ldiazbusquets/finance/blob/main/_source/models/'
+
+
+def checkit(slug):
+    """the 'check the numbers' box: the full model as a CSV and its source code"""
+    if not os.path.exists(os.path.join(DATA, '..', 'models', slug + '.csv')):
+        return ''
+    script = SCRIPT.get(slug, 'new_coverage')
+    return (f'<div class="checkit"><div><span class="mono">Check the numbers</span><p>Every figure in this valuation comes from one model script, '
+            f'rerun and checked against this page each time the site is built. The download has the inputs and their sources, each year&rsquo;s cash flow, '
+            f'the bridge to the value, the scenarios and the sensitivity table.</p></div>'
+            f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="data/models/{slug}.csv" download>Download the model (CSV)</a>'
+            f'<a class="pill gh sm" href="{SRC_URL}{script}.py" target="_blank" rel="noopener">Model code &#8599;</a></div></div>')
+
+
 def body(R):
     P, B = R['price'], R['base']
     imp = B / P - 1
@@ -134,14 +151,14 @@ def body(R):
         f'<div><span class="mono">Price at writing</span><b>${P:,.2f}</b><small>{R.get("pricenote", "Close, " + R["date"])}</small></div>'
         f'<div><span class="mono">Implied return</span><b class="{"up" if imp >= 0 else "dn"}">{"+" if imp >= 0 else "&minus;"}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>')
     now = '' if R.get('private') else f'''<div class="panel now" id="now">
-        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday.</p></div>{'' if R.get('noauto') else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
+        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday. The analysis and the call are as of {R['date']} and change only when the report is revised.</p></div>{'' if R.get('noauto') else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
         <div class="kv four"><div><b id="nPx">&mdash;</b><span id="nPxD">Last close</span></div><div><b id="nChg">&mdash;</b><span>Since the report&rsquo;s ${P:,.2f}</span></div><div><b id="nGap">&mdash;</b><span>Price against {d(B)} value</span></div><div><b id="nRg">&mdash;</b><span>52-week range</span></div></div>
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
     toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))
     head = f'''<header class="ph rp">
   <div class="wrap">
-    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; {R['sector']} &middot; {R['date']}</div>
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; {R['sector']} &middot; {R['date']}<span class="kind" title="Written and reviewed by Luis Diaz Busquets">Analyst report</span></div>
     <h1>{R['h1']}</h1>
     <p class="sub">{R['sub']}</p>
     <div class="verdict">
@@ -161,7 +178,7 @@ def body(R):
         <p class="fine">Written on {R['date']}{R.get('timing', '')}. {'Figures are from company statements and news reports, as linked; they are not audited.' if R.get('private') else 'Figures are from the company&rsquo;s filings and releases unless noted.'} Not investment advice. {disc}</p>
       </div>
 '''
-    chs = ''.join(chap(n, c[0], c[1], c[2], c[3]) for n, c in enumerate(R['chapters'], 1))
+    chs = ''.join(chap(n, c[0], c[1], c[2], c[3] + (checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
     return head + chs + '''
     </div>
   </div>

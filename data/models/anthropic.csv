@@ -1,0 +1,27 @@
+LDB Finance: Anthropic (private)
+"Method: Scenario model: 2030 earning power, capitalised and discounted back four years"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash,For Firefly: revenue x EV/sales multiple
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($B),846.91
+
+SCENARIOS,Bear,Base,Bull
+Revenue in 2030 ($B),120.0,250.0,450.0
+Operating margin %,15.0,30.0,40.0
+"After-tax operating profit, 2030 ($B)",14.22,59.25,142.2
+Exit multiple of after-tax profit (x),20,25,25
+Value in 2030 ($B),284.4,1481.25,3555.0
+Discount rate %,15.0,15.0,15.0
+Years discounted,4,4,4
+Value today ($B),162.607,846.909,2032.583
+Plus net cash ($B),0.0,0.0,0.0
+Value ($B),162.61,846.91,2032.58
+Probability,25,50,25
+Probability-weighted value ($B),,972.25,
+

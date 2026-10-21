@@ -1,0 +1,50 @@
+LDB Finance: Vertiv (VRT)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/vrt.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),14.0,Company filings and guidance
+Tax rate %,21.0,Effective rate
+Discount rate (WACC) %,13.06,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-0.13,Latest balance sheet
+Diluted shares (billions),0.393,Latest filing
+"Revenue growth, years 1-2 %",25 / 16,Then fades to 3% by year 10
+Operating margin %,22.5 rising to 24.5 by year 3,
+Sales to capital,3,Reinvestment = revenue growth / 3
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,25.0,17.5,23.17,4.054,3.203,1.167,2.036,0.9405,1.915
+2028,16.0,20.3,23.83,4.838,3.822,0.933,2.889,0.8318,2.403
+2029,14.37,23.218,24.5,5.688,4.494,0.973,3.521,0.7357,2.59
+2030,12.75,26.178,24.5,6.414,5.067,0.987,4.08,0.6507,2.655
+2031,11.12,29.091,24.5,7.127,5.631,0.971,4.66,0.5755,2.682
+2032,9.5,31.854,24.5,7.804,6.165,0.921,5.244,0.509,2.669
+2033,7.88,34.363,24.5,8.419,6.651,0.836,5.815,0.4502,2.618
+2034,6.25,36.511,24.5,8.945,7.067,0.716,6.351,0.3982,2.529
+2035,4.62,38.199,24.5,9.359,7.393,0.563,6.831,0.3521,2.405
+2036,3.0,39.345,24.5,9.64,7.615,0.382,7.233,0.3115,2.253
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,24.718
+Year-11 after-tax operating income,7.844
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),68.582
+Present value of terminal value,21.36
+Enterprise value,46.079
+Plus net cash,-0.13
+Equity value,45.949
+Value per share ($),116.92
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),65.34,116.92,187.55
+Probability,25,50,25
+Probability-weighted value ($),,121.68,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 9.0%,204.83
+,Discount rate 10.0%,173.6
+,Discount rate 11.0%,150.26
+,Discount rate 12.0%,132.16

@@ -1,0 +1,26 @@
+LDB Finance: Firefly Aerospace (FLY)
+"Method: Scenario model: 2030 earning power, capitalised and discounted back four years"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash,For Firefly: revenue x EV/sales multiple
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),19.62
+
+SCENARIOS,Bear,Base,Bull
+Revenue in 2030 ($B),0.7,1.2,2.0
+Exit value to sales (x),2,5,8
+Value in 2030 ($B),1.4,6.0,16.0
+Discount rate %,15.0,15.0,15.0
+Years discounted,4,4,4
+Value today ($B),0.8,3.431,9.148
+Plus net cash ($B),0.0,0.2,0.2
+Shares by 2030 (millions),200.0,185.0,180.0
+Value ($ per share),4.0,19.62,51.93
+Probability,25,50,25
+Probability-weighted value ($ per share),,23.8,
+

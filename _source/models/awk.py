@@ -5,6 +5,7 @@ def ddm(g=.08,yrs=5,gT=.035,k=None,d0=3.58,show=False):
     for t,gg in enumerate(gs,1):
         d*=1+gg; pv+=d/(1+k)**t
     tv=d*(1+gT)/(k-gT); v=pv+tv/(1+k)**10
+    LAST.clear(); LAST.update(k=k, gT=gT, gs=gs, d0=d0, pv=pv, tv=tv, pvtv=tv/(1+k)**10, v=v)
     if show: print(f'  k {k:.2%} pvdiv {pv:.1f} pvtv {tv/(1+k)**10:.1f} value {v:.1f}')
     return v
 b=ddm(show=True); bear=ddm(.06,gT=.03,k=ke(.7)+.01); bull=ddm(.09,gT=.04,k=ke(.7)-.005)

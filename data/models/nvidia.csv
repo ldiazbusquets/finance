@@ -1,0 +1,48 @@
+LDB Finance: Nvidia (NVDA)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/nvda.py
+
+INPUTS,Value,Basis
+Base revenue (fiscal 2027 run-rate),404,Company filings and guidance
+Tax rate %,17,
+Discount rate %,12.26,"CAPM cost of equity, beta 1.58 (no meaningful debt)"
+Terminal growth %,3,
+Return on new capital %,25,
+Net cash,0,
+Diluted shares (billions),24.3,
+"Revenue growth, years 1-2 %",40 / 15,Then fades to 3% by year 10
+Operating margin %,63 easing to 55 by year 7,
+Sales to capital,2.5,Reinvestment = revenue growth / 2.5
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,40.0,565.6,61.86,349.864,290.387,64.64,225.747,0.9438,213.064
+2028,15.0,650.44,60.71,394.91,327.775,33.936,293.839,0.8407,247.043
+2029,13.5,738.249,59.57,439.786,365.022,35.124,329.898,0.7489,247.069
+2030,12.0,826.839,58.43,483.11,400.982,35.436,365.546,0.6671,243.868
+2031,10.5,913.657,57.29,523.395,434.418,34.727,399.691,0.5943,237.526
+2032,9.0,995.887,56.14,559.119,464.069,32.892,431.177,0.5294,228.254
+2033,7.5,1070.578,55.0,588.818,488.719,29.877,458.842,0.4716,216.372
+2034,6.0,1134.813,55.0,624.147,518.042,25.694,492.348,0.4201,206.816
+2035,4.5,1185.879,55.0,652.234,541.354,20.427,520.927,0.3742,194.924
+2036,3.0,1221.456,55.0,671.801,557.595,14.231,543.364,0.3333,181.114
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,2216.049
+Terminal value = NOPAT11 x (1 - g/RONIC) / (r - g),5457.923
+Present value of terminal value,1819.238
+Enterprise value,4035.287
+Equity value,4035.287
+Value per share ($),166.06
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),81.66,166.06,306.2
+Probability,25,50,25
+Probability-weighted value ($),,180.0,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 9.0%,258.24
+,Discount rate 10.0%,220.83
+,Discount rate 11.0%,192.77
+,Discount rate 12.26%,166.06

@@ -139,7 +139,7 @@ NOTES = [
 def body(n):
     return f'''<header class="ph rp">
   <div class="wrap">
-    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;{n['label']} &middot; {n['code']} &middot; {DATE}</div>
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;{n['label']} &middot; {n['code']} &middot; {DATE}<span class="kind" title="Written by Luis Diaz Busquets; the charts update with each data run">Analyst note</span></div>
     <h1>{n['title']}</h1>
     <p class="sub">{n['sub']}</p>
   </div>

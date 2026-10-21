@@ -1,0 +1,50 @@
+LDB Finance: GE Vernova (GEV)
+Method: Ten-year discounted cash flow on the company’s 2028 targets
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/gev.py
+
+INPUTS,Value,Basis
+"Revenue, 2026",46.0,Guidance
+"Growth, 2027 and 2028 %",12 / 10,Then fades to 3% by 2036
+EBITDA margin %,"13 in 2026, 20 by 2028",Company 2028 target
+Depreciation % of revenue,2.2,
+Sales to capital,4,Reinvestment = revenue growth / 4
+Tax rate %,21,
+Discount rate %,10.7,CAPM with beta about 1.2; no net debt
+Terminal growth %,3,
+Return on new capital %,20,
+Net cash,10.27,Jun 30 2026: $13.12B cash less $2.85B debt
+Diluted shares (billions),0.2663,
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,EBITDA margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,12.0,51.52,16.5,7.367,5.82,1.38,4.44,0.9504,4.22
+2028,10.0,56.672,20.0,10.088,7.969,1.288,6.681,0.8586,5.736
+2029,9.12,61.843,20.0,11.008,8.696,1.293,7.404,0.7756,5.742
+2030,8.25,66.945,20.0,11.916,9.414,1.276,8.138,0.7006,5.702
+2031,7.38,71.883,20.0,12.795,10.108,1.234,8.874,0.6329,5.616
+2032,6.5,76.555,20.0,13.627,10.765,1.168,9.597,0.5717,5.487
+2033,5.62,80.861,20.0,14.393,11.371,1.077,10.294,0.5165,5.317
+2034,4.75,84.702,20.0,15.077,11.911,0.96,10.951,0.4665,5.109
+2035,3.88,87.984,20.0,15.661,12.372,0.821,11.552,0.4214,4.868
+2036,3.0,90.624,20.0,16.131,12.744,0.66,12.084,0.3807,4.6
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,52.398
+Present value of terminal value,55.164
+Enterprise value,107.562
+Plus net cash,10.27
+Equity value,117.832
+Value per share ($),442.48
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),271.63,442.48,682.38
+Probability,25,50,25
+Probability-weighted value ($),,459.74,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,607.08
+,Discount rate 9.0%,559.08
+,Discount rate 9.5%,518.45
+,Discount rate 10.0%,483.63
+,Discount rate 10.7%,442.48

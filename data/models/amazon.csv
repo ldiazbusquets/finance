@@ -1,0 +1,50 @@
+LDB Finance: Amazon (AMZN)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/amzn.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),810.0,Company filings and guidance
+Tax rate %,19.0,Effective rate
+Discount rate (WACC) %,10.82,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,20.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-10.0,Latest balance sheet
+Diluted shares (billions),10.9,Latest filing
+"Revenue growth, years 1-2 %",12 / 11,Then fades to 3% by year 10
+Operating margin %,13 rising to 18 by year 5,
+"Heavy AI capex, years 1-4 ($B)",130 / 100 / 70 / 50,Then reinvestment = revenue growth / 2.0
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,12.0,907.2,14.0,127.008,102.876,130.0,-27.124,0.9499,-25.766
+2028,11.0,1006.992,15.0,151.049,122.35,100.0,22.35,0.8572,19.159
+2029,10.0,1107.691,16.0,177.231,143.557,70.0,73.557,0.7736,56.901
+2030,9.0,1207.383,17.0,205.255,166.257,50.0,116.257,0.6981,81.154
+2031,8.0,1303.974,18.0,234.715,190.119,48.295,141.824,0.6299,89.339
+2032,7.0,1395.252,18.0,251.145,203.428,45.639,157.789,0.5684,89.694
+2033,6.0,1478.967,18.0,266.214,215.633,41.858,173.776,0.513,89.14
+2034,5.0,1552.916,18.0,279.525,226.415,36.974,189.441,0.4629,87.691
+2035,4.0,1615.032,18.0,290.706,235.472,31.058,204.413,0.4177,85.386
+2036,3.0,1663.483,18.0,299.427,242.536,24.225,218.31,0.3769,82.291
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,654.988
+Year-11 after-tax operating income,249.812
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),2716.735
+Present value of terminal value,1024.056
+Enterprise value,1679.044
+Plus net cash,-10.0
+Equity value,1669.044
+Value per share ($),153.12
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),74.18,153.12,266.55
+Probability,25,50,25
+Probability-weighted value ($),,161.74,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,230.87
+,Discount rate 9.0%,208.92
+,Discount rate 9.5%,190.39
+,Discount rate 10.0%,174.55

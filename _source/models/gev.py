@@ -1,4 +1,5 @@
 import json
+LAST = {}
 SH=266.3e6; NETCASH=13.12e9-2.85e9   # Jun 30 2026 balance sheet (cash, debt)
 def run(g27=.12,g28=.10,gT=.03,mT=.20,da=.022,s2c=4,W=.107,tax=.21,ronic=.20,m26=.13, show=False):
     rev=46.0e9; rows=[]; pv=0
@@ -11,6 +12,7 @@ def run(g27=.12,g28=.10,gT=.03,mT=.20,da=.022,s2c=4,W=.107,tax=.21,ronic=.20,m26
         pv+=f/d; rows.append((2026+t,g,rev,eb,ebit,nopat,reinv,f))
     nop11=rows[-1][4]*(1+gT)*(1-tax); tv=nop11*(1-gT/ronic)/(W-gT); pvtv=tv/(1+W)**9.5
     ev=pv+pvtv; eq=ev+NETCASH
+    LAST.clear(); LAST.update(W=W, gT=gT, rows=rows, pv=pv, tv=tv, pvtv=pvtv, ev=ev, net=NETCASH, eq=eq, sh=SH, da=da, s2c=s2c, tax=tax, ronic=ronic)
     if show:
         for r in rows: print(r[0], f"g {r[1]:.1%} rev {r[2]/1e9:.1f} ebitda {r[3]:.1%} ebit {r[4]/1e9:.1f} fcf {r[7]/1e9:.1f}")
         print(f"pv10 {pv/1e9:.1f} pvtv {pvtv/1e9:.1f} ev {ev/1e9:.1f} eq {eq/1e9:.1f} tvshare {pvtv/ev:.0%}")

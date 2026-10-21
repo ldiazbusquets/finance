@@ -10,6 +10,7 @@ def lh(g1=.075,g2=.075,conv=.146,W=None,gT=.03,show=False):
         f=rev*c; pv+=f/(1+W)**(t-.5); rows.append((t,g,rev,f))
     tv=rows[-1][3]*(1+gT)/(W-gT); pvtv=tv/(1+W)**9.5
     ev=pv+pvtv; eq=ev-9.5e9-1.0e9
+    LAST.clear(); LAST.update(W=W, gT=gT, rows=rows, pv=pv, tv=tv, pvtv=pvtv, ev=ev, net=-10.5e9, eq=eq, sh=SH)
     if show:
         for r in rows[:3]+rows[-1:]: print(f'  y{r[0]} g {r[1]:.1%} rev {r[2]/1e9:.1f} fcff {r[3]/1e9:.2f}')
         print(f'  pv {pv/1e9:.1f} pvtv {pvtv/1e9:.1f} ev {ev/1e9:.1f} eq {eq/1e9:.1f} tv% {pvtv/ev:.0%}')

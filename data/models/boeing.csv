@@ -1,0 +1,45 @@
+LDB Finance: Boeing (BA)
+Method: Ten-year discounted free cash flow to the firm as production recovers
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/ba.py
+
+INPUTS,Value,Basis
+"Free cash flow path, years 1-5 ($B)",2 / 6 / 9 / 10.5 / 11.5,Plus about $2B of after-tax interest to reach cash flow to the firm
+"Growth, years 6-10 %",6 fading to 3,
+Discount rate (WACC) %,9.72,CAPM beta 1.35 with $45.6B of debt
+Terminal growth %,3,
+Net debt,-25.6,Latest balance sheet
+Diluted shares (billions),0.7906,
+
+PROJECTION (base case)
+Year,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,4.0,0.9547,3.819
+2028,8.0,0.8701,6.961
+2029,11.0,0.7931,8.724
+2030,12.5,0.7228,9.035
+2031,13.5,0.6588,8.894
+2032,14.229,0.6005,8.544
+2033,14.912,0.5473,8.161
+2034,15.538,0.4988,7.75
+2035,16.098,0.4546,7.318
+2036,16.581,0.4144,6.87
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,76.076
+Terminal value = FCFF10 x (1+g) / (WACC - g),254.225
+Present value of terminal value,105.339
+Enterprise value,181.416
+Less net debt,-25.6
+Equity value,155.816
+Value per share ($),197.09
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),105.09,197.09,290.63
+Probability,25,50,25
+Probability-weighted value ($),,197.47,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.0%,280.04
+,Discount rate 8.5%,250.52
+,Discount rate 9.0%,225.94
+,Discount rate 9.5%,205.16

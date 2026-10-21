@@ -1,0 +1,28 @@
+LDB Finance: Axon Enterprise (AXON)
+"Method: Scenario model: 2030 earning power, capitalised and discounted back four years"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash,For Firefly: revenue x EV/sales multiple
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),289.09
+
+SCENARIOS,Bear,Base,Bull
+Revenue in 2030 ($B),6.5,8.5,10.5
+Operating margin %,15.0,20.0,25.0
+"After-tax operating profit, 2030 ($B)",0.77,1.343,2.074
+Exit multiple of after-tax profit (x),25,30,35
+Value in 2030 ($B),19.256,40.29,72.581
+Discount rate %,11.0,11.0,11.0
+Years discounted,4,4,4
+Value today ($B),12.685,26.54,47.812
+Plus net cash ($B),-1.1,-1.1,-1.1
+Shares by 2030 (millions),88.0,88.0,88.0
+Value ($ per share),131.64,289.09,530.81
+Probability,25,50,25
+Probability-weighted value ($ per share),,310.16,
+

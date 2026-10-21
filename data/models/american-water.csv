@@ -1,0 +1,41 @@
+LDB Finance: American Water Works (AWK)
+Method: Dividend discount model
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/awk.py
+
+INPUTS,Value,Basis
+"Dividend, last 12 months ($)",3.58,Company filings
+"Dividend growth, years 1-5 %",8,Company 7-9% EPS and dividend target
+"Growth fades to, by year 10 %",3.5,Long-run
+Cost of equity %,8.3,CAPM: beta 0.70
+
+PROJECTION (base case)
+Year,Dividend growth %,Dividend per share ($),Discount factor,Present value ($)
+2027,8.0,3.8664,0.9234,3.5701
+2028,8.0,4.1757,0.8526,3.5602
+2029,8.0,4.5098,0.7873,3.5503
+2030,8.0,4.8706,0.7269,3.5405
+2031,8.0,5.2602,0.6712,3.5307
+2032,7.1,5.6337,0.6198,3.4916
+2033,6.2,5.983,0.5723,3.4239
+2034,5.3,6.3001,0.5284,3.329
+2035,4.4,6.5773,0.4879,3.2091
+2036,3.5,6.8075,0.4505,3.0669
+
+BRIDGE (base case),Value
+Present value of 10 years of dividends ($),34.27
+Terminal value = D10 x (1+g) / (k - g) ($),146.79
+Present value of terminal value ($),66.13
+Value per share ($),100.4
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),69.37,100.4,131.99
+Probability,25,50,25
+Probability-weighted value ($),,100.54,
+
+SENSITIVITY,Input,Value per share
+,Cost of equity 7.0%,138.93
+,Cost of equity 7.5%,121.14
+,Cost of equity 8.0%,107.31
+,Cost of equity 8.5%,96.26
+,Cost of equity 9.0%,87.22

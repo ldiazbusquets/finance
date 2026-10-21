@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=22">
+<link rel="stylesheet" href="assets/site.css?v=23">
 </head>
 '''
 
@@ -163,7 +163,17 @@ TOWER = '''<div class="tower" aria-hidden="true">
     </div>'''
 
 
+def check_models():
+    """rerun every report's model, rewrite its CSV, and stop the build if a report no longer matches its model"""
+    import subprocess
+    r = subprocess.run([sys.executable, 'export.py', '--check'], cwd=os.path.join(HERE, 'models'), capture_output=True, text=True)
+    print(r.stdout.strip())
+    if r.returncode:
+        sys.exit('A report shows a value its model no longer produces; fix the report or the model before publishing.\n' + r.stderr)
+
+
 def build():
+    check_models()
     if not IN_REPO:
         if os.path.exists(OUT):
             shutil.rmtree(OUT)
@@ -296,7 +306,7 @@ def build():
 
     # ---------------- valuation ----------------
     quick = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['AAPL', 'MSFT', 'NVDA', 'JPM', 'KO', 'COST', 'XOM'])
-    valuation = ph('Valuation', 'Value <em>any company</em>', 'Search the S&amp;P 500. Each company gets a cash-flow model (or a bank model), a dividend model where it fits and a peer comparison, filled in from its filings. Every assumption can be changed.',
+    valuation = ph('Valuation<span class="kind auto" title="Generated from SEC filings and the last close by code, with no analyst review">Automated model</span>', 'Value <em>any company</em>', 'Search the S&amp;P 500. Each company gets a cash-flow model (or a bank model), a dividend model where it fits and a peer comparison, filled in from its filings. Every assumption can be changed.',
                    f'''<div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search by ticker or name, like AAPL or Coca-Cola" autocomplete="off" spellcheck="false" aria-label="Search companies"><div class="sug" id="sug" role="listbox"></div></div>
 <div class="quick"><span class="mono">Try</span>{quick}</div><p class="mono" id="count" style="margin-top:18px;font-size:11px">&nbsp;</p>''') + '''
 <section class="tight">
@@ -318,7 +328,7 @@ def build():
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
-    snapshot = ph('Research', 'Research <em>any company</em>', 'Search the S&amp;P 500 for an instant snapshot: what the filings say about growth, margins, cash and debt, a bear, base and bull valuation, and how the company compares with its peers. Generated automatically from SEC data and the last close.',
+    snapshot = ph('Research<span class="kind auto" title="Generated from SEC filings and the last close by code, with no analyst review">Automated model</span>', 'Research <em>any company</em>', 'Search the S&amp;P 500 for an instant snapshot: what the filings say about growth, margins, cash and debt, a bear, base and bull valuation, and how the company compares with its peers. Generated automatically from SEC data and the last close.',
                   f'''<div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search by ticker or name, like AAPL or Coca-Cola" autocomplete="off" spellcheck="false" aria-label="Search companies"><div class="sug" id="sug" role="listbox"></div></div>
 <div class="quick"><span class="mono">Holdings</span>{hq}</div><p class="mono" id="count" style="margin-top:18px;font-size:11px">&nbsp;</p>''') + '''
 <section class="tight">
@@ -373,7 +383,7 @@ def build():
     <p class="disc">The log started on October 20, 2026, so early results mostly reflect a few days of noise. Private-company views are not scored because they have no market price. Costco (FIN 370 coursework) is left out because its sections were priced on different dates. Not investment advice.</p>''',
               'Track record', 'Every call published on LDB Finance, scored against the S&P 500 since the day it was made.')
 
-    tool_page('screener.html', 'research.html', 'Research', 'Stock <em>screener</em>',
+    tool_page('screener.html', 'research.html', 'Research<span class="kind auto" title="Generated from SEC filings and the last close by code, with no analyst review">Automated model</span>', 'Stock <em>screener</em>',
               'Filter every S&amp;P 500 company, plus the companies covered here, by growth, profitability, valuation and debt. Figures come from SEC filings and the last close.', 'screener',
               '''<div class="scrbar">
       <div class="chips" id="presets" style="margin-top:0"></div>
@@ -383,7 +393,7 @@ def build():
     <p class="disc">Growth is the latest fiscal year; margins and returns use the latest twelve months where a newer 10-Q exists. Banks and insurers have no operating margin or net-debt figure. Not investment advice.</p>''',
               'Stock screener', 'Screen the S&P 500 by growth, margins, valuation, debt and dividends, straight from SEC filings.')
 
-    tool_page('compare.html', 'research.html', 'Research', 'Compare <em>companies</em>',
+    tool_page('compare.html', 'research.html', 'Research<span class="kind auto" title="Generated from SEC filings and the last close by code, with no analyst review">Automated model</span>', 'Compare <em>companies</em>',
               'Put two to four companies side by side: growth, margins, cash, debt and valuation, from their annual and quarterly filings.', 'compare',
               '''<div class="search" style="margin-top:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Add a company, like MSFT or Coca-Cola" autocomplete="off" spellcheck="false" aria-label="Add a company"><div class="sug" id="sug" role="listbox"></div></div>
     <div class="chips" id="picked" style="margin-top:18px"></div>
@@ -404,7 +414,7 @@ def build():
     <p class="disc">From SEC EDGAR. A 13F is a snapshot at quarter end and may have changed since. Not investment advice.</p>''',
               'Insiders and funds', 'Insider buys and sells from SEC Form 4 and famous investors’ holdings from 13F filings, for the companies covered on LDB Finance.')
 
-    tool_page('ask.html', 'research.html', 'Research', 'Ask <em>the filings</em>',
+    tool_page('ask.html', 'research.html', 'Research<span class="kind auto" title="Answers are computed from SEC filings by code; the optional AI only rewords them">Automated answers</span>', 'Ask <em>the filings</em>',
               'Ask a question about any covered company and get an answer built from its 10-K and 10-Q figures, with every number traced to its filing. On computers that support it, an AI model running privately in your browser can write the answer in plain English.', 'ask',
               '''<div class="askbox panel">
       <div class="askrow"><div class="search" style="margin:0;flex:1 1 220px;max-width:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Company, like NVDA or Costco" autocomplete="off" spellcheck="false" aria-label="Company"><div class="sug" id="sug" role="listbox"></div></div>

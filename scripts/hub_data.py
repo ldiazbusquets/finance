@@ -45,7 +45,8 @@ def earnings(cos):
     want = {t for t, _, _ in cos}
     found = {}
     ok = 0
-    for i in range(0, 75):
+    past = {}
+    for i in range(-35, 75):
         d = TODAY + timedelta(days=i)
         if d.weekday() >= 5:
             continue
@@ -54,19 +55,28 @@ def earnings(cos):
             ok += 1
             for r in ((raw.get('data') or {}).get('rows') or []):
                 s = (r.get('symbol') or '').upper()
+                if s in want and d < TODAY:
+                    past[s] = d.isoformat()          # reported recently; keep the latest
+                    continue
                 if s in want and s not in found:
                     tm = r.get('time') or ''
                     found[s] = {'date': d.isoformat(), 'when': 'before the open' if 'pre' in tm else 'after the close' if 'after' in tm else '',
                                 'epsEst': r.get('epsForecast') or None, 'ests': r.get('noOfEsts') or None,
                                 'lastEps': r.get('lastYearEPS') or None, 'quarter': r.get('fiscalQuarterEnding') or None, 'src': 'Nasdaq'}
         except Exception as e:
-            if ok == 0 and i > 6:
+            if ok == 0 and i > -28:
                 print(f'  note earnings calendar unavailable ({str(e)[:60]}); using filing-pattern estimates', file=sys.stderr)
                 break
         time.sleep(.25)
     rows = []
     for t, name, cik in cos:
         e = found.get(t)
+        if not e and t in past:
+            # reported in the past five weeks; the next report is about 13 weeks after that one
+            nxt = date.fromisoformat(past[t]) + timedelta(days=91)
+            e = {'date': nxt.isoformat(), 'when': '', 'src': 'estimate', 'last': past[t]}
+        if e and t in past:
+            e['last'] = past[t]
         if not e:
             # estimate from the filing pattern: the next report comes about 13 weeks after the last one
             d = load(os.path.join(CO, t.replace('.', '-') + '.json'), {})
@@ -134,7 +144,7 @@ def insiders(cos, ua):
                 continue
             acc = rec['accessionNumber'][i]
             if acc not in seen:
-                if n_new >= 400:          # cap per run; the rest is picked up next time
+                if n_new >= (2500 if os.environ.get('RUN_KIND', '') == 'workflow_dispatch' else 400):   # cap per run; the rest is picked up next time
                     continue
                 doc = re.sub(r'^xslF345X\d+/', '', rec['primaryDocument'][i])
                 url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{acc.replace("-", "")}/{doc}'
@@ -181,10 +191,52 @@ DROP = {'inc', 'corp', 'corporation', 'co', 'com', 'ltd', 'plc', 'holdings', 'hl
         'a', 'b', 'c', 'and', 'new', 'del', 'sa', 'nv', 'ag', 'lp', 'llc', 'company', 'cos', 'incorporated', 'shs', 'ord', 'common', 'stock', 'com.'}
 
 
-def norm(s):
-    s = re.sub(r'\(.*?\)', ' ', (s or '').lower()).replace('&', ' and ')
+ABBR = {'mtr': 'motor', 'mtrs': 'motors', 'pete': 'petroleum', 'wtr': 'water', 'wks': 'works', 'intl': 'international', 'svcs': 'services',
+        'sys': 'systems', 'mfg': 'manufacturing', 'natl': 'national', 'finl': 'financial', 'amer': 'america', 'hlth': 'health', 'tr': 'trust',
+        'pptys': 'properties', 'ppty': 'property', 'comm': 'communications', 'ent': 'entertainment', 'resh': 'research', 'bros': 'brothers',
+        'labs': 'laboratories', 'pharma': 'pharmaceuticals', 'dominos': 'domino s', 'str': 'street'}
+
+
+def norm(s, expand=False):
+    s = re.sub(r'\(.*?\)', ' ', (s or '').lower()).replace('&', ' and ').replace("'", ' ')
     w = [x for x in re.split(r'[^a-z0-9]+', s) if x and x not in DROP]
+    if expand:
+        w = ' '.join(ABBR.get(x, x) for x in w).split()
     return ' '.join(w)
+
+
+ALIAS = {'space exploration technologies': 'SPCX', 'kratos defense and security solutions': 'KTOS', 'axon enterprise': 'AXON',
+         'firefly aerospace': 'FLY', 'berkshire hathaway': 'BRK.B', 'alphabet': 'GOOGL'}
+
+
+def match(n, names):
+    """ticker for a 13F issuer name: exact, then word-by-word prefix match (13F names are abbreviated, like
+    "BANK OF AMER CORP" or "SPACE EXPLORATION TECH"), accepted only when exactly one company fits"""
+    if not n:
+        return None
+    if n in names:
+        return names[n]
+    w = n.split()
+    if len(w[0]) < 3 or set(w) & {'spdr', 'etf', 'ishares', 'index', 'fund', 'vanguard', 'invesco', 'proshares', 'direxion', 'portfolio'}:
+        return None                                   # exchange-traded funds are not companies
+    hits = set()
+    for k, t in names.items():
+        kw = k.split()
+        if not kw:
+            continue
+        m = min(len(w), len(kw))
+        ok = True
+        for i in range(m):
+            if w[i] == kw[i]:
+                continue
+            # a shortened word only matches as the last word of both names ("bank of amer" / "bank of america")
+            if i == len(w) - 1 and i == len(kw) - 1 and (kw[i].startswith(w[i]) or w[i].startswith(kw[i])) and min(len(w[i]), len(kw[i])) >= 3:
+                continue
+            ok = False
+            break
+        if ok:
+            hits.add(t)
+    return hits.pop() if len(hits) == 1 else None
 
 
 def funds(ua):
@@ -196,9 +248,11 @@ def funds(ua):
     uni = load(os.path.join(DATA, 'universe.json'), {}).get('companies', [])
     names = {}
     for t, name, *_ in uni:
-        names.setdefault(norm(name), t)
+        names.setdefault(norm(name, True), t)
     for t, name, _ in covered():
-        names.setdefault(norm(name), t)
+        names.setdefault(norm(name, True), t)
+    for k, t in ALIAS.items():
+        names[k] = t
     out, held = [], {}
     for cik, word, disp, mgr in FUNDS:
         try:
@@ -223,11 +277,15 @@ def funds(ua):
                 sh = float(it.findtext(ns + 'shrsOrPrnAmt/' + ns + 'sshPrnamt') or 0)
                 a = agg.setdefault(cu, {'name': nm, 'val': 0, 'sh': 0})
                 a['val'] += v; a['sh'] += sh
+            px = sorted(a['val'] / a['sh'] for a in agg.values() if a['sh'] > 0 and a['val'] > 0)
+            if px and px[len(px) // 2] < 2:           # some filers still report values in thousands of dollars
+                for a in agg.values():
+                    a['val'] *= 1000
             tot = sum(a['val'] for a in agg.values()) or 1
             hold = sorted(agg.values(), key=lambda a: -a['val'])
             top = []
             for a in hold:
-                tk = names.get(norm(a['name']))
+                tk = match(norm(a['name'], True), names)
                 row = {'name': a['name'].title(), 'val': round(a['val']), 'sh': round(a['sh']), 'pct': round(a['val'] / tot, 4), 't': tk}
                 if len(top) < 15:
                     top.append(row)

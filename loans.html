@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan and mortgage calculator | LDB Finance</title>
+<meta name="description" content="Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Loan and mortgage calculator | LDB Finance">
+<meta property="og:description" content="Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/loans.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loan and mortgage calculator | LDB Finance">
+<meta name="twitter:description" content="Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=13">
+</head>
+<body data-page="loans">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html" class=on>Models</a><a href="tools.html">Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <a class="pill" href="https://ldiazbusquets.github.io/"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Main site</a>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html" class=on>Models<span>&rarr;</span></a><a href="tools.html">Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><a href="https://ldiazbusquets.github.io/">Main site<span>&#8599;</span></a></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Models &middot; MOD-09</div>
+  <h1>Loans and <em>mortgages</em></h1>
+  <p class="sub">What a loan really costs: the monthly payment, every year of interest, what extra payments save, and the APR once points and fees are counted. The mortgage rate starts at this week&rsquo;s national average.</p>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="cols2 loan">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The loan</h3><p>Pick a type, then change any number.</p></div></div><div id="lIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What it costs</h3><p>Fixed rate, paid monthly.</p></div></div><div id="lOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Paying it down</h3><p>The balance falls slowly at first, because early payments are mostly interest.</p></div><div class="legend" id="lLeg"></div></div><svg class="chart" id="lChart"></svg></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Rate and term, side by side</h3><p>Monthly payment and total interest on the same loan. The highlighted row is your rate.</p></div></div><div id="lGrid"></div></div>
+    <details class="panel sched" style="margin-top:16px"><summary><h3 class="sec">Year-by-year schedule</h3></summary><div id="lTable"></div></details>
+    <p class="disc">Assumes a fixed rate, monthly payments and that taxes and insurance stay at today&rsquo;s level. PMI is estimated and drops once the balance reaches 78% of the price. For education only; a lender&rsquo;s Loan Estimate is the figure to rely on.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=11"></script>
+<script src="assets/loans.js?v=2"></script>
+</body>
+</html>

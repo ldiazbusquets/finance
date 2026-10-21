@@ -62,7 +62,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=12">
+<link rel="stylesheet" href="assets/site.css?v=13">
 </head>
 '''
 
@@ -335,7 +335,7 @@ def build():
     <div class="grid3" style="margin-top:30px">
       {card('bonds.html#pricer', 'MOD-07', 'Bond pricer', 'Price, yield to maturity, duration and convexity for any fixed-coupon bond.', 'Open &rarr;', 'live')}
       {card('bonds.html#shock', 'MOD-08', 'Rate shock', 'What a portfolio of bonds loses or gains if rates jump or fall, using the live Treasury curve.', 'Open &rarr;', 'live')}
-      {card('', 'MOD-09', 'Loan and mortgage', 'Payments, amortisation and the true cost of borrowing at today’s rates.', '', 'plan')}
+      {card('loans.html', 'MOD-09', 'Loan and mortgage', 'Payments, amortisation and the true cost of borrowing at today’s rates.', 'Open &rarr;', 'live')}
     </div>
   </div>
 </section>
@@ -484,6 +484,23 @@ def build():
 </section>
 '''
     page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=1"></script>')
+
+    # ---------------- loans ----------------
+    loans = ph('Models &middot; MOD-09', 'Loans and <em>mortgages</em>', 'What a loan really costs: the monthly payment, every year of interest, what extra payments save, and the APR once points and fees are counted. The mortgage rate starts at this week&rsquo;s national average.') + '''
+<section class="tight">
+  <div class="wrap">
+    <div class="cols2 loan">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The loan</h3><p>Pick a type, then change any number.</p></div></div><div id="lIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What it costs</h3><p>Fixed rate, paid monthly.</p></div></div><div id="lOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Paying it down</h3><p>The balance falls slowly at first, because early payments are mostly interest.</p></div><div class="legend" id="lLeg"></div></div><svg class="chart" id="lChart"></svg></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Rate and term, side by side</h3><p>Monthly payment and total interest on the same loan. The highlighted row is your rate.</p></div></div><div id="lGrid"></div></div>
+    <details class="panel sched" style="margin-top:16px"><summary><h3 class="sec">Year-by-year schedule</h3></summary><div id="lTable"></div></details>
+    <p class="disc">Assumes a fixed rate, monthly payments and that taxes and insurance stay at today&rsquo;s level. PMI is estimated and drops once the balance reaches 78% of the price. For education only; a lender&rsquo;s Loan Estimate is the figure to rely on.</p>
+  </div>
+</section>
+'''
+    page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=2"></script>')
 
     # ---------------- research reports ----------------
     page('costco.html', 'research.html', 'Costco Wholesale (COST) research', 'A full fundamental analysis of Costco against Walmart, Target and BJ\u2019s, ending in a cash-flow value of $831.50 a share and a Hold / Wait.', 'report', costco.body(), attrs=' data-ticker="COST" data-then="970.31" data-val="831.50"')

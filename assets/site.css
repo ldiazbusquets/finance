@@ -601,3 +601,25 @@ svg.chart.lad text { font: 400 11.5px var(--mono); fill: var(--t2); }
 .tbl.allr td:not(:first-child), .tbl.allr th:not(:first-child) { text-align: right; font-family: var(--mono); }
 .ntiles .tiles { grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); }
 @media (max-width: 900px) { .ntiles .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ntiles .tiles > :last-child:nth-child(odd) { grid-column: span 2; } }
+/* ---------- loans ---------- */
+.cols2.loan { margin-top: 0; }
+details.more { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+details.more summary, details.sched summary { cursor: pointer; color: var(--t2); font-size: 13.5px; list-style: none; }
+details.more summary::before, details.sched summary::before { content: "+ "; color: var(--acc); }
+details[open].more summary::before, details[open].sched summary::before { content: "− "; }
+details.more .ins { margin-top: 14px; }
+details.sched summary { display: flex; align-items: baseline; gap: 6px; } details.sched summary h3 { display: inline; margin: 0; }
+details.sched[open] summary { margin-bottom: 16px; }
+.split3 { margin-top: 18px; }
+.stack { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); }
+.stack i { display: block; height: 100%; background: var(--acc); border-right: 1px solid var(--s1); }
+.sleg { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; font-size: 13px; color: var(--t2); }
+.sleg li { display: flex; align-items: center; gap: 8px; } .sleg li i { width: 9px; height: 9px; border-radius: 2px; background: var(--acc); flex: none; }
+.sleg b { margin-left: auto; font: 400 13px var(--mono); color: var(--ink); }
+.lnotes { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.lnotes p { margin: 0 0 8px; font-size: 13.5px; color: var(--t2); } .lnotes b { color: var(--ink); font-weight: 500; }
+.tbl.lgrid td, .tbl.lgrid th { text-align: right; } .tbl.lgrid td:first-child, .tbl.lgrid th:first-child { text-align: left; font-family: var(--mono); }
+.tbl.lgrid td b { display: block; font: 400 15px var(--mono); color: var(--ink); } .tbl.lgrid td small { display: block; font-size: 11.5px; color: var(--t3); margin-top: 2px; }
+.tbl.lgrid tr.me td { background: color-mix(in srgb, var(--acc) 9%, transparent); }
+#lChart { height: 280px; }
+@media (max-width: 600px) { .sleg { grid-template-columns: 1fr; } }

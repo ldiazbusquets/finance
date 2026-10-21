@@ -717,15 +717,37 @@ def build_index(cos):
         ev = mcap + debt - cash if mcap else None
         ebitda = ebit + (da or 0) if ebit is not None else None
         r = lambda x, k=2: None if x is None or not math.isfinite(x) else round(x, k)
+        # screener metrics: growth, margins, cash, debt, dividends, latest quarter
+        rv = [x for x in f['rev'] if x]
+        g1 = rv[-1] / rv[-2] - 1 if len(rv) >= 2 and rv[-2] > 0 else None
+        g3 = (rv[-1] / rv[-4]) ** (1 / 3) - 1 if len(rv) >= 4 and rv[-4] > 0 and rv[-1] > 0 else None
+        cfo = tt['cfo'] if tt.get('cfo') is not None else last(f['cfo'])
+        capex = tt['capex'] if tt.get('capex') is not None else last(f['capex'])
+        fcf = cfo - (capex or 0) if cfo is not None and d.get('model') != 'bank' else None
+        dps = last(f.get('dps') or [])
+        qs = d.get('qs') or {}
+        qf, qg = qs.get('f') or {}, None
+        if qf.get('rev') and len(qf['rev']) >= 5 and qf['rev'][-1] and qf['rev'][-5] and qf['rev'][-5] > 0 and not qs.get('warn'):
+            qg = qf['rev'][-1] / qf['rev'][-5] - 1
+        b = (P.get(t) or {}).get('b')
+        extra_cols = [r(g1, 4), r(g3, 4),
+                      r(ebit / rev, 4) if ebit is not None and rev and d.get('model') != 'bank' else None,
+                      r(ni / rev, 4) if ni is not None and rev else None,
+                      r(fcf / mcap, 4) if fcf is not None and mcap else None,
+                      r((debt - cash) / ebitda, 2) if ebitda and ebitda > 0 and d.get('model') != 'bank' else None,
+                      r(dps / p, 4) if dps and p else 0,
+                      r(ni / eq, 4) if ni is not None and eq and eq > 0 else None,
+                      r(qg, 4), b, (qs.get('lab') or [None])[-1]]
         rows.append([t, name, sec, sub, r(mcap, 0), r(p),
                      r(mcap / ni) if mcap and ni and ni > 0 else None,
                      r(ev / ebitda) if ev and ebitda and ebitda > 0 and d.get('model') in ('dcf', 'reit') else None,
                      r(ev / rev) if ev and rev and rev > 0 and d.get('model') in ('dcf', 'reit') else None,
                      r(mcap / eq) if mcap and eq and eq > 0 else None,
-                     d.get('model'), 1 if t in SP else 0])
+                     d.get('model'), 1 if t in SP else 0] + extra_cols)
     rows.sort(key=lambda x: -(x[4] or 0))
     save(os.path.join(CO, 'index.json'), {'updated': STAMP,
-          'cols': ['t', 'name', 'sector', 'sub', 'mcap', 'price', 'pe', 'evEbitda', 'evSales', 'pb', 'model', 'sp'], 'rows': rows})
+          'cols': ['t', 'name', 'sector', 'sub', 'mcap', 'price', 'pe', 'evEbitda', 'evSales', 'pb', 'model', 'sp',
+                  'g1', 'g3', 'om', 'nm', 'fcfy', 'nde', 'dy', 'roe', 'qg', 'beta', 'qlab'], 'rows': rows})
     print(f'  ok   index {len(rows)} companies')
     return len(rows)
 

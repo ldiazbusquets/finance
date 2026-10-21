@@ -342,6 +342,12 @@ if __name__ == '__main__':
         k = company_data.run(ua if ua and '@' in ua else '')
     except Exception as e:
         print(f'  FAIL valuation data {e}', file=sys.stderr)
+    print('Research hub (earnings dates, insider trades, fund holdings)')
+    try:
+        import hub_data
+        hub_data.run(ua if ua and '@' in ua else '')
+    except Exception as e:
+        print(f'  FAIL hub data {e}', file=sys.stderr)
     print(f'done: {m} market items, {c} companies, {k} valuation updates')
     if not m and not c and not k:
         sys.exit(1)

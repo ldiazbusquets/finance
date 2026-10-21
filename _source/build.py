@@ -62,7 +62,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=11">
+<link rel="stylesheet" href="assets/site.css?v=12">
 </head>
 '''
 
@@ -88,7 +88,7 @@ def foot(extra=''):
   <span>{NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=10"></script>{extra}
+<script src="assets/site.js?v=11"></script>{extra}
 </body>
 </html>
 '''

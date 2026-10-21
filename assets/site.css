@@ -599,3 +599,5 @@ svg.chart.lad text { font: 400 11.5px var(--mono); fill: var(--t2); }
 .ntiles { margin: 6px 0 10px; }
 .cta2 { margin-top: 26px; }
 .tbl.allr td:not(:first-child), .tbl.allr th:not(:first-child) { text-align: right; font-family: var(--mono); }
+.ntiles .tiles { grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); }
+@media (max-width: 900px) { .ntiles .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ntiles .tiles > :last-child:nth-child(odd) { grid-column: span 2; } }

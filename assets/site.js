@@ -231,7 +231,7 @@
         else if (how === 'y1' && first) e.textContent = f.t(first[1]);
         else if (how === 'c1' && first) { var x = s.last.v - first[1]; e.textContent = (s.fmt === 'rate' ? sgn(x) + Math.abs(Math.round(x * 100)) + ' bp' : sgn(x) + Math.abs(x).toFixed(1) + ' pp'); }
       });
-      $$('[data-tiles]').forEach(function (e) { e.innerHTML = '<div class="tiles">' + e.getAttribute('data-tiles').split(',').map(function (k) { return tile(S[k], k); }).join('') + '</div>'; });
+      $$('[data-tiles]').forEach(function (e) { var ks = e.getAttribute('data-tiles').split(','); e.innerHTML = '<div class="tiles" style="--n:' + ks.length + '">' + ks.map(function (k) { return tile(S[k], k); }).join('') + '</div>'; });
       $$('[data-calc]').forEach(function (e) { var k = e.getAttribute('data-calc'); if (CALC[k]) e.innerHTML = CALC[k](m); });
       function draw() {
         $$('svg[data-chart]').forEach(function (el) {

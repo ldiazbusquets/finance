@@ -37,6 +37,11 @@ SERIES = {
     'CORE_PCE_YOY': ('PCEPILFE', 'Core PCE inflation', 'Core PCE', 'macro', 'Fed’s preferred gauge', 'yoy'),
     'UNRATE':       ('UNRATE', 'Unemployment rate', 'Unemployment', 'macro', 'Monthly', None),
     'GDP_REAL':     ('A191RL1Q225SBEA', 'Real GDP growth', 'GDP growth', 'macro', 'Quarterly, annualised', None),
+    'CORE_CPI_YOY': ('CPILFESL', 'Core CPI inflation', 'Core CPI', 'macro', 'Excludes food and energy', 'yoy'),
+    'T10YIE':       ('T10YIE', '10-year breakeven inflation', 'Breakeven', 'rate', 'Inflation priced into Treasuries', None),
+    'BAMLC0A0CM':   ('BAMLC0A0CM', 'Investment-grade spread', 'IG spread', 'rate', 'Over Treasuries', None),
+    'PR_UNRATE':    ('PRUR', 'Puerto Rico unemployment', 'PR unemployment', 'macro', 'Monthly', None),
+    'PR_JOBS_YOY':  ('PRNA', 'Puerto Rico job growth', 'PR jobs', 'macro', 'Nonfarm payrolls, year over year', 'yoy'),
 }
 CURVE = [('1M', 'DGS1MO'), ('3M', 'DGS3MO'), ('6M', 'DGS6MO'), ('1Y', 'DGS1'), ('2Y', 'DGS2'), ('3Y', 'DGS3'),
          ('5Y', 'DGS5'), ('7Y', 'DGS7'), ('10Y', 'DGS10'), ('20Y', 'DGS20'), ('30Y', 'DGS30')]

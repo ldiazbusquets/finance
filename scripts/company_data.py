@@ -360,13 +360,12 @@ def _fix_year_as_quarter(d):
     subtract those three quarters."""
     ks = sorted(d)
     for i, e in enumerate(ks):
-        prev = [k for k in ks[:i] if 200 <= _days(k, e) + 91 <= 380]
-        others = sorted(abs(d[k]) for k in ks if k != e)
-        if not others or d[e] <= 0:
+        others = sorted(abs(d[k]) for k in ks if k != e and k in d and abs(_days(k, e)) <= 200)   # the quarters around it
+        if len(others) < 2 or d[e] <= 0:
             continue
         med = others[len(others) // 2]
         if d[e] > 2.2 * med:
-            last3 = [k for k in ks[:i] if 0 < _days(k, e) <= 290]
+            last3 = [k for k in ks[:i] if k in d and 0 < _days(k, e) <= 290]
             if len(last3) >= 3:
                 d[e] = d[e] - sum(d[k] for k in last3[-3:])
             else:
@@ -487,7 +486,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 6   # bump when the extraction rules change, so every file is rebuilt
+FVER = 7   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):

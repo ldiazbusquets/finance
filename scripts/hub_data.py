@@ -205,7 +205,7 @@ def norm(s, expand=False):
     return ' '.join(w)
 
 
-ALIAS = {'space exploration technologies': 'SPCX', 'kratos defense and security solutions': 'KTOS', 'axon enterprise': 'AXON',
+ALIAS = {'space exploration technologies': 'SPCX', 'kratos defense and security solutions': 'KTOS', 'axon enterprise': 'AXON', 'palantir technologies': 'PLTR', 'advanced micro devices': 'AMD', 'micron technology': 'MU', 'sandisk': 'SNDK',
          'firefly aerospace': 'FLY', 'berkshire hathaway': 'BRK.B', 'alphabet': 'GOOGL'}
 
 

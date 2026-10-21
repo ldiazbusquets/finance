@@ -1,0 +1,37 @@
+LDB Finance: Micron Technology (MU)
+"Method: Cycle model: four years of free cash flow at the cycle's prices, then a mid-cycle exit value"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,"value = sum of discounted free cash flow, years 1-4 + (mid-cycle revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash",Fiscal years
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),622.21
+
+SCENARIOS,Bear,Base,Bull
+Revenue FY2027 ($B),220.0,250.0,290.0
+Free cash flow margin FY2027 %,50.0,55.0,58.0
+Present value of FY2027 free cash flow ($B),96.491,120.614,147.544
+Revenue FY2028 ($B),200.0,280.0,350.0
+Free cash flow margin FY2028 %,38.0,50.0,58.0
+Present value of FY2028 free cash flow ($B),58.48,107.725,156.202
+Revenue FY2029 ($B),130.0,200.0,330.0
+Free cash flow margin FY2029 %,15.0,30.0,52.0
+Present value of FY2029 free cash flow ($B),13.162,40.498,115.825
+Revenue FY2030 ($B),110.0,150.0,300.0
+Free cash flow margin FY2030 %,5.0,15.0,45.0
+Present value of FY2030 free cash flow ($B),3.256,13.322,79.931
+Mid-cycle revenue ($B),130.0,170.0,280.0
+Mid-cycle operating margin %,25.0,35.0,45.0
+Exit multiple of after-tax profit (x),10,12,14
+Present value of exit value ($B),152.017,333.969,825.099
+Discount rate %,14.0,14.0,14.0
+Plus net cash ($B),68.3,68.3,68.3
+Shares by 2030 (millions),1100.0,1100.0,1100.0
+Value ($ per share),356.1,622.21,1266.27
+Probability,25,50,25
+Probability-weighted value ($ per share),,716.7,
+

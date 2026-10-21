@@ -1,4 +1,4 @@
-"""Reports on SpaceX and Firefly (holdings) and on OpenAI, Anthropic and Anduril (private, on the watchlist).
+"""Reports on SpaceX and Firefly (holdings), OpenAI, Anthropic, Anduril and Bloomberg (private), and Kratos, Axon, Palantir, AMD, Micron and Sandisk.
 Written October 21, 2026. Scenario values come from _source/models/new_coverage.py."""
 from rep import src, stats, table, prose, key, bridge, fin_table
 
@@ -383,4 +383,193 @@ R['AXON'] = dict(
         ('rec', 'Recommendation', 'Watch. <em>A great business, close to a buy point.</em>',
          prose('Axon is one of the best-positioned companies in public safety: a near-monopoly in U.S. police cameras, sticky subscriptions and an AI product line that is growing fast. Real-time translation strengthens that position. At $396.30, though, the price is above our base case of $289 ($310 weighted). A price nearer $300, or third-quarter results on November 3 that show margins recovering, would make it a Buy.')
          + band('The right thesis, <em>a slightly early price.</em>', 'AI makes Axon&rsquo;s subscription more valuable; the stock already assumes much of that.')),
+    ])
+
+# ================================================================ Palantir
+PQ = 'https://investinglive.com/stocks/palantir-revenue-jumps-93-as-karp-hails-otherworldly-quarter-raises-guidance/'
+R['PLTR'] = dict(
+    t='PLTR', slug='palantir', name='Palantir Technologies', h1='Palantir', sector='AI software', date=DATE, timing=', ahead of its third-quarter results on November 2',
+    sub='Palantir sells the software that governments and companies use to pull their data together and put AI to work on it. Revenue is growing more than 90% a year and the business is highly profitable, but at about 60 times this year&rsquo;s sales the shares price in far more than that.',
+    call='Watch', method='Scenario model', price=201.72, pricenote='Close, Oct 21, 2026', base=79, bear=36, bull=204, wt=100, max=250, tick=50,
+    disclosure='The author holds no PLTR shares directly.',
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Scenario model', 36, 204, 79, '$36 to $204, base $79'), ('Probability-weighted', None, None, 100, '$100'),
+           ('Price at writing', None, None, 201.72, '$201.72'), ('52-week range', 106, 213, None, '$106 to $213'), ('Analyst average', None, None, 206, '$206')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'One platform, <em>two kinds of customer.</em>',
+         prose('Palantir builds software that joins up an organisation&rsquo;s data and lets people, and now AI models, act on it. <b>Gotham</b> and <b>Maven</b> serve defence and intelligence agencies; <b>Foundry</b> does the same for companies; <b>AIP</b>, launched in 2023, puts large language models to work inside both. Customers usually start with a short &ldquo;bootcamp&rdquo; and expand from there.',
+               'Government is still the larger half. In the U.S. it includes the Army&rsquo;s enterprise agreement of up to $10 billion over ten years, signed in 2025. The faster-growing half is <b>U.S. commercial</b>, where AIP has turned Palantir from a slow-moving consultant-heavy business into one that sells like software.')),
+        ('results', 'Latest results', 'Revenue up 93%, <em>a 62% adjusted margin.</em>',
+         stats([('$1.94B', 'Revenue, Q2 2026, +93%'), ('$764M', 'U.S. commercial, +149%'), ('$809M', 'U.S. government, +90%'), ('47%', 'GAAP operating margin'), ('157%', 'Net dollar retention'), ('$8.15B', '2026 revenue guidance, raised')])
+         + prose('The second quarter, reported on August 3, beat estimates and brought the largest guidance raise in the company&rsquo;s history: 2026 revenue of about <b>$8.15 billion</b>, up about 82%, with U.S. commercial revenue above $3.4 billion. Adjusted free cash flow was $1.22 billion in the quarter, 63% of revenue, and the &ldquo;Rule of 40&rdquo; score (growth plus margin) reached 155%. U.S. commercial contracts signed in the quarter were worth a record $2.1 billion.',
+                 'For the third quarter Palantir guided to revenue of $2.16 billion, about 12% more than the second. The shares reached a record $212.94 on October 12, then fell 7% on October 16 with other AI software names, with no company news. Results come on <b>November 2</b>.')
+         + src([('Q2 2026 results', PQ), ('Guidance raise', 'https://www.tikr.com/blog/palantirs-q2-earnings-call-produced-its-largest-ever-guidance-raise-heres-what-changed'), ('October selloff', 'https://www.vantagemarkets.com/market-analysis/why-palantir-stock-fell-ai-financing-worries-pltr-october-21-2026/')])),
+        ('fin', 'The numbers', 'From losses to <em>a 47% margin in four years.</em>',
+         fin_table('PLTR') + prose('Palantir lost money until 2023. Since then revenue growth has sped up every year while costs grew slowly, so almost every new dollar of revenue has reached profit. Stock-based pay is still large, about $840 million over the past twelve months, but it has fallen from about half of revenue in 2021 to about 14%. The margins in this report are after stock pay. The <a href="snapshot.html?t=PLTR&amp;view=q">quarterly view</a> shows each quarter from the 10-Qs.')
+         + src([('Palantir filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'About $9.4 billion of cash <em>and no debt.</em>',
+         prose('At the end of June Palantir held about $9.4 billion of cash and short-term Treasuries and had no borrowings. Dilution from stock pay is the main cost to shareholders: this model assumes about 2.6 billion diluted shares by 2030, roughly 1% a year more than today. Co-founders hold super-voting shares, so outside shareholders have little say over the company.')),
+        ('value', 'Valuation', 'Our scenarios give <em>$79 a share.</em>',
+         prose('Valued like the other fast growers on this site: revenue and operating margin in 2030, taxed at 21%, times an exit multiple, discounted back four years at 14% (beta 2.0 gives a CAPM cost of about 14.2%), plus net cash.')
+         + scen([['Revenue in 2030', '$18B', '$28B', '$45B'], ['Growth a year from 2026', '22%', '36%', '53%'], ['Operating margin after stock pay', '40%', '50%', '55%'], ['Exit multiple', '25&times;', '30&times;', '45&times;'],
+                 ['Value per share', '$36', '$79', '$204'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$100</b>. Even the base case is generous: revenue more than triples in four years and the margin stays near today&rsquo;s record.')),
+        ('implied', 'What the price assumes', 'At $202, <em>the bull case.</em>',
+         implied([['About $44 billion of revenue in 2030 at a 55% margin and 45&times; earnings', 'About $8 billion this year; 53% growth a year for four years'], ['Or about $73 billion of revenue at the base margin and multiple', 'Nine times this year&rsquo;s revenue']])
+         + prose('The market is paying today for the outcome that has everything go right. That is possible for a company growing this fast, but it leaves no room for a slowdown. The analysts&rsquo; average target of $206 is close to the price; their range runs from $80 to $265.')
+         + src([('Analyst targets', 'https://beinsure.com/news/palantir-stock-forecast-analysts-see-11-upside-after-selloff/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Valuation', 'About 60&times; this year&rsquo;s revenue: a small slowdown can mean a large fall in the price.'],
+             ['Government budgets', 'About 40% of revenue is U.S. government; spending priorities and contract timing can change.'],
+             ['Competition', 'Cloud providers and AI labs are building their own enterprise data and agent tools.'],
+             ['Stock pay and control', 'Dilution continues, and super-voting shares leave founders in charge.'],
+             ['AI software sentiment', 'The shares move with the wider AI trade, as in October&rsquo;s 7% one-day fall.'],
+         ]) + prose('<b>Upside:</b> AIP spreading through large companies faster than expected, more defence work (Maven, the Army agreement, allies), and margins rising further as revenue scales.')),
+        ('rec', 'Recommendation', 'Watch. <em>An outstanding business at a bull-case price.</em>',
+         prose('Few software companies have ever grown this fast at this size while earning these margins, and the U.S. commercial business is still accelerating. At $201.72, though, the price matches our bull case and is about twice the weighted value of $100. A fall toward $100&ndash;120, or several more quarters of 80%-plus growth that lift the base case, would make it worth buying.')
+         + band('The best numbers in software, <em>priced as if they last.</em>', 'Palantir has earned its premium; the shares already pay for the next four years of it.')),
+    ])
+
+# ================================================================ AMD
+AQ2 = 'https://ir.amd.com/news-events/press-releases/detail/1295/'
+R['AMD'] = dict(
+    t='AMD', slug='amd', name='Advanced Micro Devices', h1='AMD', sector='Semiconductors', date=DATE, timing=', ahead of its third-quarter results on November 3',
+    sub='AMD designs processors for PCs, servers and game consoles, and is now the main alternative to Nvidia in AI accelerators. Data center sales more than doubled last quarter and its Helios AI racks start shipping this half. The shares are up more than 140% this year.',
+    call='Watch', method='Scenario model', price=552.72, pricenote='Close, Oct 21, 2026', base=319, bear=128, bull=591, wt=340, max=700, tick=100,
+    disclosure='The author holds no AMD shares directly; AMD is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio.',
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Scenario model', 128, 591, 319, '$128 to $591, base $319'), ('Probability-weighted', None, None, 340, '$340'),
+           ('Price at writing', None, None, 552.72, '$552.72'), ('52-week range', 188, 659, None, '$188 to $659'), ('Analyst average', None, None, 636, '$636')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'CPUs it leads in, <em>GPUs it is catching up in.</em>',
+         prose('AMD has four businesses. <b>Data Center</b> (58% of revenue) sells EPYC server processors, where it has taken share from Intel for years, and Instinct AI accelerators. <b>Client</b> sells Ryzen PC chips, <b>Gaming</b> the chips inside the PlayStation and Xbox, and <b>Embedded</b> the Xilinx programmable chips it bought in 2022.',
+               'The investment case is AI. With the MI450 series and the <b>Helios</b> rack, AMD sells a whole AI system rather than single chips. OpenAI agreed in October 2025 to deploy 6 gigawatts of AMD GPUs and received a warrant for up to 160 million AMD shares that vests as deployments and the share price hit milestones. In 2026 Anthropic agreed to deploy up to 2 gigawatts of MI450 GPUs in Helios racks, and Meta, Microsoft and Oracle are customers too.')),
+        ('results', 'Latest results', 'Data center <em>up 107%.</em>',
+         stats([('$11.5B', 'Revenue, Q2 2026, +50%'), ('$6.7B', 'Data Center, +107%'), ('$3.1B', 'Client, +23%'), ('56%', 'Gross margin, adjusted'), ('$1.66', 'Adjusted EPS'), ('$13.0B', 'Q3 revenue guidance')])
+         + prose('Second-quarter revenue rose 50% and Data Center more than doubled. Gaming fell 31% and Embedded grew 19%. GAAP operating income was $2.0 billion and free cash flow $1.56 billion, 14% of revenue. The shares fell 7% the next day because investors wanted more.',
+                 'For the third quarter AMD guided to about <b>$13.0 billion</b> of revenue and a 56% gross margin. Lisa Su described Q3 as the start of the Helios ramp, Q4 as a step up and Q1 2027 as a further step up, and management expects Data Center revenue to more than double again in 2027. The stock closed at a record $649.42 on October 6 and has fallen about 15% since. Results come on <b>November 3</b>.')
+         + src([('Q2 2026 results', AQ2), ('Ramp and expectations', 'https://fool.com/investing/2026/10/19/amd-stock-is-up-over-140-this-year-i-d-still-buy-it-before-its-nov-3-report'), ('Analyst views', 'https://247wallst.com/investing/2026/10/08/amds-biggest-analyst-price-target-is-eye-opening-heres-what-it-would-take-to-reach-it/')])),
+        ('fin', 'The numbers', 'Revenue doubled in four years; <em>2026 adds another 40%.</em>',
+         fin_table('AMD') + prose('GAAP profit looks small next to adjusted figures because AMD still amortises the intangible assets from the Xilinx deal and pays a lot in stock (about $1.9 billion over the past twelve months). The adjusted 2025 figures add both back. This report&rsquo;s margins are GAAP, after stock pay. The <a href="snapshot.html?t=AMD&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('AMD filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'About $10 billion of net cash, <em>and a warrant to OpenAI.</em>',
+         prose('At the end of June AMD had $13.1 billion of cash and short-term investments and $3.2 billion of debt. The OpenAI warrant is the unusual item: up to 160 million shares, about 10% of today&rsquo;s count, for a nominal price, with the last tranche tied to a $600 share price. This model counts all of it, so shares rise from 1.63 billion to about 1.80 billion by 2030.')),
+        ('value', 'Valuation', 'Our scenarios give <em>$319 a share.</em>',
+         prose('2030 revenue and operating margin, taxed at 21%, times an exit multiple, discounted back four years at 12% (beta 1.6 gives a CAPM cost of about 12.3%), plus net cash. AMD&rsquo;s own long-term targets, set in November 2025, call for revenue growth above 35% a year and earnings above $20 a share; it now says it expects to beat that figure significantly.')
+         + scen([['Revenue in 2030', '$100B', '$150B', '$200B'], ['Operating margin after stock pay', '22%', '30%', '35%'], ['Exit multiple', '20&times;', '25&times;', '30&times;'],
+                 ['Value per share', '$128', '$319', '$591'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$340</b>. The base case has revenue about three times this year&rsquo;s roughly $50 billion: Data Center doubling in 2027, then growth slowing to about 15% by 2030.')),
+        ('implied', 'What the price assumes', 'At $553, <em>about $190 billion of revenue at bull margins.</em>',
+         implied([['About $187 billion of revenue in 2030 at a 35% margin and 30&times; earnings', 'Close to our bull case'], ['Or about $260 billion of revenue at the base margin and multiple', 'Five times this year&rsquo;s revenue']])
+         + prose('The analysts&rsquo; average target is $636 and they put the stock at about 34 times their 2027 earnings estimate. Our lower number comes mostly from valuing it on 2030 earnings, after the AI build-out has slowed, rather than on 2027.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Helios timing', 'Growth after Q3 depends on racks shipping on schedule; a slip would hit 2027.'],
+             ['Nvidia', 'Nvidia still has most of the market, a software lead (CUDA) and a yearly product cadence.'],
+             ['Customer concentration', 'A few AI labs and cloud providers account for most of the GPU growth.'],
+             ['AI spending cycle', 'If AI data center spending slows after 2027, the highest-growth part of AMD slows with it.'],
+             ['Dilution and export rules', 'The OpenAI warrant adds up to 10% more shares; China export limits already cost $800 million in 2025.'],
+         ]) + prose('<b>Upside:</b> a faster Helios ramp, share gains in AI inference, more lab deals like Anthropic&rsquo;s, and continued EPYC gains in servers.')),
+        ('rec', 'Recommendation', 'Watch. <em>The right products, a price ahead of them.</em>',
+         prose('AMD is in the best position in its history: leading in server CPUs and finally a credible second supplier of AI systems, with signed demand from OpenAI and Anthropic. At $552.72, though, the price is close to our bull case and about 60% above the weighted value of $340. Third-quarter results on November 3 and the size of the fourth-quarter step-up are the next test; a price nearer $350&ndash;400, or proof that 2027 data center revenue is running well ahead of plan, would make it a Buy.')
+         + band('A real challenger to Nvidia, <em>already priced as one.</em>', 'The products and customers are there; the shares have run ahead of the revenue.')),
+    ])
+
+# ================================================================ Micron
+MQ = 'https://pulse2.com/micron-reports-record-fiscal-q4-revenue-of-54-23-billion-and-fy2026-revenue-of-133-19-billion/'
+MC = 'https://www.marketbeat.com/instant-alerts/transcript-micron-technology-q4-earnings-call-highlights-2026-09-30/'
+R['MU'] = dict(
+    t='MU', slug='micron', name='Micron Technology', h1='Micron', sector='Memory chips', date=DATE, timing=', after record fiscal 2026 results',
+    sub='Micron is the only large U.S. maker of memory chips, and the AI boom has turned memory from a commodity into the scarcest part of a data center. Revenue more than tripled to $133 billion last year at an 87% gross margin by the end. The question is how long a famously cyclical industry can stay this tight.',
+    call='Watch', method='Cycle model', price=913.67, pricenote='Close, Oct 21, 2026', base=622, bear=356, bull=1266, wt=717, max=1600, tick=200,
+    disclosure='The author holds no MU shares directly; Micron is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio.',
+    fieldnote='The cycle model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; consensus target.',
+    field=[('Cycle model', 356, 1266, 622, '$356 to $1,266, base $622'), ('Probability-weighted', None, None, 717, '$717'),
+           ('Price at writing', None, None, 913.67, '$913.67'), ('52-week range', 192, 1255, None, '$192 to $1,255'), ('Analyst consensus', None, None, 1555, '$1,555')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Memory, <em>and the memory AI needs most.</em>',
+         prose('Micron makes the two main kinds of memory. <b>DRAM</b> (73% of last quarter&rsquo;s revenue) is the working memory in every computer, and includes <b>HBM</b>, the stacked memory that sits next to each AI accelerator. <b>NAND</b> (26%) stores data in phones, PCs and data center drives. Only three companies make DRAM at scale: Samsung, SK Hynix and Micron.',
+               'AI changed the industry in two ways. HBM uses about three times the silicon of ordinary DRAM for each bit, so making it takes capacity away from everything else; and AI servers need far more memory of every kind. The result is a shortage that Micron expects to be &ldquo;much tighter&rdquo; in fiscal 2027 and 2028 than in 2026.')),
+        ('results', 'Latest results', 'Revenue up 379% in a year, <em>an 87% gross margin.</em>',
+         stats([('$54.2B', 'Revenue, Q4 FY2026, +31% on Q3'), ('86.8%', 'Gross margin'), ('$37.7B', 'Net income'), ('$33.2B', 'Free cash flow'), ('$68.3B', 'Net cash'), ('$61.5B', 'Q1 FY2027 revenue guidance')])
+         + prose('Fiscal 2026 (to September 3) brought revenue of <b>$133.2 billion</b>, up 256%, and net income of $85 billion. In the fourth quarter DRAM prices rose in the high teens and NAND prices about 30% from the quarter before. For the first quarter of fiscal 2027 Micron guided to $61.5 billion of revenue, an 86.25% gross margin and $38.15 of adjusted earnings per share; it plans to step up buybacks from December.',
+                 'Micron has also changed how it sells. It has signed 26 multi-year agreements with take-or-pay volumes, expected to cover more than 35% of revenue through 2030, with about $150 billion of remaining obligations at set prices and $32 billion of customer prepayments. More than 75% of 2027 output is already committed.')
+         + src([('Q4 FY2026 results', MQ), ('Earnings call', MC)])),
+        ('fin', 'The numbers', 'A loss in 2023, <em>$85 billion of profit in 2026.</em>',
+         fin_table('MU') + prose('The table is the case for caution in one picture. In fiscal 2023 revenue halved and Micron lost $5.8 billion; three years later it earned $85 billion. Memory prices move with supply and demand, and every past boom has ended with new factories coming online and prices falling. Capital spending rises with the cycle too: about $25 billion in the first half of fiscal 2027 alone.')
+         + src([('Micron filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125&type=10-K')])),
+        ('capital', 'Balance sheet and supply', '$68 billion of net cash <em>and new fabs from 2027.</em>',
+         prose('Micron ended fiscal 2026 with $68.3 billion of net cash. Its new capacity arrives in steps: Idaho ID1 in mid-2027, ID2 and a Japan DRAM expansion in late 2028, a Singapore NAND plant in the second half of 2028 and the first New York fab in 2030. Samsung and SK Hynix are expanding too. Morningstar, which cut its fair value to $700, expects industry supply to roughly double by 2028 and prices to fall steeply from 2029.')
+         + src([('Cycle outlook', 'https://finance.yahoo.com/markets/stocks/articles/microns-blowout-q4-pushes-memory-090742260.html')])),
+        ('value', 'Valuation', 'Our cycle model gives <em>$622 a share.</em>',
+         prose('A single year&rsquo;s earnings is the wrong base for a memory maker, so this model values the cycle: free cash flow for fiscal 2027&ndash;2030 at each scenario&rsquo;s prices, then an exit value on <i>mid-cycle</i> earnings, all discounted at 14% (beta 2.0 gives a CAPM cost of about 14.3%), plus net cash, over about 1.10 billion shares after buybacks.')
+         + scen([['Revenue, FY2027 / FY2028', '$220B / $200B', '$250B / $280B', '$290B / $350B'], ['Revenue, FY2029 / FY2030', '$130B / $110B', '$200B / $150B', '$330B / $300B'], ['Free cash flow, four years', '$211B', '$360B', '$678B'],
+                 ['Mid-cycle revenue and operating margin', '$130B at 25%', '$170B at 35%', '$280B at 45%'], ['Exit multiple', '10&times;', '12&times;', '14&times;'],
+                 ['Value per share', '$356', '$622', '$1,266'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$717</b>. The base case follows management&rsquo;s view (tighter through fiscal 2028) and then the usual turn as new supply arrives. Even the bear case stays well above anything Micron earned before AI.')),
+        ('implied', 'What the price assumes', 'At $914, <em>record profit becomes normal.</em>',
+         implied([['About $92 billion of after-tax profit a year from 2031, valued at 12&times;, after the base case&rsquo;s cash flows', 'Fiscal 2026 net income was $85 billion, at the start of the boom'], ['Or the bull case&rsquo;s four-year boom with a higher exit', 'Supply stays short through 2030']])
+         + prose('The price is between our base and bull cases. Analysts are much more optimistic: their consensus target is about $1,555, and the stock trades at about 7 times next year&rsquo;s expected earnings. That multiple looks cheap only if next year&rsquo;s earnings are close to normal, which memory history argues against.')
+         + src([('Analyst targets', 'https://247wallst.com/investing/2026/10/15/micron-stock-has-some-eye-popping-analyst-targets-heres-my-price-prediction/'), ('Valuation comparison', 'https://www.fool.com/coverage/better-buy/2026/10/17/micron-technology-vs-sandisk-which-ai-memory-stock-is-the-better-investment/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['The cycle', 'New fabs at Micron, Samsung and SK Hynix arrive from 2027&ndash;2028; prices have always fallen when they do.'],
+             ['AI spending', 'Fears of AI overbuilding cut the shares 26% in July; hyperscaler capex growth is expected to slow.'],
+             ['Customer concentration', 'Data centers are about 60% of revenue and a handful of buyers dominate.'],
+             ['China', 'Beijing barred some infrastructure operators from buying Micron chips in 2023.'],
+             ['Capital spending', 'Higher capex and depreciation will weigh on margins as prices ease.'],
+         ]) + prose('<b>Upside:</b> long-term agreements that keep prices high for longer, HBM4 and custom HBM with Nvidia, and buybacks from a cash pile of nearly $70 billion.')),
+        ('rec', 'Recommendation', 'Watch. <em>Peak conditions, priced for more.</em>',
+         prose('Micron is executing brilliantly in the best memory market there has ever been, and its long-term agreements make this cycle steadier than past ones. At $913.67, though, the price assumes today&rsquo;s profit lasts well beyond 2028, about 27% above our weighted value of $717. We would rather buy nearer $700, or when the first signs of a downturn have already been priced in. Next results are expected in mid-December.')
+         + band('The best memory market ever, <em>still a memory market.</em>', 'Every past boom ended with new supply; this one has a later date, not a different ending.')),
+    ])
+
+# ================================================================ Sandisk
+SQ = 'https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-fourth-quarter-2026-financial-results'
+R['SNDK'] = dict(
+    t='SNDK', slug='sandisk', name='Sandisk', h1='Sandisk', sector='Flash storage', date=DATE, timing=', ahead of its first-quarter results on October 29',
+    sub='Sandisk makes NAND flash, the memory that stores data in phones, PCs and AI data centers. Spun off from Western Digital in February 2025, it went from losses to an 85% gross margin in a year as flash prices soared. The shares are up more than eightfold in twelve months and down about 40% from their high.',
+    call='Watch', method='Cycle model', price=1378.22, pricenote='Close, Oct 21, 2026', base=636, bear=306, bull=1487, wt=766, max=2400, tick=400,
+    disclosure='The author holds no SNDK shares.',
+    fieldnote='The cycle model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; median target.',
+    field=[('Cycle model', 306, 1487, 636, '$306 to $1,487, base $636'), ('Probability-weighted', None, None, 766, '$766'),
+           ('Price at writing', None, None, 1378.22, '$1,378.22'), ('52-week range', 145, 2354, None, '$145 to $2,354'), ('Analyst median', None, None, 2225, '$2,225')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Pure flash, <em>made with Kioxia.</em>',
+         prose('Sandisk sells only NAND flash. <b>Edge</b> (61% of last quarter&rsquo;s revenue) is flash for phones and PCs; <b>Datacenter</b> (33%) is enterprise SSDs, now the fastest-growing part as AI systems store and move far more data; <b>Consumer</b> is memory cards and portable drives. It makes its chips in Japan through <b>Flash Ventures</b>, a joint venture with Kioxia that shares the cost of the factories.',
+               'Because it does nothing but flash, Sandisk is the most direct way to own the NAND cycle. That made it one of the best-performing stocks of the AI memory boom, and also the one most exposed if flash prices turn.')),
+        ('results', 'Latest results', 'Revenue up 372%, <em>an 85% gross margin.</em>',
+         stats([('$8.97B', 'Revenue, Q4 FY2026, +51% on Q3'), ('84.6%', 'Gross margin'), ('$6.90B', 'Net income'), ('$7.08B', 'Free cash flow'), ('$2.98B', 'Datacenter, +103% on Q3'), ('$10.3&ndash;10.8B', 'Q1 FY2027 revenue guidance')])
+         + prose('In the quarter to July 3, revenue rose 51% from the quarter before; about two-thirds of that came from higher prices and one-third from volume. The gross margin went from about 51% in the second quarter to 78% in the third and <b>84.6%</b> in the fourth. For fiscal 2026 revenue was $20.2 billion, up 175%, and net income $11.4 billion.',
+                 'For the first quarter of fiscal 2027 Sandisk guided to $10.3&ndash;10.8 billion of revenue, an 83&ndash;85% gross margin and $44&ndash;46 of adjusted earnings per share. It bought back $4.5 billion of stock in the quarter and the board added $14 billion to the buyback. Results come on <b>October 29</b>.')
+         + src([('Q4 FY2026 results', SQ), ('Q1 results date', 'https://investor.sandisk.com/news-releases/news-release-details/sandisk-report-first-quarter-fiscal-year-2027-results-october-29')])),
+        ('fin', 'The numbers', 'Losses until 2025, <em>$11 billion of profit in 2026.</em>',
+         fin_table('SNDK') + prose('Sandisk lost money in each of its three years before the boom, including $2.1 billion in fiscal 2023, the last flash downturn. The swing to an $11.4 billion profit came almost entirely from price, which is why the same table is the main risk. Capital spending stays low because Flash Ventures carries most of the factory cost.')
+         + src([('Sandisk filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002023554&type=10-K')])),
+        ('capital', 'Contracts and balance sheet', 'Price floors, <em>and price ceilings.</em>',
+         prose('Sandisk now sells much of its output under multi-year agreements whose prices can move only between a floor and a ceiling. Management expects them to cover over half of its bits in fiscal 2027 and about two-thirds in fiscal 2028. The floors protect it in a downturn; the ceilings cap how much it gains if the shortage worsens. The CEO has called a mid-80s gross margin a fair return, so today&rsquo;s margin is close to the top.',
+               'At the end of fiscal 2026 Sandisk had $4.8 billion of cash and had repaid all its debt. The model assumes about 150 million shares by 2030, down from about 155 million, as buybacks continue.')
+         + src([('Contract structure', 'https://www.fool.com/investing/2026/10/01/micron-says-memory-supply-will-be-much-tighter-in-2028-sandisk-s-contracts-limit-how-much-it-can-gain/')])),
+        ('value', 'Valuation', 'Our cycle model gives <em>$636 a share.</em>',
+         prose('The same method as Micron: free cash flow for fiscal 2027&ndash;2030 at each scenario&rsquo;s prices, then an exit value on mid-cycle earnings, discounted at 15% (beta 2.1 gives a CAPM cost of about 14.6%), plus net cash.')
+         + scen([['Revenue, FY2027 / FY2028', '$40B / $35B', '$45B / $50B', '$52B / $65B'], ['Revenue, FY2029 / FY2030', '$20B / $16B', '$35B / $25B', '$65B / $60B'], ['Free cash flow, four years', '$41B', '$77B', '$154B'],
+                 ['Mid-cycle revenue and operating margin', '$18B at 12%', '$28B at 25%', '$50B at 40%'], ['Exit multiple', '8&times;', '10&times;', '12&times;'],
+                 ['Value per share', '$306', '$636', '$1,487'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$766</b>. The base case keeps the shortage through fiscal 2028, as the industry expects, then has prices fall back toward a mid-cycle margin still well above anything Sandisk earned before.')),
+        ('implied', 'What the price assumes', 'At $1,378, <em>the boom never ends.</em>',
+         implied([['About $25 billion of after-tax profit a year from 2031, valued at 10&times;, after the base case&rsquo;s cash flows', 'About what Sandisk should earn in fiscal 2027, at peak prices'], ['Or the bull case: revenue of $60 billion or more and 60% cash margins through 2030', 'Contract ceilings limit how high prices can go']])
+         + prose('The price sits just below our bull case. Analysts are far more optimistic, with a median target of about $2,225. At about 8 times next year&rsquo;s expected earnings the stock looks cheap, but those earnings are made at peak prices that the company&rsquo;s own contracts expect to cap.')
+         + src([('Analyst targets and valuation', 'https://www.fool.com/coverage/better-buy/2026/10/17/micron-technology-vs-sandisk-which-ai-memory-stock-is-the-better-investment/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['The flash cycle', 'Flash prices drove almost all of the profit; new supply from 2028 could reverse them quickly.'],
+             ['Single product', 'Unlike Micron, Sandisk has no DRAM or HBM to cushion a NAND downturn.'],
+             ['Contract ceilings', 'Prices are capped on more than half of its bits in fiscal 2027, limiting upside.'],
+             ['Kioxia', 'Its factories are shared with Kioxia, so supply and costs depend on the joint venture.'],
+             ['Volatility', 'The shares fell about 40% in July on AI overbuilding fears.'],
+         ]) + prose('<b>Upside:</b> enterprise SSD demand from AI inference, high-bandwidth flash for AI systems, contract floors that soften the next downturn, and large buybacks.')),
+        ('rec', 'Recommendation', 'Watch. <em>A great quarter, a peak-cycle price.</em>',
+         prose('Sandisk has turned a loss-making business into one with an 85% gross margin and no debt in about a year, and its contracts should make the next downturn milder than the last. At $1,378.22, though, the shares are close to our bull case and about 80% above the weighted value of $766. First-quarter results on October 29 will show how far prices are still rising; we would look again nearer $750.')
+         + band('The purest bet on flash, <em>at a price for perfect flash.</em>', 'Sandisk earns a fortune at today&rsquo;s prices; the shares assume those prices stay.')),
     ])

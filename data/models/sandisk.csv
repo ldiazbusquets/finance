@@ -1,0 +1,37 @@
+LDB Finance: Sandisk (SNDK)
+"Method: Cycle model: four years of free cash flow at the cycle's prices, then a mid-cycle exit value"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,"value = sum of discounted free cash flow, years 1-4 + (mid-cycle revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash",Fiscal years
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),636.34
+
+SCENARIOS,Bear,Base,Bull
+Revenue FY2027 ($B),40.0,45.0,52.0
+Free cash flow margin FY2027 %,60.0,65.0,68.0
+Present value of FY2027 free cash flow ($B),20.87,25.435,30.748
+Revenue FY2028 ($B),35.0,50.0,65.0
+Free cash flow margin FY2028 %,42.0,60.0,65.0
+Present value of FY2028 free cash flow ($B),11.115,22.684,31.947
+Revenue FY2029 ($B),20.0,35.0,65.0
+Free cash flow margin FY2029 %,10.0,35.0,62.0
+Present value of FY2029 free cash flow ($B),1.315,8.055,26.498
+Revenue FY2030 ($B),16.0,25.0,60.0
+Free cash flow margin FY2030 %,0,20.0,60.0
+Present value of FY2030 free cash flow ($B),0.0,2.859,20.583
+Mid-cycle revenue ($B),18.0,28.0,50.0
+Mid-cycle operating margin %,12.0,25.0,40.0
+Exit multiple of after-tax profit (x),8,10,12
+Present value of exit value ($B),7.805,31.618,108.404
+Discount rate %,15.0,15.0,15.0
+Plus net cash ($B),4.8,4.8,4.8
+Shares by 2030 (millions),150.0,150.0,150.0
+Value ($ per share),306.03,636.34,1486.54
+Probability,25,50,25
+Probability-weighted value ($ per share),,766.31,
+

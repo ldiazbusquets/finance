@@ -396,7 +396,7 @@
         $$('[data-cat]').forEach(function (b) { b.style.display = f === 'all' || b.getAttribute('data-cat') === f ? '' : 'none'; });
       };
     });
-    var REPORTS = {'LHX': 'l3harris.html', 'VRT': 'vertiv.html', 'AWK': 'american-water.html', 'AMZN': 'amazon.html', 'META': 'meta.html', 'JPM': 'jpmorgan.html', 'GEV': 'gev.html', 'NVDA': 'nvidia.html', 'BA': 'boeing.html', 'COST': 'costco.html', 'SPCX': 'spacex.html', 'FLY': 'firefly.html', 'ANTHROPIC': 'anthropic.html', 'OPENAI': 'openai.html', 'ANDURIL': 'anduril.html', 'KTOS': 'kratos.html', 'BLOOMBERG': 'bloomberg.html', 'AXON': 'axon.html'};
+    var REPORTS = {'LHX': 'l3harris.html', 'VRT': 'vertiv.html', 'AWK': 'american-water.html', 'AMZN': 'amazon.html', 'META': 'meta.html', 'JPM': 'jpmorgan.html', 'GEV': 'gev.html', 'NVDA': 'nvidia.html', 'BA': 'boeing.html', 'COST': 'costco.html', 'SPCX': 'spacex.html', 'FLY': 'firefly.html', 'ANTHROPIC': 'anthropic.html', 'OPENAI': 'openai.html', 'ANDURIL': 'anduril.html', 'KTOS': 'kratos.html', 'BLOOMBERG': 'bloomberg.html', 'AXON': 'axon.html', 'PLTR': 'palantir.html', 'AMD': 'amd.html', 'MU': 'micron.html', 'SNDK': 'sandisk.html'};
     getJSON('data/companies/index.json').then(function (ix) {
       var el = $('#cov');
       if (!ix.updated || !ix.companies || !ix.companies.length) return el.innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures come straight from SEC filings and appear here after the update runs for the first time.</div>';

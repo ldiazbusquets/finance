@@ -92,6 +92,16 @@
    "held": true
   },
   {
+   "t": "AMD",
+   "name": "Advanced Micro Devices",
+   "page": "amd.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 319,
+   "price": 552.72,
+   "held": false
+  },
+  {
    "t": "AXON",
    "name": "Axon Enterprise",
    "page": "axon.html",
@@ -119,6 +129,36 @@
    "call": "Watch",
    "value": 23,
    "price": 38.81,
+   "held": false
+  },
+  {
+   "t": "MU",
+   "name": "Micron Technology",
+   "page": "micron.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 622,
+   "price": 913.67,
+   "held": false
+  },
+  {
+   "t": "PLTR",
+   "name": "Palantir Technologies",
+   "page": "palantir.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 79,
+   "price": 201.72,
+   "held": false
+  },
+  {
+   "t": "SNDK",
+   "name": "Sandisk",
+   "page": "sandisk.html",
+   "date": "2026-10-21",
+   "call": "Watch",
+   "value": 636,
+   "price": 1378.22,
    "held": false
   },
   {

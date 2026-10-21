@@ -114,7 +114,7 @@ def foot(extra=''):
   <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=15"></script>{extra}
+<script src="assets/site.js?v=16"></script>{extra}
 </body>
 </html>
 '''
@@ -293,6 +293,10 @@ def build():
     <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
+      {card('palantir.html', 'PLTR &middot; Watch', 'Palantir', 'AI software growing 93% at a 47% margin, priced for the bull case. Value $79 against $202.', 'Read the report &rarr;', 'live')}
+      {card('amd.html', 'AMD &middot; Watch', 'AMD', 'Data center up 107% and Helios racks shipping, after a 140% run. Value $319 against $553.', 'Read the report &rarr;', 'live')}
+      {card('micron.html', 'MU &middot; Watch', 'Micron', 'An 87% gross margin in the tightest memory market ever, valued across the cycle. Value $622 against $914.', 'Read the report &rarr;', 'live')}
+      {card('sandisk.html', 'SNDK &middot; Watch', 'Sandisk', 'Pure flash: from losses to an 85% margin in a year. Value $636 against $1,378.', 'Read the report &rarr;', 'live')}
       {card('axon.html', 'AXON &middot; Watch', 'Axon Enterprise', 'TASERs, body cameras and AI translation, down half from its peak. Value $289 against $396.', 'Read the report &rarr;', 'live')}
       {card('kratos.html', 'KTOS &middot; Watch', 'Kratos Defense', 'Drones, hypersonics and engines: the listed company closest to Anduril. Value $23 against $39.', 'Read the report &rarr;', 'live')}
       {card('costco.html', 'COST &middot; Hold / Wait', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}

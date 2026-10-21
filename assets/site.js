@@ -338,12 +338,12 @@
         $$('[data-cat]').forEach(function (b) { b.style.display = f === 'all' || b.getAttribute('data-cat') === f ? '' : 'none'; });
       };
     });
-    var REPORTS = {'LHX': 'l3harris.html', 'VRT': 'vertiv.html', 'AWK': 'american-water.html', 'AMZN': 'amazon.html', 'META': 'meta.html', 'JPM': 'jpmorgan.html', 'GEV': 'gev.html', 'NVDA': 'nvidia.html', 'BA': 'boeing.html', 'COST': 'costco.html'};
+    var REPORTS = {'LHX': 'l3harris.html', 'VRT': 'vertiv.html', 'AWK': 'american-water.html', 'AMZN': 'amazon.html', 'META': 'meta.html', 'JPM': 'jpmorgan.html', 'GEV': 'gev.html', 'NVDA': 'nvidia.html', 'BA': 'boeing.html', 'COST': 'costco.html', 'SPCX': 'spacex.html', 'FLY': 'firefly.html', 'ANTHROPIC': 'anthropic.html', 'OPENAI': 'openai.html', 'ANDURIL': 'anduril.html'};
     getJSON('data/companies/index.json').then(function (ix) {
       var el = $('#cov');
       if (!ix.updated || !ix.companies || !ix.companies.length) return el.innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures come straight from SEC filings and appear here after the update runs for the first time.</div>';
       $('#cstamp').textContent = 'Figures from the latest 10-K on SEC EDGAR · updated ' + fdate(ix.updated.slice(0, 10), true);
-      el.innerHTML = ix.companies.map(function (c) {
+      el.innerHTML = ix.companies.filter(function (c) { return !c.private; }).map(function (c) {
         var st = { live: ['live', 'Published'], build: ['build', 'In progress'], plan: ['plan', 'Planned'] }[c.status] || ['plan', 'Planned'];
         var g = c.revGrowth;
         var pg = c.page || REPORTS[c.ticker];

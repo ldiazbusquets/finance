@@ -585,6 +585,10 @@ def run(ua):
     n = 0
     if ua:
         n += update_fundamentals(cos, ua, limit=600 if manual else 120)
-    n += update_prices(cos)
+    # covered companies outside the S&P 500 (holdings such as SPCX and FLY) get daily prices too
+    have = {c[0] for c in cos}
+    extra = [(c['ticker'],) for c in load(os.path.join(DATA, 'watchlist.json'), {}).get('companies', [])
+             if c.get('ticker') and c['ticker'] not in have and not c.get('private')]
+    n += update_prices(list(cos) + extra)
     build_index(cos)
     return n

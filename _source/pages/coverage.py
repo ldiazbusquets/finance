@@ -1,0 +1,247 @@
+"""Reports on SpaceX and Firefly (holdings) and on OpenAI, Anthropic and Anduril (private, on the watchlist).
+Written October 21, 2026. Scenario values come from _source/models/new_coverage.py."""
+from rep import src, stats, table, prose, key, bridge
+
+DATE = 'October 21, 2026'
+
+
+def scen(rows):
+    return table(['', 'Bear', 'Base', 'Bull'], rows, 'allnum')
+
+
+def implied(rows):
+    return table(['To justify the price, you need', 'Against'], rows)
+
+
+def band(h, p):
+    return f'<div class="band sm"><div class="eyebrow mono">Final view</div><h2>{h}</h2><p>{p}</p></div>'
+
+
+TOCP = [('overview', 'The business'), ('results', 'Latest results'), ('fin', 'The numbers'), ('capital', 'Balance sheet and ownership'),
+        ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')]
+TOCV = [('overview', 'The business'), ('growth', 'Growth'), ('fin', 'The numbers'), ('capital', 'Funding and ownership'),
+        ('value', 'Valuation'), ('implied', 'What the valuation assumes'), ('risks', 'Risks'), ('rec', 'Our view')]
+
+R = {}
+
+# ================================================================ SpaceX
+SX = 'https://www.stocktitan.net/articles/spacex-q3-2026-earnings-ai-revenue-passes-starlink'
+R['SPCX'] = dict(
+    t='SPCX', slug='spacex', name='SpaceX', h1='Space<em>X</em>', sector='Space and AI', date=DATE, timing=', the day after its third-quarter results',
+    sub='SpaceX is now three businesses: rockets, the Starlink satellite network, and since buying xAI, one of the largest AI computing operations in the world. Revenue grew 161% last quarter and AI has overtaken Starlink. The price assumes that growth keeps compounding for years.',
+    call='Hold', method='Scenario model', price=162.57, pricenote='Midday, Oct 21, 2026', noauto=True, base=118, max=320, tick=40,
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the Street&rsquo;s average target.',
+    field=[('Scenario model', 44, 270, 118, '$44 to $270, base $118'), ('Probability-weighted', None, None, 138, '$138'),
+           ('Price at writing', None, None, 162.57, '$162.57'), ('52-week range', 105, 226, None, '$105 to $226'), ('Analyst average', None, None, 223, '$223')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Rockets, a satellite network <em>and an AI cloud.</em>',
+         prose('<b>Space</b> is the original business: Falcon 9 and Falcon Heavy launches for NASA, the military and commercial customers, and Starship, the fully reusable rocket meant to cut launch costs by an order of magnitude. <b>Connectivity</b> is Starlink, internet from more than 9,000 satellites for homes, ships, airlines and phones. <b>Super Intelligence (SI)</b> came with the purchase of Elon Musk&rsquo;s xAI in February 2026: the Grok models, the X platform, the Cursor coding tool, and data centers that lease computing to other AI labs.',
+               'SpaceX listed on Nasdaq as SPCX on June 12, 2026, at $135 a share, valuing it at about $1.77 trillion in the largest IPO on record.')
+         + key('Takeaway', 'You now own an AI infrastructure company with a launch business and a telecom network attached. AI is already more than half of revenue.')),
+        ('results', 'Latest results', 'Revenue up 161%, <em>and a first operating profit.</em>',
+         stats([('$14.6B', 'Revenue, Q3 2026, +161%'), ('$7.6B', 'AI (SI) revenue, nearly triple Q2'), ('$5.2B', 'Starlink revenue, +69%'), ('$2.8B', 'Operating profit'), ('$19.6B', 'Capital spending in the quarter'), ('$33&ndash;37B', 'Q1 2027 revenue guidance')])
+         + prose('Third-quarter revenue of $14.6 billion beat estimates by about $1.7 billion. SI revenue was $7.6 billion, including $608 million from Cursor, as Anthropic, Google and others rented its computing. Starlink added 1.6 million subscribers to reach 13.6 million, fewer than analysts expected, but its operating profit nearly doubled to $2.4 billion. Rockets earned $1.8 billion and roughly broke even.',
+                 'Net income was $4.4 billion ($0.35 a share). Management guided first-quarter 2027 revenue to <b>$33&ndash;37 billion</b>, more than double this quarter, as computing capacity grows from 1.7 GW to about 3 GW by year-end. Starship reached orbit on Flight 14 and deployed V3 Starlink satellites. The shares rose about 10% the next day.')
+         + src([('Q3 2026 results', SX), ('Earnings call summary', 'https://finance.biggo.com/news/US_SPCX_2026-10-20'), ('Fortune', 'https://fortune.com/2026/10/20/spacex-q3-profit-ai-si-elon-musk/')])),
+        ('fin', 'The numbers', 'Profitable operations, <em>spending far more than it earns.</em>',
+         table(['Segment, Q3 2026', 'Revenue', 'Growth', 'Operating profit'], [
+             ['Super Intelligence (AI)', '$7.6B', '+~830%', '$0.4B ($1.6B before Cursor stock pay)'],
+             ['Connectivity (Starlink)', '$5.2B', '+69%', '$2.4B'],
+             ['Space (launch)', '$1.8B', '+6%', '&minus;$0.0B'],
+             ['Company', '$14.6B', '+161%', '$2.8B'],
+         ], 'mid')
+         + prose('Over the first nine months of 2026, operations brought in $13.1 billion of cash, but capital spending was $48.1 billion, almost all of it AI data centers. Fourth-quarter capex is guided at $35&ndash;40 billion. Over the last twelve months revenue was about $23 billion and the company lost about $8.9 billion, because earlier quarters carried large losses.')),
+        ('capital', 'Balance sheet and ownership', '$90 billion of cash, <em>and Musk in control.</em>',
+         prose('SpaceX held $89.9 billion of cash and short-term investments against $38.8 billion of debt and leases in September, thanks to the IPO. Analysts expect debt to rise sharply as the data-center build continues.',
+               'Musk owns about 42% of the shares but about 82% of the votes through ten-vote Class B shares, so public shareholders cannot change the strategy. Insiders are locked up for a year; other pre-IPO investors can start selling around <b>December 8</b>, which could add supply. Musk has also said a merger with Tesla is possible but not certain.')),
+        ('value', 'Valuation', 'Our scenarios give <em>$118 a share.</em>',
+         prose('A ten-year cash-flow model means little for a company whose revenue may triple in a year, so this report values SpaceX on its 2030 earning power: revenue, operating margin and a multiple, discounted back at 12% a year.')
+         + scen([['Revenue in 2030', '$250B', '$500B', '$900B'], ['Operating margin', '22%', '28%', '32%'], ['Exit multiple of after-tax profit', '20&times;', '22&times;', '25&times;'],
+                 ['Value per share', '$44', '$118', '$270'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25, the cases give <b>$138</b>. Net cash of about $51 billion and 13.57 billion shares are included.')),
+        ('implied', 'What the price assumes', 'At $163, <em>about $700 billion of revenue by 2030.</em>',
+         implied([['About $700 billion of revenue in 2030 at a 28% margin', 'About $23 billion over the last twelve months'], ['Or margins and multiples near the bull case', 'Base case of 28% and 22&times;']])
+         + prose('That sounds extreme, but management is guiding to a $140 billion annual pace by early 2027 and has talked about $500 billion to $1 trillion by the end of 2027 if its AI business scales. The price sits between the base and bull cases: it needs the AI buildout to keep paying back as fast as management says, which is under a year per data center today.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['AI demand', 'Most growth is renting computing to AI labs. If their spending slows, SpaceX is left with expensive capacity and rising debt.'],
+             ['Spending', 'Capex of $70 billion or more a year means negative free cash flow for some time.'],
+             ['Governance', 'Musk controls the vote; a Tesla merger or other related-party deals could be on his terms.'],
+             ['Lock-up', 'Pre-IPO investors can sell from early December.'],
+             ['Execution', 'Starship, V3 satellites and new data centers all have to work on schedule.'],
+         ]) + prose('<b>Upside:</b> Starlink Mobile (22 million monthly users), reusable Starship lowering costs for everything else, and AI revenue scaling as guided.')),
+        ('rec', 'Recommendation', 'Hold. <em>A great asset at a full price.</em>',
+         prose('At $162.57 against a base case of $118 ($138 weighted), the price already reaches toward the bull case. The business is extraordinary, but the valuation depends on AI growth that has only just started. The call is <b>Hold</b>, sized as a speculative position, with the December lock-up expiry as a possible better entry point.')
+         + band('Own the rocket company. <em>Watch the AI bill.</em>', 'SpaceX&rsquo;s value now depends more on data centers than on rockets.')),
+    ])
+
+# ================================================================ Firefly
+FF = 'https://finance.biggo.com/news/US_FLY_2026-08-11'
+R['FLY'] = dict(
+    t='FLY', slug='firefly', name='Firefly Aerospace', h1='Firefly <em>Aerospace</em>', sector='Space', date=DATE, timing=', before its third-quarter results in November',
+    sub='Firefly builds small rockets, the Blue Ghost lunar lander and spacecraft for NASA and the Pentagon. Revenue is growing fast and the backlog is $1.5 billion, but it loses money and its Alpha rocket has a mixed record. The shares are down about 70% from their high.',
+    call='Hold', method='Scenario model', price=17.41, pricenote='Midday, Oct 21, 2026', noauto=True, base=20, max=70, tick=10,
+    fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Scenario model', 4, 52, 20, '$4 to $52, base $20'), ('Probability-weighted', None, None, 24, '$24'),
+           ('Price at writing', None, None, 17.41, '$17.41'), ('52-week range', 16, 62, None, '$16 to $62'), ('Analyst average', None, None, 38, '$38')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Rockets, moon landers <em>and missile defense.</em>',
+         prose('Firefly, based in Cedar Park, Texas, has four product lines. <b>Alpha</b> is a small rocket that carries about a ton to low orbit. <b>Blue Ghost</b> is a lunar lander: in March 2025 it made the first fully successful commercial landing on the Moon. <b>Elytra</b> is a spacecraft that can serve as a satellite or carry payloads around the Moon. <b>Eclipse</b>, a larger rocket built with Northrop Grumman, is due to fly no earlier than 2027. Its SciTec division adds defense software for missile warning, which gives Firefly a role in the Golden Dome missile-defense program.',
+               'Firefly went public in August 2025 at $45 a share, raising $868 million at a valuation of about $10 billion.')),
+        ('results', 'Latest results', 'First $100 million quarter, <em>record backlog.</em>',
+         stats([('$117.7M', 'Revenue, Q2 2026, +659%'), ('$1.5B', 'Record backlog'), ('20.3%', 'Gross margin'), ('&minus;$61M', 'Adjusted EBITDA'), ('$940M', 'Liquidity, cash and credit line'), ('$420&ndash;450M', '2026 revenue guidance')])
+         + prose('Second-quarter revenue reached $117.7 million, almost all from spacecraft work for NASA lunar missions and defense. Launch revenue was only $9.4 million, because Alpha flies rarely. Net loss was $92.3 million. Management kept 2026 revenue guidance at $420&ndash;450 million, with 95% of the midpoint already booked, and plans three Alpha launches this year, with Flight 8 in the fourth quarter.')
+         + src([('Q2 2026 results summary', FF), ('Firefly investor news', 'https://investors.fireflyspace.com/news')])),
+        ('fin', 'The numbers', 'Growth is real; <em>profit is years away.</em>',
+         table(['', 'Value'], [['Revenue, last twelve months', '$287M'], ['Net loss, last twelve months', '&minus;$370M'], ['Gross margin, Q2 2026', '20.3%'],
+                                ['Alpha flight record', '7 flights: 3 successes, 2 partial, 2 failures'], ['Blue Ghost', '1 landing, 1 success; Mission 2 and a far-side mission in development']], 'mid')
+         + prose('Alpha&rsquo;s record is the weak point: a failure in April 2025 and an explosion during a ground test in September 2025 grounded it until a successful flight in March 2026. Launch is what would lift margins, so the cadence of Alpha flights matters more than any single contract.')),
+        ('capital', 'Balance sheet and ownership', 'Enough cash, <em>with dilution along the way.</em>',
+         prose('Firefly had $635 million of cash and an undrawn $305 million credit line in June. It has sold shares twice since the IPO, including an offering at $48 in May 2026, and registered shares for resale by former SciTec owners, which has weighed on the price. Expect more share sales before it turns profitable. AE Industrial Partners is the largest investor; Northrop Grumman invested $50 million alongside the Eclipse partnership.')),
+        ('value', 'Valuation', 'Our scenarios give <em>$20 a share.</em>',
+         prose('With no profits yet, this report values Firefly on its 2030 revenue and the multiple of sales a profitable space company would command, discounted back at 15% a year, with more shares outstanding to fund the losses until then.')
+         + scen([['Revenue in 2030', '$0.7B', '$1.2B', '$2.0B'], ['Exit value to sales', '2&times;', '5&times;', '8&times;'], ['Shares by 2030', '200M', '185M', '180M'],
+                 ['Value per share', '$4', '$20', '$52'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$24</b>. The range is wide on purpose: this is a company where one failed launch or one large contract changes the answer.')),
+        ('implied', 'What the price assumes', 'At $17, <em>about $1 billion of revenue by 2030.</em>',
+         implied([['About $1.06 billion of revenue in 2030 at 5&times; sales', '$420&ndash;450 million guided for 2026'], ['Roughly 25% annual growth from here', '659% last quarter, from a small base']])
+         + prose('The market now prices Firefly slightly below the base case, a big change from the $62 high, when it priced something close to the bull case.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Launch failures', 'Alpha has failed or partly failed four times in seven flights.'],
+             ['Losses and dilution', 'About $370 million lost in the last year; more share sales are likely.'],
+             ['Competition', 'SpaceX rideshares undercut small rockets; Rocket Lab is further ahead.'],
+             ['Government budgets', 'NASA and defense contracts drive most revenue.'],
+         ]) + prose('<b>Upside:</b> Golden Dome and missile-warning work through SciTec, more NASA lunar missions, and Eclipse giving Firefly a medium rocket in 2027.')),
+        ('rec', 'Recommendation', 'Hold. <em>Speculative, and priced like it.</em>',
+         prose('At $17.41 against a base case of $20 ($24 weighted), the price is close to fair for a business this uncertain, after a 70% fall. The call is <b>Hold</b>, kept within the speculative part of the portfolio. Alpha Flight 8 and the third-quarter results in November are the next tests.')
+         + band('A real business, <em>a risky stock.</em>', 'The backlog is strong; the rocket record and the cash burn decide the outcome.')),
+    ])
+
+# ================================================================ private companies
+PRIV = 'This company is private, so there is no share price; values are for the whole company. The author holds no shares.'
+
+R['ANTHROPIC'] = dict(
+    t='ANTHROPIC', slug='anthropic', name='Anthropic', h1='Anthropic', sector='AI (private)', date=DATE, timing=', ahead of its expected IPO in mid-November',
+    sub='Anthropic makes Claude, the AI models used by businesses and developers. Revenue has grown more than tenfold in a year and the company is preparing what could be one of the largest IPOs ever. This report asks what it is worth, and what price would make sense to buy at.',
+    call='IPO watch', private=True, price=965, base=847, max=2200, tick=250, suffix='B',
+    disclosure=PRIV + ' This report was drafted with help from Claude, an AI model made by Anthropic.',
+    cells=[('Last private valuation', '$965B', 'Series H, May 2026'), ('Revenue, Q3 2026', '$16.8B', 'Up 45% from Q2, reported'), ('Model value', '$847B', 'Base case; $972B weighted')],
+    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, the last private round and the valuations discussed for the IPO.',
+    field=[('Scenario model', 163, 2033, 847, '$163B to $2,033B, base $847B'), ('Probability-weighted', None, None, 972, '$972B'),
+           ('Series H, May 2026', None, None, 965, '$965B'), ('IPO talk', 1500, 2000, None, '$1.5T to $2T')],
+    toc=TOCV, chapters=[
+        ('overview', 'The business', 'Claude, sold mostly <em>to businesses.</em>',
+         prose('Anthropic was founded in 2021 by Dario and Daniela Amodei and other former OpenAI researchers. It sells access to its Claude models through its own apps and API and through Amazon Web Services and Google Cloud. Most revenue comes from businesses and developers rather than consumers, led by coding: Claude Code has become one of its largest products.',
+               'It is a public benefit corporation, and an independent Long-Term Benefit Trust holds a special class of shares with the right to elect directors, a structure meant to keep safety ahead of short-term profit.')),
+        ('growth', 'Growth', '$4.6 billion last year, <em>$16.8 billion last quarter.</em>',
+         stats([('~$4.6B', 'Revenue, 2025 (leaked draft S-1)'), ('$4.8B', 'Revenue, Q1 2026'), ('~$11.6B', 'Revenue, Q2 2026'), ('$16.8B', 'Revenue, Q3 2026, +45%'), ('$65B+', 'Annual run-rate by July'), ('Mid-Nov', 'Expected IPO')])
+         + prose('Revenue has grown faster than at almost any company of its size. Third-quarter revenue of $16.8 billion, reported by Bloomberg and the Financial Times from investor presentations, was up 45% from the second quarter, but some investors noted that monthly growth is slowing. OpenAI has argued that Anthropic counts sales through cloud partners at their gross value, which flatters the comparison; the public S-1 will settle how revenue is reported.')
+         + src([('Bloomberg: Q3 revenue', 'https://www.bloomberg.com/news/articles/2026-10-14/anthropic-revenue-jumps-to-16-8-billion-in-quarter-before-ipo'), ('IPO status', 'https://decodethefuture.org/en/anthropic-s1-ipo-filing-explained/'), ('Reuters via Manila Times', 'https://www.manilatimes.net/2026/10/21/business/foreign-business/openai-raising-funds-before-anthropic-ipo/2450125')])),
+        ('fin', 'The numbers', 'Profitable operations, <em>enormous commitments.</em>',
+         table(['', 'Figure', 'Status'], [['Operating loss, 2025', 'About $8B', 'Leaked draft S-1'], ['Net loss, 2025', 'About $42B, mostly non-cash', 'Leaked draft S-1'],
+                                          ['Operating profit, Q2 2026', 'About $0.6B, adjusted', 'Reported'], ['Compute commitments', 'About $518B, mostly non-cancellable', 'Reported'],
+                                          ['Cash-flow breakeven', '2028', 'Reported target']])
+         + prose('Anthropic reached an adjusted operating profit in the second quarter, rare for an AI lab, but it has committed to more than half a trillion dollars of computing with Amazon, Google, SpaceX and others. Those contracts are the main risk if growth slows. None of these figures is audited yet; the public S-1 will be the first full set.')),
+        ('capital', 'Funding and ownership', 'Valued at $965 billion <em>in May.</em>',
+         prose('The last private round was a $65 billion Series H at a $965 billion valuation in May 2026. Amazon owns an estimated 15&ndash;21% (non-voting) and Google about 14%. A confidential S-1 was submitted on June 1; the listing is expected on Nasdaq in mid-November, led by Morgan Stanley, Goldman Sachs, JPMorgan and Citi. Investors have discussed valuations from about $1.5 trillion to $2 trillion.')),
+        ('value', 'Valuation', 'Our scenarios give <em>about $850 billion.</em>',
+         prose('This report values the company on 2030 earning power: revenue, operating margin and a multiple of after-tax profit, discounted back at 15% a year to reflect the risk of a young business. It does not deduct the new shares that may be issued to fund the buildout.')
+         + scen([['Revenue in 2030', '$120B', '$250B', '$450B'], ['Operating margin', '15%', '30%', '40%'], ['Exit multiple', '20&times;', '25&times;', '25&times;'],
+                 ['Company value today', '$163B', '$847B', '$2.03T'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>about $970 billion</b>, almost exactly the May round.')),
+        ('implied', 'What the valuation assumes', 'At $2 trillion, <em>almost $600 billion of revenue.</em>',
+         implied([['$965B (May round): about $285B of revenue in 2030 at a 30% margin', 'About $67B annualised today'], ['$1.5T: about $445B', ''], ['$2T: about $590B', 'Close to the bull case']])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Competition', 'OpenAI, Google and open models compete on price; model leads are short.'],
+             ['Commitments', 'About $518B of compute contracts must be paid even if growth slows.'],
+             ['Concentration', 'Amazon and Google channels were about half of 2025 revenue.'],
+             ['Governance', 'The Benefit Trust and founder voting control limit shareholders&rsquo; say.'],
+             ['IPO pricing', 'A $1.5&ndash;2T listing would leave little room for error.'],
+         ]) + prose('<b>Upside:</b> AI agents and coding tools growing into a large share of software spending, with margins rising as computing gets cheaper.')),
+        ('rec', 'Our view', 'Wait for the price, <em>not the date.</em>',
+         prose('The business supports roughly the May valuation, about $1 trillion. A listing at $1.5&ndash;2 trillion would price in close to the bull case on day one. That supports the plan to wait for a post-IPO dip: an entry near $1&ndash;1.2 trillion would leave room for things to go only moderately right.')
+         + band('The fastest-growing software company, <em>if the price is right.</em>', 'Buy the business at a valuation the base case supports, not at the IPO&rsquo;s first price.')),
+    ])
+
+R['OPENAI'] = dict(
+    t='OPENAI', slug='openai', name='OpenAI', h1='Open<em>AI</em>', sector='AI (private)', date=DATE, timing='',
+    sub='OpenAI makes ChatGPT, used by more than a billion people a week. It is the most valuable private company in AI and is raising money at about $1.4 trillion, but it also expects to burn hundreds of billions of dollars before it turns a profit. An IPO is planned for 2027.',
+    call='Watch', private=True, price=852, base=790, max=2000, tick=250, suffix='B', disclosure=PRIV,
+    cells=[('Last valuation', '$852B', '$122B round, March 2026'), ('Annual revenue pace', '$50B', 'Company figure, October'), ('Model value', '$790B', 'Base case; $874B weighted')],
+    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, the March round and the round now being discussed.',
+    field=[('Scenario model', 136, 1779, 790, '$136B to $1,779B, base $790B'), ('Probability-weighted', None, None, 874, '$874B'),
+           ('March 2026 round', None, None, 852, '$852B'), ('Round in talks', None, None, 1400, '$1.4T')],
+    toc=TOCV, chapters=[
+        ('overview', 'The business', 'ChatGPT, <em>and everything built on it.</em>',
+         prose('OpenAI sells ChatGPT subscriptions to consumers and businesses, API access to developers, and since 2026 advertising inside ChatGPT. It converted from a capped-profit structure into a public benefit corporation, OpenAI Group PBC, in October 2025. The nonprofit OpenAI Foundation controls it and owns about a quarter; Microsoft owns about 27%.')),
+        ('growth', 'Growth', 'A billion users, <em>$50 billion a year.</em>',
+         stats([('$3.7B', 'Revenue, 2024'), ('$13.1B', 'Revenue, 2025'), ('$6.7B', 'Revenue, Q2 2026'), ('$50B', 'Annual pace, October (company)'), ('1B+', 'Weekly ChatGPT users'), ('$1B', 'Advertising run-rate, August')])
+         + prose('OpenAI says its annual revenue pace reached $50 billion after the launch of its newest model and expects $70 billion by year-end. It books revenue net of the share paid to partners such as Microsoft, which makes its figures look smaller than Anthropic&rsquo;s on a like-for-like basis. Growth stalled for several months in early 2026 before picking up again.')
+         + src([('Reuters via Manila Times', 'https://www.manilatimes.net/2026/10/21/business/foreign-business/openai-raising-funds-before-anthropic-ipo/2450125'), ('Financial fact sheet', 'https://www.useluminix.com/reports/company-overviews/openai-financial-fact-sheet-june-2026')])),
+        ('fin', 'The numbers', 'Big revenue, <em>bigger losses.</em>',
+         table(['', 'Figure', 'Status'], [['Operating loss, 2025', 'About $21B', 'Leaked financials'], ['Expected cash burn, 2026&ndash;2030', 'About $278B in total', 'Leaked plan'],
+                                          ['Compute plans', 'About $856B through 2030 (Azure, Oracle, Stargate)', 'Reported'], ['Profit', 'Not expected before 2029&ndash;2030', 'Reported plans']])
+         + prose('OpenAI spends far more on computing than it earns. Its plan relies on partners (Microsoft, Oracle, SoftBank&rsquo;s Stargate venture) financing much of the infrastructure, and on raising new money roughly every year until revenue catches up.')),
+        ('capital', 'Funding and ownership', '$852 billion in March, <em>$1.4 trillion in talks.</em>',
+         prose('In March 2026 OpenAI closed a $122 billion round at $852 billion, anchored by Amazon ($50 billion), Nvidia ($30 billion) and SoftBank ($30 billion). In October it was reported to be raising about $30 billion more at a valuation above $1.4 trillion, before Anthropic&rsquo;s IPO. Sam Altman has said listing in 2026 would be ill-advised; the IPO is expected in 2027.')),
+        ('value', 'Valuation', 'Our scenarios give <em>about $790 billion.</em>',
+         prose('Valued on 2030 earning power and discounted at 15% a year, before the new shares OpenAI will issue to cover its cash burn, which would lower each existing share&rsquo;s value.')
+         + scen([['Revenue in 2030', '$150B', '$280B', '$450B'], ['Operating margin', '10%', '25%', '35%'], ['Exit multiple', '20&times;', '25&times;', '25&times;'],
+                 ['Company value today', '$136B', '$790B', '$1.78T'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>about $870 billion</b>, close to the March round.')),
+        ('implied', 'What the valuation assumes', 'At $1.4 trillion, <em>about $500 billion of revenue.</em>',
+         implied([['$852B: about $300B of revenue in 2030 at a 25% margin', 'About $50B annualised today'], ['$1.4T: about $500B', 'Above the base case']])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Cash burn', 'Hundreds of billions to fund before profit; each round dilutes.'],
+             ['Competition', 'Anthropic leads in business and coding; Google bundles AI free.'],
+             ['Partners', 'Microsoft is an investor, supplier and competitor at once.'],
+             ['Governance', 'The nonprofit foundation controls the company.'],
+         ]) + prose('<b>Upside:</b> the largest consumer AI audience, advertising, devices and agents could make ChatGPT the main way people use the internet.')),
+        ('rec', 'Our view', 'Not investable yet; <em>fair near $850 billion.</em>',
+         prose('Until the 2027 IPO there is no way to buy OpenAI directly. The base case supports roughly the March valuation; the $1.4 trillion round prices in more than the base case. Indirect exposure already comes through Microsoft, Nvidia, Oracle and Amazon.')
+         + band('The biggest audience in AI, <em>the biggest bill.</em>', 'Its value depends on turning a billion users into profit before the money runs out.')),
+    ])
+
+R['ANDURIL'] = dict(
+    t='ANDURIL', slug='anduril', name='Anduril', h1='Anduril', sector='Defense (private)', date=DATE, timing='',
+    sub='Anduril builds autonomous drones, missiles and the software that links them, and sells them to the U.S. military and its allies. Revenue is roughly doubling every year and it is valued at about $90 billion, priced more like a software company than a defense contractor. An IPO is expected around 2027.',
+    call='Wait for IPO', private=True, price=90, base=20, max=110, tick=10, suffix='B', disclosure=PRIV,
+    cells=[('Latest valuation', '$90B', 'Employee tender, October 2026'), ('Revenue, 2026 guidance', '$4.3B', 'Up from $2.2B in 2025'), ('Model value', '$20B', 'Base case; $28B weighted')],
+    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, the May round and the October employee tender.',
+    field=[('Scenario model', 4, 67, 20, '$4B to $67B, base $20B'), ('Probability-weighted', None, None, 28, '$28B'),
+           ('Series H, May 2026', None, None, 61, '$61B'), ('Employee tender, Oct', None, None, 90, '$90B')],
+    toc=TOCV, chapters=[
+        ('overview', 'The business', 'Weapons built <em>like tech products.</em>',
+         prose('Anduril was founded in 2017 by Palmer Luckey, Trae Stephens, Brian Schimpf (now CEO) and others. It designs and builds its own products and sells them, rather than waiting for the Pentagon to fund development. Its range includes the <b>Fury</b> collaborative combat aircraft, <b>Roadrunner</b> reusable interceptors, <b>Barracuda</b> low-cost cruise missiles, <b>Ghost Shark</b> underwater drones and surveillance towers, all linked by <b>Lattice</b>, its AI command software.',
+               'Production is moving to <b>Arsenal-1</b>, a plant of nearly $1 billion in Ohio designed to build up to 150 Fury aircraft a year.')),
+        ('growth', 'Growth', '$236 million in 2022, <em>$4.3 billion planned for 2026.</em>',
+         stats([('$1.0B', 'Revenue, 2024'), ('$2.2B', 'Revenue, 2025'), ('~$4.3B', '2026 guidance'), ('Up to $20B', 'Army enterprise agreement, 10 years'), ('A$1.7B', 'Ghost Shark, Australia'), ('$1.98B', 'Kuwait counter-drone sale')])
+         + prose('Revenue has roughly doubled every year. In March 2026 the U.S. Army signed an enterprise agreement worth up to $20 billion over ten years that consolidates more than 120 contracts. Anduril is still loss-making: it guided to an operating loss of about $1.2 billion in 2026 as it builds factories.')
+         + src([('Revenue and contracts', 'https://valueaddvc.com/blog/anduril-revenue-2-2b-in-2025-4-3b-2026-guidance-and-the-contract-breakdown'), ('May 2026 round', 'https://siliconangle.com/2026/05/13/anduril-doubles-valuation-61b-new-5b-funding-round/'), ('Employee tender', 'https://valueaddvc.com/blog/anduril-valuation-2026-90b-employee-tender-100b-talks')])),
+        ('fin', 'The numbers', 'Fast growth, <em>still losing money.</em>',
+         table(['', '2022', '2023', '2024', '2025', '2026 guidance'], [['Revenue', '$0.24B', '$0.42B', '$1.0B', '$2.2B', '~$4.3B']], 'allnum')
+         + prose('Anduril does not publish full financial statements. The reported 2026 operating loss of about $1.2 billion reflects heavy spending on Arsenal-1 and new products; management has pointed to operating breakeven later in the decade.')),
+        ('capital', 'Funding and ownership', '$14 billion to $90 billion <em>in two years.</em>',
+         prose('Anduril was valued at $14 billion in August 2024, $30.5 billion in June 2025 and $61 billion in May 2026, when it raised $5 billion led by Thrive Capital and Andreessen Horowitz. An employee share sale that opened on October 13 values it at $90 billion ($94.80 a share). Talks about a round near $100 billion were reported in July but not confirmed. No S-1 has been filed.')),
+        ('value', 'Valuation', 'Our scenarios give <em>about $20 billion.</em>',
+         prose('Valued on 2030 earning power and discounted at 13% a year. The bull case gives it Palantir-like margins and a 35&times; multiple.')
+         + scen([['Revenue in 2030', '$8B', '$14B', '$22B'], ['Operating margin', '5%', '12%', '18%'], ['Exit multiple', '20&times;', '25&times;', '35&times;'],
+                 ['Company value today', '$4B', '$20B', '$67B'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>about $28 billion</b>, well below where private investors value it.')),
+        ('implied', 'What the valuation assumes', 'At $90 billion, <em>a software company&rsquo;s economics.</em>',
+         implied([['At defense-contractor margins (12%): about $62B of revenue in 2030', '$4.3B guided for 2026'], ['At software-like margins (25%) and a 35&times; multiple: about $21B', 'The bull case']])
+         + prose('Private investors are paying for growth well beyond 2030, and for the chance that Anduril becomes a new prime contractor with software margins. Traditional defense primes such as L3Harris trade at a fraction of that multiple.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Valuation', 'At about 21&times; 2026 revenue it is priced far above any defense company.'],
+             ['Budgets', 'Almost all revenue depends on U.S. and allied defense spending.'],
+             ['Execution', 'Arsenal-1 and Fury production must ramp on time.'],
+             ['Competition', 'Lockheed, RTX, General Atomics, Shield AI and Saronic all chase the same programs.'],
+         ]) + prose('<b>Upside:</b> the Army agreement, collaborative combat aircraft orders and exports could keep revenue doubling.')),
+        ('rec', 'Our view', 'A great company <em>priced for perfection.</em>',
+         prose('Anduril is growing like a top software company, but our scenarios value it far below the $61&ndash;90 billion private marks. For the plan to buy on IPO day, the numbers argue for patience: early public prices are likely to start from those marks, and the base case does not support them. L3Harris, rated Buy in its own report, offers defense exposure at a much lower price in the meantime.')
+         + band('Watch it, <em>don&rsquo;t chase it.</em>', 'The business is excellent; the valuation already assumes it stays that way for a decade.')),
+    ])

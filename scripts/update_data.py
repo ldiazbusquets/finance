@@ -258,6 +258,10 @@ def update_companies(ua):
     for w in wl:
         t = w['ticker'].upper()
         row = dict(old.get(t, {}), ticker=t, sector=w.get('sector', ''), status=w.get('status', 'plan'), page=w.get('page'))
+        if w.get('private'):            # private companies have no SEC filings to read
+            row.update(name=w.get('name') or t, private=True)
+            rows.append(row)
+            continue
         try:
             cik = cik_of[t]
             facts = json.loads(get(f'https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json', hdr)); time.sleep(.25)
@@ -299,7 +303,7 @@ def update_companies(ua):
             print(f'  ok   {t:6} FY{last.get("fy")} revenue {last.get("revenue")}')
         except Exception as e:
             print(f'  FAIL {t:6} {e}', file=sys.stderr)
-        row.setdefault('name', t)
+        row.setdefault('name', w.get('name') or t)
         rows.append(row)
     if ok:
         save(ipath, {'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'companies': rows})

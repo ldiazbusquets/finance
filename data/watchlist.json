@@ -101,6 +101,58 @@
       "date": "Oct 20, 2026"
     },
     {
+      "ticker": "SPCX",
+      "name": "SpaceX",
+      "sector": "Space and AI",
+      "status": "live",
+      "page": "spacex.html",
+      "holding": true,
+      "call": "Hold",
+      "value": 118,
+      "date": "2026-10-21"
+    },
+    {
+      "ticker": "FLY",
+      "name": "Firefly Aerospace",
+      "sector": "Space",
+      "status": "live",
+      "page": "firefly.html",
+      "holding": true,
+      "call": "Hold",
+      "value": 20,
+      "date": "2026-10-21"
+    },
+    {
+      "ticker": "ANTHROPIC",
+      "name": "Anthropic",
+      "sector": "AI (private)",
+      "status": "live",
+      "page": "anthropic.html",
+      "private": true,
+      "call": "IPO watch",
+      "date": "2026-10-21"
+    },
+    {
+      "ticker": "OPENAI",
+      "name": "OpenAI",
+      "sector": "AI (private)",
+      "status": "live",
+      "page": "openai.html",
+      "private": true,
+      "call": "Watch",
+      "date": "2026-10-21"
+    },
+    {
+      "ticker": "ANDURIL",
+      "name": "Anduril",
+      "sector": "Defense (private)",
+      "status": "live",
+      "page": "anduril.html",
+      "private": true,
+      "call": "Wait for IPO",
+      "date": "2026-10-21"
+    },
+    {
       "ticker": "COST",
       "name": "Costco Wholesale",
       "sector": "Consumer staples",

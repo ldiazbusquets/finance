@@ -90,7 +90,8 @@ def field(R, narrow=False):
         bot = top + step * (n - 1) + 26
     X = lambda v: x0 + v / MAX * span
     ticks = ''.join(f'<path d="M{X(v):.1f} 6V{bot}"/>' for v in range(0, MAX + 1, step_v))
-    lab = ''.join(f'<text x="{X(v):.1f}" y="{bot + 22}" text-anchor="middle">${v:,}</text>' for v in range(0, MAX + 1, step_v * 2))
+    sfx = R.get('suffix', '')
+    lab = ''.join(f'<text x="{X(v):.1f}" y="{bot + 22}" text-anchor="middle">${v:,}{sfx}</text>' for v in range(0, MAX + 1, step_v * 2))
     out = ''
     for i, (name, lo, hi, pt, txt) in enumerate(rows):
         y = top + i * step
@@ -114,7 +115,7 @@ def field(R, narrow=False):
     out += f'<path class="ln" d="M{X(R["base"]):.1f} 6V{bot}"/><path class="ln now cnow" data-x0="{x0}" data-span="{span}" data-max="{MAX}" data-bot="{bot}" d="M0 0" style="display:none"/>'
     cls = 'narrow' if narrow else 'wide'
     aria = '; '.join(f'{r[0]} {r[4]}' for r in rows)
-    return f'<svg class="field {cls}" viewBox="0 0 {W} {bot + 34}" role="img" aria-label="Value per share by method: {aria}"><g class="ax">{ticks}</g><g class="ticks">{lab}</g>{out}</svg>'
+    return f'<svg class="field {cls}" viewBox="0 0 {W} {bot + 34}" role="img" aria-label="Value by method: {aria}"><g class="ax">{ticks}</g><g class="ticks">{lab}</g>{out}</svg>'
 
 
 def d(v):
@@ -128,6 +129,15 @@ def bridge(items, ps):
 def body(R):
     P, B = R['price'], R['base']
     imp = B / P - 1
+    cells = ''.join(f'<div><span class="mono">{a}</span><b>{b}</b><small>{c}</small></div>' for a, b, c in R['cells']) if R.get('cells') else (
+        f'<div><span class="mono">Value per share</span><b>{d(B)}</b><small>{R["method"]}, base case</small></div>'
+        f'<div><span class="mono">Price at writing</span><b>${P:,.2f}</b><small>{R.get("pricenote", "Close, " + R["date"])}</small></div>'
+        f'<div><span class="mono">Implied return</span><b class="{"up" if imp >= 0 else "dn"}">{"+" if imp >= 0 else "&minus;"}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>')
+    now = '' if R.get('private') else f'''<div class="panel now" id="now">
+        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday.</p></div>{'' if R.get('noauto') else f'<a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a>'}</div>
+        <div class="kv four"><div><b id="nPx">&mdash;</b><span id="nPxD">Last close</span></div><div><b id="nChg">&mdash;</b><span>Since the report&rsquo;s ${P:,.2f}</span></div><div><b id="nGap">&mdash;</b><span>Price against {d(B)} value</span></div><div><b id="nRg">&mdash;</b><span>52-week range</span></div></div>
+      </div>'''
+    disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
     toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))
     head = f'''<header class="ph rp">
   <div class="wrap">
@@ -136,9 +146,7 @@ def body(R):
     <p class="sub">{R['sub']}</p>
     <div class="verdict">
       <div class="call"><span class="mono">Recommendation</span><b>{R['call']}</b></div>
-      <div><span class="mono">Value per share</span><b>{d(B)}</b><small>{R['method']}, base case</small></div>
-      <div><span class="mono">Price at writing</span><b>${P:,.2f}</b><small>Close, {R['date']}</small></div>
-      <div><span class="mono">Implied return</span><b class="{'up' if imp >= 0 else 'dn'}">{'+' if imp >= 0 else '&minus;'}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>
+      {cells}
     </div>
   </div>
 </header>
@@ -146,14 +154,11 @@ def body(R):
   <div class="wrap rlay">
     <nav class="toc" aria-label="Chapters"><span class="mono">Contents</span>{toc}</nav>
     <div class="rmain">
-      <div class="panel now" id="now">
-        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday.</p></div><a class="pill gh sm" href="valuation.html?t={R['t']}">Today&rsquo;s automatic model &rarr;</a></div>
-        <div class="kv four"><div><b id="nPx">&mdash;</b><span id="nPxD">Last close</span></div><div><b id="nChg">&mdash;</b><span>Since the report&rsquo;s ${P:,.2f}</span></div><div><b id="nGap">&mdash;</b><span>Price against {d(B)} value</span></div><div><b id="nRg">&mdash;</b><span>52-week range</span></div></div>
-      </div>
-      <div class="panel" style="margin-top:16px">
-        <div class="hd"><div><h3 class="sec">Where each method lands, per share</h3><p>{R['fieldnote']} <span class="nowkey">The copper line marks the base case; the fine dotted line is today&rsquo;s close.</span></p></div></div>
+      {now}
+      <div class="panel" style="margin-top:{'0' if R.get('private') else '16px'}">
+        <div class="hd"><div><h3 class="sec">Where each method lands, {'company value' if R.get('private') else 'per share'}</h3><p>{R['fieldnote']} <span class="nowkey">The copper line marks the base case{'.' if R.get('private') else '; the fine dotted line is today&rsquo;s close.'}</span></p></div></div>
         {field(R)}{field(R, True)}
-        <p class="fine">Written on {R['date']}{R.get('timing', '')}. Figures are from the company&rsquo;s filings and releases unless noted. Not investment advice. The author holds {R['t']} shares.</p>
+        <p class="fine">Written on {R['date']}{R.get('timing', '')}. Figures are from the company&rsquo;s filings and releases unless noted. Not investment advice. {disc}</p>
       </div>
 '''
     chs = ''.join(chap(n, c[0], c[1], c[2], c[3]) for n, c in enumerate(R['chapters'], 1))

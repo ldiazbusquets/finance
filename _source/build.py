@@ -6,6 +6,7 @@ import gev
 import rep
 import holdings
 import notes
+import coverage
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Inside the repo (this file in _source/), the site's own folders are the source: assets, scripts and
@@ -88,7 +89,7 @@ def foot(extra=''):
   <span>{NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=11"></script>{extra}
+<script src="assets/site.js?v=12"></script>{extra}
 </body>
 </html>
 '''
@@ -225,14 +226,19 @@ def build():
     page('index.html', None, None, 'Company research, valuation models and market data in one place.', 'home', home, '\n<script src="assets/bill.js?v=12"></script>')
 
     # ---------------- research ----------------
-    ORDER = ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA']
-    CARDS = {'LHX': 'Record backlog and missile demand, shares down a third on a CEO exit.', 'VRT': 'Power and cooling for AI data centers, after a growth miss.', 'AWK': 'The largest U.S. water utility, merging with Essential.', 'AMZN': 'AWS growing 37% while capex turns free cash flow negative.', 'META': 'Ads up 28%, free cash flow squeezed by AI spending.', 'JPM': 'The most profitable big bank, valued on return on equity.', 'GEV': 'A record order book valued on its own 2028 targets.', 'NVDA': 'The AI chip leader, priced for a long boom.', 'BA': 'A turnaround with record backlog and positive cash flow.'}
-    META_R = dict(holdings.R); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call='Hold', base=442, price=890.33)
+    ORDER = ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA', 'SPCX', 'FLY']
+    CARDS = {'LHX': 'Record backlog and missile demand, shares down a third on a CEO exit.', 'VRT': 'Power and cooling for AI data centers, after a growth miss.', 'AWK': 'The largest U.S. water utility, merging with Essential.', 'AMZN': 'AWS growing 37% while capex turns free cash flow negative.', 'META': 'Ads up 28%, free cash flow squeezed by AI spending.', 'JPM': 'The most profitable big bank, valued on return on equity.', 'GEV': 'A record order book valued on its own 2028 targets.', 'NVDA': 'The AI chip leader, priced for a long boom.', 'BA': 'A turnaround with record backlog and positive cash flow.', 'SPCX': 'Rockets, Starlink and now an AI cloud, revenue up 161%.', 'FLY': 'Moon landers and small rockets, down 70% from its high.'}
+    META_R = dict(holdings.R); META_R.update({k: coverage.R[k] for k in ('SPCX', 'FLY')}); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call='Hold', base=442, price=890.33)
     def hcard(t):
         r = META_R[t]; href = 'gev.html' if t == 'GEV' else r['slug'] + '.html'
         up = r['base'] / r['price'] - 1
         return card(href, f"{t} &middot; {r['call']}", r['name'], CARDS[t] + f" Value ${r['base']:,} against ${r['price']:,.0f}.", 'Read the report &rarr;', 'live')
     holding_cards = ''.join(hcard(t) for t in ORDER)
+    PCARDS = {'ANTHROPIC': 'The maker of Claude, growing more than tenfold a year ahead of a November IPO.', 'OPENAI': 'ChatGPT&rsquo;s billion weekly users, and hundreds of billions to spend before profit.', 'ANDURIL': 'Autonomous weapons growing like software, valued like it too.'}
+    def pcard(t):
+        r = coverage.R[t]
+        return card(r['slug'] + '.html', f"Private &middot; {r['call']}", r['name'], PCARDS[t] + f" Model value ${r['base']:,}B against ${r['price']:,}B.", 'Read the report &rarr;', 'live')
+    priv_cards = ''.join(pcard(t) for t in ('ANTHROPIC', 'OPENAI', 'ANDURIL'))
     research = ph('Research', 'Research', 'Deep dives on single companies, plus notes on bonds and the economy. Company figures are pulled from SEC filings automatically, so the numbers stay current between reports.',
                   '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>') + f'''
 <section class="tight" data-cat="eq">
@@ -240,6 +246,8 @@ def build():
     <a class="snapcta" href="snapshot.html"><div><span class="mono">Any S&amp;P 500 company</span><b>Search a company for an instant research snapshot</b><p>Growth, margins, cash, debt, a bear-to-bull valuation and peers, written from its filings in seconds.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Search</span></a>
     <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Holdings</h3></div><p>Every stock in the portfolio, valued with the same method. Written October 20, 2026 and refreshed after each quarter&rsquo;s results.</p></div>
     <div class="grid3 rcards">{holding_cards}</div>
+    <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Private companies</h3></div><p>Companies on the watchlist that are not listed yet. Values are for the whole company, set against the latest private funding round.</p></div>
+    <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
       {card('costco.html', 'COST &middot; Hold / Wait', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}
@@ -508,6 +516,11 @@ def build():
         page(r['slug'] + '.html', 'research.html', f"{r['name']} ({t}) research", f"{r['name']} valued with a cash-flow, bank or dividend model: ${r['base']:,} a share against ${r['price']:,.2f} at writing. {r['call']}.", 'report', rep.body(r), attrs=f' data-ticker="{t}" data-then="{r["price"]}" data-val="{r["base"]}"')
     for n in notes.NOTES:
         page(n['slug'] + '.html', 'research.html', re.sub('<[^>]+>', '', n['name']).replace('&rsquo;', '\u2019') + ' | Research note', re.sub('<[^>]+>', '', n['card']), 'note', notes.body(n))
+    for t, r in coverage.R.items():
+        if r.get('private'):
+            page(r['slug'] + '.html', 'research.html', f"{r['name']} research", f"{r['name']} (private) valued on 2030 earning power: about ${r['base']:,}B against ${r['price']:,}B at its latest valuation.", 'report', rep.body(r))
+        else:
+            page(r['slug'] + '.html', 'research.html', f"{r['name']} ({t}) research", f"{r['name']} valued with a scenario model: ${r['base']:,} a share against ${r['price']:,.2f} at writing. {r['call']}.", 'report', rep.body(r), attrs=f' data-ticker="{t}" data-then="{r["price"]}" data-val="{r["base"]}"')
     page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book, a cash-flow value of $442 a share and a Hold.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="890.33" data-val="442"')
 
     # ---------------- 404 ----------------

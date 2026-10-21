@@ -344,14 +344,33 @@ def _discrete(rows):
     out = {}
     for (a, b), r in best.items():
         n = _days(a, b)
-        if 80 <= n <= 100:
+        if 80 <= n <= 125:                    # 12- to 16-week quarters (Costco's fourth quarter is 16 weeks)
             out[b] = r['val']
     for a, lst in by_start.items():
         lst.sort()
         for (b0, v0), (b1, v1) in zip(lst, lst[1:]):
-            if 80 <= _days(b0, b1) <= 100 and _days(a, b0) >= 80 and b1 not in out:
+            if 80 <= _days(b0, b1) <= 125 and _days(a, b0) >= 80 and b1 not in out:
                 out[b1] = v1 - v0
     return out
+
+
+def _fix_year_as_quarter(d):
+    """Some filers tag the full-year figure with the fourth quarter's dates (L3Harris, FY2025). A quarter
+    more than twice the size of its neighbours, with the three quarters before it known, is the year:
+    subtract those three quarters."""
+    ks = sorted(d)
+    for i, e in enumerate(ks):
+        prev = [k for k in ks[:i] if 200 <= _days(k, e) + 91 <= 380]
+        others = sorted(abs(d[k]) for k in ks if k != e)
+        if not others or d[e] <= 0:
+            continue
+        med = others[len(others) // 2]
+        if d[e] > 2.2 * med:
+            last3 = [k for k in ks[:i] if 0 < _days(k, e) <= 290]
+            if len(last3) >= 3:
+                d[e] = d[e] - sum(d[k] for k in last3[-3:])
+            else:
+                del d[e]
 
 
 def _qlabel(e, fye):
@@ -382,6 +401,8 @@ def quarters(facts, ends, n=8):
         for _, _, d in sorted(per, reverse=True):
             for k, v in d.items():
                 out.setdefault(k, v)
+        if key in ('rev', 'gp'):
+            _fix_year_as_quarter(out)
         ser[key] = out
     eps = {}
     for tag in PERSHARE['eps']:
@@ -466,7 +487,7 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 5   # bump when the extraction rules change, so every file is rebuilt
+FVER = 6   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):

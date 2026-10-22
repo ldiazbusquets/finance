@@ -1,6 +1,7 @@
 """Research notes on bonds and the economy. Figures inside <b data-v> tags are filled in live from
 data/markets.json (FRED) by site.js, so the notes stay current between rewrites; fixed facts are dated."""
 import json
+import latam as LA
 
 EXT = '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 DATE = 'October 21, 2026'
@@ -133,19 +134,45 @@ NOTES = [
                'Residents generally do not pay federal income tax on Puerto Rico-source income; they pay Puerto Rico income tax instead. Act 60 offers decrees with reduced rates to new resident investors, exporters of services and manufacturers. The island&rsquo;s government bonds, restructured in 2022 under the PROMESA process, are exempt from federal, state and local income tax for most U.S. holders.')
          + key('Puerto Rico is a slow-growth economy with a tight job market. Its outcomes depend on how well federal funds are spent and whether the power grid gets fixed.')
          + src([('DDEC economic report, 2025', 'https://docs.pr.gov/files/DDEC/DEDC%20PUERTO%20RICO%20DATA%20CENTER/Puerto%20Rico%20Economic%20Analysis/DEDC%20Puerto%20Rico%20Economic%20Report%20-%20End%20of%20Year%202025.pdf'), ('2026 outlook', 'https://newsismybusiness.com/puerto-ricos-2026-outlook-modest-growth-high-stakes/'), ('FRED: Puerto Rico unemployment', FRED('PRUR'))])),
+    dict(slug='note-pr-latam', code='MAC-04', cat='mac', label='Macro', date='October 22, 2026',
+         foot='Figures are from the IMF World Economic Outlook, October 2026, pulled on October 22, 2026; 2026 and 2027 are IMF forecasts.', title='Puerto Rico and <em>Latin America</em>',
+         name='Puerto Rico and Latin America', card='Size, income, growth, inflation and debt against Chile, Mexico, Brazil, Colombia, Peru and Argentina, all in dollars.',
+         sub='Puerto Rico shares a language and much of its history with Latin America, but it uses the U.S. dollar and sits inside the U.S. economy. Put side by side in dollars, it is the richest economy in the region per person and one of the slowest-growing. This note uses the IMF&rsquo;s October 2026 figures for every country.',
+         body=lambda: LA.table()
+         + sec('How the comparison works',
+               'Every figure comes from the IMF&rsquo;s World Economic Outlook, which converts each country&rsquo;s GDP into U.S. dollars at the average market exchange rate for the year. Puerto Rico needs no conversion: its economy runs on dollars. That matters more than it looks. The IMF expects Colombia&rsquo;s GDP to rise from $457 billion to $573 billion in dollars this year, a 25% jump, while its real economy grows only about 2.2%. Most of the difference is a stronger peso and local inflation. Dollar figures for the rest of the region swing with their currencies; Puerto Rico&rsquo;s do not.',
+               'The second measure, <b>purchasing-power parity</b> (PPP), corrects for the fact that a dollar buys more in Lima or Bogot&aacute; than in San Juan. It is the better guide to living standards; market dollars are the better guide to what an economy is worth to a foreign investor.')
+         + sec('Size: about the Dominican Republic',
+               'Puerto Rico&rsquo;s GDP was <b>$129 billion</b> in 2025. That is a fraction of Brazil ($2.28 trillion) and Mexico ($1.84 trillion), about a third of Chile ($357 billion) or Peru ($342 billion), and almost exactly the size of the Dominican Republic ($128 billion). On the IMF&rsquo;s forecasts the Dominican Republic overtakes it this year, at $145 billion against $133 billion.')
+         + LA.per_person()
+         + sec('Income: well ahead, with a caveat',
+               'At <b>$40,620</b> of GDP per person, Puerto Rico is far ahead of every country here: 1.7 times Uruguay, 2.3 times Chile, 3.8 times Brazil and 4.7 times Colombia. It is still under half the U.S. figure of $90,267.',
+               'Two things narrow the gap. First, part of Puerto Rico&rsquo;s GDP is the profit of multinational drug and medical-device makers that is booked on the island and paid out abroad. Real GNP, which leaves that out, was about 67% of real GDP in fiscal 2025. Applied to the dollar figure, that suggests roughly <b>$27,000</b> per person, still the highest in the group but much closer to Uruguay&rsquo;s $24,549. Second, prices are higher in Puerto Rico. On a purchasing-power basis it is about $52,000 per person against $36,000 for Chile and $44,000 for Panama, so the lead shrinks from 2.3 times Chile to about 1.5 times.')
+         + LA.trend()
+         + LA.growth()
+         + sec('Growth: the weakest in the group',
+               'From 2019 to 2026, including the IMF&rsquo;s forecast for this year, Puerto Rico&rsquo;s real GDP grows about <b>3%</b> in total. Costa Rica, Panama and the Dominican Republic grow more than 25%, Colombia 18%, Brazil 16%, and Chile and Peru 14%. Even Mexico (7%) and Argentina (9%), both weak, do better. The IMF puts Puerto Rico&rsquo;s growth at &minus;0.1% for 2026 and 1.0% for 2027.',
+               'Part of the gap is people. Puerto Rico&rsquo;s population fell about 10% between 2015 and 2025, to 3.2 million, while Colombia&rsquo;s and Peru&rsquo;s grew about 15%. Output per person has held up better than the headline: dollar GDP per person rose about 39% from 2015 to 2025, more than Chile (32%), the same as Mexico, and less than Uruguay (46%).')
+         + sec('Inflation and money: the dollar&rsquo;s advantage',
+               'Because it uses the dollar and the Federal Reserve sets its interest rates, Puerto Rico imports U.S. inflation. Prices rose <b>1.5%</b> in 2025, against 3.8% in Mexico, 4.2% in Chile, 5.0% in Brazil and 5.1% in Colombia. Argentina has brought inflation down from 220% in 2024 to 42% in 2025, and the IMF expects 32.5% this year. Peru matched Puerto Rico at 1.5%. The trade-off is that Puerto Rico has no exchange rate or central bank of its own to cushion a downturn.')
+         + sec('Jobs and debt',
+               'Puerto Rico&rsquo;s unemployment rate of about 5.6% in 2025 is lower than Chile (8.5%), Colombia (8.0%) and Argentina (7.4%), and close to Brazil (6.0%) and Peru (5.9%). Mexico reports 2.6%, partly because many workers are in informal jobs. Puerto Rico&rsquo;s weakness is participation: only about 45% of adults work or look for work, so the jobless rate flatters it.',
+               'On debt, the IMF puts Puerto Rico&rsquo;s government at <b>18% of GDP</b>, the lowest here, against 93% for Brazil, 80% for Argentina, 62% for Mexico and 60% for Colombia. That low figure reflects the 2022 restructuring under PROMESA, which cut the central government&rsquo;s bonded debt sharply. It does not include the power utility PREPA, whose debt is still being restructured, or unfunded pension promises, and the island&rsquo;s budget remains under a federal oversight board.')
+         + key('Puerto Rico is richer and more stable than any economy in Latin America, measured in dollars, but it barely grows and its population is shrinking. Its neighbors offer growth and higher interest rates, with currency risk attached; Puerto Rico offers the dollar and slow growth.')
+         + src([('IMF DataMapper: GDP per person', 'https://www.imf.org/external/datamapper/NGDPDPC@WEO/PRI/CHL/ARG/MEX/BRA/COL/PER'), ('IMF World Economic Outlook, October 2026', 'https://www.imf.org/en/Publications/WEO'), ('IMF regional forecasts (MercoPress)', 'https://en.mercopress.com/2026/10/13/imf-trims-latin-america-s-outlook-to-2.3-and-sharply-cuts-argentina-s'), ('DDEC economic report, 2025', 'https://docs.pr.gov/files/DDEC/DEDC%20PUERTO%20RICO%20DATA%20CENTER/Puerto%20Rico%20Economic%20Analysis/DEDC%20Puerto%20Rico%20Economic%20Report%20-%20End%20of%20Year%202025.pdf')])),
 ]
 
 
 def body(n):
     return f'''<header class="ph rp">
   <div class="wrap">
-    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;{n['label']} &middot; {n['code']} &middot; {DATE}<span class="kind" title="Written by Luis Diaz Busquets; the charts update with each data run">Analyst note</span></div>
+    <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;{n['label']} &middot; {n['code']} &middot; {n.get('date', DATE)}<span class="kind" title="Written by Luis Diaz Busquets; the charts update with each data run">Analyst note</span></div>
     <h1>{n['title']}</h1>
     <p class="sub">{n['sub']}</p>
   </div>
 </header>
 <section class="tight rbody">
   <div class="wrap"><article class="note">{n['body']()}
-  <p class="fine" style="margin-top:34px">Figures in copper come straight from FRED and update every weekday; other figures are as of {DATE}. For education only, not investment advice.</p></article></div>
+  <p class="fine" style="margin-top:34px">{n.get('foot', f'Figures in copper come straight from FRED and update every weekday; other figures are as of {DATE}.')} For education only, not investment advice.</p></article></div>
 </section>
 '''

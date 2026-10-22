@@ -76,6 +76,8 @@ def jobs():
              ('plan', 'Financial <em>plan</em>', 'Pay, debts, goals and Social Security, run through 1,000 markets: will the money last?')]
     for slug, h, sub in tools:
         out.append((slug, card('Research tool', h, sub=sub)))
+    for n in notes.NOTES:
+        out.append((n['slug'], card('Research note &middot; ' + n['label'], n['title'], sub=n['card'])))
     return out
 
 

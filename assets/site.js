@@ -127,7 +127,7 @@
   /* line chart: sets = [{pts:[[date,v]], color, w, dash, area}], o = {yf, zero, xYears} */
   function line(el, sets, o) {
     o = o || {};
-    var W = el.clientWidth || 600, H = el.clientHeight || 260, L = 46, R = 10, T = 10, B = 26;
+    var W = el.clientWidth || 600, H = el.clientHeight || 260, L = 46, R = o.R || 10, T = 10, B = 26;
     var all = []; sets.forEach(function (s) { s.pts.forEach(function (p) { all.push(p); }); });
     if (!all.length) { el.innerHTML = ''; return; }
     var t0 = Math.min.apply(null, all.map(function (p) { return pd(p[0]).getTime(); })), t1 = Math.max.apply(null, all.map(function (p) { return pd(p[0]).getTime(); }));
@@ -149,8 +149,18 @@
       if (s.pts.length < 2) return;
       var p = s.pts.map(function (q, i) { return (i ? 'L' : 'M') + X(pd(q[0]).getTime()).toFixed(1) + ' ' + Y(q[1]).toFixed(1); }).join('');
       if (s.area) g += '<path d="' + p + 'L' + X(pd(s.pts[s.pts.length - 1][0]).getTime()).toFixed(1) + ' ' + Y(Math.max(mn, Math.min(0, mx))).toFixed(1) + 'L' + X(pd(s.pts[0][0]).getTime()).toFixed(1) + ' ' + Y(Math.max(mn, Math.min(0, mx))).toFixed(1) + 'Z" fill="' + s.color + '" opacity=".1"/>';
-      g += '<path d="' + p + '" fill="none" stroke="' + s.color + '" stroke-width="' + (s.w || 1.6) + '"' + (s.dash ? ' stroke-dasharray="' + s.dash + '"' : '') + ' stroke-linejoin="round"/>';
+      var path = function (pts, dash) { return '<path d="' + pts.map(function (q, i) { return (i ? 'L' : 'M') + X(pd(q[0]).getTime()).toFixed(1) + ' ' + Y(q[1]).toFixed(1); }).join('') + '" fill="none" stroke="' + s.color + '" stroke-width="' + (s.w || 1.6) + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + ' stroke-linejoin="round"/>'; };
+      var k = o.split ? s.pts.findIndex(function (q) { return q[0] >= o.split; }) : -1;
+      if (k > 0) g += path(s.pts.slice(0, k), s.dash) + path(s.pts.slice(k - 1), '4 4');
+      else g += path(s.pts, s.dash);
     });
+    /* end-of-line labels, nudged apart so they never overlap */
+    var labs2 = sets.filter(function (s) { return s.lab && s.pts.length; }).map(function (s) { var q = s.pts[s.pts.length - 1]; return { y: Y(q[1]), t: s.lab, c: s.color, x: X(pd(q[0]).getTime()) }; });
+    labs2.sort(function (a, b) { return a.y - b.y; });
+    for (var li = 1; li < labs2.length; li++) if (labs2[li].y - labs2[li - 1].y < 13) labs2[li].y = labs2[li - 1].y + 13;
+    var over = labs2.length ? labs2[labs2.length - 1].y - (H - B) : 0;
+    if (over > 0) labs2.forEach(function (l) { l.y -= over; });
+    labs2.forEach(function (l) { g += '<text class="el" x="' + (l.x + 6) + '" y="' + (l.y + 4) + '" style="fill:' + l.c + '">' + esc(l.t) + '</text>'; });
     el.setAttribute('viewBox', '0 0 ' + W + ' ' + H); el.innerHTML = g;
   }
   /* yield curve: categorical tenors */
@@ -295,6 +305,11 @@
         $$('svg[data-chart]').forEach(function (el) {
           var c = JSON.parse(el.getAttribute('data-chart'));
           if (c.curve) { if (m.curve) curve(el, m.curve); return; }
+          if (c.data) {   /* figures written into the page (e.g. IMF annual data), not FRED series */
+            var ds = c.data.map(function (d) { return { pts: d.p.map(function (q) { return [q[0] + '-07-01', q[1]]; }), color: css('--' + (d.c || 'acc')), w: d.w || 1.4, lab: d.n }; });
+            line(el, ds, { R: el.clientWidth < 480 ? 74 : 92, split: c.dash_from ? c.dash_from + '-07-01' : '', yf: c.yf === 'k' ? function (v) { return v ? '$' + (v / 1000).toFixed(0) + 'k' : '$0'; } : function (v) { return v; } });
+            return;
+          }
           var sets = c.lines.map(function (l) { var s = S[l[0]]; return s ? { pts: s[c.r || 'y5'] || s.y1 || [], color: css('--' + (l[1] || 'acc')), w: l[2] || 1.6, dash: l[3] || '', area: !!l[4] } : null; }).filter(Boolean);
           line(el, sets, { zero: !!c.zero, yf: function (v) { return v.toFixed(c.dp || 0) + '%'; } });
         });

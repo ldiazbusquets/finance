@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=33">
+<link rel="stylesheet" href="assets/site.css?v=35">
 </head>
 '''
 
@@ -473,7 +473,7 @@ def build():
     <div class="grid3" style="margin-top:30px">
       {card('bonds.html#pricer', 'MOD-07', 'Bond pricer', 'Price, yield to maturity, duration and convexity for any fixed-coupon bond.', 'Open &rarr;', 'live')}
       {card('bonds.html#shock', 'MOD-08', 'Rate shock', 'What a portfolio of bonds loses or gains if rates jump or fall, using the live Treasury curve.', 'Open &rarr;', 'live')}
-      {card('fixed-income.html', 'MOD-09', 'Bond portfolio stress test', 'Treasuries and corporates against curve twists, humps and spread shocks, with key-rate risk and a goal to fund.', 'Open &rarr;', 'live')}
+      {card('fixed-income.html', 'MOD-10', 'Bond portfolio stress test', 'Treasuries and corporates against curve twists, humps and spread shocks, with key-rate risk and a goal to fund.', 'Open &rarr;', 'live')}
       {card('loans.html', 'MOD-09', 'Loan and mortgage', 'Payments, amortisation and the true cost of borrowing at today’s rates.', 'Open &rarr;', 'live')}
     </div>
   </div>
@@ -483,7 +483,7 @@ def build():
 
     # ---------------- tools ----------------
     tools = ph('Tools', 'Tools you can <em>use</em>', 'Interactive finance tools that run in your browser. Company data comes from the same nightly update as the rest of the site.',
-               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a></div>') + f'''
+               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a><a class="pill gh" href="risk.html">Portfolio risk</a></div>') + f'''
 <section class="tight" id="sizer">
   <div class="wrap">
     <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-06</div><h3 class="sec">Position sizer</h3></div><p>Decide the loss you can accept first; the number of shares follows from the distance to your stop.</p></div>
@@ -503,6 +503,7 @@ def build():
     </div>
     <div class="panel" style="margin-top:16px"><div id="xOut"></div></div>
     <p class="disc">S&amp;P 500 weights here are by total market value, which is close to, but not exactly, the index&rsquo;s float-adjusted weights. Companies outside the S&amp;P 500 are counted as &ldquo;not covered&rdquo;.</p>
+    <a class="snapcta" href="risk.html" style="margin-top:24px"><div><span class="mono">TOOL-08 &middot; Next step</span><b>Measure the risk of a portfolio</b><p>Volatility, drawdowns, beta, value at risk, which holding carries the risk, correlations and the efficient frontier, from five years of weekly returns.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
   </div>
 </section>
 
@@ -520,6 +521,35 @@ def build():
 </section>
 '''
     page('tools.html', 'tools.html', 'Tools', 'Position sizing, a portfolio x-ray and more finance tools that run in the browser.', 'tools', tools, '\n<script src="assets/tools.js?v=1"></script>')
+
+    # ---------------- portfolio risk ----------------
+    risk = ph('Tools<span class="kind auto" title="Calculated by code from historical prices, with no analyst review">Automated model</span>', 'Portfolio <em>risk</em>', 'How a mix of stocks, funds and bonds actually behaved: how much it swung, how far it fell, which holding carried the risk and what the same holdings could have done with different weights.',
+              '<div class="meta"><span class="mono" id="rkStamp">&nbsp;</span><span class="mono">Source: Yahoo Finance weekly total returns</span></div>') + '''
+<section class="tight">
+  <div class="wrap">
+    <div class="panel">
+      <div class="hd"><div><h3 class="sec">Your portfolio</h3><p>Ticker and dollar amount. Any S&amp;P 500 company, the companies researched here and about fifty common ETFs, including bond and gold funds.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="rkAdd">+ Add a holding</button></div></div>
+      <div class="chips sm" id="rkPre" style="margin-bottom:16px"></div>
+      <div id="rkT"></div>
+      <div class="seg sm" id="rkLook"></div>
+    </div>
+    <div id="rkOut" style="margin-top:16px"></div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Growth of $10,000</h3><p>Dividends included.</p></div></div><svg class="chart" id="rkG"></svg><p class="fine" id="rkGNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Drawdowns</h3><p>Distance below the last high.</p></div></div><svg class="chart" id="rkD"></svg><p class="fine" id="rkDNote"></p></div>
+    </div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Where the risk comes from</h3><p>Each holding&rsquo;s share of the money against its share of the portfolio&rsquo;s volatility.</p></div></div><div id="rkC"></div><p class="fine" id="rkCNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">How they move together</h3><p>Correlation of weekly returns: copper moves together, green moves opposite.</p></div></div><div id="rkH"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The efficient frontier</h3><p>The same holdings, every long-only mix: grey circles are single holdings, the copper line the best return for each level of risk.</p></div></div>
+      <div class="cols2 rkf"><svg class="chart" id="rkF" style="height:320px"></svg><div id="rkFT"></div></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The worst weeks</h3><p>The mix&rsquo;s six biggest weekly losses in the period, with the S&amp;P 500 alongside.</p></div></div><div id="rkW" class="scroll"></div></div>
+    <p class="disc">Weekly total returns from Yahoo Finance adjusted closes, refreshed once a week. The portfolio is rebalanced to your weights every week. Volatility and ratios are annualised from weekly figures; value at risk is historical, from the worst 5% of weeks. Past behaviour is not a forecast, and nothing here is a recommendation. Not investment advice.</p>
+  </div>
+</section>
+'''
+    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=1"></script>')
 
     # ---------------- markets ----------------
     markets = ph('Markets', 'The markets, <em>in numbers</em>', 'Rates, the yield curve, inflation, credit and the S&amp;P 500, refreshed from the Federal Reserve every weekday evening.',

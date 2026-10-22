@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio risk | LDB Finance</title>
+<meta name="description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Portfolio risk | LDB Finance">
+<meta property="og:description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/risk.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio risk | LDB Finance">
+<meta name="twitter:description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=35">
+</head>
+<body data-page="risk">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html" class=on>Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <span class="sites" role="navigation" aria-label="Luis Diaz Busquets sites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></span>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><div class="msites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></div></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Tools<span class="kind auto" title="Calculated by code from historical prices, with no analyst review">Automated model</span></div>
+  <h1>Portfolio <em>risk</em></h1>
+  <p class="sub">How a mix of stocks, funds and bonds actually behaved: how much it swung, how far it fell, which holding carried the risk and what the same holdings could have done with different weights.</p><div class="meta"><span class="mono" id="rkStamp">&nbsp;</span><span class="mono">Source: Yahoo Finance weekly total returns</span></div>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="panel">
+      <div class="hd"><div><h3 class="sec">Your portfolio</h3><p>Ticker and dollar amount. Any S&amp;P 500 company, the companies researched here and about fifty common ETFs, including bond and gold funds.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="rkAdd">+ Add a holding</button></div></div>
+      <div class="chips sm" id="rkPre" style="margin-bottom:16px"></div>
+      <div id="rkT"></div>
+      <div class="seg sm" id="rkLook"></div>
+    </div>
+    <div id="rkOut" style="margin-top:16px"></div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Growth of $10,000</h3><p>Dividends included.</p></div></div><svg class="chart" id="rkG"></svg><p class="fine" id="rkGNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Drawdowns</h3><p>Distance below the last high.</p></div></div><svg class="chart" id="rkD"></svg><p class="fine" id="rkDNote"></p></div>
+    </div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Where the risk comes from</h3><p>Each holding&rsquo;s share of the money against its share of the portfolio&rsquo;s volatility.</p></div></div><div id="rkC"></div><p class="fine" id="rkCNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">How they move together</h3><p>Correlation of weekly returns: copper moves together, green moves opposite.</p></div></div><div id="rkH"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The efficient frontier</h3><p>The same holdings, every long-only mix: grey circles are single holdings, the copper line the best return for each level of risk.</p></div></div>
+      <div class="cols2 rkf"><svg class="chart" id="rkF" style="height:320px"></svg><div id="rkFT"></div></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The worst weeks</h3><p>The mix&rsquo;s six biggest weekly losses in the period, with the S&amp;P 500 alongside.</p></div></div><div id="rkW" class="scroll"></div></div>
+    <p class="disc">Weekly total returns from Yahoo Finance adjusted closes, refreshed once a week. The portfolio is rebalanced to your weights every week. Volatility and ratios are annualised from weekly figures; value at risk is historical, from the worst 5% of weeks. Past behaviour is not a forecast, and nothing here is a recommendation. Not investment advice.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>&copy; <span class="yr">2026</span> Luis Diaz Busquets &middot; LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=19"></script>
+<script src="assets/risk.js?v=1"></script>
+</body>
+</html>

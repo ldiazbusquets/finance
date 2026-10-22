@@ -865,3 +865,24 @@ html.lt .band .eyebrow::before { background: #FFF6EA; }
 .mixr em { font: 400 13px var(--mono); font-style: normal; text-align: right; color: var(--t2); }
 #fiPreNote b { font-weight: 500; color: var(--ink); white-space: nowrap; }
 @media (max-width: 760px) { .mixg { grid-template-columns: 1fr; } .mixr { grid-template-columns: 110px 1fr 40px; } }
+
+/* portfolio risk */
+.rkrange { margin: 0 0 12px; color: var(--t3); font-size: 12px; letter-spacing: .06em; }
+.tbl.pf .cell.tk { width: 92px; text-transform: uppercase; text-align: left; font-family: var(--mono); }
+#rkT td.nmc, #rkT th:nth-child(2) { text-align: left; } .tbl.pf td.nmc { color: var(--t2); font-size: 13.5px; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rcl, .rcr { display: grid; grid-template-columns: 64px 1fr 1fr; gap: 14px; align-items: center; }
+.rcl { margin-bottom: 6px; } .rcl .mono { font-size: 11px; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; }
+.rcr { padding: 7px 0; border-top: 1px solid var(--line); }
+.rcr b { font: 500 13px var(--mono); }
+.rcr > div { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.rcr i { display: block; height: 8px; border-radius: 99px; min-width: 2px; }
+.rcr i.wb { background: var(--t3); opacity: .6; } .rcr i.rb { background: var(--acc); }
+.rcr em { font: 400 12.5px var(--mono); font-style: normal; color: var(--t2); }
+.hm { display: grid; gap: 3px; font: 400 11px var(--mono); }
+.hm span { display: grid; place-items: center; min-height: 30px; border-radius: 6px; color: var(--ink); overflow: hidden; }
+.hm .hx { color: var(--t3); font-size: 10.5px; } .hm .hy { color: var(--t3); justify-items: start; font-size: 10.5px; }
+.hm .hc { border: 1px solid var(--line); }
+.cols2.rkf { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; margin-top: 4px; }
+@media (max-width: 980px) { .cols2.rkf { grid-template-columns: minmax(0, 1fr); } }
+#rkF text { font: 400 11px var(--mono); fill: var(--t3); } #rkF text.lb { fill: var(--ink); font-weight: 500; }
+@media (max-width: 760px) { .rcl, .rcr { grid-template-columns: 52px 1fr 1fr; gap: 8px; } .hm span { min-height: 24px; } }

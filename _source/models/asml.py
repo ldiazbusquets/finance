@@ -1,6 +1,6 @@
 exec(open('val_all.py').read())
 # ASML: 2026 guidance midpoint EUR 44.5B, converted at $1.123 per euro = $50.0B; net cash about EUR 9B = $10B; one ADR = one share
-FX=1.123; P=1558.26; SH=383.1e6
+FX=1.123; P=1560.54; SH=383.1e6
 W0=ke(1.30)
 def asm(g1=.22,g2=.15,m0=.415,mT=.44,W=None,s2c=3,show=False):
     W=W or W0

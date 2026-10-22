@@ -19,30 +19,30 @@ Net debt basis,Machinery only,Cat Financial debt is matched by its loans
 PROJECTION (base case)
 Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
 2027,8.0,84.24,20.25,17.059,13.306,2.08,11.226,0.9548,10.719
-2028,6.0,89.294,20.5,18.305,14.278,1.685,12.593,0.8705,10.963
+2028,6.0,89.294,20.5,18.305,14.278,1.685,12.593,0.8706,10.963
 2029,5.62,94.317,20.75,19.571,15.265,1.674,13.591,0.7937,10.787
-2030,5.25,99.269,21.0,20.846,16.26,1.651,14.61,0.7236,10.572
-2031,4.88,104.108,21.0,21.863,17.053,1.613,15.44,0.6597,10.186
-2032,4.5,108.793,21.0,22.847,17.82,1.562,16.259,0.6015,9.779
-2033,4.12,113.281,21.0,23.789,18.555,1.496,17.059,0.5484,9.355
-2034,3.75,117.529,21.0,24.681,19.251,1.416,17.835,0.5,8.917
-2035,3.38,121.495,21.0,25.514,19.901,1.322,18.579,0.4558,8.469
-2036,3.0,125.14,21.0,26.279,20.498,1.215,19.283,0.4156,8.014
+2030,5.25,99.269,21.0,20.846,16.26,1.651,14.61,0.7237,10.572
+2031,4.88,104.108,21.0,21.863,17.053,1.613,15.44,0.6598,10.187
+2032,4.5,108.793,21.0,22.847,17.82,1.562,16.259,0.6015,9.78
+2033,4.12,113.281,21.0,23.789,18.555,1.496,17.059,0.5485,9.356
+2034,3.75,117.529,21.0,24.681,19.251,1.416,17.835,0.5,8.918
+2035,3.38,121.495,21.0,25.514,19.901,1.322,18.579,0.4559,8.47
+2036,3.0,125.14,21.0,26.279,20.498,1.215,19.283,0.4157,8.015
 
 BRIDGE (base case),Value
-Present value of 10 years of cash flow,97.762
+Present value of 10 years of cash flow,97.769
 Year-11 after-tax operating income,21.113
-Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),268.524
-Present value of terminal value,111.597
-Enterprise value,209.359
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),268.599
+Present value of terminal value,111.646
+Enterprise value,209.415
 Plus net cash,-5.0
-Equity value,204.359
-Value per share ($),441.86
+Equity value,204.415
+Value per share ($),441.98
 
 SCENARIOS,Bear,Base,Bull
-Value per share ($),255.66,441.86,675.72
+Value per share ($),255.72,441.98,675.94
 Probability,25,50,25
-Probability-weighted value ($),,453.77,
+Probability-weighted value ($),,453.91,
 
 SENSITIVITY,Input,Value per share
 ,Discount rate 8.5%,536.79

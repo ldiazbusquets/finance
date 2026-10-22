@@ -1,6 +1,6 @@
 exec(open('val_all.py').read())
 # Northrop Grumman: 2026 guidance midpoint $44.0B; 2027 growth 5-7%, higher in 2028; margins up 10-20bp a year
-P=553.29; SH=143.0e6
+P=552.53; SH=143.0e6
 W0=wacc(0.80,P*SH,15.2e9,.05)   # beta 0.80 (defense peers), not the measured 0.50
 def nc(g1=.06,g2=.07,m0=.113,mT=.12,W=None,s2c=3,show=False):
     W=W or W0

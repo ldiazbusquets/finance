@@ -295,10 +295,10 @@ def build():
     <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
-      {card('lockheed-martin.html', 'LMT &middot; Hold', 'Lockheed Martin', 'A record $292 billion backlog, and where Anduril can and can&rsquo;t compete. Value $646 against $603.', 'Read the report &rarr;', 'live')}
+      {card('lockheed-martin.html', 'LMT &middot; Hold', 'Lockheed Martin', 'A record $292 billion backlog, and where Anduril can and can&rsquo;t compete. Value $647 against $590.', 'Read the report &rarr;', 'live')}
       {card('northrop-grumman.html', 'NOC &middot; Hold', 'Northrop Grumman', 'The B-21 and Sentinel, and a private Anduril now worth more. Value $564 against $553.', 'Read the report &rarr;', 'live')}
-      {card('caterpillar.html', 'CAT &middot; Watch', 'Caterpillar', 'Engines and turbines for AI data centers, inside a cyclical machinery company. Value $442 against $711.', 'Read the report &rarr;', 'live')}
-      {card('asml.html', 'ASML &middot; Watch', 'ASML', 'The only maker of EUV machines, with demand ahead of supply to 2028. Value $1,081 against $1,558.', 'Read the report &rarr;', 'live')}
+      {card('caterpillar.html', 'CAT &middot; Watch', 'Caterpillar', 'Engines and turbines for AI data centers, inside a cyclical machinery company. Value $442 against $704.', 'Read the report &rarr;', 'live')}
+      {card('asml.html', 'ASML &middot; Watch', 'ASML', 'The only maker of EUV machines, with demand ahead of supply to 2028. Value $1,081 against $1,561.', 'Read the report &rarr;', 'live')}
       {card('sk-hynix.html', 'SKHY &middot; Watch', 'SK hynix', 'The HBM leader at a 76% margin, valued across the memory cycle. Value $111 against $132 an ADR.', 'Read the report &rarr;', 'live')}
       {card('palantir.html', 'PLTR &middot; Watch', 'Palantir', 'AI software growing 93% at a 47% margin, priced for the bull case. Value $79 against $202.', 'Read the report &rarr;', 'live')}
       {card('amd.html', 'AMD &middot; Watch', 'AMD', 'Data center up 107% and Helios racks shipping, after a 140% run. Value $319 against $553.', 'Read the report &rarr;', 'live')}

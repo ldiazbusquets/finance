@@ -178,7 +178,7 @@
    "date": "2026-10-22",
    "call": "Watch",
    "value": 1081,
-   "price": 1558.26,
+   "price": 1560.54,
    "held": false
   },
   {
@@ -188,7 +188,7 @@
    "date": "2026-10-22",
    "call": "Watch",
    "value": 442,
-   "price": 710.9,
+   "price": 703.84,
    "held": false
   },
   {
@@ -197,8 +197,8 @@
    "page": "lockheed-martin.html",
    "date": "2026-10-22",
    "call": "Hold",
-   "value": 646,
-   "price": 602.75,
+   "value": 647,
+   "price": 590.2,
    "held": false
   },
   {
@@ -218,7 +218,7 @@
    "date": "2026-10-22",
    "call": "Hold",
    "value": 564,
-   "price": 553.29,
+   "price": 552.53,
    "held": false
   },
   {
@@ -228,7 +228,7 @@
    "date": "2026-10-22",
    "call": "Watch",
    "value": 111,
-   "price": 131.62,
+   "price": 131.69,
    "held": false
   }
  ]

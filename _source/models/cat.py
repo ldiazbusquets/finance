@@ -1,6 +1,6 @@
 exec(open('val_all.py').read())
 # Caterpillar: 2025 revenue $67.6B; 2026 guided up mid-to-high teens (~$78B); MP&E net debt $5.0B (Cat Financial's debt is funded by its loan book)
-P=710.90; SH=462.5e6
+P=703.84; SH=462.5e6
 W0=wacc(1.05,P*SH,11.0e9,.05)
 def ct(g1=.08,g2=.06,m0=.20,mT=.21,W=None,s2c=3,show=False):
     W=W or W0

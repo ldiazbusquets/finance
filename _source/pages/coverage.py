@@ -602,11 +602,11 @@ LC = 'https://finance.biggo.com/news/US_LMT_2026-10-22'
 R['LMT'] = dict(
     t='LMT', slug='lockheed-martin', name='Lockheed Martin', h1='Lockheed <em>Martin</em>', sector='Aerospace &amp; defense', date=D22, timing=', the day of its third-quarter results',
     sub='Lockheed Martin is the world&rsquo;s largest defense contractor: the F-35, the PAC-3 and THAAD missile interceptors, Sikorsky helicopters and military satellites. Its backlog just hit a record $292 billion. The question this report asks is how much of that a new kind of competitor, led by Anduril, can take.',
-    call='Hold', method='Cash-flow model', price=602.75, pricenote='Oct 22, 2026, near the close', base=646, bear=400, bull=970, wt=665, max=1100, tick=100,
+    call='Hold', method='Cash-flow model', price=590.20, pricenote='Close, Oct 22, 2026', base=647, bear=401, bull=973, wt=667, max=1100, tick=100,
     disclosure='The author holds no LMT shares directly.',
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 400, 970, 646, '$400 to $970, base $646'), ('Probability-weighted', None, None, 665, '$665'),
-           ('Price at writing', None, None, 602.75, '$602.75'), ('52-week range', 437, 692, None, '$437 to $692')],
+    field=[('Cash-flow model', 401, 973, 647, '$401 to $973, base $647'), ('Probability-weighted', None, None, 667, '$667'),
+           ('Price at writing', None, None, 590.20, '$590.20'), ('52-week range', 437, 692, None, '$437 to $692')],
     toc=toc_with('threat', 'The Anduril question'), chapters=[
         ('overview', 'The business', 'Fighter jets, interceptors <em>and satellites.</em>',
          prose('Lockheed reports four segments. <b>Aeronautics</b> (about 40% of sales) builds the F-35, the F-16 and the C-130. <b>Missiles and Fire Control</b> makes the PAC-3 and THAAD interceptors, GMLRS and PrSM rockets and long-range strike missiles. <b>Rotary and Mission Systems</b> is Sikorsky helicopters, radars and ship combat systems. <b>Space</b> builds satellites, the Orion capsule and the Trident submarine-launched missile.',
@@ -614,7 +614,7 @@ R['LMT'] = dict(
         ('results', 'Latest results', 'Sales up 11%, <em>a record $292 billion backlog.</em>',
          stats([('$20.7B', 'Sales, Q3 2026, +11%'), ('$7.97', 'Earnings per share'), ('$3.0B', 'Free cash flow'), ('$292B', 'Backlog, a record'), ('+24%', 'Missiles and Fire Control sales'), ('$80&ndash;82B', '2026 sales guidance, raised')])
          + prose('Third-quarter sales rose 11% to $20.7 billion. Missiles and Fire Control grew 24% as PAC-3, THAAD, GMLRS and PrSM production ramped, and Aeronautics 13%. Backlog jumped 27% in the quarter to $292 billion, including $52.5 billion for the PAC-3 MSE interceptor under a seven-year agreement worth up to $58.6 billion.',
-                 'Lockheed raised its 2026 guidance for the second quarter running: sales of $80&ndash;82 billion, earnings of $30.35&ndash;30.75 a share and free cash flow of $7.8&ndash;8.0 billion. Management expects all four segments to grow in 2027, with a &ldquo;clear line of sight&rdquo; to high single-digit growth. The shares rose about 9% on the day.')
+                 'Lockheed raised its 2026 guidance for the second quarter running: sales of $80&ndash;82 billion, earnings of $30.35&ndash;30.75 a share and free cash flow of $7.8&ndash;8.0 billion. Management expects all four segments to grow in 2027, with a &ldquo;clear line of sight&rdquo; to high single-digit growth. The shares closed up about 7% on the day.')
          + src([('Q3 2026 results', LQ), ('Earnings call', LC), ('Share price reaction', 'https://247wallst.com/investing/2026/10/22/lockheed-martin-rises-9-as-record-backlog-lifts-outlook-rtx-gains-2-northrop-grumman-advances-3/')])),
         ('threat', 'The Anduril question', 'Where the new entrants <em>win, and where they can&rsquo;t yet.</em>',
          prose('Anduril, valued at about $90 billion in an October employee share sale, is the most visible of a group of venture-backed defense companies that build products with their own money and sell them, rather than waiting for the Pentagon to fund development. Its 2026 revenue of about $4.3 billion is roughly 5% of Lockheed&rsquo;s, but it is roughly doubling every year, and it has already won where it matters most: in June 2026 the Air Force chose <b>Anduril and General Atomics</b> to build the first collaborative combat aircraft (drone wingmen for fighters). Lockheed, Boeing and Northrop were not picked for that hardware, though all three are in the six-company pool competing to write the autonomy software.')
@@ -632,7 +632,7 @@ R['LMT'] = dict(
         ('capital', 'Balance sheet and ownership', 'Buybacks paused, <em>the dividend raised again.</em>',
          prose('At the end of September Lockheed had $6.0 billion of cash and $20.5 billion of long-term debt, about $14.5 billion of net debt. It bought back no shares in the first nine months of 2026 (against $2.25 billion a year earlier) while it funds the munitions expansion and the pending purchase of Ultra Maritime, but it raised its dividend for the 24th year in a row. It expects to contribute more than $1 billion to its pension plan next year.',
                  'One item to watch: Lockheed&rsquo;s costs on the F-35 Lot 20 contract have run ahead of the funding authorized so far, and the company warns that results will suffer if negotiations on Lots 20 and later do not close. Lot 20 is now expected in 2027.')),
-        ('value', 'Valuation', 'The model gives <em>$646 a share.</em>',
+        ('value', 'Valuation', 'The model gives <em>$647 a share.</em>',
          table(['Assumption', 'Base case', 'Basis'], [
              ['Sales, 2026', '$81B', 'Guidance midpoint'],
              ['Growth, 2027 and 2028', '7%, then 6%', 'Management&rsquo;s high single-digit outlook; fades to 3% by year 10'],
@@ -641,14 +641,14 @@ R['LMT'] = dict(
              ['Discount rate', '8.1%', 'Beta 0.80 for defense peers (Lockheed&rsquo;s own is 0.48), 13% debt'],
              ['Terminal growth', '3.0%', 'With a 15% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$65B'), ('PV of terminal value', '$99B'), ('Enterprise value', '$164B'), ('Net debt', '&minus;$14.5B'), ('Equity value', '$150B'), ('Shares', '231.5M')], '$646')
+         + bridge([('PV of 10 years of cash flow', '$65B'), ('PV of terminal value', '$99B'), ('Enterprise value', '$164B'), ('Net debt', '&minus;$14.5B'), ('Equity value', '$150B'), ('Shares', '231.5M')], '$647')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
              ['Growth, 2027 / 2028', '4% / 3%', '7% / 6%', '9% / 8%'], ['Long-run operating margin', '10.5%', '12%', '13%'],
-             ['Discount rate', '9.1%', '8.1%', '7.1%'], ['Value per share', '$400', '$646', '$970'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$665</b>. The bear case is a budget squeeze after the midterms plus share lost to cheaper autonomous systems; the bull case is the munitions ramp and F-35 multi-year deal running ahead of plan.')
+             ['Discount rate', '9.1%', '8.1%', '7.1%'], ['Value per share', '$401', '$647', '$973'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$667</b>. The bear case is a budget squeeze after the midterms plus share lost to cheaper autonomous systems; the bull case is the munitions ramp and F-35 multi-year deal running ahead of plan.')
          + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$840', '$742', '$664', '$600', '$547'])),
-        ('implied', 'What the price assumes', 'At $603, <em>about 4.7% growth.</em>',
-         implied([['Sales growth of about 4.7% a year for two years, then the same fade', '7% and 6%'], ['Or a long-run operating margin of about 11.3%', '12%'], ['Or a discount rate of about 8.5%', '8.1%']])
+        ('implied', 'What the price assumes', 'At $590, <em>about 4% growth.</em>',
+         implied([['Sales growth of about 4% a year for two years, then the same fade', '7% and 6%'], ['Or a long-run operating margin of about 11%', '12%'], ['Or a discount rate of about 8.6%', '8.1%']])
          + prose('The price asks for less growth than management is guiding to, which is why the model sits above it. Before the results the shares were down 21% from their high as investors began to price in a Democratic Congress after the November 3 midterms, which could trim the proposed defense increase.')
          + src([('Defense stocks and the midterms', MIDT)])),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
@@ -660,7 +660,7 @@ R['LMT'] = dict(
              ['Pension and buybacks', 'More than $1 billion of pension contributions next year and no buybacks this year.'],
          ]) + prose('<b>Upside:</b> missile defense demand that management calls &ldquo;permanent&rdquo;, a 10-year F-35 production path, Golden Dome missile-defense spending, and a return to buybacks once the munitions build-out is funded.')),
         ('rec', 'Recommendation', 'Hold. <em>Fairly priced, with a real but narrow threat.</em>',
-         prose('Lockheed is the strongest of the primes on the work that matters most right now: interceptors and munitions, where it is the only supplier and has seven-year contracts. Anduril is taking the new drone and low-cost categories, and that will cap Lockheed&rsquo;s share of future budgets, but it does not touch the F-35, PAC-3, THAAD or Trident this decade. At $602.75 the shares are about 10% below our weighted value of $665: close to fair. We would buy nearer $550, or after the midterms if the budget holds up.')
+         prose('Lockheed is the strongest of the primes on the work that matters most right now: interceptors and munitions, where it is the only supplier and has seven-year contracts. Anduril is taking the new drone and low-cost categories, and that will cap Lockheed&rsquo;s share of future budgets, but it does not touch the F-35, PAC-3, THAAD or Trident this decade. At $590.20 the shares are about 12% below our weighted value of $667: close to fair. We would buy nearer $550, or after the midterms if the budget holds up.')
          + band('The incumbent with the moat, <em>at about a fair price.</em>', 'Anduril wins the new categories; Lockheed still owns the ones with years of backlog.')),
     ])
 
@@ -670,11 +670,11 @@ NC = 'https://www.fool.com/earnings/call-transcripts/2026/10/20/northrop-grumman
 R['NOC'] = dict(
     t='NOC', slug='northrop-grumman', name='Northrop Grumman', h1='Northrop <em>Grumman</em>', sector='Aerospace &amp; defense', date=D22, timing=', after its third-quarter results',
     sub='Northrop Grumman builds the B-21 stealth bomber, the Sentinel nuclear missile, satellites and rocket motors. Its backlog is a record $110 billion and its growth rests on two of the biggest programs in the defense budget. Anduril, valued privately at about $90 billion, is now worth more than Northrop&rsquo;s entire stock market value.',
-    call='Hold', method='Cash-flow model', price=553.29, pricenote='Oct 22, 2026, near the close', base=564, bear=329, bull=870, wt=582, max=1000, tick=100,
+    call='Hold', method='Cash-flow model', price=552.53, pricenote='Close, Oct 22, 2026', base=564, bear=329, bull=870, wt=582, max=1000, tick=100,
     disclosure='The author holds no NOC shares directly.',
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
     field=[('Cash-flow model', 329, 870, 564, '$329 to $870, base $564'), ('Probability-weighted', None, None, 582, '$582'),
-           ('Price at writing', None, None, 553.29, '$553.29'), ('52-week range', 470, 774, None, '$470 to $774')],
+           ('Price at writing', None, None, 552.53, '$552.53'), ('52-week range', 470, 774, None, '$470 to $774')],
     toc=toc_with('threat', 'The Anduril question'), chapters=[
         ('overview', 'The business', 'Bombers, ICBMs <em>and rocket motors.</em>',
          prose('Northrop has four segments. <b>Aeronautics</b> builds the B-21 Raider stealth bomber and parts of the F-35. <b>Defense Systems</b> holds <b>Sentinel</b>, the new intercontinental ballistic missile, along with munitions and missile components. <b>Mission Systems</b> makes radars, sensors and electronic warfare systems. <b>Space</b> builds satellites and is one of the largest makers of solid rocket motors.',
@@ -727,7 +727,7 @@ R['NOC'] = dict(
              ['Cash flow', 'Heavy capital spending keeps free cash flow near 8% of sales.'],
          ]) + prose('<b>Upside:</b> faster B-21 production, a munitions and rocket-motor ramp from 2027, Golden Dome space work, and a separation of the microelectronics business.')),
         ('rec', 'Recommendation', 'Hold. <em>Protected programs, exposed budgets.</em>',
-         prose('Northrop owns two of the most protected programs in defense, and no new entrant can build a stealth bomber or an ICBM. Its newer bets, though, sit exactly where Anduril is strongest, and its growth depends on budgets that the midterms put in question. At $553.29 the shares are about 5% below our weighted value of $582: fairly priced for the plan. We prefer Lockheed for its missile-defense backlog and would buy Northrop nearer $480.')
+         prose('Northrop owns two of the most protected programs in defense, and no new entrant can build a stealth bomber or an ICBM. Its newer bets, though, sit exactly where Anduril is strongest, and its growth depends on budgets that the midterms put in question. At $552.53 the shares are about 5% below our weighted value of $582: fairly priced for the plan. We prefer Lockheed for its missile-defense backlog and would buy Northrop nearer $480.')
          + band('The most protected programs, <em>and the most political.</em>', 'Northrop&rsquo;s core is safe from Anduril; its budget is not safe from Congress.')),
     ])
 
@@ -737,11 +737,11 @@ CC = 'https://finance.biggo.com/news/US_CAT_2026-08-04'
 R['CAT'] = dict(
     t='CAT', slug='caterpillar', name='Caterpillar', h1='Caterpillar', sector='Machinery &amp; power', date=D22, timing=', ahead of its third-quarter results on October 29',
     sub='Caterpillar is the world&rsquo;s largest maker of construction and mining equipment, and it has quietly become one of the biggest suppliers of power for AI data centers: gas engines, generators and turbines. Its backlog has nearly doubled to $72 billion. The shares ran past $1,000 and have fallen about 30% since.',
-    call='Watch', method='Cash-flow model', price=710.90, pricenote='Oct 22, 2026, near the close', base=442, bear=256, bull=676, wt=454, max=1200, tick=200,
+    call='Watch', method='Cash-flow model', price=703.84, pricenote='Close, Oct 22, 2026', base=442, bear=256, bull=676, wt=454, max=1200, tick=200,
     disclosure='The author holds no CAT shares.',
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
     field=[('Cash-flow model', 256, 676, 442, '$256 to $676, base $442'), ('Probability-weighted', None, None, 454, '$454'),
-           ('Price at writing', None, None, 710.90, '$710.90'), ('52-week range', 510, 1073, None, '$510 to $1,073'), ('Analyst average', None, None, 922, '$922')],
+           ('Price at writing', None, None, 703.84, '$703.84'), ('52-week range', 510, 1073, None, '$510 to $1,073'), ('Analyst average', None, None, 922, '$922')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Bulldozers, mining trucks <em>and data-center power.</em>',
          prose('Caterpillar has three equipment segments of similar size. <b>Construction Industries</b> sells excavators, loaders and bulldozers. <b>Resource Industries</b> sells mining trucks and equipment. <b>Power &amp; Energy</b> makes engines, generator sets, gas turbines (through Solar Turbines) and rail locomotives. <b>Financial Products</b> lends to customers and dealers.',
@@ -771,7 +771,7 @@ R['CAT'] = dict(
              ['Discount rate', '10.7%', '9.7%', '8.7%'], ['Value per share', '$256', '$442', '$676'], ['Probability', '25%', '50%', '25%']])
          + prose('Weighted 25/50/25: <b>$454</b>. The bear case is the usual machinery downturn arriving as data-center orders normalise; the bull case keeps power growing at double digits through 2028.')
          + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$537', '$492', '$454', '$422', '$394'])),
-        ('implied', 'What the price assumes', 'At $711, <em>18% growth for two years.</em>',
+        ('implied', 'What the price assumes', 'At $704, <em>18% growth for two years.</em>',
          implied([['Sales growth of about 18% a year in 2027 and 2028, then the same fade', '8% and 6%'], ['Or a long-run operating margin of about 34%', '21%; Caterpillar has never sustained much above 21%']])
          + prose('Even after a 30% fall the shares trade at about 32 times forward earnings, a multiple Caterpillar has rarely held outside the bottom of a downturn. Analysts are more optimistic, with an average target of about $922, though several cut their targets this month on slowing bookings, dealer inventories and the risk that data-center power demand normalises.')
          + src([('The 30% fall', 'https://www.xtb.com/int/market-analysis/news-and-research/caterpillar-shares-extend-decline-down-30-from-record-high'), ('Target cuts', 'https://www.tradingkey.com/news/market-movers/262232614-market-movers-cat-20261022')])),
@@ -783,7 +783,7 @@ R['CAT'] = dict(
              ['Valuation', 'At about 32 times forward earnings, a normal downturn would hit the shares hard.'],
          ]) + prose('<b>Upside:</b> a power backlog that keeps growing, turbines sold out into 2030, new engine capacity from late 2026, and more tariff refunds.')),
         ('rec', 'Recommendation', 'Watch. <em>A great power business inside a cyclical company.</em>',
-         prose('Caterpillar has turned into one of the clearest ways to own the power needed for AI, and its backlog makes the next two years visible. But about 60% of the company is still construction and mining equipment, and even after a 30% fall the price assumes growth of about 18% a year for two more years. At $710.90 the shares are about 57% above our weighted value of $454. It is on the watchlist; we would look again nearer $500, or after a quarter that shows power orders still accelerating. Results come on October 29.')
+         prose('Caterpillar has turned into one of the clearest ways to own the power needed for AI, and its backlog makes the next two years visible. But about 60% of the company is still construction and mining equipment, and even after a 30% fall the price assumes growth of about 18% a year for two more years. At $703.84 the shares are about 55% above our weighted value of $454. It is on the watchlist; we would look again nearer $500, or after a quarter that shows power orders still accelerating. Results come on October 29.')
          + band('The AI power trade, <em>at an AI price.</em>', 'The engines are sold out; the shares already know it.')),
     ])
 
@@ -793,11 +793,11 @@ XV = 'https://vestedfinance.com/blog/us-stocks/asml-q3-earnings-2026/'
 R['ASML'] = dict(
     t='ASML', slug='asml', name='ASML Holding', h1='ASML', sector='Chip equipment', date=D22, timing=', after its third-quarter results',
     sub='ASML, based in the Netherlands, is the only company in the world that makes extreme ultraviolet (EUV) lithography machines, without which no leading-edge chip can be made. Sales are up 36% this year, it says demand will outrun its capacity through 2028, and its shares trade in New York as ADRs. All figures are converted to U.S. dollars at $1.123 per euro.',
-    call='Watch', method='Cash-flow model', price=1558.26, pricenote='Oct 22, 2026, near the close', base=1081, bear=524, bull=1653, wt=1085, max=2200, tick=200,
+    call='Watch', method='Cash-flow model', price=1560.54, pricenote='Close, Oct 22, 2026', base=1081, bear=524, bull=1653, wt=1085, max=2200, tick=200,
     disclosure='The author holds no ASML shares directly; ASML is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio.',
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
     field=[('Cash-flow model', 524, 1653, 1081, '$524 to $1,653, base $1,081'), ('Probability-weighted', None, None, 1085, '$1,085'),
-           ('Price at writing', None, None, 1558.26, '$1,558.26'), ('52-week range', 946, 2000, None, '$946 to $2,000'), ('Analyst average', None, None, 2079, '$2,079')],
+           ('Price at writing', None, None, 1560.54, '$1,560.54'), ('52-week range', 946, 2000, None, '$946 to $2,000'), ('Analyst average', None, None, 2079, '$2,079')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'The only maker <em>of the machine every chip needs.</em>',
          prose('Lithography machines print a chip&rsquo;s circuits onto silicon wafers with light. ASML makes three kinds: <b>EUV</b>, which only it can build and which is needed for every leading-edge logic chip and, increasingly, for DRAM and HBM memory; older <b>DUV</b> machines, where it competes with Nikon and Canon; and <b>High-NA EUV</b>, the next generation, now being tested by chipmakers. About 28% of sales come from servicing and upgrading the machines already installed.',
@@ -833,7 +833,7 @@ R['ASML'] = dict(
              ['Discount rate', '12.0%', '11.0%', '10.0%'], ['Value per share', '$524', '$1,081', '$1,653'], ['Probability', '25%', '50%', '25%']])
          + prose('Weighted 25/50/25: <b>$1,085</b>. The bear case is the chip-equipment downturn that usually follows a capacity boom; the bull case is shortage pricing and High-NA adoption lifting margins toward 47%.')
          + sens('Discount rate', ['9.5%', '10.0%', '10.5%', '11.0%', '11.5%'], ['$1,336', '$1,239', '$1,155', '$1,081', '$1,016'])),
-        ('implied', 'What the price assumes', 'At $1,558, <em>26% growth for two years.</em>',
+        ('implied', 'What the price assumes', 'At $1,561, <em>26% growth for two years.</em>',
          implied([['Sales growth of about 26% a year in 2027 and 2028, then the same fade', '22% and 15%'], ['Or a long-run operating margin far above anything ASML has earned', '44%'], ['Or a discount rate near 9%', '11.0%']])
          + prose('ASML has never been cheap: its monopoly in EUV has earned it a premium for a decade. At about 25 times next year&rsquo;s expected earnings the shares are pricing in something close to our bull case. The analysts&rsquo; average target is about $2,079. The shares fell about 7% today as Lam Research warned that clean-room space and parts will limit the whole chip-equipment industry into 2027.')
          + src([('Analyst targets', 'https://www.marketbeat.com/instant-alerts/price-asml-nasdaq-asml-shares-climb-28-heres-what-happened-2026-10-21/'), ('Supply warning', 'https://247wallst.com/investing/2026/10/22/chip-stocks-fall-as-supply-warning-deepens-ai-selloff-marvell-and-amd-sink-8-intel-drops-7/')])),
@@ -846,7 +846,7 @@ R['ASML'] = dict(
              ['Currency', 'Results are in euros; a stronger euro lowers the dollar value of the ADR&rsquo;s earnings.'],
          ]) + prose('<b>Upside:</b> EUV price increases from 2027, High-NA adoption, memory makers moving more layers to EUV, and a new 2030 target at the June 2027 investor day.')),
         ('rec', 'Recommendation', 'Watch. <em>The best moat in chips, at a full price.</em>',
-         prose('No company in the AI supply chain has a stronger position: every leading-edge chip runs through ASML&rsquo;s machines, and demand is ahead of its capacity for at least two years. At $1,558.26, though, the price needs growth close to our bull case, about 44% above our weighted value of $1,085. ASML is already part of the portfolio through SMH. As a direct holding we would look again nearer $1,100.')
+         prose('No company in the AI supply chain has a stronger position: every leading-edge chip runs through ASML&rsquo;s machines, and demand is ahead of its capacity for at least two years. At $1,560.54, though, the price needs growth close to our bull case, about 44% above our weighted value of $1,085. ASML is already part of the portfolio through SMH. As a direct holding we would look again nearer $1,100.')
          + band('A monopoly, <em>priced like one.</em>', 'The machines are irreplaceable; the shares already assume it.')),
     ])
 
@@ -856,11 +856,11 @@ HC = 'https://www.investing.com/news/transcripts/earnings-call-transcript-sk-hyn
 R['SKHY'] = dict(
     t='SKHY', slug='sk-hynix', name='SK hynix', h1='SK <em>hynix</em>', sector='Memory chips', date=D22, timing=', ahead of its third-quarter results on October 29 in Seoul',
     sub='SK hynix, based in South Korea, makes about half of the world&rsquo;s HBM, the stacked memory that sits beside every Nvidia AI chip. Its operating margin reached 76% last quarter. Since July its shares have also traded in New York as ADRs (ten ADRs equal one Korean share). Figures are in won, converted at about &#8361;1,327 per dollar.',
-    call='Watch', method='Cycle model', price=131.62, pricenote='ADR, Oct 22, 2026, near the close', base=111, bear=60, bull=215, wt=124, max=280, tick=40,
+    call='Watch', method='Cycle model', price=131.69, pricenote='ADR close, Oct 22, 2026', base=111, bear=60, bull=215, wt=124, max=280, tick=40,
     disclosure='The author holds no SK hynix shares or ADRs.',
     fieldnote='Per ADR, in dollars: the cycle model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its range since the July listing and the analysts&rsquo; consensus target.',
     field=[('Cycle model', 60, 215, 111, '$60 to $215, base $111'), ('Probability-weighted', None, None, 124, '$124'),
-           ('Price at writing', None, None, 131.62, '$131.62'), ('Range since listing', 125, 200, None, '$125 to $200'), ('Analyst consensus', None, None, 253, '$253')],
+           ('Price at writing', None, None, 131.69, '$131.69'), ('Range since listing', 125, 200, None, '$125 to $200'), ('Analyst consensus', None, None, 253, '$253')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'The leader <em>in AI memory.</em>',
          prose('SK hynix makes <b>DRAM</b>, the working memory in every computer, and <b>NAND</b> flash for storage. Its edge is <b>HBM</b>: high-bandwidth memory made by stacking DRAM chips, which Nvidia and other AI chipmakers place next to each accelerator. SK hynix was first to supply HBM at scale to Nvidia and held about 50% of the market in the second quarter, ahead of Samsung (33%) and Micron (18%). It began mass shipments of the newest generation, <b>HBM4</b>, for Nvidia&rsquo;s Vera Rubin platform this year.',
@@ -902,6 +902,6 @@ R['SKHY'] = dict(
              ['Currency', 'A 10% stronger won cuts pre-tax profit by about &#8361;1.2 trillion and changes the dollar value of everything here.'],
          ]) + prose('<b>Upside:</b> HBM4 prices up sharply through 2027, long-term agreements that smooth the next downturn, large buybacks, and a cash pile that could approach $100 billion.')),
         ('rec', 'Recommendation', 'Watch. <em>The best position in memory, at peak conditions.</em>',
-         prose('SK hynix earned the AI memory boom: first to HBM at scale, the largest share of Nvidia&rsquo;s supply and a 76% margin. Compared with Micron it looks cheaper, only about 6% above our weighted value against Micron&rsquo;s 27%. But it is still a memory company at the top of its cycle, Samsung is catching up in HBM, and its home currency adds a risk Micron does not have. At $131.62 we would watch the October 29 results; nearer $110, our base case, it would be the better of the two memory makers to own.')
+         prose('SK hynix earned the AI memory boom: first to HBM at scale, the largest share of Nvidia&rsquo;s supply and a 76% margin. Compared with Micron it looks cheaper, only about 6% above our weighted value against Micron&rsquo;s 27%. But it is still a memory company at the top of its cycle, Samsung is catching up in HBM, and its home currency adds a risk Micron does not have. At $131.69 we would watch the October 29 results; nearer $110, our base case, it would be the better of the two memory makers to own.')
          + band('The HBM leader, <em>closer to fair than its rivals.</em>', 'The cycle still decides; the price leaves less to go wrong than Micron&rsquo;s.')),
     ])

@@ -1,6 +1,6 @@
 exec(open('val_all.py').read())
 # Lockheed Martin: 2026 guidance midpoint $81B; segment margin ~10.6% plus the FAS/CAS pension adjustment gives ~11.5% operating
-P=602.75; SH=231.5e6
+P=590.20; SH=231.5e6
 W0=wacc(0.80,P*SH,20.5e9,.05)   # beta 0.80 (defense peers), not the measured 0.48
 def lm(g1=.07,g2=.06,m0=.115,mT=.12,W=None,s2c=4,show=False):
     W=W or W0

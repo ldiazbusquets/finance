@@ -163,9 +163,9 @@ def checkit(slug):
         return ''
     script = SCRIPT.get(slug, 'new_coverage')
     return (f'<div class="checkit"><div><span class="mono">Check the numbers</span><p>Every figure in this valuation comes from one model script, '
-            f'rerun and checked against this page each time the site is built. The Excel model rebuilds it in live formulas: change any blue input and '
+            f'rerun and checked against this page each time the site is built. The XLSX model rebuilds it in live formulas: change any blue input and '
             f'every year&rsquo;s cash flow, the bridge to the value, the scenarios and the sensitivity table recalculate.</p></div>'
-            f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="data/models/{slug}.xlsx" download>Download the model (Excel)</a>'
+            f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="data/models/{slug}.xlsx" download>XLSX</a>'
             f'<a class="pill gh sm" href="data/models/{slug}.csv" download>CSV</a>'
             f'<a class="pill gh sm" href="{SRC_URL}{script}.py" target="_blank" rel="noopener">Model code &#8599;</a></div></div>')
 

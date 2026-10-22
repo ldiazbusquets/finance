@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Financial plan | LDB Finance</title>
+<title>Financial Plan | LDB Finance</title>
 <meta name="description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LDB Finance">
-<meta property="og:title" content="Financial plan | LDB Finance">
+<meta property="og:title" content="Financial Plan | LDB Finance">
 <meta property="og:description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
 <meta property="og:url" content="https://ldiazbusquets.github.io/finance/plan.html">
 <meta property="og:image" content="https://ldiazbusquets.github.io/finance/og/plan.jpg">
@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Financial plan | LDB Finance">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Financial plan | LDB Finance">
+<meta name="twitter:title" content="Financial Plan | LDB Finance">
 <meta name="twitter:description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
 <meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/og/plan.jpg">
 <meta name="theme-color" content="#0C0A08">
@@ -48,14 +48,14 @@
 <div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><div class="msites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></div></div>
 <header class="ph"><div class="wrap">
   <div class="eyebrow mono">Tools<span class="kind auto" title="Calculated by code from your inputs, with no analyst review">Automated model</span></div>
-  <h1>Financial <em>plan</em></h1>
+  <h1>Financial <em>Plan</em></h1>
   <p class="sub">A whole household on one page: pay, taxes, spending, debts, goals and Social Security, projected year by year and run through 1,000 different markets. The question it answers is the one a planner asks first: will the money last?</p><div class="meta"><span class="mono" id="plInfl">&nbsp;</span><span class="mono">All results in today&rsquo;s dollars</span></div>
 </div></header>
 
 <section class="tight">
   <div class="wrap">
     <div class="cols2 plan">
-      <div class="panel"><div class="hd"><div><h3 class="sec">The household</h3><p>Change anything; everything below updates.</p></div></div><div id="plIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">The Household</h3><p>Change anything; everything below updates.</p></div></div><div id="plIn"></div></div>
       <div>
         <div class="panel"><div class="hd"><div><h3 class="sec">Debts</h3><p>Payments come out of savings until each is paid off.</p></div><button type="button" class="reset" id="plAddD">+ Add</button></div><div class="scroll" id="plDebt"></div></div>
         <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Goals</h3><p>One-off costs in today&rsquo;s dollars: a home, a car, tuition.</p></div><button type="button" class="reset" id="plAddG">+ Add</button></div><div class="scroll" id="plGoal"></div></div>
@@ -63,13 +63,13 @@
       </div>
     </div>
     <div id="plSum" style="margin-top:16px"></div><div id="plWarn"></div>
-    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Net worth, 1,000 markets</h3><p>Copper: the middle outcome. Shaded: the middle 80%. Dashed: the worst 10%. Everything in today&rsquo;s dollars.</p></div></div><svg class="chart" id="plFan" style="height:330px"></svg></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Net Worth, 1,000 Markets</h3><p>Copper: the middle outcome. Shaded: the middle 80%. Dashed: the worst 10%. Everything in today&rsquo;s dollars.</p></div></div><svg class="chart" id="plFan" style="height:330px"></svg></div>
     <div class="cols eq">
-      <div class="panel"><div class="hd"><div><h3 class="sec">What if</h3><p>The same plan with one thing changed.</p></div></div><div id="plSc" class="scroll"></div></div>
-      <div class="panel"><div class="hd"><div><h3 class="sec">What it would take</h3><p>The two levers most people have.</p></div></div><div id="plSolve"></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What If</h3><p>The same plan with one thing changed.</p></div></div><div id="plSc" class="scroll"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What It Would Take</h3><p>The two levers most people have.</p></div></div><div id="plSolve"></div>
         <h3 class="sec" style="margin-top:26px">Debts</h3><div id="plDebtOut" style="margin-top:14px"></div></div>
     </div>
-    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Year by year</h3><p>With average returns every year, in today&rsquo;s dollars. Retirement row highlighted.</p></div></div><div id="plFlow" class="scroll"></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Year by Year</h3><p>With average returns every year, in today&rsquo;s dollars. Retirement row highlighted.</p></div></div><div id="plFlow" class="scroll"></div></div>
     <p class="disc">A teaching model, not a financial plan: taxes are one flat rate, all investments are treated as one account, and returns are random draws, not forecasts. Real planning also covers account types, required withdrawals, health costs, insurance and estate questions. Not investment advice.</p>
   </div>
 </section>

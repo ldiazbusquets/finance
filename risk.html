@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portfolio risk | LDB Finance</title>
+<title>Portfolio Risk | LDB Finance</title>
 <meta name="description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LDB Finance">
-<meta property="og:title" content="Portfolio risk | LDB Finance">
+<meta property="og:title" content="Portfolio Risk | LDB Finance">
 <meta property="og:description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
 <meta property="og:url" content="https://ldiazbusquets.github.io/finance/risk.html">
 <meta property="og:image" content="https://ldiazbusquets.github.io/finance/og/risk.jpg">
@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Portfolio risk | LDB Finance">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Portfolio risk | LDB Finance">
+<meta name="twitter:title" content="Portfolio Risk | LDB Finance">
 <meta name="twitter:description" content="Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.">
 <meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/og/risk.jpg">
 <meta name="theme-color" content="#0C0A08">
@@ -48,14 +48,14 @@
 <div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><div class="msites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></div></div>
 <header class="ph"><div class="wrap">
   <div class="eyebrow mono">Tools<span class="kind auto" title="Calculated by code from historical prices, with no analyst review">Automated model</span></div>
-  <h1>Portfolio <em>risk</em></h1>
+  <h1>Portfolio <em>Risk</em></h1>
   <p class="sub">How a mix of stocks, funds and bonds actually behaved: how much it swung, how far it fell, which holding carried the risk and what the same holdings could have done with different weights.</p><div class="meta"><span class="mono" id="rkStamp">&nbsp;</span><span class="mono">Source: Yahoo Finance weekly total returns</span></div>
 </div></header>
 
 <section class="tight">
   <div class="wrap">
     <div class="panel">
-      <div class="hd"><div><h3 class="sec">Your portfolio</h3><p>Ticker and dollar amount. Any S&amp;P 500 company, the companies researched here and about fifty common ETFs, including bond and gold funds.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="rkAdd">+ Add a holding</button></div></div>
+      <div class="hd"><div><h3 class="sec">Your Portfolio</h3><p>Ticker and dollar amount. Any S&amp;P 500 company, the companies researched here and about fifty common ETFs, including bond and gold funds.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="rkAdd">+ Add a holding</button></div></div>
       <div class="chips sm" id="rkPre" style="margin-bottom:16px"></div>
       <div id="rkT"></div>
       <div class="seg sm" id="rkLook"></div>
@@ -66,12 +66,12 @@
       <div class="panel"><div class="hd"><div><h3 class="sec">Drawdowns</h3><p>Distance below the last high.</p></div></div><svg class="chart" id="rkD"></svg><p class="fine" id="rkDNote"></p></div>
     </div>
     <div class="cols eq">
-      <div class="panel"><div class="hd"><div><h3 class="sec">Where the risk comes from</h3><p>Each holding&rsquo;s share of the money against its share of the portfolio&rsquo;s volatility.</p></div></div><div id="rkC"></div><p class="fine" id="rkCNote"></p></div>
-      <div class="panel"><div class="hd"><div><h3 class="sec">How they move together</h3><p>Correlation of weekly returns: copper moves together, green moves opposite.</p></div></div><div id="rkH"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Where the Risk Comes From</h3><p>Each holding&rsquo;s share of the money against its share of the portfolio&rsquo;s volatility.</p></div></div><div id="rkC"></div><p class="fine" id="rkCNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">How They Move Together</h3><p>Correlation of weekly returns: copper moves together, green moves opposite.</p></div></div><div id="rkH"></div></div>
     </div>
-    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The efficient frontier</h3><p>The same holdings, every long-only mix: grey circles are single holdings, the copper line the best return for each level of risk.</p></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The Efficient Frontier</h3><p>The same holdings, every long-only mix: grey circles are single holdings, the copper line the best return for each level of risk.</p></div></div>
       <div class="cols2 rkf"><svg class="chart" id="rkF" style="height:320px"></svg><div id="rkFT"></div></div></div>
-    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The worst weeks</h3><p>The mix&rsquo;s six biggest weekly losses in the period, with the S&amp;P 500 alongside.</p></div></div><div id="rkW" class="scroll"></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The Worst Weeks</h3><p>The mix&rsquo;s six biggest weekly losses in the period, with the S&amp;P 500 alongside.</p></div></div><div id="rkW" class="scroll"></div></div>
     <p class="disc">Weekly total returns from Yahoo Finance adjusted closes, refreshed once a week. The portfolio is rebalanced to your weights every week. Volatility and ratios are annualised from weekly figures; value at risk is historical, from the worst 5% of weeks. Past behaviour is not a forecast, and nothing here is a recommendation. Not investment advice.</p>
   </div>
 </section>

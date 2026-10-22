@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pag
 import costco
 import gev
 import rep
+import titlecase
 import holdings
 import notes
 import coverage
@@ -124,6 +125,7 @@ def page(fn, cur, title, desc, kind, body, extra='', root='', attrs=''):
     html = head(title, desc, fn) + f'<body data-page="{kind}"{attrs}>\n' + nav(cur) + body + foot(extra)
     if root:   # pages GitHub serves at other addresses (404) need absolute links
         html = re.sub(r'(href|src)="(?!https?:|/|#|data:|mailto:)([^"]*)"', lambda m: f'{m.group(1)}="{root}{m.group(2)}"', html)
+    html = titlecase.apply(html)
     with open(os.path.join(OUT, fn), 'w') as f:
         f.write(html)
 

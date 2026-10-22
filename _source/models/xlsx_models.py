@@ -474,7 +474,7 @@ def sens_block(S, Wlist, f, col='Discount rate (base case)', note='Each row repr
 def make_scenario(slug, title, cases, kind, unit, price):
     usd = unit == 1
     wb = Workbook()
-    S, out = summary(wb, title, 'Scenario model: 2030 earning power, capitalised and discounted back four years', price, 'new_coverage',
+    S, out = summary(wb, title, 'Scenario model: 2030 earning power, capitalised and discounted back four years, plus cash flow along the way', price, 'new_coverage',
                      scen_sheets=None, ps_cells=['', '', ''], unit='$ per share' if usd else '$B, whole company')
     X = Sheet(wb, 'Model', title, 'Bear, base and bull in one table, $ billions', 5); X.widths(48, 14, {'E': 52})
     X.section('Inputs'); X.header(['', 'Bear', 'Base', 'Bull'])
@@ -490,6 +490,10 @@ def make_scenario(slug, title, cases, kind, unit, price):
     nc = X.row('Net cash ($B)', [c[5] / 1e9 for c in cases], 'b', 'i')
     if usd:
         sh = X.row('Shares by 2030 (billions)', [c[6] / 1e9 for c in cases], FMT['n4'], 'i')
+    has_fcf = cases[1][8] is not None
+    if has_fcf:
+        f0 = X.row('Free cash flow this year ($B)', [c[8] / 1e9 for c in cases], 'b', 'i', 'Operating cash flow less capital spending, last twelve months')
+        cv = X.row('Free cash flow in 2030, share of after-tax profit', [.8] * 3, 'pct', 'i', 'The rest is reinvested; zero for a company without profit yet' if kind != 'pe' else 'The rest is reinvested')
     X.gap(); X.section('Value'); X.header(['', 'Bear', 'Base', 'Bull'])
     if kind == 'pe':
         ap = X.row('After-tax operating profit, 2030 ($B)', [f'={c}{rv}*{c}{mg}*(1-{c}{tx})' for c in 'BCD'], 'b')
@@ -497,7 +501,13 @@ def make_scenario(slug, title, cases, kind, unit, price):
     else:
         v30 = X.row('Value in 2030 ($B)', [f'={c}{rv}*{c}{mu}' for c in 'BCD'], 'b')
     vt = X.row('Value today ($B)', [f'={c}{v30}/(1+{c}{r})^{c}{n}' for c in 'BCD'], 'b')
-    eq = X.row('Plus net cash: equity value ($B)', [f'={c}{vt}+{c}{nc}' for c in 'BCD'], 'b', key=not usd)
+    if has_fcf:
+        fT = X.row('Free cash flow in 2030 ($B)', [(f'={c}{ap}*{c}{cv}' if kind == 'pe' else '=0') for c in 'BCD'], 'b')
+        yrs_rows = [X.row(f'Free cash flow, year {k} ($B)', [f'={c}{f0}+({c}{fT}-{c}{f0})*{k}/{c}{n}' for c in 'BCD'], 'b') for k in range(1, 5)]
+        pvf = X.row('Present value of free cash flow, years 1-4 ($B)', [f'=' + '+'.join(f'{c}{yr}/(1+{c}{r})^{k}' for k, yr in enumerate(yrs_rows, 1)) for c in 'BCD'], 'b')
+        eq = X.row('Plus cash flow and net cash: equity value ($B)', [f'={c}{vt}+{c}{pvf}+{c}{nc}' for c in 'BCD'], 'b', key=not usd)
+    else:
+        eq = X.row('Plus net cash: equity value ($B)', [f'={c}{vt}+{c}{nc}' for c in 'BCD'], 'b', key=not usd)
     if usd:
         ps = X.row('Value per share ($)', [f'={c}{eq}/{c}{sh}' for c in 'BCD'], 'usd', key=True)
     else:
@@ -506,10 +516,9 @@ def make_scenario(slug, title, cases, kind, unit, price):
     for c in 'BCD':
         cell = S.ws[f'{c}{vr}']; cell.value = f"='Model'!{c}{ps}"; cell.font = font(color=GREEN); cell.number_format = FMT['usd'] if usd else FMT['b']
     base_r = cases[1][3]
-    if kind == 'pe':
-        f = lambda rr: f"=('Model'!$C${v30}/(1+B{rr})^'Model'!$C${n}+'Model'!$C${nc})" + (f"/'Model'!$C${sh}" if usd else '')
-    else:
-        f = lambda rr: f"=('Model'!$C${v30}/(1+B{rr})^'Model'!$C${n}+'Model'!$C${nc})" + (f"/'Model'!$C${sh}" if usd else '')
+    def f(rr):
+        extra = '+'.join(f"'Model'!$C${yr}/(1+B{rr})^{k}" for k, yr in enumerate(yrs_rows, 1)) if has_fcf else '0'
+        return f"=('Model'!$C${v30}/(1+B{rr})^'Model'!$C${n}+{extra}+'Model'!$C${nc})" + (f"/'Model'!$C${sh}" if usd else '')
     sens_block(S, [base_r - .02, base_r - .01, base_r, base_r + .01, base_r + .02], f, usd=usd, note='Each row reprices the base case at that discount rate.')
     return wb
 
@@ -569,16 +578,15 @@ def all_books():
         books[c['slug']] = (key, make_generic(key, c))
     books['l3harris'] = ('LHX', make_lhx()); books['boeing'] = ('BA', make_ba()); books['gev'] = ('GEV', make_gev())
     books['american-water'] = ('AWK', make_awk()); books['jpmorgan'] = ('JPM', make_jpm())
-    SC = {'SPCX': ('spacex', 'SpaceX (SPCX)', [(250e9, .22, 20, .12, 4, 51.1e9, 13.57e9), (500e9, .28, 22, .12, 4, 51.1e9, 13.57e9), (900e9, .32, 25, .12, 4, 51.1e9, 13.57e9)], 'pe', 1),
-          'FLY': ('firefly', 'Firefly Aerospace (FLY)', [(0.7e9, 0, 2, .15, 4, 0, 200e6), (1.2e9, 0, 5, .15, 4, .2e9, 185e6), (2.0e9, 0, 8, .15, 4, .2e9, 180e6)], 'ps', 1),
-          'KTOS': ('kratos', 'Kratos Defense (KTOS)', [(2.6e9, .06, 18, .10, 4, 1.2e9, 200e6), (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6), (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6)], 'pe', 1),
-          'AXON': ('axon', 'Axon Enterprise (AXON)', [(6.5e9, .15, 25, .11, 4, -1.1e9, 88e6), (8.5e9, .20, 30, .11, 4, -1.1e9, 88e6), (10.5e9, .25, 35, .11, 4, -1.1e9, 88e6)], 'pe', 1),
-          'PLTR': ('palantir', 'Palantir Technologies (PLTR)', [(18e9, .40, 25, .14, 4, 9.4e9, 2.6e9), (28e9, .50, 30, .14, 4, 9.4e9, 2.6e9), (45e9, .55, 45, .14, 4, 9.4e9, 2.6e9)], 'pe', 1),
-          'AMD': ('amd', 'Advanced Micro Devices (AMD)', [(100e9, .22, 20, .12, 4, 9.9e9, 1.80e9), (150e9, .30, 25, .12, 4, 9.9e9, 1.80e9), (200e9, .35, 30, .12, 4, 9.9e9, 1.80e9)], 'pe', 1),
-          'ANTHROPIC': ('anthropic', 'Anthropic (private)', [(120e9, .15, 20, .15, 4, 0, 1), (250e9, .30, 25, .15, 4, 0, 1), (450e9, .40, 25, .15, 4, 0, 1)], 'pe', 1e9),
-          'OPENAI': ('openai', 'OpenAI (private)', [(150e9, .10, 20, .15, 4, 0, 1), (280e9, .25, 25, .15, 4, 0, 1), (450e9, .35, 25, .15, 4, 0, 1)], 'pe', 1e9),
-          'ANDURIL': ('anduril', 'Anduril (private)', [(8e9, .05, 20, .13, 4, 0, 1), (14e9, .12, 25, .13, 4, 0, 1), (22e9, .18, 35, .13, 4, 0, 1)], 'pe', 1e9),
-          'BLOOMBERG': ('bloomberg', 'Bloomberg LP (private)', [(16e9, .22, 18, .09, 4, 0, 1), (18e9, .28, 22, .09, 4, 0, 1), (20e9, .33, 26, .09, 4, 0, 1)], 'pe', 1e9)}
+    ns0 = run_script('new_coverage')
+    NAMES = {'SPCX': ('spacex', 'SpaceX (SPCX)', 'SPCX', 1), 'FLY': ('firefly', 'Firefly Aerospace (FLY)', 'FLY', 1), 'KTOS': ('kratos', 'Kratos Defense (KTOS)', 'KTOS', 1),
+             'AXON': ('axon', 'Axon Enterprise (AXON)', 'AXON', 1), 'PLTR': ('palantir', 'Palantir Technologies (PLTR)', 'PLTR', 1), 'AMD': ('amd', 'Advanced Micro Devices (AMD)', 'AMD', 1),
+             'ANTHROPIC': ('anthropic', 'Anthropic (private)', 'Anthropic', 1e9), 'OPENAI': ('openai', 'OpenAI (private)', 'OpenAI', 1e9),
+             'ANDURIL': ('anduril', 'Anduril (private)', 'Anduril', 1e9), 'BLOOMBERG': ('bloomberg', 'Bloomberg LP (private)', 'Bloomberg', 1e9)}
+    SC = {}
+    for t, (slug, title, reg, unit) in NAMES.items():
+        C = ns0['REG'][reg]; cs = [tuple(C[k]) + (('pe', None) if len(C[k]) == 7 else ()) for k in ('bear', 'base', 'bull')]
+        SC[t] = (slug, title, cs, cs[1][7], unit)
     for t, (slug, title, cases, kind, unit) in SC.items():
         books[slug] = (t, make_scenario(slug, title, cases, kind, unit, R[t]['price']))
     ns = run_script('new_coverage')

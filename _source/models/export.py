@@ -165,16 +165,16 @@ def main():
     vals['JPM'] = (ns['b'], ns['bear'], ns['bull'])
     # scenario models: SpaceX, Firefly, Kratos, Axon and the private companies
     ns = run('new_coverage'); val = ns['val']
-    SC = {'SPCX': ('spacex', 'SpaceX (SPCX)', (250e9, .22, 20, .12, 4, 51.1e9, 13.57e9), (500e9, .28, 22, .12, 4, 51.1e9, 13.57e9), (900e9, .32, 25, .12, 4, 51.1e9, 13.57e9), 'pe', 1),
-          'FLY': ('firefly', 'Firefly Aerospace (FLY)', (0.7e9, 0, 2, .15, 4, 0, 200e6, 'ps'), (1.2e9, 0, 5, .15, 4, .2e9, 185e6, 'ps'), (2.0e9, 0, 8, .15, 4, .2e9, 180e6, 'ps'), 'ps', 1),
-          'KTOS': ('kratos', 'Kratos Defense (KTOS)', (2.6e9, .06, 18, .10, 4, 1.2e9, 200e6), (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6), (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6), 'pe', 1),
-          'AXON': ('axon', 'Axon Enterprise (AXON)', (6.5e9, .15, 25, .11, 4, -1.1e9, 88e6), (8.5e9, .20, 30, .11, 4, -1.1e9, 88e6), (10.5e9, .25, 35, .11, 4, -1.1e9, 88e6), 'pe', 1),
-          'PLTR': ('palantir', 'Palantir Technologies (PLTR)', (18e9, .40, 25, .14, 4, 9.4e9, 2.6e9), (28e9, .50, 30, .14, 4, 9.4e9, 2.6e9), (45e9, .55, 45, .14, 4, 9.4e9, 2.6e9), 'pe', 1),
-          'AMD': ('amd', 'Advanced Micro Devices (AMD)', (100e9, .22, 20, .12, 4, 9.9e9, 1.80e9), (150e9, .30, 25, .12, 4, 9.9e9, 1.80e9), (200e9, .35, 30, .12, 4, 9.9e9, 1.80e9), 'pe', 1),
-          'ANTHROPIC': ('anthropic', 'Anthropic (private)', (120e9, .15, 20, .15, 4, 0, 1), (250e9, .30, 25, .15, 4, 0, 1), (450e9, .40, 25, .15, 4, 0, 1), 'pe', 1e9),
-          'OPENAI': ('openai', 'OpenAI (private)', (150e9, .10, 20, .15, 4, 0, 1), (280e9, .25, 25, .15, 4, 0, 1), (450e9, .35, 25, .15, 4, 0, 1), 'pe', 1e9),
-          'ANDURIL': ('anduril', 'Anduril (private)', (8e9, .05, 20, .13, 4, 0, 1), (14e9, .12, 25, .13, 4, 0, 1), (22e9, .18, 35, .13, 4, 0, 1), 'pe', 1e9),
-          'BLOOMBERG': ('bloomberg', 'Bloomberg LP (private)', (16e9, .22, 18, .09, 4, 0, 1), (18e9, .28, 22, .09, 4, 0, 1), (20e9, .33, 26, .09, 4, 0, 1), 'pe', 1e9)}
+    # the case sets come straight from new_coverage.py (REG), so the CSV cannot drift from the script
+    NAMES = {'SPCX': ('spacex', 'SpaceX (SPCX)', 'SPCX', 1), 'FLY': ('firefly', 'Firefly Aerospace (FLY)', 'FLY', 1), 'KTOS': ('kratos', 'Kratos Defense (KTOS)', 'KTOS', 1),
+             'AXON': ('axon', 'Axon Enterprise (AXON)', 'AXON', 1), 'PLTR': ('palantir', 'Palantir Technologies (PLTR)', 'PLTR', 1), 'AMD': ('amd', 'Advanced Micro Devices (AMD)', 'AMD', 1),
+             'ANTHROPIC': ('anthropic', 'Anthropic (private)', 'Anthropic', 1e9), 'OPENAI': ('openai', 'OpenAI (private)', 'OpenAI', 1e9),
+             'ANDURIL': ('anduril', 'Anduril (private)', 'Anduril', 1e9), 'BLOOMBERG': ('bloomberg', 'Bloomberg LP (private)', 'Bloomberg', 1e9)}
+    SC = {}
+    for t, (slug, title, reg, unit) in NAMES.items():
+        C = ns['REG'][reg]; cs = [tuple(C[k]) + (('pe', None) if len(C[k]) == 7 else ()) for k in ('bear', 'base', 'bull')]
+        SC[t] = (slug, title, cs[0], cs[1], cs[2], cs[1][7], unit)
+    itm = ns['interim']
     for t, (slug, title, be, ba_, bu, kind, unit) in SC.items():
         cases = [be, ba_, bu]; v = [val(*c) / unit for c in cases]; u = '$B' if unit > 1 else '$ per share'
         def row(label, f): return [label] + [f(c) for c in cases]
@@ -185,12 +185,19 @@ def main():
         else:
             scen += [row('Exit value to sales (x)', lambda c: c[2])]
         scen += [row('Value in 2030 ($B)', lambda c: B(ev(c))), row('Discount rate %', lambda c: P(c[3])), row('Years discounted', lambda c: c[4]),
-                 row('Value today ($B)', lambda c: B(ev(c) / (1 + c[3]) ** c[4])), row('Plus net cash ($B)', lambda c: B(c[5]))]
+                 row('Value today ($B)', lambda c: B(ev(c) / (1 + c[3]) ** c[4]))]
+        if be[8] is not None:
+            scen += [row('Free cash flow this year ($B)', lambda c: B(c[8]))]
+            for k in range(4):
+                scen += [row(f'Free cash flow, year {k + 1} ($B)', lambda c, k=k: B(itm(c[0], c[1], c[3], c[4], c[8], c[7])[0][k]))]
+            scen += [row('Present value of free cash flow, years 1-4 ($B)', lambda c: B(itm(c[0], c[1], c[3], c[4], c[8], c[7])[1]))]
+        scen += [row('Plus net cash ($B)', lambda c: B(c[5]))]
         if unit == 1:
             scen += [row('Shares by 2030 (millions)', lambda c: round(c[6] / 1e6, 1))]
         scen += [['Value (' + u + ')'] + [round(x, 2) for x in v], ['Probability', 25, 50, 25], ['Probability-weighted value (' + u + ')', '', round(wsum(*v), 2), '']]
         write(slug, title, 'Scenario model: 2030 earning power, capitalised and discounted back four years',
-              [['Tax rate on operating profit %', 21, 'U.S. federal rate'], ['Formula', 'value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash', 'For Firefly: revenue x EV/sales multiple'], ['Inputs by scenario', 'see SCENARIOS', 'Sources are linked in the report']],
+              [['Tax rate on operating profit %', 21, 'U.S. federal rate'], ['Formula', 'value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + PV of free cash flow in years 1-4 + net cash', 'For Firefly: revenue x EV/sales multiple'],
+               ['Free cash flow, years 1-4', 'straight line from this year to 80% of 2030 after-tax operating profit', 'Zero at the end for Firefly; left out for private companies, whose cash burn is funded by new shares'], ['Inputs by scenario', 'see SCENARIOS', 'Sources are linked in the report']],
               None, None, [['Base-case value (' + u + ')', round(v[1], 2)]], scen, None, 'Model script: _source/models/new_coverage.py')
         vals[t] = (v[1], v[0], v[2])
     # memory makers: four years of cash flow, then a mid-cycle exit value

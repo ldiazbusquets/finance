@@ -172,31 +172,131 @@
    "held": true
   },
   {
+   "t": "AMD",
+   "name": "Advanced Micro Devices",
+   "page": "amd.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 353,
+   "price": 552.72,
+   "held": false
+  },
+  {
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "amazon.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 153,
+   "price": 262.63,
+   "held": true
+  },
+  {
    "t": "ASML",
    "name": "ASML Holding",
    "page": "asml.html",
    "date": "2026-10-22",
-   "call": "Watch",
+   "call": "Hold",
    "value": 1081,
    "price": 1560.54,
    "held": false
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "american-water.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 100,
+   "price": 135.79,
+   "held": true
+  },
+  {
+   "t": "AXON",
+   "name": "Axon Enterprise",
+   "page": "axon.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 314,
+   "price": 396.3,
+   "held": false
+  },
+  {
+   "t": "BA",
+   "name": "Boeing",
+   "page": "boeing.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 197,
+   "price": 190.47,
+   "held": true
   },
   {
    "t": "CAT",
    "name": "Caterpillar",
    "page": "caterpillar.html",
    "date": "2026-10-22",
-   "call": "Watch",
+   "call": "Hold",
    "value": 442,
    "price": 703.84,
    "held": false
+  },
+  {
+   "t": "FLY",
+   "name": "Firefly Aerospace",
+   "page": "firefly.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 18,
+   "price": 17.41,
+   "held": true
+  },
+  {
+   "t": "GEV",
+   "name": "GE Vernova",
+   "page": "gev.html",
+   "date": "2026-10-22",
+   "call": "Sell",
+   "value": 442,
+   "price": 890.33,
+   "held": true
+  },
+  {
+   "t": "JPM",
+   "name": "JPMorgan Chase",
+   "page": "jpmorgan.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 284,
+   "price": 335.26,
+   "held": true
+  },
+  {
+   "t": "KTOS",
+   "name": "Kratos Defense",
+   "page": "kratos.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 24,
+   "price": 38.81,
+   "held": false
+  },
+  {
+   "t": "LHX",
+   "name": "L3Harris",
+   "page": "l3harris.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 436,
+   "price": 248.77,
+   "held": true
   },
   {
    "t": "LMT",
    "name": "Lockheed Martin",
    "page": "lockheed-martin.html",
    "date": "2026-10-22",
-   "call": "Hold",
+   "call": "Buy",
    "value": 647,
    "price": 590.2,
    "held": false
@@ -206,19 +306,49 @@
    "name": "Meta Platforms",
    "page": "meta.html",
    "date": "2026-10-22",
-   "call": "Hold",
+   "call": "Buy",
    "value": 531,
    "price": 697.52,
    "held": true
+  },
+  {
+   "t": "MU",
+   "name": "Micron Technology",
+   "page": "micron.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 622,
+   "price": 913.67,
+   "held": false
   },
   {
    "t": "NOC",
    "name": "Northrop Grumman",
    "page": "northrop-grumman.html",
    "date": "2026-10-22",
-   "call": "Hold",
+   "call": "Buy",
    "value": 564,
    "price": 552.53,
+   "held": false
+  },
+  {
+   "t": "NVDA",
+   "name": "Nvidia",
+   "page": "nvidia.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 166,
+   "price": 216.47,
+   "held": true
+  },
+  {
+   "t": "PLTR",
+   "name": "Palantir Technologies",
+   "page": "palantir.html",
+   "date": "2026-10-22",
+   "call": "Sell",
+   "value": 87,
+   "price": 201.72,
    "held": false
   },
   {
@@ -226,10 +356,40 @@
    "name": "SK hynix",
    "page": "sk-hynix.html",
    "date": "2026-10-22",
-   "call": "Watch",
+   "call": "Buy",
    "value": 111,
    "price": 131.69,
    "held": false
+  },
+  {
+   "t": "SNDK",
+   "name": "Sandisk",
+   "page": "sandisk.html",
+   "date": "2026-10-22",
+   "call": "Sell",
+   "value": 636,
+   "price": 1378.22,
+   "held": false
+  },
+  {
+   "t": "SPCX",
+   "name": "SpaceX",
+   "page": "spacex.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 123,
+   "price": 162.57,
+   "held": true
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "vertiv.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 117,
+   "price": 203.56,
+   "held": true
   }
  ]
 }

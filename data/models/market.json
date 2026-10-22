@@ -1,0 +1,24 @@
+{
+ "companies": 420,
+ "market_value": 49995987090368.39,
+ "net_income": 1879946638000,
+ "free_cash_flow": 1654060631000,
+ "cost_of_equity": 0.0965,
+ "scenarios": {
+  "0.06": {
+   "value_to_price": 0.6064257291555264,
+   "implied_cost_of_equity": 0.07079242181433934,
+   "implied_premium": 0.019292421814339343
+  },
+  "0.08": {
+   "value_to_price": 0.6779303181613743,
+   "implied_cost_of_equity": 0.0757536176880903,
+   "implied_premium": 0.024253617688090305
+  },
+  "0.10": {
+   "value_to_price": 0.7573195424444992,
+   "implied_cost_of_equity": 0.08110849850539459,
+   "implied_premium": 0.02960849850539459
+  }
+ }
+}

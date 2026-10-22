@@ -1,4 +1,6 @@
 import rep
+import ratings
+from rep import rating_block, prose
 """GE Vernova deep dive for LDB Finance. Written October 20, 2026, before third-quarter results on October 28."""
 
 EXT = '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -14,6 +16,7 @@ L = {
     'edgar': 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001996810&type=10-K',
 }
 PRICE, BASE, BEAR, BULL, WT = 890.33, 442, 272, 682, 460
+CALL = ratings.rate(WT, PRICE)[0]
 
 
 def src(*items):
@@ -80,7 +83,7 @@ def field(narrow=False):
 def body():
     toc = ''.join(f'<a href="#{c}"><i>{n:02d}</i>{t}</a>' for n, (c, t) in enumerate([
         ('overview', 'The business'), ('orders', 'The order book'), ('segments', 'Three segments'), ('profit', 'Profit and cash'),
-        ('capital', 'Balance sheet'), ('value', 'Cash-flow value'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')], 1))
+        ('capital', 'Balance sheet'), ('value', 'Cash-flow value'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Rating')], 1))
     head = f'''<header class="ph rp">
   <div class="wrap">
     <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; Industrials &middot; October 20, 2026<span class="kind" title="Written and reviewed by Luis Diaz Busquets">Analyst report</span></div>
@@ -88,7 +91,7 @@ def body():
     <h1>GE <em>Vernova</em></h1>
     <p class="sub">GE Vernova (GEV) makes the gas turbines, grid equipment and wind turbines behind a large share of the world&rsquo;s electricity, and AI data centers have filled its order book for years ahead. This report values the business on the company&rsquo;s own 2028 targets. The conclusion: an exceptional order book, at a price that already assumes more than those targets.</p>
     <div class="verdict">
-      <div class="call"><span class="mono">Recommendation</span><b>Hold</b></div>
+      <div class="call"><span class="mono">Rating</span><b>{CALL}</b></div>
       <div><span class="mono">Value per share</span><b>${BASE}</b><small>Cash-flow model, base case</small></div>
       <div><span class="mono">Price at writing</span><b>${PRICE:,.2f}</b><small>Close, October 20, 2026</small></div>
       <div><span class="mono">Implied return</span><b class="dn">&minus;{(1 - BASE / PRICE) * 100:.1f}%</b><small>Price to value</small></div>
@@ -206,12 +209,11 @@ def body():
 ], '')}
 <div class="prose" style="margin-top:22px"><h4>Upside</h4><p>Pricing keeps rising; electrification grows faster than planned on data-center and grid spending; nuclear (the BWRX-300) becomes a real business; and margins pass 20% as Wind shrinks. Any two together would move the value well above the bull case.</p></div>
 {src(('q2', 'Q2 2026 results'), ('ud', 'Utility Dive'))}''')
-    c9 = chap('09', 'rec', 'Recommendation', 'Hold. <em>Own the order book, don&rsquo;t chase the price.</em>', f'''
-<div class="prose"><p>At ${PRICE:,.2f} against a base-case value of ${BASE} (${WT} probability-weighted), the stock trades at roughly twice what the company&rsquo;s own 2028 plan supports. The business is excellent: a sold-out turbine franchise, a growing grid business, net cash and rising margins. But the price already assumes the plan is beaten by a wide margin, so the call is <b>Hold</b>: keep an existing position, don&rsquo;t add at this level.</p>
-<h4>What would change the view</h4>
-<p><b>Toward Buy:</b> a raised 2028 margin target above 20%, gas pricing still climbing through 2027, or a pullback toward the bull-case value. <b>Toward Sell:</b> slot reservations failing to turn into firm orders, or the 2026 margin landing at the low end of 12 to 14%.</p>
-<h4>What to watch on October 28</h4>
-<p>Third-quarter orders, where Bank of America expects about $21 billion against a $22.2 billion consensus; gas gigawatts added toward the 125 GW goal; Power and Electrification margins against the 22% path; and any change to 2026 guidance.</p></div>
+    G = dict(t='GEV', price=PRICE, base=BASE, wt=WT, private=False, rated=ratings.RATED,
+             field=[('Analyst targets', 470, 1450, 1172, '')])
+    G['call'], G['gap'], G['rel'] = ratings.rate(WT, PRICE)
+    _, p1, p2 = ratings.REC['GEV']
+    c9 = chap('09', 'rec', 'Rating', G['call'] + '. ' + ratings.REC['GEV'][0], prose(p1, '<b>What would change the value:</b> ' + p2) + rating_block(G) + f'''
 <div class="band sm"><div class="eyebrow mono">Final view</div><h2>A great business, <em>priced for a greater one.</em></h2><p>GE Vernova is one of the clearest beneficiaries of rising power demand. On the company&rsquo;s own targets the shares are fully valued; the upside depends on what comes after 2028.</p></div>
 {src(('q3', 'Q3 2026 results webcast, Oct 28'), ('bofa', 'BofA Q3 preview'))}''')
     return head + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + '''

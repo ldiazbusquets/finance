@@ -3,7 +3,8 @@
 A report is a dict (see pages/holdings.py). Valuation numbers are worked out in the analyst's
 own model and typed in; the five-year table is read from the SEC data collected by the nightly update.
 """
-import json, os
+import json, os, re
+import ratings
 
 EXT = '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -170,6 +171,86 @@ def checkit(slug):
             f'<a class="pill gh sm" href="{SRC_URL}{script}.py" target="_blank" rel="noopener">Model code &#8599;</a></div></div>')
 
 
+def weighted(R):
+    if R.get('wt'):
+        return R['wt']
+    for f in R.get('field', []):
+        if f[0].startswith('Probability'):
+            return f[3]
+    return R['base']
+
+
+def analyst(R):
+    for f in R.get('field', []):
+        if 'nalyst' in f[0] or 'Street' in f[0]:
+            return f[3]
+    return None
+
+
+def apply_ratings(Rs):
+    """Set every public report's call from the published rule (ratings.py); private companies are not rated."""
+    for t, R in Rs.items():
+        if R.get('private'):
+            R['call'] = 'Not rated'
+            continue
+        R['call'], R['gap'], R['rel'] = ratings.rate(weighted(R), R['price'])
+        R['rated'] = ratings.RATED
+    return Rs
+
+
+def pct_s(v):
+    return ('+' if v >= 0 else '&minus;') + f'{abs(v) * 100:.0f}%'
+
+
+def robust(W, P):
+    m0 = ratings.MKT
+    calls = []
+    for m in ratings.MKT_RANGE:
+        ratings.MKT = m; calls.append(ratings.rate(W, P)[0])
+    ratings.MKT = m0
+    now = ratings.rate(W, P)[0]
+    if calls[0] == calls[1] == now:
+        return f'The rating is the same whether the index is assumed to grow 6% or 10% a year.'
+    return f'The rating depends on that assumption: it would be <b>{calls[0]}</b> if the index grows 6% a year and <b>{calls[1]}</b> at 10%, against 8% here.'
+
+
+def rating_block(R):
+    if R.get('private'):
+        return ('<div class="rate"><div class="rh"><span class="mono">Rating</span><b>Not rated</b></div>'
+                '<p>Private companies are not rated: there is no price at which to buy them. The values above are for the whole company, before the dilution that future funding rounds would bring. <a href="about.html#ratings">How ratings work</a></p></div>')
+    W, P = weighted(R), R['price']
+    a = analyst(R)
+    street = ratings.STREET.get(R['t'], '')
+    rows = [('Probability-weighted value', d(W)), ('Price at writing', f'${P:,.2f}'), ('Value against price', pct_s(R['gap'])),
+            ('S&amp;P 500 value / price', f'{ratings.MKT * 100:.0f}%'), ('Against the market', pct_s(R['rel']))]
+    if a:
+        rows.append(('Analysts&rsquo; average target', d(a)))
+    cells = ''.join(f'<div><span class="mono">{k}</span><b>{v}</b></div>' for k, v in rows)
+    return (f'<div class="rate"><div class="rh"><span class="mono">Rating, {R["rated"]}</span><b>{R["call"]}</b></div><div class="kv rk">{cells}</div>'
+            f'<p>On the same assumptions every report uses (a 5.15% Treasury yield and a 4.5% equity premium), the S&amp;P 500 itself is worth about {ratings.MKT * 100:.0f}% of its price. '
+            f'The rating compares each stock with that: <b>Buy</b> if it is at least 15% cheaper than the market on this basis, <b>Sell</b> if at least 15% dearer, <b>Hold</b> in between. '
+            f'It is the same rule for every company, whoever owns it. {robust(W, P)} <a href="about.html#ratings">How ratings work</a></p>'
+            + (f'<p><b>Against the Street:</b> {street}</p>' if street else '') + '</div>')
+
+
+def rec_body(R, original):
+    """the closing chapter: neutral text, the rating box, then the original final-view band"""
+    t = R['t']
+    band = re.search(r'<div class="band sm">.*$', original, re.S)
+    if t in ratings.REC:
+        _, p1, p2 = ratings.REC[t]
+        text = prose(p1, '<b>What would change the value:</b> ' + p2)
+    else:
+        text = original[:band.start()] if band else original
+    return text + rating_block(R) + (band.group(0) if band else '')
+
+
+def rec_title(R, h2):
+    if R['t'] in ratings.REC:
+        return (R['call'] + '. ' if not R.get('private') else '') + ratings.REC[R['t']][0]
+    return h2
+
+
 def body(R):
     P, B = R['price'], R['base']
     imp = B / P - 1
@@ -178,7 +259,7 @@ def body(R):
         f'<div><span class="mono">Price at writing</span><b>${P:,.2f}</b><small>{R.get("pricenote", "Close, " + R["date"])}</small></div>'
         f'<div><span class="mono">Implied return</span><b class="{"up" if imp >= 0 else "dn"}">{"+" if imp >= 0 else "&minus;"}{abs(imp) * 100:.1f}%</b><small>Price to value</small></div>')
     now = '' if R.get('private') else f'''<div class="panel now" id="now">
-        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday. The analysis and the call are as of {R['date']} and change only when the report is revised.</p></div>{'' if R.get('noauto') or not os.path.exists(os.path.join(DATA, R['t'] + '.json')) else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
+        <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday. The analysis is as of {R['date']}; the rating as of {R.get('rated', R['date'])}. Both change only when the report is revised.</p></div>{'' if R.get('noauto') or not os.path.exists(os.path.join(DATA, R['t'] + '.json')) else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
         {since(R['t'], P, B)}
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
@@ -191,7 +272,7 @@ def body(R):
     <h1>{R['h1']}</h1>
     <p class="sub">{R['sub']}</p>
     <div class="verdict">
-      <div class="call"><span class="mono">Recommendation</span><b>{R['call']}</b></div>
+      <div class="call"><span class="mono">{'Rating' if not R.get('private') else 'Rating'}</span><b>{R['call']}</b></div>
       {cells}
     </div>
   </div>
@@ -207,7 +288,8 @@ def body(R):
         <p class="fine">Written on {R['date']}{R.get('timing', '')}. {'Figures are from company statements and news reports, as linked; they are not audited.' if R.get('private') else 'Figures are from the company&rsquo;s filings and releases unless noted.'} Not investment advice. {disc}</p>
       </div>
 '''
-    chs = ''.join(chap(n, c[0], c[1], c[2], c[3] + (checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
+    chs = ''.join(chap(n, c[0], c[1], rec_title(R, c[2]) if c[0] == 'rec' else c[2],
+                       rec_body(R, c[3]) if c[0] == 'rec' else c[3] + (checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
     return head + chs + '''
     </div>
   </div>

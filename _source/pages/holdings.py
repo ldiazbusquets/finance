@@ -22,7 +22,7 @@ def implied(rows):
 
 
 TOC = [('overview', 'The business'), ('results', 'Latest results'), ('fin', 'Five years'), ('capital', 'Balance sheet'),
-       ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')]
+       ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Rating')]
 
 R = {}
 
@@ -81,7 +81,7 @@ R['NVDA'] = dict(
              ['China and export rules', 'Guidance assumes no data-center sales to China; policy can move either way.'],
              ['Supply chain', 'Dependence on TSMC and on memory supply; a disruption in Taiwan is the tail risk.'],
          ]) + prose('<b>Upside:</b> AI moving from training into everyday use (inference), robotics and sovereign AI could extend the cycle further than the model allows.')),
-        ('rec', 'Recommendation', 'Hold. <em>Fair at a 10% discount rate, rich at 12%.</em>',
+        ('rec', 'Rating', 'Hold. <em>Fair at a 10% discount rate, rich at 12%.</em>',
          prose('At $216.47 against a base case of $166 ($180 weighted), Nvidia trades above what the model supports at its own cost of capital, but within reach of it at a lower rate. The business is in its strongest position ever. The call is <b>Hold</b>: keep the position, add only on a pullback toward the base case.',
                '<b>What would change the view:</b> next-year guidance that points to growth well above 40% would move it toward Buy; signs that cloud spending is peaking would move it toward Sell. Watch fiscal third-quarter results in November against the $108 billion guidance.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The best business in tech, <em>priced like it.</em></h2><p>Nvidia earns more than almost any company in history; the price already counts on that continuing.</p></div>'),
@@ -137,7 +137,7 @@ R['AMZN'] = dict(
              ['Regulation', 'The U.S. antitrust case against the store, and scrutiny of AWS in Europe.'],
              ['Consumer slowdown', 'Retail and ads both depend on spending.'],
          ]) + prose('<b>Upside:</b> Trainium chips cutting AWS costs, advertising in Prime Video, Leo satellite internet and the value of the Anthropic stake.')),
-        ('rec', 'Recommendation', 'Hold. <em>A great company in an expensive building phase.</em>',
+        ('rec', 'Rating', 'Hold. <em>A great company in an expensive building phase.</em>',
          prose('At $262.63 against a base case of $153 ($162 weighted), the shares price in much higher long-run margins than Amazon has ever earned. The call is <b>Hold</b>: keep the core position, don&rsquo;t add until free cash flow turns back up or the price comes closer to the bull case.',
                '<b>Watch in the third-quarter report:</b> AWS growth staying above 30%, operating income against the $22.5&ndash;26.5 billion guide, and any change to the $220 billion capex plan.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Own the platform, <em>wait for the cash.</em></h2><p>The spending is a bet on AI that only pays off if AWS keeps its margins as it grows.</p></div>'),
@@ -193,7 +193,7 @@ R['META'] = dict(
              ['Reality Labs', 'Losses of $18&ndash;19 billion this year and about $15 billion in 2027, with no clear payoff date.'],
              ['Ad cycle', 'Advertising is the first budget cut in a slowdown.'],
          ]) + prose('<b>Upside:</b> WhatsApp business messaging, AI agents that sell for advertisers, and spending easing after 2027 would lift free cash flow quickly.')),
-        ('rec', 'Recommendation', 'Hold. <em>Strong ads, heavy bills.</em>',
+        ('rec', 'Rating', 'Hold. <em>Strong ads, heavy bills.</em>',
          prose('At $697.52 against a base case of $531 ($551 weighted), Meta trades above the model at an 11% discount rate but close to fair at 9.5%. The quarter was better than feared: ads grew faster than expected and the legal charge is a one-off. But free cash flow is now negative and there is still no limit on 2027 spending. The call stays <b>Hold</b>. A move toward the mid $500s, or evidence that 2027 spending will fall, would make it a Buy.',
                '<b>Watch in the fourth-quarter report:</b> revenue against $73&ndash;76 billion, the first 2027 capex guidance, when the settlement is paid, and whether buybacks resume.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The ad machine works. <em>The AI bill is the question.</em></h2><p>Meta can afford the spending; the price needs it to pay off.</p></div>'),
@@ -246,7 +246,7 @@ R['JPM'] = dict(
              ['Expenses', '2027 costs near $114 billion as the bank invests in technology and branches.'],
              ['Succession', 'Jamie Dimon&rsquo;s eventual departure.'],
          ]) + prose('<b>Upside:</b> lighter capital rules releasing the $30 billion of excess capital, and continued strength in markets and investment banking.')),
-        ('rec', 'Recommendation', 'Hold. <em>The best bank, at a full price.</em>',
+        ('rec', 'Rating', 'Hold. <em>The best bank, at a full price.</em>',
          prose('At $335.26 against a base case of $284 ($290 weighted), the shares need returns above the bank&rsquo;s own through-cycle target. The call is <b>Hold</b>; it would be a Buy below about 2.2 times book value, roughly $290.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Quality you pay for.</h2><p>JPMorgan earns more than its peers; the premium is already in the price.</p></div>'),
     ])
@@ -298,7 +298,7 @@ R['VRT'] = dict(
              ['Data-center spending', 'Results depend on a small number of very large customers&rsquo; build plans.'],
              ['Competition', 'Schneider, Eaton and new liquid-cooling entrants are chasing the same projects.'],
          ]) + prose('<b>Upside:</b> a third quarter that delivers the guided 34&ndash;36% organic growth would show the miss was timing, and the stock is already 46% below its high.')),
-        ('rec', 'Recommendation', 'Hold. <em>Down a lot, still not cheap at its risk.</em>',
+        ('rec', 'Rating', 'Hold. <em>Down a lot, still not cheap at its risk.</em>',
          prose('At $203.56 against a base case of $117 ($122 weighted), Vertiv is fully valued at its high cost of capital, though the bull case ($188) is close to the price. The call is <b>Hold</b>; add only after a clean third quarter.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The right market, <em>prove the execution.</em></h2><p>Demand is not the issue; delivering it on schedule is.</p></div>'),
     ])
@@ -351,7 +351,7 @@ R['LHX'] = dict(
              ['Debt', 'Interest of about $560 million a year limits flexibility.'],
              ['Budgets', 'Defense spending depends on Congress; the IPO depends on markets.'],
          ]) + prose('<b>Upside:</b> missile demand, space programs, and the Missile Solutions IPO putting a public value on the fastest-growing part of the company.')),
-        ('rec', 'Recommendation', 'Buy. <em>A good business at a discounted price.</em>',
+        ('rec', 'Rating', 'Buy. <em>A good business at a discounted price.</em>',
          prose('At $248.77 against a base case of $436 ($439 weighted), even a 9% discount rate gives $346. The selloff reflects real but temporary problems: a CEO change and a delayed IPO. The call is <b>Buy</b>, with the bear case ($231) close to today&rsquo;s price as the main warning.',
                '<b>What would change the view:</b> a cut to the $3.0 billion cash-flow guidance or new findings from the conduct investigation.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Headline risk, <em>not business risk.</em></h2><p>The backlog is at a record; the price reflects the boardroom, not the order book.</p></div>'),
@@ -403,7 +403,7 @@ R['AWK'] = dict(
              ['Merger', 'Approvals, integration costs and the share issuance to Essential holders.'],
              ['Contamination rules', 'PFAS treatment requirements raise costs, though usually recoverable in rates.'],
          ]) + prose('<b>Upside:</b> falling interest rates would lift the value quickly: at a 7% cost of equity the model gives $139.')),
-        ('rec', 'Recommendation', 'Hold. <em>A defensive anchor, priced for lower rates.</em>',
+        ('rec', 'Rating', 'Hold. <em>A defensive anchor, priced for lower rates.</em>',
          prose('At $135.79 against a base case of $100, the shares price in a cost of equity well below what today&rsquo;s Treasury yields justify. As a stable, low-volatility holding it still does its job in the portfolio. The call is <b>Hold</b>; it becomes attractive if rates fall or the price drops toward the low $100s.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Safe business, <em>rate-sensitive price.</em></h2><p>The earnings are reliable; the valuation is a bet on interest rates.</p></div>'),
     ])
@@ -451,7 +451,7 @@ R['BA'] = dict(
              ['Fixed-price defense programs', 'Air Force One and others have produced repeated charges.'],
              ['Labor', 'Engineering union talks ahead of an October contract expiry.'],
          ]) + prose('<b>Upside:</b> faster rate increases, the 737-7 and -10 certifications, and the 777X entering service in 2027.')),
-        ('rec', 'Recommendation', 'Hold. <em>Fairly priced for the recovery.</em>',
+        ('rec', 'Rating', 'Hold. <em>Fairly priced for the recovery.</em>',
          prose('At $190.47 against a base case of $197, Boeing is roughly fairly valued: the price assumes the turnaround works, no more. The call is <b>Hold</b>. The upside depends on beating the plan; a stumble on quality or production would hit the shares hard.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The recovery is priced in. <em>Execution decides the rest.</em></h2><p>Demand is guaranteed by the backlog; Boeing has to build the planes.</p></div>'),
     ])

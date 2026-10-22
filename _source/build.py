@@ -8,6 +8,9 @@ import titlecase
 import holdings
 import notes
 import coverage
+import ratings
+rep.apply_ratings(holdings.R); rep.apply_ratings(coverage.R)
+GEV_CALL = ratings.rate(460, 890.33)[0]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Inside the repo (this file in _source/), the site's own folders are the source: assets, scripts and
@@ -68,7 +71,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=38">
+<link rel="stylesheet" href="assets/site.css?v=39">
 </head>
 '''
 
@@ -265,7 +268,7 @@ def build():
     # ---------------- research ----------------
     ORDER = ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA', 'SPCX', 'FLY']
     CARDS = {'LHX': 'Record backlog and missile demand, shares down a third on a CEO exit.', 'VRT': 'Power and cooling for AI data centers, after a growth miss.', 'AWK': 'The largest U.S. water utility, merging with Essential.', 'AMZN': 'AWS growing 37% while capex turns free cash flow negative.', 'META': 'Ads up 26%, free cash flow turned negative by AI spending.', 'JPM': 'The most profitable big bank, valued on return on equity.', 'GEV': 'A record order book valued on its own 2028 targets.', 'NVDA': 'The AI chip leader, priced for a long boom.', 'BA': 'A turnaround with record backlog and positive cash flow.', 'SPCX': 'Rockets, Starlink and now an AI cloud, revenue up 161%.', 'FLY': 'Moon landers and small rockets, down 70% from its high.'}
-    META_R = dict(holdings.R); META_R.update({k: coverage.R[k] for k in ('SPCX', 'FLY')}); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call='Hold', base=442, price=890.33)
+    META_R = dict(holdings.R); META_R.update({k: coverage.R[k] for k in ('SPCX', 'FLY')}); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call=GEV_CALL, base=442, price=890.33)
     def hcard(t):
         r = META_R[t]; href = 'gev.html' if t == 'GEV' else r['slug'] + '.html'
         up = r['base'] / r['price'] - 1
@@ -295,18 +298,18 @@ def build():
     <div class="grid3 rcards">{priv_cards}</div>
     <h3 class="sec" style="margin-top:56px">Other reports</h3>
     <div class="grid3 rcards" style="margin-top:24px;margin-bottom:64px">
-      {card('lockheed-martin.html', 'LMT &middot; Hold', 'Lockheed Martin', 'A record $292 billion backlog, and where Anduril can and can&rsquo;t compete. Value $647 against $590.', 'Read the report &rarr;', 'live')}
-      {card('northrop-grumman.html', 'NOC &middot; Hold', 'Northrop Grumman', 'The B-21 and Sentinel, and a private Anduril now worth more. Value $564 against $553.', 'Read the report &rarr;', 'live')}
-      {card('caterpillar.html', 'CAT &middot; Watch', 'Caterpillar', 'Engines and turbines for AI data centers, inside a cyclical machinery company. Value $442 against $704.', 'Read the report &rarr;', 'live')}
-      {card('asml.html', 'ASML &middot; Watch', 'ASML', 'The only maker of EUV machines, with demand ahead of supply to 2028. Value $1,081 against $1,561.', 'Read the report &rarr;', 'live')}
-      {card('sk-hynix.html', 'SKHY &middot; Watch', 'SK hynix', 'The HBM leader at a 76% margin, valued across the memory cycle. Value $111 against $132 an ADR.', 'Read the report &rarr;', 'live')}
-      {card('palantir.html', 'PLTR &middot; Watch', 'Palantir', 'AI software growing 93% at a 47% margin, priced for the bull case. Value $79 against $202.', 'Read the report &rarr;', 'live')}
-      {card('amd.html', 'AMD &middot; Watch', 'AMD', 'Data center up 107% and Helios racks shipping, after a 140% run. Value $319 against $553.', 'Read the report &rarr;', 'live')}
-      {card('micron.html', 'MU &middot; Watch', 'Micron', 'An 87% gross margin in the tightest memory market ever, valued across the cycle. Value $622 against $914.', 'Read the report &rarr;', 'live')}
-      {card('sandisk.html', 'SNDK &middot; Watch', 'Sandisk', 'Pure flash: from losses to an 85% margin in a year. Value $636 against $1,378.', 'Read the report &rarr;', 'live')}
-      {card('axon.html', 'AXON &middot; Watch', 'Axon Enterprise', 'TASERs, body cameras and AI translation, down half from its peak. Value $289 against $396.', 'Read the report &rarr;', 'live')}
-      {card('kratos.html', 'KTOS &middot; Watch', 'Kratos Defense', 'Drones, hypersonics and engines: the listed company closest to Anduril. Value $23 against $39.', 'Read the report &rarr;', 'live')}
-      {card('costco.html', 'COST &middot; Hold / Wait', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}
+      {card('lockheed-martin.html', 'LMT &middot; ' + coverage.R['LMT']['call'], 'Lockheed Martin', 'A record $292 billion backlog, and where Anduril can and can&rsquo;t compete. Value $647 against $590.', 'Read the report &rarr;', 'live')}
+      {card('northrop-grumman.html', 'NOC &middot; ' + coverage.R['NOC']['call'], 'Northrop Grumman', 'The B-21 and Sentinel, and a private Anduril now worth more. Value $564 against $553.', 'Read the report &rarr;', 'live')}
+      {card('caterpillar.html', 'CAT &middot; ' + coverage.R['CAT']['call'], 'Caterpillar', 'Engines and turbines for AI data centers, inside a cyclical machinery company. Value $442 against $704.', 'Read the report &rarr;', 'live')}
+      {card('asml.html', 'ASML &middot; ' + coverage.R['ASML']['call'], 'ASML', 'The only maker of EUV machines, with demand ahead of supply to 2028. Value $1,081 against $1,561.', 'Read the report &rarr;', 'live')}
+      {card('sk-hynix.html', 'SKHY &middot; ' + coverage.R['SKHY']['call'], 'SK hynix', 'The HBM leader at a 76% margin, valued across the memory cycle. Value $111 against $132 an ADR.', 'Read the report &rarr;', 'live')}
+      {card('palantir.html', 'PLTR &middot; ' + coverage.R['PLTR']['call'], 'Palantir', 'AI software growing 93% at a 47% margin, priced for the bull case. Value $87 against $202.', 'Read the report &rarr;', 'live')}
+      {card('amd.html', 'AMD &middot; ' + coverage.R['AMD']['call'], 'AMD', 'Data center up 107% and Helios racks shipping, after a 140% run. Value $353 against $553.', 'Read the report &rarr;', 'live')}
+      {card('micron.html', 'MU &middot; ' + coverage.R['MU']['call'], 'Micron', 'An 87% gross margin in the tightest memory market ever, valued across the cycle. Value $622 against $914.', 'Read the report &rarr;', 'live')}
+      {card('sandisk.html', 'SNDK &middot; ' + coverage.R['SNDK']['call'], 'Sandisk', 'Pure flash: from losses to an 85% margin in a year. Value $636 against $1,378.', 'Read the report &rarr;', 'live')}
+      {card('axon.html', 'AXON &middot; ' + coverage.R['AXON']['call'], 'Axon Enterprise', 'TASERs, body cameras and AI translation, down half from its peak. Value $314 against $396.', 'Read the report &rarr;', 'live')}
+      {card('kratos.html', 'KTOS &middot; ' + coverage.R['KTOS']['call'], 'Kratos Defense', 'Drones, hypersonics and engines: the listed company closest to Anduril. Value $24 against $39.', 'Read the report &rarr;', 'live')}
+      {card('costco.html', 'COST &middot; Coursework', 'Costco Wholesale', 'FIN 370 coursework: an excellent business trading above its $831.50 cash-flow value.', 'Read the report &rarr;', 'live')}
     </div>
     <div class="split" style="align-items:end;margin-bottom:34px">
       <div><div class="eyebrow mono">Equities</div><h3 class="sec">Company coverage</h3></div>
@@ -386,8 +389,8 @@ def build():
     wlh = {c['ticker']: c for c in json.load(open(os.path.join(SRC, 'data', 'watchlist.json')))['companies']}
     cur_calls = []
     for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
-        cur_calls.append({'t': t, 'name': r['name'], 'page': r['slug'] + '.html', 'date': iso(r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
-    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': '2026-10-20', 'call': 'Hold', 'value': 442, 'price': 890.33, 'held': True})
+        cur_calls.append({'t': t, 'name': r['name'], 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
+    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
     lp = os.path.join(SRC, 'data', 'calls.json')
     ledger = json.load(open(lp)) if os.path.exists(lp) else {'_note': 'Every published call, appended when a report is written or its call changes. Never edit past rows.', 'calls': []}
     have = {(c['t'], c['date']) for c in ledger['calls']}
@@ -648,10 +651,39 @@ def build():
       <div class="step"><span class="k">03</span><h4>The valuation</h4><p>What it's worth under bull, base and bear cases, and what the price already assumes.</p></div>
       <div class="step"><span class="k">04</span><h4>The risks</h4><p>What would change the view, and the dates to watch.</p></div>
     </div>
+  </div>
+</section>
+<section class="tight" style="padding-top:10px" id="ratings">
+  <div class="wrap">
+    <div class="eyebrow mono">Objectivity</div><h3 class="sec">How ratings work</h3>
+    <div class="cols eq" style="margin-top:24px;align-items:start">
+      <div class="prose">
+        <p>Every public company gets a <b>Buy</b>, <b>Hold</b> or <b>Sell</b> from the same rule, whoever owns it. The rule starts from the report&rsquo;s probability-weighted value (25% bear, 50% base, 25% bull) and the price at writing.</p>
+        <p>Because the value depends on the discount rate, the same assumptions are first applied to the whole S&amp;P 500: a 5.15% 10-year Treasury yield and a 4.5% equity risk premium. On those assumptions the index is worth about <b>{{MKT_PCT}}% of its price</b>, so part of every stock&rsquo;s gap is the method, not the stock. The rating compares each stock with the market on that same basis:</p>
+        <ul class="dl"><li><b>Buy</b>: at least 15% cheaper than the market.</li><li><b>Hold</b>: within 15% either way.</li><li><b>Sell</b>: at least 15% dearer than the market.</li></ul>
+        <p>Each report shows both numbers, the absolute value and the comparison with the market, and says whether the rating would change if the index grew 6% or 10% a year instead of 8%. Private companies are not rated, since there is no price to buy them at; the Costco report is university coursework and is left as written.</p>
+      </div>
+      <div>
+        <div class="eyebrow mono">The S&amp;P 500 on the reports&rsquo; assumptions</div>
+        <div class="scroll"><table class="tbl txt allnum"><thead><tr><th>Index growth, years 1&ndash;5</th><th>Value / price</th><th>Implied equity premium</th></tr></thead><tbody>{{MKT_ROWS}}</tbody></table></div>
+        <p class="fine">{{MKT_N}} S&amp;P 500 companies with complete data, ${{MKT_MC:.1f}} trillion of market value and ${{MKT_FCF:,.0f}} billion of free cash flow over the last twelve months. Growth fades to 3% by year ten. Rebuilt with <code>_source/models/market.py</code>; the ratings use the 8% row, as of {{RATED}}.</p>
+        <div class="eyebrow mono" style="margin-top:26px">Other rules</div>
+        <dl class="src">
+          <dt>Ownership</dt><dd>Stated once, in each report&rsquo;s disclosure line. It never enters the rating or the recommendation text.</dd>
+          <dt>Sources</dt><dd>Company releases and SEC filings first; news sites only for prices, analyst targets and reactions. Figures that are the analyst&rsquo;s own estimates are marked as such.</dd>
+          <dt>Changes</dt><dd>When a rating changes, the old one stays in the <a href="track.html" style="color:var(--acc)">track record</a>, which scores every call against the S&amp;P 500.</dd>
+          <dt>Known lean</dt><dd>On these assumptions the models sit below analysts&rsquo; targets almost everywhere. Each report explains its own gap with the Street.</dd>
+        </dl>
+      </div>
+    </div>
     <p class="lead" style="margin-top:40px;font-size:14px">Everything on this site is for education. It is not investment advice, and nothing here is a recommendation to buy or sell any security.</p>
   </div>
 </section>
 '''
+    _mk = json.load(open(os.path.join(SRC, 'data', 'models', 'market.json')))
+    about = about.replace('{MKT_PCT}', f'{ratings.MKT * 100:.0f}').replace('{MKT_N}', str(_mk['companies'])).replace('{RATED}', ratings.RATED)
+    about = about.replace('{MKT_ROWS}', ''.join(f"<tr><td>{float(g) * 100:.0f}%</td><td>{v['value_to_price'] * 100:.0f}%</td><td>{v['implied_premium'] * 100:.1f}%</td></tr>" for g, v in _mk['scenarios'].items()))
+    about = about.replace('${MKT_MC:.1f}', f"${_mk['market_value'] / 1e12:.1f}").replace('${MKT_FCF:,.0f}', f"${_mk['free_cash_flow'] / 1e9:,.0f}")
     page('about.html', 'about.html', 'About', 'Who builds LDB Finance, where the data comes from and how research is done.', 'about', about)
 
 

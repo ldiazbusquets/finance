@@ -19,7 +19,7 @@ def band(h, p):
 
 
 TOCP = [('overview', 'The business'), ('results', 'Latest results'), ('fin', 'The numbers'), ('capital', 'Balance sheet and ownership'),
-        ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')]
+        ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Rating')]
 TOCV = [('overview', 'The business'), ('growth', 'Growth'), ('fin', 'The numbers'), ('capital', 'Funding and ownership'),
         ('value', 'Valuation'), ('implied', 'What the valuation assumes'), ('risks', 'Risks'), ('rec', 'Our view')]
 
@@ -30,20 +30,20 @@ SX = 'https://www.stocktitan.net/articles/spacex-q3-2026-earnings-ai-revenue-pas
 R['SPCX'] = dict(
     t='SPCX', slug='spacex', name='SpaceX', h1='Space<em>X</em>', sector='Space and AI', date=DATE, timing=', the day after its third-quarter results',
     sub='SpaceX is now three businesses: rockets, the Starlink satellite network, and since buying xAI, one of the largest AI computing operations in the world. Revenue grew 161% last quarter and AI has overtaken Starlink. The price assumes that growth keeps compounding for years.',
-    call='Hold', method='Scenario model', price=162.57, pricenote='Midday, Oct 21, 2026', noauto=True, base=118, max=320, tick=40,
+    call='Hold', method='Scenario model', price=162.57, pricenote='Midday, Oct 21, 2026', noauto=True, base=123, bear=43, bull=288, wt=144, max=320, tick=40,
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the Street&rsquo;s average target.',
-    field=[('Scenario model', 44, 270, 118, '$44 to $270, base $118'), ('Probability-weighted', None, None, 138, '$138'),
+    field=[('Scenario model', 43, 288, 123, '$43 to $288, base $123'), ('Probability-weighted', None, None, 144, '$144'),
            ('Price at writing', None, None, 162.57, '$162.57'), ('52-week range', 105, 226, None, '$105 to $226'), ('Analyst average', None, None, 223, '$223')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Rockets, a satellite network <em>and an AI cloud.</em>',
          prose('<b>Space</b> is the original business: Falcon 9 and Falcon Heavy launches for NASA, the military and commercial customers, and Starship, the fully reusable rocket meant to cut launch costs by an order of magnitude. <b>Connectivity</b> is Starlink, internet from more than 9,000 satellites for homes, ships, airlines and phones. <b>Super Intelligence (SI)</b> came with the purchase of Elon Musk&rsquo;s xAI in February 2026: the Grok models, the X platform, the Cursor coding tool, and data centers that lease computing to other AI labs.',
                'SpaceX listed on Nasdaq as SPCX on June 12, 2026, at $135 a share, valuing it at about $1.77 trillion in the largest IPO on record.')
-         + key('Takeaway', 'You now own an AI infrastructure company with a launch business and a telecom network attached. AI is already more than half of revenue.')),
+         + key('Takeaway', 'SpaceX is now an AI infrastructure company with a launch business and a telecom network attached. AI is already more than half of revenue.')),
         ('results', 'Latest results', 'Revenue up 161%, <em>and a first operating profit.</em>',
          stats([('$14.6B', 'Revenue, Q3 2026, +161%'), ('$7.6B', 'AI (SI) revenue, nearly triple Q2'), ('$5.2B', 'Starlink revenue, +69%'), ('$2.8B', 'Operating profit'), ('$19.6B', 'Capital spending in the quarter'), ('$33&ndash;37B', 'Q1 2027 revenue guidance')])
          + prose('Third-quarter revenue of $14.6 billion beat estimates by about $1.7 billion. SI revenue was $7.6 billion, including $608 million from Cursor, as Anthropic, Google and others rented its computing. Starlink added 1.6 million subscribers to reach 13.6 million, fewer than analysts expected, but its operating profit nearly doubled to $2.4 billion. Rockets earned $1.8 billion and roughly broke even.',
                  'Net income was $4.4 billion ($0.35 a share). Management guided first-quarter 2027 revenue to <b>$33&ndash;37 billion</b>, more than double this quarter, as computing capacity grows from 1.7 GW to about 3 GW by year-end. Starship reached orbit on Flight 14 and deployed V3 Starlink satellites. The shares rose about 10% the next day.')
-         + src([('Q3 2026 results', SX), ('Earnings call summary', 'https://finance.biggo.com/news/US_SPCX_2026-10-20'), ('Fortune', 'https://fortune.com/2026/10/20/spacex-q3-profit-ai-si-elon-musk/')])),
+         + src([('Investor relations', 'https://ir.spacex.com/updates/releases-details/2026/SpaceX-to-Post-Third-Quarter-2026-Results-and-Host-Webcast-on-October-20-2026-2026-QssQGye3im/'), ('Q3 2026 results', SX), ('Fortune', 'https://fortune.com/2026/10/20/spacex-q3-profit-ai-si-elon-musk/')])),
         ('fin', 'The numbers', 'Profitable operations, <em>spending far more than it earns.</em>',
          table(['Segment, Q3 2026', 'Revenue', 'Growth', 'Operating profit'], [
              ['Super Intelligence (AI)', '$7.6B', '+~830%', '$0.4B ($1.6B before Cursor stock pay)'],
@@ -55,13 +55,13 @@ R['SPCX'] = dict(
         ('capital', 'Balance sheet and ownership', '$90 billion of cash, <em>and Musk in control.</em>',
          prose('SpaceX held $89.9 billion of cash and short-term investments against $38.8 billion of debt and leases in September, thanks to the IPO. Analysts expect debt to rise sharply as the data-center build continues.',
                'Musk owns about 42% of the shares but about 82% of the votes through ten-vote Class B shares, so public shareholders cannot change the strategy. Insiders are locked up for a year; other pre-IPO investors can start selling around <b>December 8</b>, which could add supply. Musk has also said a merger with Tesla is possible but not certain.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$118 a share.</em>',
-         prose('A ten-year cash-flow model means little for a company whose revenue may triple in a year, so this report values SpaceX on its 2030 earning power: revenue, operating margin and a multiple, discounted back at 12% a year.')
+        ('value', 'Valuation', 'Our scenarios give <em>$123 a share.</em>',
+         prose('A ten-year cash-flow model means little for a company whose revenue may triple in a year, so this report values SpaceX on its 2030 earning power: revenue, operating margin and a multiple, discounted back at 12% a year, plus the free cash flow between now and then. That starts deeply negative (an estimated &minus;$68 billion this year, from nine months of reported cash flow and the guided fourth-quarter capital spending) and is assumed to rise in a straight line to 80% of 2030 after-tax profit.')
          + scen([['Revenue in 2030', '$250B', '$500B', '$900B'], ['Operating margin', '22%', '28%', '32%'], ['Exit multiple of after-tax profit', '20&times;', '22&times;', '25&times;'],
-                 ['Value per share', '$44', '$118', '$270'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25, the cases give <b>$138</b>. Net cash of about $51 billion and 13.57 billion shares are included.')),
-        ('implied', 'What the price assumes', 'At $163, <em>about $700 billion of revenue by 2030.</em>',
-         implied([['About $700 billion of revenue in 2030 at a 28% margin', 'About $23 billion over the last twelve months'], ['Or margins and multiples near the bull case', 'Base case of 28% and 22&times;']])
+                 ['Value per share', '$43', '$123', '$288'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25, the cases give <b>$144</b>. Net cash of about $51 billion and 13.57 billion shares are included.')),
+        ('implied', 'What the price assumes', 'At $163, <em>about $660 billion of revenue by 2030.</em>',
+         implied([['About $660 billion of revenue in 2030 at a 28% margin', 'About $23 billion over the last twelve months'], ['Or margins and multiples near the bull case', 'Base case of 28% and 22&times;']])
          + prose('That sounds extreme, but management is guiding to a $140 billion annual pace by early 2027 and has talked about $500 billion to $1 trillion by the end of 2027 if its AI business scales. The price sits between the base and bull cases: it needs the AI buildout to keep paying back as fast as management says, which is under a year per data center today.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -71,7 +71,7 @@ R['SPCX'] = dict(
              ['Lock-up', 'Pre-IPO investors can sell from early December.'],
              ['Execution', 'Starship, V3 satellites and new data centers all have to work on schedule.'],
          ]) + prose('<b>Upside:</b> Starlink Mobile (22 million monthly users), reusable Starship lowering costs for everything else, and AI revenue scaling as guided.')),
-        ('rec', 'Recommendation', 'Hold. <em>A great asset at a full price.</em>',
+        ('rec', 'Rating', 'Hold. <em>A great asset at a full price.</em>',
          prose('At $162.57 against a base case of $118 ($138 weighted), the price already reaches toward the bull case. The business is extraordinary, but the valuation depends on AI growth that has only just started. The call is <b>Hold</b>, sized as a speculative position, with the December lock-up expiry as a possible better entry point.')
          + band('Own the rocket company. <em>Watch the AI bill.</em>', 'SpaceX&rsquo;s value now depends more on data centers than on rockets.')),
     ])
@@ -81,9 +81,9 @@ FF = 'https://finance.biggo.com/news/US_FLY_2026-08-11'
 R['FLY'] = dict(
     t='FLY', slug='firefly', name='Firefly Aerospace', h1='Firefly <em>Aerospace</em>', sector='Space', date=DATE, timing=', before its third-quarter results in November',
     sub='Firefly builds small rockets, the Blue Ghost lunar lander and spacecraft for NASA and the Pentagon. Revenue is growing fast and the backlog is $1.5 billion, but it loses money and its Alpha rocket has a mixed record. The shares are down about 70% from their high.',
-    call='Hold', method='Scenario model', price=17.41, pricenote='Midday, Oct 21, 2026', noauto=True, base=20, max=70, tick=10,
+    call='Hold', method='Scenario model', price=17.41, pricenote='Midday, Oct 21, 2026', noauto=True, base=18, bear=3, bull=50, wt=22, max=70, tick=10,
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 4, 52, 20, '$4 to $52, base $20'), ('Probability-weighted', None, None, 24, '$24'),
+    field=[('Scenario model', 3, 50, 18, '$3 to $50, base $18'), ('Probability-weighted', None, None, 22, '$22'),
            ('Price at writing', None, None, 17.41, '$17.41'), ('52-week range', 16, 62, None, '$16 to $62'), ('Analyst average', None, None, 38, '$38')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Rockets, moon landers <em>and missile defense.</em>',
@@ -99,13 +99,13 @@ R['FLY'] = dict(
          + prose('Alpha&rsquo;s record is the weak point: a failure in April 2025 and an explosion during a ground test in September 2025 grounded it until a successful flight in March 2026. Launch is what would lift margins, so the cadence of Alpha flights matters more than any single contract.')),
         ('capital', 'Balance sheet and ownership', 'Enough cash, <em>with dilution along the way.</em>',
          prose('Firefly had $635 million of cash and an undrawn $305 million credit line in June. It has sold shares twice since the IPO, including an offering at $48 in May 2026, and registered shares for resale by former SciTec owners, which has weighed on the price. Expect more share sales before it turns profitable. AE Industrial Partners is the largest investor; Northrop Grumman invested $50 million alongside the Eclipse partnership.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$20 a share.</em>',
-         prose('With no profits yet, this report values Firefly on its 2030 revenue and the multiple of sales a profitable space company would command, discounted back at 15% a year, with more shares outstanding to fund the losses until then.')
+        ('value', 'Valuation', 'Our scenarios give <em>$18 a share.</em>',
+         prose('With no profits yet, this report values Firefly on its 2030 revenue and the multiple of sales a profitable space company would command, discounted back at 15% a year, with more shares outstanding to fund the losses until then, and with the cash it burns until 2030 (about $0.2 billion this year, falling in a straight line to breakeven) subtracted.')
          + scen([['Revenue in 2030', '$0.7B', '$1.2B', '$2.0B'], ['Exit value to sales', '2&times;', '5&times;', '8&times;'], ['Shares by 2030', '200M', '185M', '180M'],
-                 ['Value per share', '$4', '$20', '$52'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$24</b>. The range is wide on purpose: this is a company where one failed launch or one large contract changes the answer.')),
+                 ['Value per share', '$3', '$18', '$50'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$22</b>. The range is wide on purpose: this is a company where one failed launch or one large contract changes the answer.')),
         ('implied', 'What the price assumes', 'At $17, <em>about $1 billion of revenue by 2030.</em>',
-         implied([['About $1.06 billion of revenue in 2030 at 5&times; sales', '$420&ndash;450 million guided for 2026'], ['Roughly 25% annual growth from here', '659% last quarter, from a small base']])
+         implied([['About $1.15 billion of revenue in 2030 at 5&times; sales', '$420&ndash;450 million guided for 2026'], ['Roughly 25% annual growth from here', '659% last quarter, from a small base']])
          + prose('The market now prices Firefly slightly below the base case, a big change from the $62 high, when it priced something close to the bull case.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -114,7 +114,7 @@ R['FLY'] = dict(
              ['Competition', 'SpaceX rideshares undercut small rockets; Rocket Lab is further ahead.'],
              ['Government budgets', 'NASA and defense contracts drive most revenue.'],
          ]) + prose('<b>Upside:</b> Golden Dome and missile-warning work through SciTec, more NASA lunar missions, and Eclipse giving Firefly a medium rocket in 2027.')),
-        ('rec', 'Recommendation', 'Hold. <em>Speculative, and priced like it.</em>',
+        ('rec', 'Rating', 'Hold. <em>Speculative, and priced like it.</em>',
          prose('At $17.41 against a base case of $20 ($24 weighted), the price is close to fair for a business this uncertain, after a 70% fall. The call is <b>Hold</b>, kept within the speculative part of the portfolio. Alpha Flight 8 and the third-quarter results in November are the next tests.')
          + band('A real business, <em>a risky stock.</em>', 'The backlog is strong; the rocket record and the cash burn decide the outcome.')),
     ])
@@ -248,14 +248,14 @@ R['ANDURIL'] = dict(
     ])
 
 # ================================================================ Kratos (watchlist, not held)
-KQ = 'https://www.stocktitan.net/news/KTOS/kratos-reports-second-quarter-2026-financial-iz9i8yyotxfi.html'
+KQ = 'https://ir.kratosdefense.com/node/32946'
 R['KTOS'] = dict(
     t='KTOS', slug='kratos', name='Kratos Defense', h1='Kratos <em>Defense</em>', sector='Defense', date=DATE, timing=', ahead of its third-quarter results in early November',
     sub='Kratos makes low-cost drones, hypersonic test rockets, small jet engines and satellite ground systems. It is the closest listed company to Anduril. Revenue is growing about 20% a year, but the shares are down more than 70% from their January high because the price had run far ahead of the profits.',
-    call='Watch', method='Scenario model', price=38.81, pricenote='Midday, Oct 21, 2026', noauto=True, base=23, max=140, tick=20,
+    call='Watch', method='Scenario model', price=38.81, pricenote='Midday, Oct 21, 2026', noauto=True, base=24, bear=14, bull=44, wt=26, max=140, tick=20,
     disclosure='The author holds no KTOS shares.',
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 14, 42, 23, '$14 to $42, base $23'), ('Probability-weighted', None, None, 26, '$26'),
+    field=[('Scenario model', 14, 44, 24, '$14 to $44, base $24'), ('Probability-weighted', None, None, 26, '$26'),
            ('Price at writing', None, None, 38.81, '$38.81'), ('52-week range', 38, 134, None, '$38 to $134'), ('Analyst average', None, None, 98, '$98')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Cheap drones, rockets <em>and engines.</em>',
@@ -271,13 +271,13 @@ R['KTOS'] = dict(
          + prose('Margins are low because much of the work is cost-plus or fixed-price government contracting and because development spending runs through the income statement. Management expects the 2027 EBITDA margin to rise about one percentage point; 2027 guidance comes with the third-quarter results.')),
         ('capital', 'Balance sheet and ownership', '$1.4 billion of cash, <em>paid for with new shares.</em>',
          prose('Kratos held $1.44 billion of cash in June and almost no borrowings beyond about $140 million of finance leases, after raising roughly $1 billion by selling stock earlier in 2026. The share count is about 188 million. The cash covers the factory build-out, but stock-based pay of about $60 million a year keeps adding shares.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$23 a share.</em>',
-         prose('Valued the same way as the other fast-growing companies here: 2030 revenue, operating margin after stock pay, and a multiple of after-tax profit, discounted back at 10% a year (Kratos&rsquo;s cost of equity from its beta of about 1.1).')
+        ('value', 'Valuation', 'Our scenarios give <em>$24 a share.</em>',
+         prose('Valued the same way as the other fast-growing companies here: 2030 revenue, operating margin after stock pay, and a multiple of after-tax profit, discounted back at 10% a year (Kratos&rsquo;s cost of equity from its beta of about 1.1), plus the free cash flow along the way, which starts slightly negative.')
          + scen([['Revenue in 2030', '$2.6B', '$3.2B', '$4.0B'], ['Operating margin', '6%', '9%', '12%'], ['Exit multiple', '18&times;', '22&times;', '28&times;'],
-                 ['Value per share', '$14', '$23', '$42'], ['Probability', '25%', '50%', '25%']])
+                 ['Value per share', '$14', '$24', '$44'], ['Probability', '25%', '50%', '25%']])
          + prose('Weighted 25/50/25: <b>$26</b>. Net cash of about $1.2 billion and 200 million shares by 2030 are included. The base case already assumes revenue grows about 16% a year and the operating margin more than triples.')),
-        ('implied', 'What the price assumes', 'At $39, <em>about $6 billion of revenue by 2030.</em>',
-         implied([['About $6.1 billion of revenue in 2030 at the base margin and multiple', '$1.75&ndash;1.81 billion guided for 2026'], ['Or roughly 35% growth a year for four years', '18&ndash;23% organic growth guided']])
+        ('implied', 'What the price assumes', 'At $39, <em>about $5.7 billion of revenue by 2030.</em>',
+         implied([['About $5.7 billion of revenue in 2030 at the base margin and multiple', '$1.75&ndash;1.81 billion guided for 2026'], ['Or roughly 34% growth a year for four years', '18&ndash;23% organic growth guided']])
          + prose('Even after a 70% fall, the price sits near the bull case. At the January high of $134 it implied revenue several times larger. The analysts&rsquo; average target of $98 assumes faster growth and higher margins than this model does.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -286,7 +286,7 @@ R['KTOS'] = dict(
              ['Program wins', 'The Air Force&rsquo;s main collaborative combat aircraft awards went to rivals; Valkyrie depends on the Marines and new customers.'],
              ['Competition', 'Anduril, General Atomics and the large primes chase the same drone and missile budgets.'],
          ]) + prose('<b>Upside:</b> hypersonic testing, engines for low-cost cruise missiles, a second-source role on JASSM, Golden Dome and a larger Valkyrie order could all lift growth.')),
-        ('rec', 'Recommendation', 'Watch. <em>Not an Anduril substitute at this price.</em>',
+        ('rec', 'Rating', 'Watch. <em>Not an Anduril substitute at this price.</em>',
          prose('Kratos is a real, growing business with many of the same products as Anduril, but at $38.81 it trades well above our base case of $23 ($26 weighted) and earns very little today. Your earlier instinct to skip it still holds on the numbers. A price in the mid-$20s, or proof that margins are rising in the 2027 guidance, would change the view.')
          + band('Same idea as Anduril, <em>at a fraction of the margin.</em>', 'Revenue growth is real; the profits that would justify the price are not here yet.')),
     ])
@@ -342,12 +342,12 @@ AQ = 'https://investor.axon.com/2026-08-05-Axon-reports-Q2-2026-revenue-of-904-m
 R['AXON'] = dict(
     t='AXON', slug='axon', name='Axon Enterprise', h1='Axon', sector='Public safety technology', date=DATE, timing=', ahead of its third-quarter results on November 3',
     sub='Axon makes the TASER, the body cameras most U.S. police wear, and the cloud software that stores and analyses the video. It is now adding AI on top: report writing, transcription and real-time translation through the camera. Revenue has grown more than 30% for ten straight quarters, yet the shares are down about half from their 2025 peak.',
-    call='Watch', method='Scenario model', price=396.30, pricenote='Midday, Oct 21, 2026', base=289, max=800, tick=100,
+    call='Watch', method='Scenario model', price=396.30, pricenote='Midday, Oct 21, 2026', base=314, bear=147, bull=567, wt=335, max=800, tick=100,
     disclosure='The author holds no AXON shares.',
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 132, 531, 289, '$132 to $531, base $289'), ('Probability-weighted', None, None, 310, '$310'),
+    field=[('Scenario model', 147, 567, 314, '$147 to $567, base $314'), ('Probability-weighted', None, None, 335, '$335'),
            ('Price at writing', None, None, 396.30, '$396.30'), ('52-week range', 339, 764, None, '$339 to $764'), ('Analyst average', None, None, 691, '$691')],
-    toc=[('overview', 'The business'), ('results', 'Latest results'), ('fin', 'Five years'), ('ai', 'The translation thesis'), ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Recommendation')], chapters=[
+    toc=[('overview', 'The business'), ('results', 'Latest results'), ('fin', 'Five years'), ('ai', 'The translation thesis'), ('value', 'Valuation'), ('implied', 'What the price assumes'), ('risks', 'Risks'), ('rec', 'Rating')], chapters=[
         ('overview', 'The business', 'Devices that feed <em>a software subscription.</em>',
          prose('Axon sells two things. <b>Connected Devices</b> (56% of revenue) are TASER energy weapons, Axon Body cameras, in-car and fixed cameras, drones and, since buying Dedrone in 2024, counter-drone systems. <b>Software &amp; Services</b> (44%) is Axon Evidence, the cloud where agencies store and share footage, plus records, dispatch and AI tools. Devices are sold inside five- to ten-year bundles, so about 95% of revenue is tied to subscription plans and customers rarely switch.',
                'The <b>AI Era Plan</b>, an add-on of about $199 per officer a year, includes Draft One (police reports written from camera audio), transcription and <b>real-time translation</b>. Revenue from it grew almost 700% in the past year.')),
@@ -365,13 +365,13 @@ R['AXON'] = dict(
                '<b>Military and federal use</b> is a real but early opportunity. Federal agencies added more than 22,000 body cameras and evidence licenses in 2026, the VA bought TASER 10s, and in October DHS selected Dedrone for counter-drone protection. Axon does not report military revenue separately, and armed forces have their own translation programs and suppliers, so this report treats military translation as upside rather than part of the base case.')
          + key('Takeaway', 'Translation is a strong reason to upgrade, but it is a feature Axon sells to customers it already has, not a new product line. It supports the 2028 targets more than it changes them.')
          + src([('Translation in Frederick, Md.', 'https://www.governing.com/artificial-intelligence/police-body-cameras-are-learning-to-speak-50-languages'), ('Renton police rollout', 'https://www.kiro7.com/news/local/renton-police-debut-bodycam-that-translates-over-50-languages-real-time/KMK2544CHBFZLAJTLTO7VVAKU4/'), ('Federal momentum', 'https://www.tikr.com/blog/axon-stock-fell-6-in-a-day-and-is-down-31-in-2026-time-to-sell-or-load-up')])),
-        ('value', 'Valuation', 'Our scenarios give <em>$289 a share.</em>',
-         prose('Valued on 2030 earning power like the other fast growers here, using operating margin <i>after</i> stock-based pay, discounted at 11% a year (beta 1.44 gives a CAPM cost of about 11.6%, trimmed slightly for the subscription base). Net debt of about $1.1 billion and 88 million shares by 2030 are included.')
+        ('value', 'Valuation', 'Our scenarios give <em>$314 a share.</em>',
+         prose('Valued on 2030 earning power like the other fast growers here, using operating margin <i>after</i> stock-based pay, discounted at 11% a year (beta 1.44 gives a CAPM cost of about 11.6%, trimmed slightly for the subscription base). Net debt of about $1.1 billion, 88 million shares by 2030 and the free cash flow earned along the way (a straight line from about $0.1 billion this year to 80% of 2030 after-tax profit) are included.')
          + scen([['Revenue in 2030', '$6.5B', '$8.5B', '$10.5B'], ['Operating margin after stock pay', '15%', '20%', '25%'], ['Exit multiple', '25&times;', '30&times;', '35&times;'],
-                 ['Value per share', '$132', '$289', '$531'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$310</b>. The base case is close to management&rsquo;s own path: $6 billion in 2028, then about 19% growth a year.')),
-        ('implied', 'What the price assumes', 'At $396, <em>about $11.5 billion of revenue by 2030.</em>',
-         implied([['About $11.5 billion of revenue in 2030 at the base margin and multiple', 'Management&rsquo;s path reaches about $8.5 billion'], ['Or margins of about 27% after stock pay with base revenue', 'About 5% today, 20% in the base case']])
+                 ['Value per share', '$147', '$314', '$567'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$335</b>. The base case is close to management&rsquo;s own path: $6 billion in 2028, then about 19% growth a year.')),
+        ('implied', 'What the price assumes', 'At $396, <em>about $10.7 billion of revenue by 2030.</em>',
+         implied([['About $10.7 billion of revenue in 2030 at the base margin and multiple', 'Management&rsquo;s path reaches about $8.5 billion'], ['Or margins of about 25% after stock pay with base revenue', 'About 5% today, 20% in the base case']])
          + prose('After a 50% fall the stock is far cheaper than it was, but it still prices in growth beyond the company&rsquo;s own targets. Analysts&rsquo; average target of $691 assumes faster growth and a higher multiple.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -381,20 +381,20 @@ R['AXON'] = dict(
              ['AI accuracy', 'Translation and report-writing errors could create legal problems in court.'],
              ['Valuation', 'Still about 44&times; next year&rsquo;s earnings.'],
          ]) + prose('<b>Upside:</b> AI Era Plan adoption across the installed base, counter-drone demand, international bookings (which tripled), enterprise customers and federal or military contracts.')),
-        ('rec', 'Recommendation', 'Watch. <em>A great business, close to a buy point.</em>',
+        ('rec', 'Rating', 'Watch. <em>A great business, close to a buy point.</em>',
          prose('Axon is one of the best-positioned companies in public safety: a near-monopoly in U.S. police cameras, sticky subscriptions and an AI product line that is growing fast. Real-time translation strengthens that position. At $396.30, though, the price is above our base case of $289 ($310 weighted). A price nearer $300, or third-quarter results on November 3 that show margins recovering, would make it a Buy.')
          + band('The right thesis, <em>a slightly early price.</em>', 'AI makes Axon&rsquo;s subscription more valuable; the stock already assumes much of that.')),
     ])
 
 # ================================================================ Palantir
-PQ = 'https://investinglive.com/stocks/palantir-revenue-jumps-93-as-karp-hails-otherworldly-quarter-raises-guidance/'
+PQ = 'https://www.sec.gov/Archives/edgar/data/0001321655/000132165526000039/a2026q2ex991pressrelease.htm'
 R['PLTR'] = dict(
     t='PLTR', slug='palantir', name='Palantir Technologies', h1='Palantir', sector='AI software', date=DATE, timing=', ahead of its third-quarter results on November 2',
     sub='Palantir sells the software that governments and companies use to pull their data together and put AI to work on it. Revenue is growing more than 90% a year and the business is highly profitable, but at about 60 times this year&rsquo;s sales the shares price in far more than that.',
-    call='Watch', method='Scenario model', price=201.72, pricenote='Close, Oct 21, 2026', base=79, bear=36, bull=204, wt=100, max=250, tick=50,
+    call='Watch', method='Scenario model', price=201.72, pricenote='Close, Oct 21, 2026', base=87, bear=41, bull=216, wt=107, max=250, tick=50,
     disclosure='The author holds no PLTR shares directly.',
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 36, 204, 79, '$36 to $204, base $79'), ('Probability-weighted', None, None, 100, '$100'),
+    field=[('Scenario model', 41, 216, 87, '$41 to $216, base $87'), ('Probability-weighted', None, None, 107, '$107'),
            ('Price at writing', None, None, 201.72, '$201.72'), ('52-week range', 106, 213, None, '$106 to $213'), ('Analyst average', None, None, 206, '$206')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'One platform, <em>two kinds of customer.</em>',
@@ -410,13 +410,13 @@ R['PLTR'] = dict(
          + src([('Palantir filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K')])),
         ('capital', 'Balance sheet and ownership', 'About $9.4 billion of cash <em>and no debt.</em>',
          prose('At the end of June Palantir held about $9.4 billion of cash and short-term Treasuries and had no borrowings. Dilution from stock pay is the main cost to shareholders: this model assumes about 2.6 billion diluted shares by 2030, roughly 1% a year more than today. Co-founders hold super-voting shares, so outside shareholders have little say over the company.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$79 a share.</em>',
-         prose('Valued like the other fast growers on this site: revenue and operating margin in 2030, taxed at 21%, times an exit multiple, discounted back four years at 14% (beta 2.0 gives a CAPM cost of about 14.2%), plus net cash.')
+        ('value', 'Valuation', 'Our scenarios give <em>$87 a share.</em>',
+         prose('Valued like the other fast growers on this site: revenue and operating margin in 2030, taxed at 21%, times an exit multiple, discounted back four years at 14% (beta 2.0 gives a CAPM cost of about 14.2%), plus net cash and the free cash flow earned along the way (a straight line from about $3.4 billion over the last twelve months to 80% of 2030 after-tax profit).')
          + scen([['Revenue in 2030', '$18B', '$28B', '$45B'], ['Growth a year from 2026', '22%', '36%', '53%'], ['Operating margin after stock pay', '40%', '50%', '55%'], ['Exit multiple', '25&times;', '30&times;', '45&times;'],
-                 ['Value per share', '$36', '$79', '$204'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$100</b>. Even the base case is generous: revenue more than triples in four years and the margin stays near today&rsquo;s record.')),
+                 ['Value per share', '$41', '$87', '$216'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$107</b>. Even the base case is generous: revenue more than triples in four years and the margin stays near today&rsquo;s record.')),
         ('implied', 'What the price assumes', 'At $202, <em>the bull case.</em>',
-         implied([['About $44 billion of revenue in 2030 at a 55% margin and 45&times; earnings', 'About $8 billion this year; 53% growth a year for four years'], ['Or about $73 billion of revenue at the base margin and multiple', 'Nine times this year&rsquo;s revenue']])
+         implied([['About $42 billion of revenue in 2030 at a 55% margin and 45&times; earnings', 'About $8 billion this year; about 50% growth a year for four years'], ['Or about $68 billion of revenue at the base margin and multiple', 'More than eight times this year&rsquo;s revenue']])
          + prose('The market is paying today for the outcome that has everything go right. That is possible for a company growing this fast, but it leaves no room for a slowdown. The analysts&rsquo; average target of $206 is close to the price; their range runs from $80 to $265.')
          + src([('Analyst targets', 'https://beinsure.com/news/palantir-stock-forecast-analysts-see-11-upside-after-selloff/')])),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
@@ -427,7 +427,7 @@ R['PLTR'] = dict(
              ['Stock pay and control', 'Dilution continues, and super-voting shares leave founders in charge.'],
              ['AI software sentiment', 'The shares move with the wider AI trade, as in October&rsquo;s 7% one-day fall.'],
          ]) + prose('<b>Upside:</b> AIP spreading through large companies faster than expected, more defence work (Maven, the Army agreement, allies), and margins rising further as revenue scales.')),
-        ('rec', 'Recommendation', 'Watch. <em>An outstanding business at a bull-case price.</em>',
+        ('rec', 'Rating', 'Watch. <em>An outstanding business at a bull-case price.</em>',
          prose('Few software companies have ever grown this fast at this size while earning these margins, and the U.S. commercial business is still accelerating. At $201.72, though, the price matches our bull case and is about twice the weighted value of $100. A fall toward $100&ndash;120, or several more quarters of 80%-plus growth that lift the base case, would make it worth buying.')
          + band('The best numbers in software, <em>priced as if they last.</em>', 'Palantir has earned its premium; the shares already pay for the next four years of it.')),
     ])
@@ -437,10 +437,10 @@ AQ2 = 'https://ir.amd.com/news-events/press-releases/detail/1295/'
 R['AMD'] = dict(
     t='AMD', slug='amd', name='Advanced Micro Devices', h1='AMD', sector='Semiconductors', date=DATE, timing=', ahead of its third-quarter results on November 3',
     sub='AMD designs processors for PCs, servers and game consoles, and is now the main alternative to Nvidia in AI accelerators. Data center sales more than doubled last quarter and its Helios AI racks start shipping this half. The shares are up more than 140% this year.',
-    call='Watch', method='Scenario model', price=552.72, pricenote='Close, Oct 21, 2026', base=319, bear=128, bull=591, wt=340, max=700, tick=100,
+    call='Watch', method='Scenario model', price=552.72, pricenote='Close, Oct 21, 2026', base=353, bear=148, bull=641, wt=374, max=700, tick=100,
     disclosure='The author holds no AMD shares directly; AMD is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio.',
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 128, 591, 319, '$128 to $591, base $319'), ('Probability-weighted', None, None, 340, '$340'),
+    field=[('Scenario model', 148, 641, 353, '$148 to $641, base $353'), ('Probability-weighted', None, None, 374, '$374'),
            ('Price at writing', None, None, 552.72, '$552.72'), ('52-week range', 188, 659, None, '$188 to $659'), ('Analyst average', None, None, 636, '$636')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'CPUs it leads in, <em>GPUs it is catching up in.</em>',
@@ -456,13 +456,13 @@ R['AMD'] = dict(
          + src([('AMD filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&type=10-K')])),
         ('capital', 'Balance sheet and ownership', 'About $10 billion of net cash, <em>and a warrant to OpenAI.</em>',
          prose('At the end of June AMD had $13.1 billion of cash and short-term investments and $3.2 billion of debt. The OpenAI warrant is the unusual item: up to 160 million shares, about 10% of today&rsquo;s count, for a nominal price, with the last tranche tied to a $600 share price. This model counts all of it, so shares rise from 1.63 billion to about 1.80 billion by 2030.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$319 a share.</em>',
-         prose('2030 revenue and operating margin, taxed at 21%, times an exit multiple, discounted back four years at 12% (beta 1.6 gives a CAPM cost of about 12.3%), plus net cash. AMD&rsquo;s own long-term targets, set in November 2025, call for revenue growth above 35% a year and earnings above $20 a share; it now says it expects to beat that figure significantly.')
+        ('value', 'Valuation', 'Our scenarios give <em>$353 a share.</em>',
+         prose('2030 revenue and operating margin, taxed at 21%, times an exit multiple, discounted back four years at 12% (beta 1.6 gives a CAPM cost of about 12.3%), plus net cash and the free cash flow earned along the way (a straight line from about $8.4 billion over the last twelve months to 80% of 2030 after-tax profit). AMD&rsquo;s own long-term targets, set in November 2025, call for revenue growth above 35% a year and earnings above $20 a share; it now says it expects to beat that figure significantly.')
          + scen([['Revenue in 2030', '$100B', '$150B', '$200B'], ['Operating margin after stock pay', '22%', '30%', '35%'], ['Exit multiple', '20&times;', '25&times;', '30&times;'],
-                 ['Value per share', '$128', '$319', '$591'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$340</b>. The base case has revenue about three times this year&rsquo;s roughly $50 billion: Data Center doubling in 2027, then growth slowing to about 15% by 2030.')),
-        ('implied', 'What the price assumes', 'At $553, <em>about $190 billion of revenue at bull margins.</em>',
-         implied([['About $187 billion of revenue in 2030 at a 35% margin and 30&times; earnings', 'Close to our bull case'], ['Or about $260 billion of revenue at the base margin and multiple', 'Five times this year&rsquo;s revenue']])
+                 ['Value per share', '$148', '$353', '$641'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$374</b>. The base case has revenue about three times this year&rsquo;s roughly $50 billion: Data Center doubling in 2027, then growth slowing to about 15% by 2030.')),
+        ('implied', 'What the price assumes', 'At $553, <em>about $170 billion of revenue at bull margins.</em>',
+         implied([['About $172 billion of revenue in 2030 at a 35% margin and 30&times; earnings', 'Close to our bull case'], ['Or about $237 billion of revenue at the base margin and multiple', 'Almost five times this year&rsquo;s revenue']])
          + prose('The analysts&rsquo; average target is $636 and they put the stock at about 34 times their 2027 earnings estimate. Our lower number comes mostly from valuing it on 2030 earnings, after the AI build-out has slowed, rather than on 2027.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -472,13 +472,13 @@ R['AMD'] = dict(
              ['AI spending cycle', 'If AI data center spending slows after 2027, the highest-growth part of AMD slows with it.'],
              ['Dilution and export rules', 'The OpenAI warrant adds up to 10% more shares; China export limits already cost $800 million in 2025.'],
          ]) + prose('<b>Upside:</b> a faster Helios ramp, share gains in AI inference, more lab deals like Anthropic&rsquo;s, and continued EPYC gains in servers.')),
-        ('rec', 'Recommendation', 'Watch. <em>The right products, a price ahead of them.</em>',
+        ('rec', 'Rating', 'Watch. <em>The right products, a price ahead of them.</em>',
          prose('AMD is in the best position in its history: leading in server CPUs and finally a credible second supplier of AI systems, with signed demand from OpenAI and Anthropic. At $552.72, though, the price is close to our bull case and about 60% above the weighted value of $340. Third-quarter results on November 3 and the size of the fourth-quarter step-up are the next test; a price nearer $350&ndash;400, or proof that 2027 data center revenue is running well ahead of plan, would make it a Buy.')
          + band('A real challenger to Nvidia, <em>already priced as one.</em>', 'The products and customers are there; the shares have run ahead of the revenue.')),
     ])
 
 # ================================================================ Micron
-MQ = 'https://pulse2.com/micron-reports-record-fiscal-q4-revenue-of-54-23-billion-and-fy2026-revenue-of-133-19-billion/'
+MQ = 'https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000018/a2026q4ex991-pressrelease.htm'
 MC = 'https://www.marketbeat.com/instant-alerts/transcript-micron-technology-q4-earnings-call-highlights-2026-09-30/'
 R['MU'] = dict(
     t='MU', slug='micron', name='Micron Technology', h1='Micron', sector='Memory chips', date=DATE, timing=', after record fiscal 2026 results',
@@ -521,7 +521,7 @@ R['MU'] = dict(
              ['China', 'Beijing barred some infrastructure operators from buying Micron chips in 2023.'],
              ['Capital spending', 'Higher capex and depreciation will weigh on margins as prices ease.'],
          ]) + prose('<b>Upside:</b> long-term agreements that keep prices high for longer, HBM4 and custom HBM with Nvidia, and buybacks from a cash pile of nearly $70 billion.')),
-        ('rec', 'Recommendation', 'Watch. <em>Peak conditions, priced for more.</em>',
+        ('rec', 'Rating', 'Watch. <em>Peak conditions, priced for more.</em>',
          prose('Micron is executing brilliantly in the best memory market there has ever been, and its long-term agreements make this cycle steadier than past ones. At $913.67, though, the price assumes today&rsquo;s profit lasts well beyond 2028, about 27% above our weighted value of $717. We would rather buy nearer $700, or when the first signs of a downturn have already been priced in. Next results are expected in mid-December.')
          + band('The best memory market ever, <em>still a memory market.</em>', 'Every past boom ended with new supply; this one has a later date, not a different ending.')),
     ])
@@ -570,7 +570,7 @@ R['SNDK'] = dict(
              ['Kioxia', 'Its factories are shared with Kioxia, so supply and costs depend on the joint venture.'],
              ['Volatility', 'The shares fell about 40% in July on AI overbuilding fears.'],
          ]) + prose('<b>Upside:</b> enterprise SSD demand from AI inference, high-bandwidth flash for AI systems, contract floors that soften the next downturn, and large buybacks.')),
-        ('rec', 'Recommendation', 'Watch. <em>A great quarter, a peak-cycle price.</em>',
+        ('rec', 'Rating', 'Watch. <em>A great quarter, a peak-cycle price.</em>',
          prose('Sandisk has turned a loss-making business into one with an 85% gross margin and no debt in about a year, and its contracts should make the next downturn milder than the last. At $1,378.22, though, the shares are close to our bull case and about 80% above the weighted value of $766. First-quarter results on October 29 will show how far prices are still rising; we would look again nearer $750.')
          + band('The purest bet on flash, <em>at a price for perfect flash.</em>', 'Sandisk earns a fortune at today&rsquo;s prices; the shares assume those prices stay.')),
     ])
@@ -659,13 +659,14 @@ R['LMT'] = dict(
              ['F-35 funding', 'Lot 20 costs are already running ahead of authorized funding.'],
              ['Pension and buybacks', 'More than $1 billion of pension contributions next year and no buybacks this year.'],
          ]) + prose('<b>Upside:</b> missile defense demand that management calls &ldquo;permanent&rdquo;, a 10-year F-35 production path, Golden Dome missile-defense spending, and a return to buybacks once the munitions build-out is funded.')),
-        ('rec', 'Recommendation', 'Hold. <em>Fairly priced, with a real but narrow threat.</em>',
+        ('rec', 'Rating', 'Hold. <em>Fairly priced, with a real but narrow threat.</em>',
          prose('Lockheed is the strongest of the primes on the work that matters most right now: interceptors and munitions, where it is the only supplier and has seven-year contracts. Anduril is taking the new drone and low-cost categories, and that will cap Lockheed&rsquo;s share of future budgets, but it does not touch the F-35, PAC-3, THAAD or Trident this decade. At $590.20 the shares are about 12% below our weighted value of $667: close to fair. We would buy nearer $550, or after the midterms if the budget holds up.')
          + band('The incumbent with the moat, <em>at about a fair price.</em>', 'Anduril wins the new categories; Lockheed still owns the ones with years of backlog.')),
     ])
 
 # ================================================================ Northrop Grumman
-NQ = 'https://www.stocktitan.net/articles/northrop-grumman-q3-2026-earnings-record-backlog'
+NQ = 'https://www.sec.gov/Archives/edgar/data/0001133421/000113342126000037/noc-09302026xearningsrelea.htm'
+NA = 'https://www.stocktitan.net/articles/northrop-grumman-q3-2026-earnings-record-backlog'
 NC = 'https://www.fool.com/earnings/call-transcripts/2026/10/20/northrop-grumman-noc-q3-2026-earnings-call-transcript/'
 R['NOC'] = dict(
     t='NOC', slug='northrop-grumman', name='Northrop Grumman', h1='Northrop <em>Grumman</em>', sector='Aerospace &amp; defense', date=D22, timing=', after its third-quarter results',
@@ -683,7 +684,7 @@ R['NOC'] = dict(
          stats([('$11.1B', 'Sales, Q3 2026, +7%'), ('$7.89', 'Earnings per share'), ('$1.81B', 'Adjusted free cash flow'), ('$109.6B', 'Backlog, a record'), ('1.5&times;', 'Book-to-bill'), ('5&ndash;7%', '2027 sales growth outlook')])
          + prose('Third-quarter sales rose 7% to $11.1 billion, led by Aeronautics (+14%) and Defense Systems (+12%). Backlog reached a record $109.6 billion on $16.4 billion of new awards. Northrop kept 2026 sales guidance at $43.75&ndash;44.25 billion, raised segment operating income to $4.94&ndash;5.04 billion and adjusted earnings to $29.35&ndash;29.75 a share, and kept adjusted free cash flow at $3.1&ndash;3.5 billion.',
                  'For 2027 it expects sales growth of 5&ndash;7% with all four segments growing, margins up 10&ndash;20 basis points and free cash flow of $3.3&ndash;3.7 billion, with faster growth in 2028. The B-21 is meeting its test requirements, and the Air Force approved Sentinel&rsquo;s design maturity, allowing a first flight in 2027.')
-         + src([('Q3 2026 results', NQ), ('Earnings call', NC)])),
+         + src([('Q3 2026 results', NQ), ('Earnings call', NC), ('Backlog analysis', NA)])),
         ('threat', 'The Anduril question', 'Anduril is now worth <em>more than Northrop.</em>',
          prose('At about $90 billion in its October employee share sale, Anduril is valued above Northrop&rsquo;s market value of about $79 billion, on roughly a tenth of the revenue. That says more about how investors value growth than about who builds what, but the two do now compete. Northrop&rsquo;s own drone fighter, the <b>Talon Blue</b>, flew fully autonomously this quarter, yet the Air Force picked Anduril and General Atomics, not Northrop, to build the first drone wingmen in June. Anduril also makes solid rocket motors, a business where Northrop is one of the two largest suppliers and only resumed deliveries this quarter.')
          + table(['Market', 'Where Northrop stands', 'How exposed'], [
@@ -726,7 +727,7 @@ R['NOC'] = dict(
              ['Sentinel cost', 'The program&rsquo;s cost growth has drawn scrutiny; production is not yet priced.'],
              ['Cash flow', 'Heavy capital spending keeps free cash flow near 8% of sales.'],
          ]) + prose('<b>Upside:</b> faster B-21 production, a munitions and rocket-motor ramp from 2027, Golden Dome space work, and a separation of the microelectronics business.')),
-        ('rec', 'Recommendation', 'Hold. <em>Protected programs, exposed budgets.</em>',
+        ('rec', 'Rating', 'Hold. <em>Protected programs, exposed budgets.</em>',
          prose('Northrop owns two of the most protected programs in defense, and no new entrant can build a stealth bomber or an ICBM. Its newer bets, though, sit exactly where Anduril is strongest, and its growth depends on budgets that the midterms put in question. At $552.53 the shares are about 5% below our weighted value of $582: fairly priced for the plan. We prefer Lockheed for its missile-defense backlog and would buy Northrop nearer $480.')
          + band('The most protected programs, <em>and the most political.</em>', 'Northrop&rsquo;s core is safe from Anduril; its budget is not safe from Congress.')),
     ])
@@ -750,7 +751,7 @@ R['CAT'] = dict(
          stats([('$20.5B', 'Sales, Q2 2026, +24%'), ('21.9%', 'Adjusted operating margin'), ('$8.17', 'Adjusted EPS, +73%'), ('$72B', 'Backlog, +92%'), ('+72%', 'Power generation sales'), ('$5.1B', 'Free cash flow, quarter')])
          + prose('Second-quarter sales rose 24% to a record $20.5 billion and adjusted earnings per share 73%. All three segments grew: Construction 35%, Resource 20% and Power &amp; Energy 17%, with margins of 23%, 15% and 25%. Backlog reached $72 billion, up $35 billion in a year, and 59% of it is expected to ship within twelve months.',
                  'Caterpillar raised its 2026 outlook to sales growth in the mid-to-high teens and free cash flow in the top half of its $6&ndash;15 billion range, with about $2.2 billion of tariff costs. The operating profit included $392 million of expected refunds of IEEPA tariffs. Third-quarter results come on <b>October 29</b>.')
-         + src([('Q2 2026 results', CQ), ('Earnings call', CC), ('Backlog', 'https://www.fool.com/investing/2026/09/07/caterpillars-power-generation-backlog-just-hit-72/')])),
+         + src([('Q2 2026 results', CQ), ('Results with segment detail, SEC', 'https://www.sec.gov/Archives/edgar/data/0000018230/000001823026000040/ex991toformcat2q2026earnin.htm'), ('Earnings call', CC)])),
         ('fin', 'The numbers', 'A record year <em>after two flat ones.</em>',
          fin_table('CAT') + prose('Sales were flat from 2023 to 2025 as construction demand cooled; operating income fell in 2025 as tariffs and lower prices hit margins. 2026 is a sharp reacceleration, driven by data-center power and a construction rebound. The table includes Cat Financial, whose loans are funded by its own debt.')
          + src([('Caterpillar filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000018230&type=10-K')])),
@@ -758,7 +759,7 @@ R['CAT'] = dict(
          prose('Caterpillar&rsquo;s balance sheet has two halves. The machinery business had $5.9 billion of cash and $11.0 billion of debt at the end of June, about $5 billion of net debt. Cat Financial carries another $35 billion of debt, matched by the loans it makes to customers, so this model leaves it out. Caterpillar bought back $1.5 billion of stock and paid $0.7 billion of dividends in the second quarter, and plans about $3.5 billion of capital spending this year.')),
         ('value', 'Valuation', 'The model gives <em>$442 a share.</em>',
          table(['Assumption', 'Base case', 'Basis'], [
-             ['Sales, 2026', '$78B', '2025&rsquo;s $67.6B plus mid-to-high-teens growth'],
+             ['Sales, 2026', '$78B', 'Estimate: 2025&rsquo;s $67.6B plus the guided mid-to-high-teens growth'],
              ['Growth, 2027 and 2028', '8%, then 6%', 'Power backlog ships; construction slows; fades to 3% by year 10'],
              ['Operating margin', '20% rising to 21%', 'Adjusted margin, less the one-off tariff refunds'],
              ['Reinvestment', '$1 for every $3 of new sales', 'New engine and turbine capacity'],
@@ -782,14 +783,14 @@ R['CAT'] = dict(
              ['Tariffs and costs', 'About $2.2 billion of tariff costs this year, plus rising diesel and material costs.'],
              ['Valuation', 'At about 32 times forward earnings, a normal downturn would hit the shares hard.'],
          ]) + prose('<b>Upside:</b> a power backlog that keeps growing, turbines sold out into 2030, new engine capacity from late 2026, and more tariff refunds.')),
-        ('rec', 'Recommendation', 'Watch. <em>A great power business inside a cyclical company.</em>',
+        ('rec', 'Rating', 'Watch. <em>A great power business inside a cyclical company.</em>',
          prose('Caterpillar has turned into one of the clearest ways to own the power needed for AI, and its backlog makes the next two years visible. But about 60% of the company is still construction and mining equipment, and even after a 30% fall the price assumes growth of about 18% a year for two more years. At $703.84 the shares are about 55% above our weighted value of $454. It is on the watchlist; we would look again nearer $500, or after a quarter that shows power orders still accelerating. Results come on October 29.')
          + band('The AI power trade, <em>at an AI price.</em>', 'The engines are sold out; the shares already know it.')),
     ])
 
 # ================================================================ ASML
 XQ = 'https://www.stocktitan.net/articles/asml-q3-2026-earnings-ai-chip-machine-demand'
-XV = 'https://vestedfinance.com/blog/us-stocks/asml-q3-earnings-2026/'
+XV = 'https://investor.asml.com/news-releases/news-release-details/asml-reports-eu11.7-billion-total-net-sales-and-eu5.0-billion-net-income-q3-2026'
 R['ASML'] = dict(
     t='ASML', slug='asml', name='ASML Holding', h1='ASML', sector='Chip equipment', date=D22, timing=', after its third-quarter results',
     sub='ASML, based in the Netherlands, is the only company in the world that makes extreme ultraviolet (EUV) lithography machines, without which no leading-edge chip can be made. Sales are up 36% this year, it says demand will outrun its capacity through 2028, and its shares trade in New York as ADRs. All figures are converted to U.S. dollars at $1.123 per euro.',
@@ -806,7 +807,7 @@ R['ASML'] = dict(
          stats([('&euro;11.7B', 'Sales, Q3 2026, +55%'), ('57.5%', 'Gross margin'), ('&euro;5.0B', 'Net income'), ('17', 'EUV machines sold'), ('&euro;14.2&ndash;15.2B', 'Q4 sales guidance'), ('&euro;44&ndash;45B', '2026 sales guidance, +36%')])
          + prose('Third-quarter sales rose 55% to &euro;11.7 billion ($13.1 billion), with a record 57.5% gross margin and 121 machines sold, including 17 EUV. Net income of &euro;5.0 billion included a &euro;510 million gain on its stake in Mistral AI. Customer prepayments rose &euro;5.7 billion in the quarter, the clearest sign of new orders now that ASML no longer reports bookings.',
                  'ASML guided to &euro;14.2&ndash;15.2 billion of fourth-quarter sales and &euro;44&ndash;45 billion for 2026, up 36%, at a 56% gross margin. It plans to raise EUV and DUV capacity by 30% in 2027 and says even that will not meet customer demand in 2027 or 2028; price increases should come through partly in 2027 and fully from 2028. China fell to 23% of machine sales from 42% a year earlier.')
-         + src([('Q3 2026 analysis', XQ), ('Q3 2026 figures', XV)])),
+         + src([('Q3 2026 results', XV), ('Analysis', XQ)])),
         ('fin', 'The numbers', 'Flat for two years, <em>then up a third.</em>',
          table(['', '2023', '2024', '2025', '2026 guidance'], [
              ['Sales', '&euro;27.6B', '&euro;28.3B', '&euro;32.7B', '&euro;44&ndash;45B'],
@@ -817,7 +818,7 @@ R['ASML'] = dict(
          + prose('ASML reports in euros under IFRS, in an annual report filed with the SEC as a 20-F, so the site&rsquo;s automatic tables do not cover it; these figures come from its results releases. Sales stalled in 2023&ndash;2024 as memory makers cut spending and China export rules tightened, then accelerated as AI demand reached every leading-edge customer at once.')
          + src([('2025 results', 'https://www.dukascopy.com/swiss/it/marketwatch/market-news/Stock-Analysis/154194/'), ('ASML filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000937966&type=20-F')])),
         ('capital', 'Balance sheet and ownership', 'Net cash, <em>and &euro;12 billion of buybacks.</em>',
-         prose('At the end of September ASML had &euro;12.7 billion of cash and short-term investments against about &euro;3 billion of bonds, roughly &euro;9 billion ($10 billion) of net cash. It bought back &euro;4.1 billion of stock in the quarter under a program of up to &euro;12 billion running to 2028, and pays an interim dividend of &euro;1.88 a share in November. Each ADR is one ordinary share; there are about 383 million.')),
+         prose('At the end of September ASML had &euro;12.7 billion of cash and short-term investments against bonds of roughly &euro;3 billion (an estimate; the latest balance sheet has the exact figure), giving about &euro;9 billion ($10 billion) of net cash. It bought back &euro;4.1 billion of stock in the quarter under a program of up to &euro;12 billion running to 2028, and pays an interim dividend of &euro;1.88 a share in November. Each ADR is one ordinary share; there are about 383 million.')),
         ('value', 'Valuation', 'The model gives <em>$1,081 a share.</em>',
          table(['Assumption', 'Base case', 'Basis'], [
              ['Sales, 2026', '$50.0B', 'Guidance midpoint, &euro;44.5B at $1.123'],
@@ -845,7 +846,7 @@ R['ASML'] = dict(
              ['Customer concentration', 'TSMC, Samsung, SK Hynix, Micron and Intel buy almost all EUV machines.'],
              ['Currency', 'Results are in euros; a stronger euro lowers the dollar value of the ADR&rsquo;s earnings.'],
          ]) + prose('<b>Upside:</b> EUV price increases from 2027, High-NA adoption, memory makers moving more layers to EUV, and a new 2030 target at the June 2027 investor day.')),
-        ('rec', 'Recommendation', 'Watch. <em>The best moat in chips, at a full price.</em>',
+        ('rec', 'Rating', 'Watch. <em>The best moat in chips, at a full price.</em>',
          prose('No company in the AI supply chain has a stronger position: every leading-edge chip runs through ASML&rsquo;s machines, and demand is ahead of its capacity for at least two years. At $1,560.54, though, the price needs growth close to our bull case, about 44% above our weighted value of $1,085. ASML is already part of the portfolio through SMH. As a direct holding we would look again nearer $1,100.')
          + band('A monopoly, <em>priced like one.</em>', 'The machines are irreplaceable; the shares already assume it.')),
     ])
@@ -884,11 +885,11 @@ R['SKHY'] = dict(
          prose('At the end of June SK hynix had &#8361;88 trillion of cash against &#8361;18.6 trillion of debt. In July it listed ADRs on the Nasdaq under SKHY, issuing up to 17.79 million new shares (about 2.4% more) for up to about $29 billion; this model adds that to net cash, about $80 billion in all. Capital spending will reach the high &#8361;40 trillions this year (about $35 billion). New capacity comes from the M15X fab, pulled forward, and the first Yongin cleanroom in early 2027.',
                'Management says it does not expect its investment plans to cause oversupply soon and that tight conditions should last &ldquo;for a considerable period&rdquo;. It is weighing more shareholder returns, with analysts expecting buybacks of more than &#8361;30 trillion.')),
         ('value', 'Valuation', 'Our cycle model gives <em>$111 an ADR.</em>',
-         prose('The same method as Micron: free cash flow for 2027&ndash;2030 at each scenario&rsquo;s prices, then an exit value on <i>mid-cycle</i> earnings, all discounted at 14% (a high beta plus Korea and memory-cycle risk), plus net cash, over about 7.4 billion ADR-equivalents (740 million Korean shares).')
+         prose('The same method as Micron: free cash flow for 2027&ndash;2030 at each scenario&rsquo;s prices, then an exit value on <i>mid-cycle</i> earnings, all discounted at 14% (a high beta plus Korea and memory-cycle risk), plus net cash, over about 7.4 billion ADR-equivalents (an estimate of 740 million Korean shares outstanding after the July offering, net of treasury shares).')
          + scen([['Revenue, 2027 / 2028', '$280B / $230B', '$330B / $350B', '$380B / $450B'], ['Revenue, 2029 / 2030', '$150B / $120B', '$240B / $180B', '$400B / $350B'], ['Free cash flow, four years', '$228B', '$417B', '$763B'],
                  ['Mid-cycle revenue and operating margin', '$150B at 25%', '$210B at 35%', '$320B at 45%'], ['Exit multiple', '10&times;', '12&times;', '14&times;'],
                  ['Value per ADR', '$60', '$111', '$215'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$124</b>. This year&rsquo;s revenue should be about &#8361;340 trillion ($256 billion); the base case grows it another 30% in 2027 as HBM4 ramps, then has prices fall as new supply arrives from 2028, to a mid-cycle margin still far above anything before AI.')),
+         + prose('Weighted 25/50/25: <b>$124</b>. This year&rsquo;s revenue should be about &#8361;340 trillion ($256 billion), an estimate from the first two quarters and analysts&rsquo; third- and fourth-quarter forecasts; the base case grows it another 30% in 2027 as HBM4 ramps, then has prices fall as new supply arrives from 2028, to a mid-cycle margin still far above anything before AI.')),
         ('implied', 'What the price assumes', 'At $132, <em>today&rsquo;s profits last.</em>',
          implied([['About $80 billion of after-tax profit a year from 2031, valued at 12&times;, after the base case&rsquo;s cash flows', '2025 net profit was &#8361;42.9T, about $32B'], ['Or the bull case: revenue staying above $350 billion through 2030', 'New supply from all three makers arrives from 2027&ndash;2028']])
          + prose('The price sits just above our weighted value. Analysts are far more optimistic, with a consensus target of about $253, and the shares trade at about 8 times trailing earnings. As with Micron, that multiple looks cheap only if peak earnings are close to normal.')
@@ -901,7 +902,7 @@ R['SKHY'] = dict(
              ['China', 'CXMT, China&rsquo;s DRAM maker, is closing the technology gap at the low end.'],
              ['Currency', 'A 10% stronger won cuts pre-tax profit by about &#8361;1.2 trillion and changes the dollar value of everything here.'],
          ]) + prose('<b>Upside:</b> HBM4 prices up sharply through 2027, long-term agreements that smooth the next downturn, large buybacks, and a cash pile that could approach $100 billion.')),
-        ('rec', 'Recommendation', 'Watch. <em>The best position in memory, at peak conditions.</em>',
+        ('rec', 'Rating', 'Watch. <em>The best position in memory, at peak conditions.</em>',
          prose('SK hynix earned the AI memory boom: first to HBM at scale, the largest share of Nvidia&rsquo;s supply and a 76% margin. Compared with Micron it looks cheaper, only about 6% above our weighted value against Micron&rsquo;s 27%. But it is still a memory company at the top of its cycle, Samsung is catching up in HBM, and its home currency adds a risk Micron does not have. At $131.69 we would watch the October 29 results; nearer $110, our base case, it would be the better of the two memory makers to own.')
          + band('The HBM leader, <em>closer to fair than its rivals.</em>', 'The cycle still decides; the price leaves less to go wrong than Micron&rsquo;s.')),
     ])

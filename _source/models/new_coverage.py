@@ -2,11 +2,29 @@
 Method: revenue and operating margin in 2030, after-tax operating profit capitalised at an exit multiple,
 discounted back four years, plus net cash, divided by shares. Rough by design: these are young businesses."""
 T = .21
-def val(rev, m, mult, disc, yrs, net, shares, kind='pe'):
+CONV = .80   # free cash flow in 2030 as a share of after-tax operating profit (the rest is reinvested)
+REG = {}     # every case set, for export.py and xlsx_models.py
+
+
+def interim(rev, m, disc, yrs, fcf0, kind='pe'):
+    """Free cash flow between now and 2030: a straight line from this year's level to CONV x 2030 after-tax
+    operating profit (zero for a 'ps' company not yet profitable). Returns (flows, present value)."""
+    if fcf0 is None:
+        return [], 0.0
+    fT = rev * m * (1 - T) * CONV if kind == 'pe' else 0.0
+    flows = [fcf0 + (fT - fcf0) * t / yrs for t in range(1, yrs + 1)]
+    return flows, sum(f / (1 + disc) ** t for t, f in enumerate(flows, 1))
+
+
+def val(rev, m, mult, disc, yrs, net, shares, kind='pe', fcf0=None):
+    """value = PV of free cash flow, years 1-4 + PV of the 2030 exit value + net cash, per share.
+    fcf0 = this year's free cash flow; None for private companies, whose interim cash burn is funded by new
+    shares (so it shows up as dilution, which these whole-company values leave out)."""
     ev = rev * m * (1 - T) * mult if kind == 'pe' else rev * mult   # 'ps' = exit EV/sales
-    return (ev / (1 + disc) ** yrs + net) / shares
+    return (ev / (1 + disc) ** yrs + interim(rev, m, disc, yrs, fcf0, kind)[1] + net) / shares
 
 def show(name, cases, price=None, unit=1, label='per share'):
+    REG[name] = cases
     v = {k: val(*c) for k, c in cases.items()}
     wt = .25 * v['bear'] + .5 * v['base'] + .25 * v['bull']
     f = lambda x: f'{x / unit:,.0f}'
@@ -15,30 +33,30 @@ def show(name, cases, price=None, unit=1, label='per share'):
 
 # SpaceX: 13.57B shares, $89.9B cash, $38.8B debt (Sep 30), discount 12%
 N = 89.9e9 - 38.8e9
-show('SPCX', {'bear': (250e9, .22, 20, .12, 4, N, 13.57e9), 'base': (500e9, .28, 22, .12, 4, N, 13.57e9), 'bull': (900e9, .32, 25, .12, 4, N, 13.57e9)}, 162.57)
+show('SPCX', {'bear': (250e9, .22, 20, .12, 4, N, 13.57e9, 'pe', -68e9), 'base': (500e9, .28, 22, .12, 4, N, 13.57e9, 'pe', -68e9), 'bull': (900e9, .32, 25, .12, 4, N, 13.57e9, 'pe', -68e9)}, 162.57)
 # Firefly: 167.4M shares now, more later; discount 15%; exit EV/sales
-show('FLY', {'bear': (0.7e9, 0, 2, .15, 4, 0, 200e6, 'ps'), 'base': (1.2e9, 0, 5, .15, 4, .2e9, 185e6, 'ps'), 'bull': (2.0e9, 0, 8, .15, 4, .2e9, 180e6, 'ps')}, 17.41)
+show('FLY', {'bear': (0.7e9, 0, 2, .15, 4, 0, 200e6, 'ps', -0.23e9), 'base': (1.2e9, 0, 5, .15, 4, .2e9, 185e6, 'ps', -0.23e9), 'bull': (2.0e9, 0, 8, .15, 4, .2e9, 180e6, 'ps', -0.23e9)}, 17.41)
 # Private companies: equity value in $B (shares = 1), discount 15% (13% Anduril)
 show('Anthropic', {'bear': (120e9, .15, 20, .15, 4, 0, 1), 'base': (250e9, .30, 25, .15, 4, 0, 1), 'bull': (450e9, .40, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')
 show('OpenAI', {'bear': (150e9, .10, 20, .15, 4, 0, 1), 'base': (280e9, .25, 25, .15, 4, 0, 1), 'bull': (450e9, .35, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')
 show('Anduril', {'bear': (8e9, .05, 20, .13, 4, 0, 1), 'base': (14e9, .12, 25, .13, 4, 0, 1), 'bull': (22e9, .18, 35, .13, 4, 0, 1)}, unit=1e9, label='$B')
 # Kratos: 187.7M shares now, ~200M by 2030 (stock pay); net cash ~$1.3B (cash $1.44B less leases), less ~$0.1B 2026 burn
 # discount 10% (CAPM: 5.15% + 1.1 beta x 4.5%)
-show('KTOS', {'bear': (2.6e9, .06, 18, .10, 4, 1.2e9, 200e6), 'base': (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6), 'bull': (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6)}, 38.81)
+show('KTOS', {'bear': (2.6e9, .06, 18, .10, 4, 1.2e9, 200e6, 'pe', -0.13e9), 'base': (3.2e9, .09, 22, .10, 4, 1.2e9, 200e6, 'pe', -0.13e9), 'bull': (4.0e9, .12, 28, .10, 4, 1.2e9, 200e6, 'pe', -0.13e9)}, 38.81)
 # Bloomberg LP: ~$15B revenue (Forbes/BCG estimates), mature, discount 9% (beta ~0.8)
 show('Bloomberg', {'bear': (16e9, .22, 18, .09, 4, 0, 1), 'base': (18e9, .28, 22, .09, 4, 0, 1), 'bull': (20e9, .33, 26, .09, 4, 0, 1)}, unit=1e9, label='$B')
 # Axon: 81.2M shares now, ~88M by 2030 (stock pay; target <2.5% a year); net debt ~$1.1B (Jun 30, before and after the $1B convert)
 # discount 11% (CAPM: 5.15% + 1.44 beta x 4.5% = 11.6%, rounded down for 95% recurring revenue); margins are operating margin after stock pay
-show('AXON', {'bear': (6.5e9, .15, 25, .11, 4, -1.1e9, 88e6), 'base': (8.5e9, .20, 30, .11, 4, -1.1e9, 88e6), 'bull': (10.5e9, .25, 35, .11, 4, -1.1e9, 88e6)}, 396.30)
+show('AXON', {'bear': (6.5e9, .15, 25, .11, 4, -1.1e9, 88e6, 'pe', 0.14e9), 'base': (8.5e9, .20, 30, .11, 4, -1.1e9, 88e6, 'pe', 0.14e9), 'bull': (10.5e9, .25, 35, .11, 4, -1.1e9, 88e6, 'pe', 0.14e9)}, 396.30)
 
 # ---------------------------------------------------------------- added Oct 21, 2026: Palantir, AMD, Micron, Sandisk
 # Discount rates are CAPM: 5.15% 10-year yield + beta x 4.5% premium, rounded to a whole percent.
 # Palantir: beta 2.01 -> 14%. 2026 revenue guided at $8.15B. Net cash $9.4B (no debt, Jun 30). ~2.6B diluted shares by 2030.
 # Margins are GAAP operating margin, after stock pay.
-show('PLTR', {'bear': (18e9, .40, 25, .14, 4, 9.4e9, 2.6e9), 'base': (28e9, .50, 30, .14, 4, 9.4e9, 2.6e9), 'bull': (45e9, .55, 45, .14, 4, 9.4e9, 2.6e9)}, 201.72)
+show('PLTR', {'bear': (18e9, .40, 25, .14, 4, 9.4e9, 2.6e9, 'pe', 3.36e9), 'base': (28e9, .50, 30, .14, 4, 9.4e9, 2.6e9, 'pe', 3.36e9), 'bull': (45e9, .55, 45, .14, 4, 9.4e9, 2.6e9, 'pe', 3.36e9)}, 201.72)
 # AMD: beta 1.59 -> 12%. Net cash $9.9B ($13.1B cash and investments less $3.2B debt, Jun 27).
 # 1.63B shares plus up to 160M from the OpenAI warrant -> 1.80B by 2030.
-show('AMD', {'bear': (100e9, .22, 20, .12, 4, 9.9e9, 1.80e9), 'base': (150e9, .30, 25, .12, 4, 9.9e9, 1.80e9), 'bull': (200e9, .35, 30, .12, 4, 9.9e9, 1.80e9)}, 552.72)
+show('AMD', {'bear': (100e9, .22, 20, .12, 4, 9.9e9, 1.80e9, 'pe', 8.40e9), 'base': (150e9, .30, 25, .12, 4, 9.9e9, 1.80e9, 'pe', 8.40e9), 'bull': (200e9, .35, 30, .12, 4, 9.9e9, 1.80e9, 'pe', 8.40e9)}, 552.72)
 
 
 def cyc(revs, fcfm, nrev, nm, mult, disc, net, shares):

@@ -5,11 +5,12 @@ Model script: _source/models/new_coverage.py
 
 INPUTS,Value,Basis
 Tax rate on operating profit %,21,U.S. federal rate
-Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash,For Firefly: revenue x EV/sales multiple
+Formula,value = (revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + PV of free cash flow in years 1-4 + net cash,For Firefly: revenue x EV/sales multiple
+"Free cash flow, years 1-4",straight line from this year to 80% of 2030 after-tax operating profit,"Zero at the end for Firefly; left out for private companies, whose cash burn is funded by new shares"
 Inputs by scenario,see SCENARIOS,Sources are linked in the report
 
 BRIDGE (base case),Value
-Base-case value ($ per share),117.72
+Base-case value ($ per share),123.15
 
 SCENARIOS,Bear,Base,Bull
 Revenue in 2030 ($B),250.0,500.0,900.0
@@ -20,9 +21,15 @@ Value in 2030 ($B),869.0,2433.2,5688.0
 Discount rate %,12.0,12.0,12.0
 Years discounted,4,4,4
 Value today ($B),552.265,1546.343,3614.827
+Free cash flow this year ($B),-68.0,-68.0,-68.0
+"Free cash flow, year 1 ($B)",-42.31,-28.88,-5.496
+"Free cash flow, year 2 ($B)",-16.62,10.24,57.008
+"Free cash flow, year 3 ($B)",9.07,49.36,119.512
+"Free cash flow, year 4 ($B)",34.76,88.48,182.016
+"Present value of free cash flow, years 1-4 ($B)",-22.48,73.742,241.28
 Plus net cash ($B),51.1,51.1,51.1
 Shares by 2030 (millions),13570.0,13570.0,13570.0
-Value ($ per share),44.46,117.72,270.15
+Value ($ per share),42.81,123.15,287.93
 Probability,25,50,25
-Probability-weighted value ($ per share),,137.51,
+Probability-weighted value ($ per share),,144.26,
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial plan | LDB Finance</title>
+<meta name="description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Financial plan | LDB Finance">
+<meta property="og:description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/plan.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/og/plan.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Financial plan | LDB Finance">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Financial plan | LDB Finance">
+<meta name="twitter:description" content="Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/og/plan.jpg">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=37">
+</head>
+<body data-page="plan">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html" class=on>Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <span class="sites" role="navigation" aria-label="Luis Diaz Busquets sites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></span>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><div class="msites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></div></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Tools<span class="kind auto" title="Calculated by code from your inputs, with no analyst review">Automated model</span></div>
+  <h1>Financial <em>plan</em></h1>
+  <p class="sub">A whole household on one page: pay, taxes, spending, debts, goals and Social Security, projected year by year and run through 1,000 different markets. The question it answers is the one a planner asks first: will the money last?</p><div class="meta"><span class="mono" id="plInfl">&nbsp;</span><span class="mono">All results in today&rsquo;s dollars</span></div>
+</div></header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="cols2 plan">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The household</h3><p>Change anything; everything below updates.</p></div></div><div id="plIn"></div></div>
+      <div>
+        <div class="panel"><div class="hd"><div><h3 class="sec">Debts</h3><p>Payments come out of savings until each is paid off.</p></div><button type="button" class="reset" id="plAddD">+ Add</button></div><div class="scroll" id="plDebt"></div></div>
+        <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Goals</h3><p>One-off costs in today&rsquo;s dollars: a home, a car, tuition.</p></div><button type="button" class="reset" id="plAddG">+ Add</button></div><div class="scroll" id="plGoal"></div></div>
+        <details class="panel plas" style="margin-top:16px"><summary><h3 class="sec">Assumptions</h3><span class="mono">Returns, volatility, inflation</span></summary><div id="plAs" style="margin-top:18px"></div><p class="fine">Returns are nominal and drawn at random each year around these averages. Stocks and bonds are only slightly correlated. Cash earns a little less than the 3-month Treasury.</p></details>
+      </div>
+    </div>
+    <div id="plSum" style="margin-top:16px"></div><div id="plWarn"></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Net worth, 1,000 markets</h3><p>Copper: the middle outcome. Shaded: the middle 80%. Dashed: the worst 10%. Everything in today&rsquo;s dollars.</p></div></div><svg class="chart" id="plFan" style="height:330px"></svg></div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">What if</h3><p>The same plan with one thing changed.</p></div></div><div id="plSc" class="scroll"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What it would take</h3><p>The two levers most people have.</p></div></div><div id="plSolve"></div>
+        <h3 class="sec" style="margin-top:26px">Debts</h3><div id="plDebtOut" style="margin-top:14px"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Year by year</h3><p>With average returns every year, in today&rsquo;s dollars. Retirement row highlighted.</p></div></div><div id="plFlow" class="scroll"></div></div>
+    <p class="disc">A teaching model, not a financial plan: taxes are one flat rate, all investments are treated as one account, and returns are random draws, not forecasts. Real planning also covers account types, required withdrawals, health costs, insurance and estate questions. Not investment advice.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>&copy; <span class="yr">2026</span> Luis Diaz Busquets &middot; LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=19"></script>
+<script src="assets/plan.js?v=2"></script>
+</body>
+</html>

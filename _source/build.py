@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=35">
+<link rel="stylesheet" href="assets/site.css?v=37">
 </head>
 '''
 
@@ -483,7 +483,7 @@ def build():
 
     # ---------------- tools ----------------
     tools = ph('Tools', 'Tools you can <em>use</em>', 'Interactive finance tools that run in your browser. Company data comes from the same nightly update as the rest of the site.',
-               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a><a class="pill gh" href="risk.html">Portfolio risk</a></div>') + f'''
+               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a><a class="pill gh" href="risk.html">Portfolio risk</a><a class="pill gh" href="plan.html">Financial plan</a></div>') + f'''
 <section class="tight" id="sizer">
   <div class="wrap">
     <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-06</div><h3 class="sec">Position sizer</h3></div><p>Decide the loss you can accept first; the number of shares follows from the distance to your stop.</p></div>
@@ -504,6 +504,7 @@ def build():
     <div class="panel" style="margin-top:16px"><div id="xOut"></div></div>
     <p class="disc">S&amp;P 500 weights here are by total market value, which is close to, but not exactly, the index&rsquo;s float-adjusted weights. Companies outside the S&amp;P 500 are counted as &ldquo;not covered&rdquo;.</p>
     <a class="snapcta" href="risk.html" style="margin-top:24px"><div><span class="mono">TOOL-08 &middot; Next step</span><b>Measure the risk of a portfolio</b><p>Volatility, drawdowns, beta, value at risk, which holding carries the risk, correlations and the efficient frontier, from five years of weekly returns.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
+    <a class="snapcta" href="plan.html" style="margin-top:16px"><div><span class="mono">TOOL-09 &middot; Wealth planning</span><b>Will the money last?</b><p>A household projected year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets, with what-ifs and the savings it would take.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
   </div>
 </section>
 
@@ -521,6 +522,33 @@ def build():
 </section>
 '''
     page('tools.html', 'tools.html', 'Tools', 'Position sizing, a portfolio x-ray and more finance tools that run in the browser.', 'tools', tools, '\n<script src="assets/tools.js?v=1"></script>')
+
+    # ---------------- financial planner ----------------
+    plan = ph('Tools<span class="kind auto" title="Calculated by code from your inputs, with no analyst review">Automated model</span>', 'Financial <em>plan</em>', 'A whole household on one page: pay, taxes, spending, debts, goals and Social Security, projected year by year and run through 1,000 different markets. The question it answers is the one a planner asks first: will the money last?',
+             '<div class="meta"><span class="mono" id="plInfl">&nbsp;</span><span class="mono">All results in today&rsquo;s dollars</span></div>') + '''
+<section class="tight">
+  <div class="wrap">
+    <div class="cols2 plan">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The household</h3><p>Change anything; everything below updates.</p></div></div><div id="plIn"></div></div>
+      <div>
+        <div class="panel"><div class="hd"><div><h3 class="sec">Debts</h3><p>Payments come out of savings until each is paid off.</p></div><button type="button" class="reset" id="plAddD">+ Add</button></div><div class="scroll" id="plDebt"></div></div>
+        <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Goals</h3><p>One-off costs in today&rsquo;s dollars: a home, a car, tuition.</p></div><button type="button" class="reset" id="plAddG">+ Add</button></div><div class="scroll" id="plGoal"></div></div>
+        <details class="panel plas" style="margin-top:16px"><summary><h3 class="sec">Assumptions</h3><span class="mono">Returns, volatility, inflation</span></summary><div id="plAs" style="margin-top:18px"></div><p class="fine">Returns are nominal and drawn at random each year around these averages. Stocks and bonds are only slightly correlated. Cash earns a little less than the 3-month Treasury.</p></details>
+      </div>
+    </div>
+    <div id="plSum" style="margin-top:16px"></div><div id="plWarn"></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Net worth, 1,000 markets</h3><p>Copper: the middle outcome. Shaded: the middle 80%. Dashed: the worst 10%. Everything in today&rsquo;s dollars.</p></div></div><svg class="chart" id="plFan" style="height:330px"></svg></div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">What if</h3><p>The same plan with one thing changed.</p></div></div><div id="plSc" class="scroll"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">What it would take</h3><p>The two levers most people have.</p></div></div><div id="plSolve"></div>
+        <h3 class="sec" style="margin-top:26px">Debts</h3><div id="plDebtOut" style="margin-top:14px"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Year by year</h3><p>With average returns every year, in today&rsquo;s dollars. Retirement row highlighted.</p></div></div><div id="plFlow" class="scroll"></div></div>
+    <p class="disc">A teaching model, not a financial plan: taxes are one flat rate, all investments are treated as one account, and returns are random draws, not forecasts. Real planning also covers account types, required withdrawals, health costs, insurance and estate questions. Not investment advice.</p>
+  </div>
+</section>
+'''
+    page('plan.html', 'tools.html', 'Financial plan', 'Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.', 'plan', plan, '\n<script src="assets/plan.js?v=2"></script>')
 
     # ---------------- portfolio risk ----------------
     risk = ph('Tools<span class="kind auto" title="Calculated by code from historical prices, with no analyst review">Automated model</span>', 'Portfolio <em>risk</em>', 'How a mix of stocks, funds and bonds actually behaved: how much it swung, how far it fell, which holding carried the risk and what the same holdings could have done with different weights.',

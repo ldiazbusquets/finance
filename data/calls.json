@@ -202,6 +202,16 @@
    "held": false
   },
   {
+   "t": "AVGO",
+   "name": "Broadcom",
+   "page": "broadcom.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 358,
+   "price": 323.24,
+   "held": false
+  },
+  {
    "t": "AWK",
    "name": "American Water Works",
    "page": "american-water.html",
@@ -250,6 +260,16 @@
    "value": 18,
    "price": 17.41,
    "held": true
+  },
+  {
+   "t": "GD",
+   "name": "General Dynamics",
+   "page": "general-dynamics.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 336,
+   "price": 350.755,
+   "held": false
   },
   {
    "t": "GEV",
@@ -369,6 +389,16 @@
    "call": "Sell",
    "value": 87,
    "price": 201.72,
+   "held": false
+  },
+  {
+   "t": "RTX",
+   "name": "RTX",
+   "page": "rtx.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 146,
+   "price": 194.745,
    "held": false
   },
   {

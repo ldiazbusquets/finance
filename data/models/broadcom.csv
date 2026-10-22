@@ -1,0 +1,52 @@
+LDB Finance: Broadcom (AVGO)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/avgo.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),106.0,Company filings and guidance
+Tax rate %,16.0,Effective rate
+Discount rate (WACC) %,10.74,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-35.4,Latest balance sheet
+Diluted shares (billions),4.89,Latest filing
+"Revenue growth, years 1-2 %",55 / 25,Fiscal years to November; then fades to 3% by year 10
+Operating margin %,54 easing to 50 by year 5,"After stock pay, before VMware amortization"
+Sales to capital,4,Reinvestment = revenue growth / 4
+Beta,1.3,Large chip peers; measured 1.86
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,55.0,164.3,54.0,88.722,74.526,14.575,59.951,0.9503,56.969
+2028,25.0,205.375,53.0,108.849,91.433,10.269,81.164,0.8581,69.643
+2029,22.25,251.071,52.0,130.557,109.668,11.424,98.244,0.7748,76.12
+2030,19.5,300.03,51.0,153.015,128.533,12.24,116.293,0.6996,81.362
+2031,16.75,350.285,50.0,175.142,147.12,12.564,134.556,0.6318,85.006
+2032,14.0,399.325,50.0,199.662,167.716,12.26,155.456,0.5705,88.682
+2033,11.25,444.249,50.0,222.124,186.584,11.231,175.353,0.5151,90.327
+2034,8.5,482.01,50.0,241.005,202.444,9.44,193.004,0.4651,89.773
+2035,5.75,509.725,50.0,254.863,214.085,6.929,207.156,0.42,87.007
+2036,3.0,525.017,50.0,262.509,220.507,3.823,216.684,0.3793,82.179
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,807.068
+Year-11 after-tax operating income,227.122
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),2580.717
+Present value of terminal value,978.755
+Enterprise value,1785.822
+Plus net cash,-35.4
+Equity value,1750.422
+Value per share ($),357.96
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),102.34,357.96,866.76
+Probability,25,50,25
+Probability-weighted value ($),,421.26,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 9.0%,472.82
+,Discount rate 9.5%,433.55
+,Discount rate 10.0%,399.92
+,Discount rate 10.5%,370.82
+,Discount rate 11.0%,345.39

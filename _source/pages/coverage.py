@@ -1083,3 +1083,194 @@ R['TSM'] = dict(
          prose('placeholder')
          + band('The factory every AI chip needs, <em>priced for its own forecast.</em>', 'The price pays for the plan; the risk is geography and the cycle.')),
     ])
+
+# ================================================================ Broadcom
+AQ = 'https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial'
+AC = 'https://www.fool.com/earnings/call-transcripts/2026/09/09/broadcom-avgo-q3-2026-earnings-call-transcript/'
+R['AVGO'] = dict(
+    t='AVGO', slug='broadcom', name='Broadcom', h1='Broadcom', sector='Semiconductors', date=D22, timing=', ahead of its fourth-quarter results on December 9',
+    sub='Broadcom designs the custom AI chips Google, Meta, Anthropic and OpenAI use instead of buying Nvidia&rsquo;s, plus the networking chips that connect them, and owns VMware. AI revenue is growing more than 200% a year. The shares have fallen about a third from their high on worries about how the customers will pay for it all.',
+    call='Hold', method='Cash-flow model', price=323.24, pricenote='Close, Oct 22, 2026', base=358, bear=102, bull=867, wt=421, max=1000, tick=200,
+    disclosure='The author holds no AVGO shares directly; Broadcom is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio. Anthropic, which makes Claude (the AI model that helped draft this report), is expected to be Broadcom&rsquo;s largest custom-chip customer in 2027.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 102, 867, 358, '$102 to $867, base $358'), ('Probability-weighted', None, None, 421, '$421'),
+           ('Price at writing', None, None, 323.24, '$323.24'), ('52-week range', 290, 495, None, '$290 to $495'), ('Analyst average', None, None, 529, '$529')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'The other way <em>to build AI chips.</em>',
+         prose('Broadcom has two segments. <b>Semiconductor Solutions</b> (about 70% of revenue) designs custom AI accelerators, which it calls XPUs, for companies that want an alternative to Nvidia: Google&rsquo;s TPUs, Meta&rsquo;s MTIA, and chips for Anthropic and OpenAI. It also makes the Ethernet switches (Tomahawk) and optical parts that connect tens of thousands of chips in a data center, plus older chips for phones, broadband and storage. <b>Infrastructure Software</b> is mainly VMware, bought in 2023, plus mainframe and security software.',
+               'Broadcom designs the chips; TSMC manufactures them. The business needs little capital of its own, which is why about 46% of revenue becomes free cash flow.')),
+        ('results', 'Latest results', 'AI revenue up 221%, <em>guided to double again.</em>',
+         stats([('$29.6B', 'Revenue, Q3 FY2026, +86%'), ('$16.7B', 'AI semiconductor revenue, +221%'), ('$13.7B', 'Free cash flow'), ('$34.8B', 'Q4 revenue guidance'), ('~$115B', 'FY2027 AI revenue outlook'), ('~73%', 'Q4 gross margin, from 78%')])
+         + prose('In the quarter to August 2, revenue rose 86% to $29.6 billion and AI semiconductor revenue 221% to $16.7 billion; software grew 29% to $8.8 billion. Broadcom guided fourth-quarter revenue to about $34.8 billion, with AI at $21.7 billion.',
+                 'Management said it has secured supply for about $115 billion of AI revenue in fiscal 2027 and about $230 billion in 2028, across six custom-chip customers, and expects earnings above $30 a share in 2028. It named Anthropic as likely to be its largest custom-chip customer in 2027 and OpenAI the second. The gross margin is falling, to about 73% from 78%, because complete systems carry more memory bought from others.')
+         + src([('Q3 FY2026 results', AQ), ('Earnings call', AC)])),
+        ('fin', 'The numbers', 'Revenue tripled <em>in three years.</em>',
+         fin_table('AVGO') + prose('The operating margin fell in fiscal 2024 because of the amortization of VMware&rsquo;s intangible assets, an accounting cost that is not a cash cost. Fiscal years end in early November; the last column covers the four quarters to August 2026. The <a href="snapshot.html?t=AVGO&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('Broadcom filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001730168&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Paying down VMware debt, <em>and lending to customers.</em>',
+         prose('At August 2 Broadcom had $24.0 billion of cash and $59.4 billion of debt, $35.4 billion of net debt left from the VMware purchase; it repaid $5.6 billion in the quarter and $1.5 billion more after it. It pays a $0.65 quarterly dividend.',
+               'A newer item: with Apollo and Blackstone, Broadcom set up a financing vehicle to help Anthropic and OpenAI pay for their chips. The first $35 billion closed in June for Anthropic&rsquo;s first gigawatt. Broadcom says it may give &ldquo;modest&rdquo; guarantees on the hardware&rsquo;s resale value but has not said how large they could become. In October chief executive Hock Tan said financing access and costs might become key limits on AI growth.')
+         + src([('Hock Tan on AI financing', 'https://www.heygotrade.com/en/news/broadcom-avgo-stock-news-october-15-2026/')])),
+        ('value', 'Valuation', 'The model gives <em>$358 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, fiscal 2026', '$106B', 'First three quarters plus Q4 guidance (estimate)'],
+             ['Growth, 2027 and 2028', '55%, then 25%', 'Below management&rsquo;s outlook for 2028; fades to 3% by year 10'],
+             ['Operating margin', '54% easing to 50%', 'After stock pay, before VMware amortization; systems carry more memory'],
+             ['Reinvestment', '$1 for every $4 of new revenue', 'Working capital and customer financing'],
+             ['Discount rate', '10.7%', 'Beta 1.30 for large chip companies (Broadcom&rsquo;s own is 1.86), little debt'],
+             ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$807B'), ('PV of terminal value', '$979B'), ('Enterprise value', '$1,786B'), ('Net debt', '&minus;$35B'), ('Equity value', '$1,750B'), ('Diluted shares', '4.89B')], '$358')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '30% / 0%', '55% / 25%', '60% / 45%'], ['Long-run operating margin', '45%', '50%', '53%'],
+             ['Discount rate', '11.7%', '10.7%', '9.7%'], ['Value per share', '$102', '$358', '$867'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$421</b>. The range is unusually wide. The bear case is AI customers unable to fund their build-outs after 2027, leaving Broadcom with a year of growth and then none; the bull case is management&rsquo;s 2028 outlook delivered in full. The base case takes 2027 roughly as guided and haircuts 2028.')
+         + sens('Discount rate', ['9.0%', '9.5%', '10.0%', '10.5%', '11.0%'], ['$473', '$434', '$400', '$371', '$345'])),
+        ('implied', 'What the price assumes', 'At $323, <em>far less than the plan.</em>',
+         implied([['Revenue growth of about 28% a year in 2027 and 2028, then the same fade', '55% and 25%'], ['Or a long-run operating margin of about 45%', '50%']])
+         + prose('The price assumes about half the growth management says it has already secured supply for. Analysts average about $529. The shares fell 15% in one day in June when guidance was not raised, and again in October on worries that the AI labs cannot finance their plans; the model&rsquo;s wide bear case is the same worry, quantified.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/stocks/NYSE/AVGO/'), ('The June selloff', 'https://dashboard.channelchek.com/broadcoms-15-single-day-plunge-took-300-billion-off-the-table/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Customer funding', 'Anthropic and OpenAI need outside money to buy their chips; Broadcom is now helping finance them.'],
+             ['Concentration', 'A handful of customers make up most AI revenue; losing one design generation would show quickly.'],
+             ['Competition', 'Nvidia, and design houses in Taiwan, compete for the same custom-chip work.'],
+             ['Supply', 'Leading-edge wafers, substrates, HBM memory and lasers are all tight; Broadcom depends on TSMC.'],
+             ['Margins', 'Complete systems carry more bought-in memory, pulling the gross margin down.'],
+         ]) + prose('<b>Upside:</b> the 2028 outlook delivered in full, more custom-chip customers, Ethernet winning inside AI racks, and VMware growing faster than expected.')),
+        ('rec', 'Rating', 'Buy.',
+         prose('placeholder')
+         + band('Custom AI chips, <em>priced for half the plan.</em>', 'The orders are there; the question is whether the customers can pay.')),
+    ])
+
+# ================================================================ RTX
+RQ = 'https://www.sec.gov/Archives/edgar/data/0000101829/000010182926000030/a2026-10x208xkerexhibit99.htm'
+R['RTX'] = dict(
+    t='RTX', slug='rtx', name='RTX', h1='RTX', sector='Aerospace &amp; defense', date=D22, timing=', after its third-quarter results',
+    sub='RTX is three businesses: Raytheon missiles and air defense, Pratt &amp; Whitney jet engines and Collins aircraft parts. Its backlog is a record $340 billion, and it raised 2026 guidance again this week. Of the primes it is the one most exposed to commercial air travel, and its missiles face Anduril&rsquo;s cheaper ones.',
+    call='Hold', method='Cash-flow model', price=194.745, pricenote='Close, Oct 22, 2026', base=146, bear=86, bull=229, wt=152, max=300, tick=50,
+    disclosure='The author holds no RTX shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 86, 229, 146, '$86 to $229, base $146'), ('Probability-weighted', None, None, 152, '$152'),
+           ('Price at writing', None, None, 194.745, '$194.75'), ('52-week range', 167, 227, None, '$167 to $227'), ('Analyst average', None, None, 227, '$227')],
+    toc=toc_with('threat', 'The Anduril question'), chapters=[
+        ('overview', 'The business', 'Missiles, engines <em>and aircraft parts.</em>',
+         prose('<b>Raytheon</b> makes Patriot air defense, the Standard Missile family, AMRAAM, Tomahawk and the Coyote counter-drone interceptor. <b>Pratt &amp; Whitney</b> makes the GTF engine for the Airbus A320neo family and the F135 for the F-35. <b>Collins Aerospace</b> makes avionics, seats, landing gear and other parts for airliners and military aircraft.',
+               'About half of sales are commercial. That makes RTX the prime most tied to airline traffic and aftermarket parts, and the least dependent on U.S. defense budgets alone.')),
+        ('results', 'Latest results', 'Sales up 11%, <em>guidance raised again.</em>',
+         stats([('$25.0B', 'Sales, Q3 2026, +11%'), ('$2.26', 'Adjusted earnings per share, +33%'), ('$2.1B', 'Free cash flow'), ('$340B', 'Backlog, a record'), ('$97.0&ndash;97.5B', '2026 sales guidance, raised'), ('$9.0&ndash;9.2B', '2026 free cash flow guidance')])
+         + prose('Third-quarter sales rose 11% (12% organic) to $25.0 billion. Adjusted earnings rose 33% to $2.26 a share, including $0.25 from a tariff refund; reported earnings were $1.89. Collins earned a 21.3% margin and Raytheon 14.1%. Pratt &amp; Whitney earned 6.6% as reported and 10.5% adjusted, the gap being items RTX excludes from adjusted results.',
+                 'Backlog reached $340 billion, $164 billion of it defense. RTX raised 2026 guidance to sales of $97.0&ndash;97.5 billion, adjusted earnings of $7.65&ndash;7.75 a share and free cash flow of $9.0&ndash;9.2 billion.')
+         + src([('Q3 2026 results (8-K)', RQ)])),
+        ('threat', 'The Anduril question', 'Cheap missiles <em>against expensive ones.</em>',
+         prose('Anduril, valued at about $90 billion this month, sells exactly the kind of low-cost weapons that sit next to Raytheon&rsquo;s: the <b>Roadrunner</b> reusable interceptor against drones, and the <b>Barracuda</b> low-cost cruise missile. Raytheon&rsquo;s own Coyote interceptor competes in the same counter-drone market. The high end, Patriot, Standard Missile and AMRAAM, is protected by years of qualification and some of the largest multi-year production deals the Pentagon has signed.')
+         + table(['Market', 'Where RTX stands', 'How exposed'], [
+             ['Counter-drone interceptors', 'Coyote in production; competes with Anduril Roadrunner', 'High: a new market where new entrants start level'],
+             ['Low-cost cruise missiles', 'Tomahawk is the high end; Anduril Barracuda is built to be cheaper and faster to make', 'Medium'],
+             ['Air and missile defense', 'Patriot, Standard Missile, AMRAAM: sole or main producer, long production deals', 'Low'],
+             ['Engines and aircraft parts', 'Pratt &amp; Whitney and Collins, about half of sales', 'None: no defense start-up competes here'],
+         ])
+         + prose('RTX is less exposed than Northrop overall, because half its business is commercial aerospace. Where it does compete with Anduril, in cheap interceptors and missiles, it is the Pentagon&rsquo;s new money that is contested, not the existing backlog.')
+         + src([('Anduril report', 'anduril.html'), ('CCA production awards', ANDP)])),
+        ('fin', 'The numbers', 'Recovered from <em>the 2023 engine charge.</em>',
+         fin_table('RTX') + prose('The operating margin fell to 5% in 2023 when RTX took a charge of about $2.9 billion for inspections of GTF engines made with contaminated powder metal; that problem is still keeping some A320neo aircraft on the ground. Since then the margin has recovered every year. The <a href="snapshot.html?t=RTX&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('RTX filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000101829&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Debt falling, <em>cash flow rising.</em>',
+         prose('At the end of September RTX had $9.2 billion of cash and $37.4 billion of debt, about $28.2 billion of net debt, down from about $30 billion at the start of the year. There are about 1.37 billion diluted shares. Free cash flow guidance of about $9.1 billion this year is roughly 9% of sales.')),
+        ('value', 'Valuation', 'The model gives <em>$146 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Sales, 2026', '$97.25B', 'Guidance midpoint'],
+             ['Growth, 2027 and 2028', '8%, then 7%', 'Record backlog; fades to 3% by year 10'],
+             ['Operating margin', '12.5% rising to 14%', 'Segment margins less corporate costs (estimate); GTF costs roll off'],
+             ['Reinvestment', '$1 for every $3 of new sales', 'Engine and munitions capacity'],
+             ['Discount rate', '8.2%', 'Beta 0.80 for defense peers, 12% debt'],
+             ['Terminal growth', '3.0%', 'With a 15% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$87B'), ('PV of terminal value', '$142B'), ('Enterprise value', '$228B'), ('Net debt', '&minus;$28B'), ('Equity value', '$200B'), ('Diluted shares', '1.37B')], '$146')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '4% / 4%', '8% / 7%', '10% / 9%'], ['Long-run operating margin', '12%', '14%', '15.5%'],
+             ['Discount rate', '9.2%', '8.2%', '7.2%'], ['Value per share', '$86', '$146', '$229'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$152</b>. The bear case is an air-travel slowdown hitting the aftermarket plus a budget squeeze after the midterms; the bull case is the munitions ramp and engine margins recovering faster.')
+         + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$194', '$171', '$152', '$136', '$123'])),
+        ('implied', 'What the price assumes', 'At $195, <em>a 7% discount rate.</em>',
+         implied([['Sales growth of about 14% a year for two years, then the same fade', '8% and 7%'], ['Or a long-run operating margin of about 18%', '14%'], ['Or a discount rate of about 7.0%', '8.2%']])
+         + prose('The price sits above the model&rsquo;s base case, as it does for most large companies on this method; analysts average about $227. The shares are down about 14% from their high, in part because investors began pricing in a Democratic Congress after the November 3 midterms.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/stocks/NYSE/RTX/price-target'), ('Defense stocks and the midterms', MIDT)])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Air travel', 'Half the business depends on airline flying and the aftermarket for parts and engine overhauls.'],
+             ['The GTF engine', 'Inspections and compensation to airlines are still costing money.'],
+             ['Budgets and politics', 'A Democratic Congress could trim the defense increase.'],
+             ['New entrants', 'Anduril and others are going after cheap interceptors and missiles.'],
+             ['Fixed-price contracts', 'Raytheon has taken charges on fixed-price development work before.'],
+         ]) + prose('<b>Upside:</b> munitions multi-year deals, Patriot exports to Europe and the Gulf, and GTF costs falling away faster.')),
+        ('rec', 'Rating', 'Buy.',
+         prose('placeholder')
+         + band('Half aerospace, half missiles, <em>a record backlog.</em>', 'Cheap new missiles threaten the edges, not the core.')),
+    ])
+
+# ================================================================ General Dynamics
+GQ = 'https://www.investing.com/news/transcripts/earnings-call-transcript-general-dynamics-tops-q2-2026-estimates-and-lifts-outlook-93CH-4820684'
+GW = 'https://investorrelations.gd.com/news/press-release-details/2026/General-Dynamics-to-Webcast-2026-Third-Quarter-Financial-Results-Conference-Call/default.aspx'
+R['GD'] = dict(
+    t='GD', slug='general-dynamics', name='General Dynamics', h1='General <em>Dynamics</em>', sector='Aerospace &amp; defense', date=D22, timing=', ahead of its third-quarter results on October 30',
+    sub='General Dynamics builds America&rsquo;s nuclear submarines, Abrams tanks and Gulfstream business jets, and runs a large government IT business. Its backlog is a record $136.5 billion, up 32% in a year, mostly submarines. It is the prime least exposed to Anduril.',
+    call='Hold', method='Cash-flow model', price=350.755, pricenote='Close, Oct 22, 2026', base=336, bear=229, bull=494, wt=349, max=600, tick=100,
+    disclosure='The author holds no GD shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 229, 494, 336, '$229 to $494, base $336'), ('Probability-weighted', None, None, 349, '$349'),
+           ('Price at writing', None, None, 350.755, '$350.76'), ('52-week range', 307, 400, None, '$307 to $400'), ('Analyst average', None, None, 402, '$402')],
+    toc=toc_with('threat', 'The Anduril question'), chapters=[
+        ('overview', 'The business', 'Submarines, tanks <em>and Gulfstreams.</em>',
+         prose('General Dynamics has four segments. <b>Marine Systems</b> (about a third of sales) is Electric Boat, which builds the Columbia-class ballistic-missile submarines and, with HII, the Virginia-class attack submarines. <b>Technologies</b> is government IT (GDIT) and mission systems. <b>Combat Systems</b> builds Abrams tanks, Stryker vehicles and artillery shells. <b>Aerospace</b> is Gulfstream business jets and their servicing.',
+               'Most sales go to the U.S. government, but Gulfstream gives it a commercial business that depends on corporate profits and wealthy buyers rather than on the defense budget.')),
+        ('results', 'Latest results', 'Record backlog, <em>guidance raised again.</em>',
+         stats([('$14.1B', 'Revenue, Q2 2026, +8%'), ('$4.24', 'Earnings per share, +13%'), ('$1.6B', 'Free cash flow'), ('$136.5B', 'Backlog, a record, +32%'), ('~$55.7B', '2026 revenue guidance'), ('$16.80&ndash;16.90', '2026 EPS guidance, raised')])
+         + prose('Second-quarter revenue rose 8% to $14.1 billion and earnings 13% to $4.24 a share, ahead of forecasts. Orders of nearly $20 billion gave a book-to-bill of 1.4 and lifted backlog 32% to $136.5 billion. Gulfstream delivered 41 jets at a 14.5% margin.',
+                 'General Dynamics raised 2026 guidance for the second time this year: revenue of about $55.7 billion at a 10.5% operating margin and earnings of $16.80&ndash;16.90 a share, with Marine revenue raised by almost $1.3 billion to about $18 billion. Electric Boat is on track for two Virginia-class and one Columbia-class submarine a year in the early 2030s. Third-quarter results come on October 30.')
+         + src([('Q2 2026 earnings call', GQ), ('Q3 results date', GW)])),
+        ('threat', 'The Anduril question', 'The least exposed <em>of the primes.</em>',
+         prose('Anduril does build for the sea: its <b>Dive-XL</b> and <b>Ghost Shark</b> autonomous submarines are designed to be built quickly and in numbers. But they complement crewed nuclear submarines rather than replace them, and no new entrant can build a Columbia-class boat. Anduril makes no tanks or business jets. The most exposed part of General Dynamics is its IT business, where software-first companies, including Anduril with its Lattice platform and Palantir, compete for the Pentagon&rsquo;s data and command systems.')
+         + table(['Market', 'Where General Dynamics stands', 'How exposed'], [
+             ['Nuclear submarines', 'One of two U.S. builders; prime on Columbia', 'Low: drone submarines add to the fleet, not replace it'],
+             ['Tanks, vehicles, shells', 'Abrams, Stryker and a large artillery-shell business', 'Low to medium: drones change ground warfare, but not who builds tanks'],
+             ['Government IT', 'GDIT, one of the largest federal IT contractors', 'Medium: software-first rivals and budget cuts to contractors'],
+             ['Business jets', 'Gulfstream, about a quarter of sales', 'None'],
+         ])
+         + src([('Anduril report', 'anduril.html')])),
+        ('fin', 'The numbers', 'Steady growth <em>at a 10% margin.</em>',
+         fin_table('GD') + prose('Sales have grown about 7% a year since 2021 at an operating margin close to 10% every year: General Dynamics&rsquo; record is steady rather than spectacular. The last column covers the four quarters to April; second-quarter results, above, were ahead of that pace. The <a href="snapshot.html?t=GD&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('General Dynamics filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000040533&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Little debt, <em>cash conversion above 100%.</em>',
+         prose('At the end of June General Dynamics had about $4.3 billion of cash and net debt of only $3.2 billion. It expects free cash flow of about 105% of net income this year, with capital spending of 3.5&ndash;4% of sales, much of it to expand submarine yards.')),
+        ('value', 'Valuation', 'The model gives <em>$336 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Sales, 2026', '$55.7B', 'Guidance'],
+             ['Growth, 2027 and 2028', '7%, then 6%', 'Submarine ramp and record backlog; fades to 3% by year 10'],
+             ['Operating margin', '10.5% rising to 11%', 'Marine margins improving slowly'],
+             ['Reinvestment', '$1 for every $3 of new sales', 'Shipyard expansion'],
+             ['Discount rate', '8.4%', 'Beta 0.80 for defense peers (its own is 0.70), 8% debt'],
+             ['Terminal growth', '3.0%', 'With a 15% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$37B'), ('PV of terminal value', '$57B'), ('Enterprise value', '$95B'), ('Net debt', '&minus;$3.2B'), ('Equity value', '$91B'), ('Diluted shares', '272M')], '$336')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '4% / 3%', '7% / 6%', '9% / 8%'], ['Long-run operating margin', '10%', '11%', '12%'],
+             ['Discount rate', '9.4%', '8.4%', '7.4%'], ['Value per share', '$229', '$336', '$494'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$349</b>. The bear case is submarine delays and a business-jet downturn; the bull case is Electric Boat reaching full production sooner, with better margins.')
+         + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$454', '$403', '$362', '$328', '$300'])),
+        ('implied', 'What the price assumes', 'At $351, <em>about the plan.</em>',
+         implied([['Sales growth of about 7.3% a year for two years, then the same fade', '7% and 6%'], ['Or a long-run operating margin of about 11.5%', '11%']])
+         + prose('The price is close to the base case: investors are paying for roughly management&rsquo;s plan. Analysts average about $402. The shares are about 12% below their high, part of the sector&rsquo;s fall as investors priced in a Democratic Congress after the November 3 midterms.')
+         + src([('Defense stocks and the midterms', MIDT)])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Shipyard execution', 'Submarine programs have run late; labor and suppliers are the constraint.'],
+             ['Marine margins', 'Around 7%, the lowest of its segments; cost overruns land on General Dynamics.'],
+             ['Business jets', 'Gulfstream depends on corporate profits and wealthy buyers.'],
+             ['Federal IT', 'Contractor spending cuts and software-first rivals squeeze GDIT.'],
+             ['Budgets and politics', 'A Democratic Congress could trim the defense increase, though submarines have support in both parties.'],
+         ]) + prose('<b>Upside:</b> Block VI Virginia-class contracts, faster submarine production, new Gulfstream models and European orders for vehicles and shells.')),
+        ('rec', 'Rating', 'Buy.',
+         prose('placeholder')
+         + band('Submarines and Gulfstreams, <em>out of Anduril&rsquo;s reach.</em>', 'The steadiest of the primes, at about the plan&rsquo;s price.')),
+    ])

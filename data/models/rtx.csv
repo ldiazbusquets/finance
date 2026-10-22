@@ -1,0 +1,52 @@
+LDB Finance: RTX (RTX)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/rtx.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),97.25,Company filings and guidance
+Tax rate %,18.0,Effective rate
+Discount rate (WACC) %,8.16,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,15.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-28.2,Latest balance sheet
+Diluted shares (billions),1.368,Latest filing
+"Revenue growth, years 1-2 %",8 / 7,Then fades to 3% by year 10
+Operating margin %,12.5 rising to 14 by year 5,Estimate
+Sales to capital,3,Reinvestment = revenue growth / 3
+Beta,0.8,Defense peers; measured 0.81
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,8.0,105.03,12.8,13.444,11.024,2.593,8.431,0.9615,8.106
+2028,7.0,112.382,13.1,14.722,12.072,2.451,9.621,0.889,8.553
+2029,6.5,119.687,13.4,16.038,13.151,2.435,10.716,0.8219,8.808
+2030,6.0,126.868,13.7,17.381,14.252,2.394,11.859,0.7599,9.012
+2031,5.5,133.846,14.0,18.738,15.366,2.326,13.04,0.7026,9.162
+2032,5.0,140.538,14.0,19.675,16.134,2.231,13.903,0.6496,9.032
+2033,4.5,146.862,14.0,20.561,16.86,2.108,14.752,0.6006,8.86
+2034,4.0,152.737,14.0,21.383,17.534,1.958,15.576,0.5553,8.649
+2035,3.5,158.083,14.0,22.132,18.148,1.782,16.366,0.5134,8.402
+2036,3.0,162.825,14.0,22.796,18.692,1.581,17.112,0.4747,8.122
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,86.707
+Year-11 after-tax operating income,19.253
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),298.549
+Present value of terminal value,141.715
+Enterprise value,228.423
+Plus net cash,-28.2
+Equity value,200.223
+Value per share ($),146.36
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),85.79,146.36,228.77
+Probability,25,50,25
+Probability-weighted value ($),,151.82,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 7.0%,194.31
+,Discount rate 7.5%,170.61
+,Discount rate 8.0%,151.63
+,Discount rate 8.5%,136.09
+,Discount rate 9.0%,123.14

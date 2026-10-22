@@ -353,6 +353,48 @@
         "Semiconductors"
       ],
       "call": "Buy"
+    },
+    {
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sector": "Semiconductors",
+      "status": "live",
+      "page": "broadcom.html",
+      "value": 358,
+      "date": "2026-10-22",
+      "gics": [
+        "Information Technology",
+        "Semiconductors"
+      ],
+      "call": "Buy"
+    },
+    {
+      "ticker": "RTX",
+      "name": "RTX",
+      "sector": "Aerospace & defense",
+      "status": "live",
+      "page": "rtx.html",
+      "value": 146,
+      "date": "2026-10-22",
+      "gics": [
+        "Industrials",
+        "Aerospace & Defense"
+      ],
+      "call": "Buy"
+    },
+    {
+      "ticker": "GD",
+      "name": "General Dynamics",
+      "sector": "Aerospace & defense",
+      "status": "live",
+      "page": "general-dynamics.html",
+      "value": 336,
+      "date": "2026-10-22",
+      "gics": [
+        "Industrials",
+        "Aerospace & Defense"
+      ],
+      "call": "Buy"
     }
   ]
 }

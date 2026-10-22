@@ -98,8 +98,14 @@ def main():
                               [['Revenue growth, years 1-2 %', '25 / 20', 'Then fades to 3% by year 10'], ['Operating margin %', '57 easing to 54 by year 5', 'Overseas fab dilution'], ['Sales to capital', 1.3, 'Reinvestment = revenue growth / 1.3'], ['Shares', '5.186B ADR-equivalents', '1 ADR = 5 Taiwan shares']], 'tsm')
     vals['ASML'] = generic_dcf('ASML', 'asml', 'ASML Holding (ASML)', 'asm', None, None, 44.5e9 * 1.123, .16, .03, .30, 9.0e9 * 1.123, [.095, .10, .105, .11, .115],
                                [['Revenue growth, years 1-2 %', '22 / 15', 'Then fades to 3% by year 10'], ['Operating margin %', '41.5 rising to 44 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Euro to dollar', 1.123, 'All euro figures converted at this rate']], 'asml')
+    vals['AVGO'] = generic_dcf('AVGO', 'broadcom', 'Broadcom (AVGO)', 'av', None, None, 106e9, .16, .03, .25, -35.4e9, [.09, .095, .10, .105, .11],
+                               [['Revenue growth, years 1-2 %', '55 / 25', 'Fiscal years to November; then fades to 3% by year 10'], ['Operating margin %', '54 easing to 50 by year 5', 'After stock pay, before VMware amortization'], ['Sales to capital', 4, 'Reinvestment = revenue growth / 4'], ['Beta', 1.30, 'Large chip peers; measured 1.86']], 'avgo')
+    vals['RTX'] = generic_dcf('RTX', 'rtx', 'RTX (RTX)', 'rt', None, None, 97.25e9, .18, .03, .15, -28.2e9, [.07, .075, .08, .085, .09],
+                              [['Revenue growth, years 1-2 %', '8 / 7', 'Then fades to 3% by year 10'], ['Operating margin %', '12.5 rising to 14 by year 5', 'Estimate'], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Beta', 0.80, 'Defense peers; measured 0.81']], 'rtx')
+    vals['GD'] = generic_dcf('GD', 'general-dynamics', 'General Dynamics (GD)', 'gd', None, None, 55.7e9, .175, .03, .15, -3.2e9, [.07, .075, .08, .085, .09],
+                             [['Revenue growth, years 1-2 %', '7 / 6', 'Then fades to 3% by year 10'], ['Operating margin %', '10.5 rising to 11 by year 4', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Beta', 0.80, 'Defense peers; measured 0.70']], 'gd')
     # the bear and bull cases also move the discount rate by a point: rebuild them exactly as the scripts do
-    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr'), ('LMT', 'lmt', 'lm'), ('NOC', 'noc', 'nc'), ('CAT', 'cat', 'ct'), ('ASML', 'asml', 'asm'), ('MSFT', 'msft', 'ms'), ('GOOGL', 'googl', 'gg'), ('TSM', 'tsm', 'ts')):
+    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr'), ('LMT', 'lmt', 'lm'), ('NOC', 'noc', 'nc'), ('CAT', 'cat', 'ct'), ('ASML', 'asml', 'asm'), ('MSFT', 'msft', 'ms'), ('GOOGL', 'googl', 'gg'), ('TSM', 'tsm', 'ts'), ('AVGO', 'avgo', 'av'), ('RTX', 'rtx', 'rt'), ('GD', 'gd', 'gd')):
         ns = run(script); vals[key] = (ns['b'], ns['bear'], ns['bull'])
     ns = run('nvda'); nv = ns['nv']; W0 = ns['ke'](1.58)
     with contextlib.redirect_stdout(io.StringIO()):

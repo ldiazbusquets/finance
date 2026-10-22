@@ -70,7 +70,9 @@ def jobs():
              ('track', 'Track <em>record</em>', 'Every published call, scored against the S&amp;P 500 since the day it was made.'),
              ('earnings', 'Earnings <em>hub</em>', 'Upcoming reports and what each latest quarter changed.'),
              ('insiders', 'Insiders <em>and funds</em>', 'Executive trades from Form 4 and famous investors&rsquo; holdings from 13F filings.'),
-             ('snapshot', 'Research <em>any company</em>', 'An instant snapshot of any S&amp;P 500 company from its filings, annual and quarterly.')]
+             ('snapshot', 'Research <em>any company</em>', 'An instant snapshot of any S&amp;P 500 company from its filings, annual and quarterly.'),
+             ('risk', 'Portfolio <em>risk</em>', 'Volatility, drawdowns, value at risk, correlations and the efficient frontier for any mix.'),
+             ('fixed-income', 'Bond portfolio, <em>stress-tested</em>', 'Curve twists, humps and credit-spread shocks, bond by bond, with key-rate risk.')]
     for slug, h, sub in tools:
         out.append((slug, card('Research tool', h, sub=sub)))
     return out

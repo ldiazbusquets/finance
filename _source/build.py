@@ -67,7 +67,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=32">
+<link rel="stylesheet" href="assets/site.css?v=33">
 </head>
 '''
 
@@ -473,6 +473,7 @@ def build():
     <div class="grid3" style="margin-top:30px">
       {card('bonds.html#pricer', 'MOD-07', 'Bond pricer', 'Price, yield to maturity, duration and convexity for any fixed-coupon bond.', 'Open &rarr;', 'live')}
       {card('bonds.html#shock', 'MOD-08', 'Rate shock', 'What a portfolio of bonds loses or gains if rates jump or fall, using the live Treasury curve.', 'Open &rarr;', 'live')}
+      {card('fixed-income.html', 'MOD-09', 'Bond portfolio stress test', 'Treasuries and corporates against curve twists, humps and spread shocks, with key-rate risk and a goal to fund.', 'Open &rarr;', 'live')}
       {card('loans.html', 'MOD-09', 'Loan and mortgage', 'Payments, amortisation and the true cost of borrowing at today’s rates.', 'Open &rarr;', 'live')}
     </div>
   </div>
@@ -591,7 +592,7 @@ def build():
 
     # ---------------- bonds ----------------
     bonds = ph('Models &middot; Fixed income', 'Bonds, <em>priced and shocked</em>', 'Price any fixed-coupon bond, see its duration and convexity, then hit a portfolio with a rate move. Yields start at today&rsquo;s Treasury curve.',
-               '<div class="cta">' + pill('#pricer', 'Bond pricer') + '<a class="pill gh" href="#shock">Rate shock</a></div>') + '''
+               '<div class="cta">' + pill('#pricer', 'Bond pricer') + '<a class="pill gh" href="#shock">Rate shock</a><a class="pill gh" href="fixed-income.html">Portfolio stress test</a></div>') + '''
 <section class="tight" id="pricer">
   <div class="wrap">
     <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">MOD-07</div><h3 class="sec">Bond pricer</h3></div><p>Enter a yield to get the price, or a price to get the yield. Everything else follows from the cash flows.</p></div>
@@ -623,6 +624,33 @@ def build():
 </section>
 '''
     page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=1"></script>')
+
+    # ---------------- fixed-income portfolio ----------------
+    fi = ph('Models &middot; Fixed income', 'Bond portfolio, <em>stress-tested</em>', 'Build a portfolio of Treasuries and corporate bonds, then bend the yield curve and widen credit spreads. Every payment is repriced at the curve on its own date, so twists and humps show up bond by bond.',
+            '<div class="meta"><span class="mono" id="fiStamp">&nbsp;</span><span class="mono">Source: FRED, Federal Reserve Bank of St. Louis</span></div>') + '''
+<section class="tight">
+  <div class="wrap">
+    <div class="panel">
+      <div class="hd"><div><h3 class="sec">Your bonds</h3><p>Edit any cell. Coupons are paid twice a year; yields start at today&rsquo;s Treasury curve plus the market spread for each type.</p></div><div class="cta" style="margin:0"><button type="button" class="reset" id="fiAdd">+ Add a bond</button><button type="button" class="reset" id="fiReset">Starter portfolio</button></div></div>
+      <div id="fiT"></div>
+    </div>
+    <div style="margin-top:16px" id="fiSum"></div>
+    <div class="cols2 shk">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The move</h3><p>Pick a scenario or set the curve yourself: level moves every maturity, slope tilts the long end against the short, curvature lifts the middle.</p></div></div><div id="fiS"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Treasury curve</h3><p>Today, dashed; after the move, copper. Dots mark the four key maturities.</p></div></div><svg class="chart" id="fiCurve"></svg></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What the move does</h3><p>Full repricing, split into the part from Treasury yields and the part from credit spreads.</p></div></div><div id="fiRes"></div></div>
+    <div class="cols eq">
+      <div class="panel"><div class="hd"><div><h3 class="sec">Where the rate risk sits</h3><p>Key-rate exposure at 2, 5, 10 and 30 years.</p></div></div><svg class="chart" id="fiKrd" style="height:220px"></svg><p class="fine" id="fiKrdNote"></p></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">Cash coming in</h3><p>Every coupon and principal payment, by year.</p></div></div><svg class="chart" id="fiCf" style="height:220px"></svg><p class="fine" id="fiCfNote"></p></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What you own</h3><p>Share of market value.</p></div></div><div id="fiMix"></div></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Assets against a goal</h3><p>Asset-liability matching: a future payment is a short position in a bond, so it has a duration too.</p></div></div><div id="fiG"></div><div id="fiGoal" style="margin-top:20px"></div></div>
+    <p class="disc">The Treasury curve is the daily constant-maturity curve from FRED, used as a discount curve with straight lines between maturities. Spreads are the ICE BofA investment-grade and high-yield averages; real bonds trade at their own spreads, so enter a bond&rsquo;s actual yield if you know it. A bond fund can be entered as one bond at its average maturity and yield. Settlement is on a coupon date. For education only, not investment advice.</p>
+  </div>
+</section>
+'''
+    page('fixed-income.html', 'models.html', 'Bond portfolio stress test', 'Build a portfolio of Treasuries and corporate bonds and test it against curve twists, humps and credit-spread shocks, with key-rate durations, cash flows and a goal to fund.', 'fi', fi, '\n<script src="assets/fi.js?v=1"></script>')
 
     # ---------------- loans ----------------
     loans = ph('Models &middot; MOD-09', 'Loans and <em>mortgages</em>', 'What a loan really costs: the monthly payment, every year of interest, what extra payments save, and the APR once points and fees are counted. The mortgage rate starts at this week&rsquo;s national average.') + '''

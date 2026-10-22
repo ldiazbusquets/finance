@@ -348,6 +348,12 @@ if __name__ == '__main__':
         hub_data.run(ua if ua and '@' in ua else '')
     except Exception as e:
         print(f'  FAIL hub data {e}', file=sys.stderr)
+    print('Weekly returns (portfolio risk tool)')
+    try:
+        import risk_data
+        risk_data.run(force=os.environ.get('RISK_FORCE') == '1')
+    except Exception as e:
+        print(f'  FAIL risk data {e}', file=sys.stderr)
     print(f'done: {m} market items, {c} companies, {k} valuation updates')
     if not m and not c and not k:
         sys.exit(1)

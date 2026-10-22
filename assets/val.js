@@ -364,7 +364,7 @@
     var f = c.f;
     if (a.model === 'dcf') {
       html += '<div class="cols2"><div class="panel"><div class="hd"><div><h3 class="sec">Assumptions</h3><p>Filled in from the company’s last three years. Change any of them.</p></div><button class="reset" id="reset" type="button">Reset</button></div>' +
-        '<div class="gmr"><div class="seg gm" role="group" aria-label="Model"><button type="button" data-gm="std" class="' + (G ? '' : 'on') + '" aria-pressed="' + !G + '">Steady</button><button type="button" data-gm="growth" class="' + (G ? 'on' : '') + '" aria-pressed="' + G + '">High growth</button></div><p class="sx">' + (AUTO.gm === 'growth' ? 'Recent growth is fast, so high growth is the default.' : 'High growth suits companies growing well above 15% a year.') + '</p></div>' +
+        '<div class="gmr"><div class="seg gm" role="group" aria-label="Model"><button type="button" data-gm="std" class="' + (G ? '' : 'on') + '" aria-pressed="' + !G + '">Steady</button><button type="button" data-gm="growth" class="' + (G ? 'on' : '') + '" aria-pressed="' + G + '">High Growth</button></div><p class="sx">' + (AUTO.gm === 'growth' ? 'Recent growth is fast, so high growth is the default.' : 'High growth suits companies growing well above 15% a year.') + '</p></div>' +
         '<div class="ins">' +
         (G ? inputRow('g0', 'Starting growth', a.g0, 0.01, '%', 'Year 1, then fades to terminal') +
           inputRow('hold', 'Years at full growth', a.hold, 1, 'n', 'Before the fade starts') +

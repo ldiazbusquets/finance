@@ -36,7 +36,10 @@ def tc_text(s):
 
 
 def tc_html(fragment):
-    """Title-case the text of a fragment as one phrase, leaving tags alone."""
+    """Title-case the text of a fragment as one phrase, leaving tags alone. Line breaks start a new phrase."""
+    if re.search(r'<br\s*/?>', fragment, re.I):
+        bits = re.split(r'(<br\s*/?>)', fragment, flags=re.I)
+        return ''.join(b if i % 2 else tc_html(b) for i, b in enumerate(bits))
     tags = re.findall(r'<[^>]+>', fragment)
     txt = tc_text(re.sub(r'<[^>]+>', '\ue000', fragment))
     it = iter(tags)
@@ -57,3 +60,48 @@ if __name__ == '__main__':
               'Where each method lands, per share', 'Amazon (AMZN) research', 'What if', 'How an LLM works',
               'Today&rsquo;s Treasuries, priced at par', 'Growth-company DCF', 'Year-by-year schedule', 'Growth of $10,000', '10-year minus 2-year', 'Duration and <em>convexity</em>', 'Ask <em>the filings</em>', 'L3<em>Harris</em>', 'Research with <em>the numbers</em> showing.']:
         print(tc_html(s))
+
+
+# ---------- site-wide pass: headings, buttons and pills, never inside <script> or <style> ----------
+_SENT = re.compile(r'[.;!?,]')
+
+
+def _words(s):
+    return len(re.sub(r'<[^>]+>', ' ', s).split())
+
+
+def _plain(s):
+    return re.sub(r'<[^>]+>', '', s).strip()
+
+
+def _apply_part(h):
+    def head(m):
+        tag, attrs, inner = m.group(1), m.group(2), m.group(3)
+        t = _plain(inner)
+        if not t or t.endswith('?'):
+            return m.group(0)
+        if tag == 'h2':
+            # h2s in reports and the Lab are full-sentence headlines; only short labels get Title Case
+            if 'class="nh"' not in attrs and (_words(inner) > 7 or _SENT.search(t)):
+                return m.group(0)
+        elif _words(inner) > 10:
+            return m.group(0)
+        return f'<{tag}{attrs}>' + tc_html(inner) + f'</{tag}>'
+    h = re.sub(r'<(h[1-6])((?:\s[^>]*)?)>(.*?)</\1>', head, h, flags=re.S)
+
+    def short(m):
+        inner = m.group(3); t = _plain(inner)
+        if not t or t.endswith('?') or _words(inner) > 7 or re.search(r'[.!]\s*$', t):
+            return m.group(0)
+        return m.group(1) + m.group(2) + '>' + tc_html(inner) + m.group(4)
+    h = re.sub(r'(<button)((?:\s[^>]*)?)>(.*?)(</button>)', short, h, flags=re.S)
+    h = re.sub(r'(<a)(\s[^>]*class="pill[^"]*"[^>]*)>(.*?)(</a>)', short, h, flags=re.S)
+    h = re.sub(r'(<span)(\sclass="go")>(.*?)(</span>)', short, h, flags=re.S)
+    h = re.sub(r'(<title>)(.*?)(</title>)', lambda m: m.group(1) + tc_text(m.group(2)) + m.group(3), h, flags=re.S)
+    h = re.sub(r'(<meta (?:property|name)="(?:og|twitter):title" content=")([^"]*)', lambda m: m.group(1) + tc_text(m.group(2)), h)
+    return h
+
+
+def apply_all(html):
+    parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>)', html, flags=re.S | re.I)
+    return ''.join(p if i % 2 else _apply_part(p) for i, p in enumerate(parts))

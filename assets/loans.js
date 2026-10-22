@@ -91,7 +91,7 @@
   function rateNote() {
     var el = $('#lRate'); if (!el) return;
     if (kind !== 'mortgage' || !RATE) { el.innerHTML = ''; return; }
-    el.innerHTML = '<span>The average 30-year fixed mortgage rate was <b>' + RATE.v.toFixed(2) + '%</b> in the week of ' + fdate(RATE.d) + ' (Freddie Mac).</span>' + (Math.abs(L.rate * 100 - RATE.v) > 0.001 ? '<button type="button" class="reset" id="lUse">Use it</button>' : '');
+    el.innerHTML = '<span>The average 30-year fixed mortgage rate was <b>' + RATE.v.toFixed(2) + '%</b> in the week of ' + fdate(RATE.d) + ' (Freddie Mac).</span>' + (Math.abs(L.rate * 100 - RATE.v) > 0.001 ? '<button type="button" class="reset" id="lUse">Use It</button>' : '');
     var u = $('#lUse'); if (u) u.onclick = function () { L.rate = RATE.v / 100; inputs(); calc(); };
   }
 

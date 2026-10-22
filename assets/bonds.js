@@ -98,7 +98,7 @@
   function pricerInputs() {
     var el = $('#bIn'); if (!el) return;
     el.innerHTML =
-      '<div class="seg" id="bSolve"><button type="button" data-v="price"' + (B.solve === 'price' ? ' class="on"' : '') + '>I know the yield</button><button type="button" data-v="yield"' + (B.solve === 'yield' ? ' class="on"' : '') + '>I know the price</button></div>' +
+      '<div class="seg" id="bSolve"><button type="button" data-v="price"' + (B.solve === 'price' ? ' class="on"' : '') + '>I Know the Yield</button><button type="button" data-v="yield"' + (B.solve === 'yield' ? ' class="on"' : '') + '>I Know the Price</button></div>' +
       '<div class="ins">' +
       box('c', 'Coupon rate', shown('c'), '%', 'Paid on face value') +
       box('T', 'Years to maturity', shown('T'), 'yr') +
@@ -116,8 +116,8 @@
     var el = $('#bTsy'); if (!el) return;
     var y = curveAt(B.T);
     if (y == null) { el.innerHTML = ''; return; }
-    el.innerHTML = '<span>A ' + (B.T % 1 ? B.T.toFixed(1) : B.T) + '-year Treasury yields about <b>' + pc(y) + '</b> today' + (CDATE ? ' (' + fdate(CDATE) + ')' : '') + '.</span><button type="button" class="reset" id="bUse">Use it</button>' +
-      '<button type="button" class="reset" id="bPar">Price a new Treasury</button>';
+    el.innerHTML = '<span>A ' + (B.T % 1 ? B.T.toFixed(1) : B.T) + '-year Treasury yields about <b>' + pc(y) + '</b> today' + (CDATE ? ' (' + fdate(CDATE) + ')' : '') + '.</span><button type="button" class="reset" id="bUse">Use It</button>' +
+      '<button type="button" class="reset" id="bPar">Price a New Treasury</button>';
     $('#bUse').onclick = function () { B.y = Math.round(y * 1e5) / 1e5; B.solve = 'price'; pricerInputs(); pricer(); };
     $('#bPar').onclick = function () { B.y = Math.round(y * 1e5) / 1e5; B.c = Math.round(y * 800) / 800; B.solve = 'price'; B.f = 2; pricerInputs(); pricer(); };
   }

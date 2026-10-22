@@ -125,7 +125,7 @@ def page(fn, cur, title, desc, kind, body, extra='', root='', attrs=''):
     html = head(title, desc, fn) + f'<body data-page="{kind}"{attrs}>\n' + nav(cur) + body + foot(extra)
     if root:   # pages GitHub serves at other addresses (404) need absolute links
         html = re.sub(r'(href|src)="(?!https?:|/|#|data:|mailto:)([^"]*)"', lambda m: f'{m.group(1)}="{root}{m.group(2)}"', html)
-    html = titlecase.apply(html)
+    html = titlecase.apply_all(html)
     with open(os.path.join(OUT, fn), 'w') as f:
         f.write(html)
 
@@ -351,7 +351,7 @@ def build():
   </div>
 </section>
 '''
-    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=13"></script>')
+    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=14"></script>')
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
@@ -371,7 +371,7 @@ def build():
   </div>
 </section>
 '''
-    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=13"></script>')
+    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=14"></script>')
 
     # ---------------- calls ledger (track record) ----------------
     MONTHS = {m: i + 1 for i, m in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])}
@@ -683,7 +683,7 @@ def build():
   </div>
 </section>
 '''
-    page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=1"></script>')
+    page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=2"></script>')
 
     # ---------------- fixed-income portfolio ----------------
     fi = ph('Models &middot; Fixed income', 'Bond portfolio, <em>stress-tested</em>', 'Build a portfolio of Treasuries and corporate bonds, then bend the yield curve and widen credit spreads. Every payment is repriced at the curve on its own date, so twists and humps show up bond by bond.',
@@ -727,7 +727,7 @@ def build():
   </div>
 </section>
 '''
-    page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=2"></script>')
+    page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=3"></script>')
 
     # ---------------- research reports ----------------
     page('costco.html', 'research.html', 'Costco Wholesale (COST) research', 'A full fundamental analysis of Costco against Walmart, Target and BJ\u2019s, ending in a cash-flow value of $831.50 a share and a Hold / Wait.', 'report', costco.body(), attrs=' data-ticker="COST" data-then="970.31" data-val="831.50"')

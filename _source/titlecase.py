@@ -91,7 +91,7 @@ def _apply_part(h):
 
     def short(m):
         inner = m.group(3); t = _plain(inner)
-        if not t or t.endswith('?') or _words(inner) > 7 or re.search(r'[.!]\s*$', t):
+        if not t or t[0].islower() or t.endswith('?') or _words(inner) > 7 or re.search(r'[.!]\s*$', t):   # lowercase on purpose: commands, sample inputs
             return m.group(0)
         return m.group(1) + m.group(2) + '>' + tc_html(inner) + m.group(4)
     h = re.sub(r'(<button)((?:\s[^>]*)?)>(.*?)(</button>)', short, h, flags=re.S)

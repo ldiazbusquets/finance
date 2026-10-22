@@ -1,0 +1,52 @@
+LDB Finance: Northrop Grumman (NOC)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/noc.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),44.0,Company filings and guidance
+Tax rate %,16.0,Effective rate
+Discount rate (WACC) %,7.98,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,15.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-11.5,Latest balance sheet
+Diluted shares (billions),0.143,Latest filing
+"Revenue growth, years 1-2 %",6 / 7,Then fades to 3% by year 10
+Operating margin %,11.3 rising to 12 by year 5,
+Sales to capital,3,Reinvestment = revenue growth / 3
+Beta,0.8,Defense peers; measured 0.50
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,6.0,46.64,11.44,5.336,4.482,0.88,3.602,0.9624,3.466
+2028,7.0,49.905,11.58,5.779,4.854,1.088,3.766,0.8913,3.357
+2029,6.5,53.149,11.72,6.229,5.232,1.081,4.151,0.8254,3.426
+2030,6.0,56.338,11.86,6.682,5.613,1.063,4.55,0.7644,3.478
+2031,5.5,59.436,12.0,7.132,5.991,1.033,4.958,0.708,3.51
+2032,5.0,62.408,12.0,7.489,6.291,0.991,5.3,0.6557,3.475
+2033,4.5,65.216,12.0,7.826,6.574,0.936,5.638,0.6072,3.423
+2034,4.0,67.825,12.0,8.139,6.837,0.87,5.967,0.5624,3.356
+2035,3.5,70.199,12.0,8.424,7.076,0.791,6.285,0.5208,3.273
+2036,3.0,72.305,12.0,8.677,7.288,0.702,6.586,0.4824,3.177
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,33.942
+Year-11 after-tax operating income,7.507
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),120.679
+Present value of terminal value,58.211
+Enterprise value,92.154
+Plus net cash,-11.5
+Equity value,80.654
+Value per share ($),564.01
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),329.11,564.01,869.87
+Probability,25,50,25
+Probability-weighted value ($),,581.75,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 7.0%,720.02
+,Discount rate 7.5%,631.7
+,Discount rate 8.0%,561.0
+,Discount rate 8.5%,503.13
+,Discount rate 9.0%,454.89

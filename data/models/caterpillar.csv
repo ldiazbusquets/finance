@@ -1,0 +1,52 @@
+LDB Finance: Caterpillar (CAT)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/cat.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),78.0,Company filings and guidance
+Tax rate %,22.0,Effective rate
+Discount rate (WACC) %,9.68,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,20.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-5.0,Latest balance sheet
+Diluted shares (billions),0.4625,Latest filing
+"Revenue growth, years 1-2 %",8 / 6,Then fades to 3% by year 10
+Operating margin %,20 rising to 21 by year 4,
+Sales to capital,3,Reinvestment = revenue growth / 3
+Net debt basis,Machinery only,Cat Financial debt is matched by its loans
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,8.0,84.24,20.25,17.059,13.306,2.08,11.226,0.9548,10.719
+2028,6.0,89.294,20.5,18.305,14.278,1.685,12.593,0.8705,10.963
+2029,5.62,94.317,20.75,19.571,15.265,1.674,13.591,0.7937,10.787
+2030,5.25,99.269,21.0,20.846,16.26,1.651,14.61,0.7236,10.572
+2031,4.88,104.108,21.0,21.863,17.053,1.613,15.44,0.6597,10.186
+2032,4.5,108.793,21.0,22.847,17.82,1.562,16.259,0.6015,9.779
+2033,4.12,113.281,21.0,23.789,18.555,1.496,17.059,0.5484,9.355
+2034,3.75,117.529,21.0,24.681,19.251,1.416,17.835,0.5,8.917
+2035,3.38,121.495,21.0,25.514,19.901,1.322,18.579,0.4558,8.469
+2036,3.0,125.14,21.0,26.279,20.498,1.215,19.283,0.4156,8.014
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,97.762
+Year-11 after-tax operating income,21.113
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),268.524
+Present value of terminal value,111.597
+Enterprise value,209.359
+Plus net cash,-5.0
+Equity value,204.359
+Value per share ($),441.86
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),255.66,441.86,675.72
+Probability,25,50,25
+Probability-weighted value ($),,453.77,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,536.79
+,Discount rate 9.0%,492.12
+,Discount rate 9.5%,454.3
+,Discount rate 10.0%,421.86
+,Discount rate 10.5%,393.72

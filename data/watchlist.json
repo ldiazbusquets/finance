@@ -261,6 +261,64 @@
       "name": "Charles Schwab",
       "sector": "Brokerage",
       "status": "plan"
+    },
+    {
+      "ticker": "LMT",
+      "name": "Lockheed Martin",
+      "sector": "Aerospace & defense",
+      "status": "live",
+      "page": "lockheed-martin.html",
+      "call": "Hold",
+      "value": 646,
+      "date": "2026-10-22"
+    },
+    {
+      "ticker": "NOC",
+      "name": "Northrop Grumman",
+      "sector": "Aerospace & defense",
+      "status": "live",
+      "page": "northrop-grumman.html",
+      "call": "Hold",
+      "value": 564,
+      "date": "2026-10-22"
+    },
+    {
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "sector": "Machinery & power",
+      "status": "live",
+      "page": "caterpillar.html",
+      "call": "Watch",
+      "value": 442,
+      "date": "2026-10-22"
+    },
+    {
+      "ticker": "ASML",
+      "name": "ASML Holding",
+      "sector": "Chip equipment",
+      "status": "live",
+      "page": "asml.html",
+      "call": "Watch",
+      "value": 1081,
+      "date": "2026-10-22",
+      "gics": [
+        "Information Technology",
+        "Semiconductor Materials & Equipment"
+      ]
+    },
+    {
+      "ticker": "SKHY",
+      "name": "SK hynix",
+      "sector": "Memory chips",
+      "status": "live",
+      "page": "sk-hynix.html",
+      "call": "Watch",
+      "value": 111,
+      "date": "2026-10-22",
+      "gics": [
+        "Information Technology",
+        "Semiconductors"
+      ]
     }
   ]
 }

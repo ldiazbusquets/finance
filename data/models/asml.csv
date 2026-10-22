@@ -1,0 +1,52 @@
+LDB Finance: ASML Holding (ASML)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/asml.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),49.974,Company filings and guidance
+Tax rate %,16.0,Effective rate
+Discount rate (WACC) %,11.0,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,30.0,Sets reinvestment after year 10
+Net cash (negative = net debt),10.107,Latest balance sheet
+Diluted shares (billions),0.3831,Latest filing
+"Revenue growth, years 1-2 %",22 / 15,Then fades to 3% by year 10
+Operating margin %,41.5 rising to 44 by year 3,
+Sales to capital,3,Reinvestment = revenue growth / 3
+Euro to dollar,1.123,All euro figures converted at this rate
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,22.0,60.968,42.33,25.81,21.68,3.665,18.015,0.9492,17.099
+2028,15.0,70.113,43.17,30.265,25.423,3.048,22.375,0.8551,19.132
+2029,13.5,79.578,44.0,35.014,29.412,3.155,26.257,0.7704,20.227
+2030,12.0,89.127,44.0,39.216,32.941,3.183,29.758,0.694,20.653
+2031,10.5,98.486,44.0,43.334,36.4,3.119,33.281,0.6252,20.809
+2032,9.0,107.35,44.0,47.234,39.676,2.955,36.722,0.5633,20.685
+2033,7.5,115.401,44.0,50.776,42.652,2.684,39.968,0.5075,20.282
+2034,6.0,122.325,44.0,53.823,45.211,2.308,42.903,0.4572,19.614
+2035,4.5,127.829,44.0,56.245,47.246,1.835,45.411,0.4119,18.703
+2036,3.0,131.664,44.0,57.932,48.663,1.278,47.385,0.371,17.582
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,194.787
+Year-11 after-tax operating income,50.123
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),563.884
+Present value of terminal value,209.229
+Enterprise value,404.015
+Plus net cash,10.107
+Equity value,414.122
+Value per share ($),1080.98
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),523.78,1080.98,1652.71
+Probability,25,50,25
+Probability-weighted value ($),,1084.61,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 9.5%,1335.89
+,Discount rate 10.0%,1238.7
+,Discount rate 10.5%,1154.55
+,Discount rate 11.0%,1080.98
+,Discount rate 11.5%,1016.12

@@ -67,3 +67,10 @@ SNDK = {'bear': ([40e9, 35e9, 20e9, 16e9], [.60, .42, .10, 0], 18e9, .12, 8, .15
         'base': ([45e9, 50e9, 35e9, 25e9], [.65, .60, .35, .20], 28e9, .25, 10, .15, 4.8e9, 150e6),
         'bull': ([52e9, 65e9, 65e9, 60e9], [.68, .65, .62, .60], 50e9, .40, 12, .15, 4.8e9, 150e6)}
 showc('SNDK', SNDK, 1378.22)
+# SK hynix (ADR SKHY, 10 ADRs = 1 Korean share): values per ADR in dollars, won converted at 1,327 per dollar.
+# Beta about 1.6 plus Korea and memory-cycle risk -> 14%, as for Micron. Q2 2026 net cash KRW 69.4T ($52B) plus ~$28B from the July ADR offering -> ~$80B.
+# ~745.8M common shares after the offering (728.0M + 17.79M), ~740M outstanding net of treasury -> 7.40B ADR-equivalents.
+SKHY = {'bear': ([280e9, 230e9, 150e9, 120e9], [.45, .35, .10, .05], 150e9, .25, 10, .14, 80e9, 7.40e9),
+        'base': ([330e9, 350e9, 240e9, 180e9], [.50, .45, .28, .15], 210e9, .35, 12, .14, 80e9, 7.40e9),
+        'bull': ([380e9, 450e9, 400e9, 350e9], [.55, .52, .45, .40], 320e9, .45, 14, .14, 80e9, 7.40e9)}
+showc('SKHY', SKHY, 131.62)

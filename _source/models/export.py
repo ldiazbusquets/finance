@@ -84,8 +84,16 @@ def main():
                                256e9, .16, .03, .25, 1.5e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '18 / 14', 'Then fades to 3% by year 10'], ['Operating margin %', '34 rising to 38 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '110 / 90 / 60 / 40', 'Then reinvestment = revenue growth / 2.0']], 'meta')
     vals['VRT'] = generic_dcf('VRT', 'vertiv', 'Vertiv (VRT)', 'vr', ((.12, .08, .21, .21), {}), ((.35, .22, .235, .27), {}),
                               14.0e9, .21, .03, .25, -0.13e9, [.09, .10, .11, .12], [['Revenue growth, years 1-2 %', '25 / 16', 'Then fades to 3% by year 10'], ['Operating margin %', '22.5 rising to 24.5 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3']], 'vrt')
+    vals['LMT'] = generic_dcf('LMT', 'lockheed-martin', 'Lockheed Martin (LMT)', 'lm', None, None, 81.0e9, .16, .03, .15, -14.5e9, [.07, .075, .08, .085, .09],
+                              [['Revenue growth, years 1-2 %', '7 / 6', 'Then fades to 3% by year 10'], ['Operating margin %', '11.5 rising to 12 by year 4', ''], ['Sales to capital', 4, 'Reinvestment = revenue growth / 4'], ['Beta', 0.80, 'Defense peers; measured 0.48']], 'lmt')
+    vals['NOC'] = generic_dcf('NOC', 'northrop-grumman', 'Northrop Grumman (NOC)', 'nc', None, None, 44.0e9, .16, .03, .15, -11.5e9, [.07, .075, .08, .085, .09],
+                              [['Revenue growth, years 1-2 %', '6 / 7', 'Then fades to 3% by year 10'], ['Operating margin %', '11.3 rising to 12 by year 5', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Beta', 0.80, 'Defense peers; measured 0.50']], 'noc')
+    vals['CAT'] = generic_dcf('CAT', 'caterpillar', 'Caterpillar (CAT)', 'ct', None, None, 78.0e9, .22, .03, .20, -5.0e9, [.085, .09, .095, .10, .105],
+                              [['Revenue growth, years 1-2 %', '8 / 6', 'Then fades to 3% by year 10'], ['Operating margin %', '20 rising to 21 by year 4', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Net debt basis', 'Machinery only', 'Cat Financial debt is matched by its loans']], 'cat')
+    vals['ASML'] = generic_dcf('ASML', 'asml', 'ASML Holding (ASML)', 'asm', None, None, 44.5e9 * 1.123, .16, .03, .30, 9.0e9 * 1.123, [.095, .10, .105, .11, .115],
+                               [['Revenue growth, years 1-2 %', '22 / 15', 'Then fades to 3% by year 10'], ['Operating margin %', '41.5 rising to 44 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Euro to dollar', 1.123, 'All euro figures converted at this rate']], 'asml')
     # the bear and bull cases also move the discount rate by a point: rebuild them exactly as the scripts do
-    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr')):
+    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr'), ('LMT', 'lmt', 'lm'), ('NOC', 'noc', 'nc'), ('CAT', 'cat', 'ct'), ('ASML', 'asml', 'asm')):
         ns = run(script); vals[key] = (ns['b'], ns['bear'], ns['bull'])
     ns = run('nvda'); nv = ns['nv']; W0 = ns['ke'](1.58)
     with contextlib.redirect_stdout(io.StringIO()):
@@ -188,7 +196,8 @@ def main():
     # memory makers: four years of cash flow, then a mid-cycle exit value
     cyc = ns['cyc']
     for t, slug, title, yrs in (('MU', 'micron', 'Micron Technology (MU)', ['FY2027', 'FY2028', 'FY2029', 'FY2030']),
-                                ('SNDK', 'sandisk', 'Sandisk (SNDK)', ['FY2027', 'FY2028', 'FY2029', 'FY2030'])):
+                                ('SNDK', 'sandisk', 'Sandisk (SNDK)', ['FY2027', 'FY2028', 'FY2029', 'FY2030']),
+                                ('SKHY', 'sk-hynix', 'SK hynix (SKHY ADR, values per ADR)', ['2027', '2028', '2029', '2030'])):
         C = ns[t]; cases = [C['bear'], C['base'], C['bull']]; v = [cyc(*c) for c in cases]
         def row(label, f): return [label] + [f(c) for c in cases]
         scen = []

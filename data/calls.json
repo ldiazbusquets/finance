@@ -172,6 +172,36 @@
    "held": true
   },
   {
+   "t": "ASML",
+   "name": "ASML Holding",
+   "page": "asml.html",
+   "date": "2026-10-22",
+   "call": "Watch",
+   "value": 1081,
+   "price": 1558.26,
+   "held": false
+  },
+  {
+   "t": "CAT",
+   "name": "Caterpillar",
+   "page": "caterpillar.html",
+   "date": "2026-10-22",
+   "call": "Watch",
+   "value": 442,
+   "price": 710.9,
+   "held": false
+  },
+  {
+   "t": "LMT",
+   "name": "Lockheed Martin",
+   "page": "lockheed-martin.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 646,
+   "price": 602.75,
+   "held": false
+  },
+  {
    "t": "META",
    "name": "Meta Platforms",
    "page": "meta.html",
@@ -180,6 +210,26 @@
    "value": 531,
    "price": 697.52,
    "held": true
+  },
+  {
+   "t": "NOC",
+   "name": "Northrop Grumman",
+   "page": "northrop-grumman.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 564,
+   "price": 553.29,
+   "held": false
+  },
+  {
+   "t": "SKHY",
+   "name": "SK hynix",
+   "page": "sk-hynix.html",
+   "date": "2026-10-22",
+   "call": "Watch",
+   "value": 111,
+   "price": 131.62,
+   "held": false
   }
  ]
 }

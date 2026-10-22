@@ -1,0 +1,37 @@
+"LDB Finance: SK hynix (SKHY ADR, values per ADR)"
+"Method: Cycle model: four years of free cash flow at the cycle's prices, then a mid-cycle exit value"
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/new_coverage.py
+
+INPUTS,Value,Basis
+Tax rate on operating profit %,21,U.S. federal rate
+Formula,"value = sum of discounted free cash flow, years 1-4 + (mid-cycle revenue x margin x (1 - tax) x multiple) / (1 + r)^4 + net cash",Fiscal years
+Inputs by scenario,see SCENARIOS,Sources are linked in the report
+
+BRIDGE (base case),Value
+Base-case value ($ per share),110.79
+
+SCENARIOS,Bear,Base,Bull
+Revenue 2027 ($B),280.0,330.0,380.0
+Free cash flow margin 2027 %,45.0,50.0,55.0
+Present value of 2027 free cash flow ($B),110.526,144.737,183.333
+Revenue 2028 ($B),230.0,350.0,450.0
+Free cash flow margin 2028 %,35.0,45.0,52.0
+Present value of 2028 free cash flow ($B),61.942,121.191,180.055
+Revenue 2029 ($B),150.0,240.0,400.0
+Free cash flow margin 2029 %,10.0,28.0,45.0
+Present value of 2029 free cash flow ($B),10.125,45.358,121.495
+Revenue 2030 ($B),120.0,180.0,350.0
+Free cash flow margin 2030 %,5.0,15.0,40.0
+Present value of 2030 free cash flow ($B),3.552,15.986,82.891
+Mid-cycle revenue ($B),150.0,210.0,320.0
+Mid-cycle operating margin %,25.0,35.0,45.0
+Exit multiple of after-tax profit (x),10,12,14
+Present value of exit value ($B),175.404,412.55,942.971
+Discount rate %,14.0,14.0,14.0
+Plus net cash ($B),80.0,80.0,80.0
+Shares by 2030 (millions),7400.0,7400.0,7400.0
+Value ($ per share),59.67,110.79,214.97
+Probability,25,50,25
+Probability-weighted value ($ per share),,124.05,
+

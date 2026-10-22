@@ -1,6 +1,7 @@
 """Title Case for page titles and headings (shared by Finance and Lab)."""
 import re
 
+KEEP = {'hynix'}   # brand names written in lowercase
 SMALL = {'a', 'an', 'and', 'the', 'of', 'in', 'on', 'at', 'to', 'for', 'by', 'with', 'or',
          'as', 'but', 'vs', 'vs.', 'nor', 'per', 'via', 'from', 'into'}
 
@@ -9,8 +10,8 @@ def _word(w, first, last):
     if '-' in w:
         ps = w.split('-')
         return '-'.join(_word(p, first if i == 0 else False, i == len(ps) - 1) for i, p in enumerate(ps))
-    if not w or not w[0].isalpha():
-        return w                    # numbers, entities, placeholders
+    if not w or not w[0].isalpha() or w in KEEP:
+        return w                    # numbers, entities, placeholders, lowercase brands
     if any(c.isupper() for c in w) or any(c.isdigit() for c in w):
         return w                    # acronyms, tickers, already-capitalised names
     if w.lower() in SMALL and not first and not last:

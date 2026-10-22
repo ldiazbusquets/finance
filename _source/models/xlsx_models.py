@@ -219,7 +219,7 @@ def dcf_sens(name, info, Wcells):
 
 
 def generic_cases():
-    """the exact cases in amzn.py, meta.py, nvda.py and vrt.py"""
+    """the exact cases in amzn.py, meta.py, nvda.py, vrt.py, lmt.py, noc.py, cat.py and asml.py"""
     return {
         'AMZN': dict(slug='amazon', title='Amazon (AMZN)', script='amzn', rev0n='Base revenue for 2026, $810B', price=262.63, W=[.085, .09, .095, .10],
                      wacc=dict(beta=1.33, price=262.63, shares=10.9, debt=133, kd=.05),
@@ -237,6 +237,22 @@ def generic_cases():
                     wacc=dict(beta=1.83, price=203.56, shares=0.393, debt=2.94, kd=.055),
                     base=dict(rev0=14.0, g1=.25, g2=.16, m0=.225, mT=.245, ny=3, tax=.21, s2c=3, ronic=.25, net=-0.13, shares=0.393, shift=0),
                     bear=dict(g1=.12, g2=.08, m0=.21, mT=.21, shift=.01), bull=dict(g1=.35, g2=.22, m0=.235, mT=.27, shift=-.01)),
+        'LMT': dict(slug='lockheed-martin', title='Lockheed Martin (LMT)', script='lmt', rev0n='2026 guidance midpoint, $81.0B', price=602.75, W=[.07, .075, .08, .085, .09],
+                    wacc=dict(beta=0.80, price=602.75, shares=0.2315, debt=20.5, kd=.05),
+                    base=dict(rev0=81.0, g1=.07, g2=.06, m0=.115, mT=.12, ny=4, tax=.16, s2c=4, ronic=.15, net=-14.5, shares=0.2315, shift=0),
+                    bear=dict(g1=.04, g2=.03, m0=.10, mT=.105, shift=.01), bull=dict(g1=.09, g2=.08, m0=.12, mT=.13, shift=-.01)),
+        'NOC': dict(slug='northrop-grumman', title='Northrop Grumman (NOC)', script='noc', rev0n='2026 guidance midpoint, $44.0B', price=553.29, W=[.07, .075, .08, .085, .09],
+                    wacc=dict(beta=0.80, price=553.29, shares=0.143, debt=15.2, kd=.05),
+                    base=dict(rev0=44.0, g1=.06, g2=.07, m0=.113, mT=.12, ny=5, tax=.16, s2c=3, ronic=.15, net=-11.5, shares=0.143, shift=0),
+                    bear=dict(g1=.03, g2=.03, m0=.105, mT=.105, shift=.01), bull=dict(g1=.08, g2=.09, m0=.118, mT=.13, shift=-.01)),
+        'CAT': dict(slug='caterpillar', title='Caterpillar (CAT)', script='cat', rev0n='2026 estimate, $78.0B', price=710.90, W=[.085, .09, .095, .10, .105],
+                    wacc=dict(beta=1.05, price=710.90, shares=0.4625, debt=11.0, kd=.05),
+                    base=dict(rev0=78.0, g1=.08, g2=.06, m0=.20, mT=.21, ny=4, tax=.22, s2c=3, ronic=.20, net=-5.0, shares=0.4625, shift=0),
+                    bear=dict(g1=0, g2=.02, m0=.17, mT=.17, shift=.01), bull=dict(g1=.12, g2=.10, m0=.215, mT=.23, shift=-.01)),
+        'ASML': dict(slug='asml', title='ASML Holding (ASML), US$ at 1.123 per euro', script='asml', rev0n='2026 guidance midpoint, EUR 44.5B = $50.0B', price=1558.26, W=[.095, .10, .105, .11, .115],
+                     wacc=dict(beta=1.30),
+                     base=dict(rev0=44.5 * 1.123, g1=.22, g2=.15, m0=.415, mT=.44, ny=3, tax=.16, s2c=3, ronic=.30, net=9.0 * 1.123, shares=0.3831, shift=0),
+                     bear=dict(g1=.08, g2=.05, m0=.36, mT=.36, shift=.01), bull=dict(g1=.30, g2=.20, m0=.43, mT=.47, shift=-.01)),
     }
 
 
@@ -568,6 +584,7 @@ def all_books():
     ns = run_script('new_coverage')
     books['micron'] = ('MU', make_cycle('micron', 'Micron Technology (MU)', ns['MU'], R['MU']['price'], ['FY2027', 'FY2028', 'FY2029', 'FY2030']))
     books['sandisk'] = ('SNDK', make_cycle('sandisk', 'Sandisk (SNDK)', ns['SNDK'], R['SNDK']['price'], ['FY2027', 'FY2028', 'FY2029', 'FY2030']))
+    books['sk-hynix'] = ('SKHY', make_cycle('sk-hynix', 'SK hynix (SKHY), per ADR', ns['SKHY'], R['SKHY']['price'], ['2027', '2028', '2029', '2030']))
     return books
 
 

@@ -428,7 +428,7 @@
       /* optical sizing: wide wordmarks get less height, compact marks more, so every logo carries similar weight */
       var r = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 4;
       var h = Math.max(20, Math.min(38, 38 * Math.pow(3 / r, .45)));
-      h = Math.min(h, 180 / r);
+      h = Math.min(h, 200 / r);
       m.style.setProperty('--lh', h.toFixed(1) + 'px');
       m.textContent = ''; m.appendChild(img); m.classList.add('has');
     };

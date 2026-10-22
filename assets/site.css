@@ -848,6 +848,8 @@ html.lt .band .eyebrow::before { background: #FFF6EA; }
 .rmark { position: absolute; top: 0; right: 32px; display: grid; place-items: center; min-width: 64px; height: 64px; padding: 0 16px; border-radius: 18px; border: 1px solid rgba(197,139,92,.45); background: rgba(197,139,92,.06); }
 .rmark .tk { font: 500 14px/1 "Geist Mono", ui-monospace, monospace; letter-spacing: .12em; color: var(--acc); }
 .rmark.has { border-color: var(--line2); background: #FBF7F1; padding: 12px 18px; min-width: 0; }
-.rmark img { display: block; height: var(--lh, 36px); width: auto; max-width: 180px; object-fit: contain; }   /* fixed height: SVGs with only a viewBox have no size of their own */
-@media (min-width: 761px) { .ph.rp .eyebrow, .ph.rp h1 { padding-right: 230px; } }
-@media (max-width: 760px) { .rmark { position: static; float: right; margin: 0 0 8px 14px; height: 46px; min-width: 46px; padding: 0 12px; border-radius: 14px; } .rmark .tk { font-size: 12px; } .rmark.has { padding: 8px 12px; } .rmark img { height: calc(var(--lh, 36px) * .72); max-width: 130px; } }
+.rmark img { display: block; height: var(--lh, 36px); width: auto; max-width: 200px; object-fit: contain; }   /* fixed height: SVGs with only a viewBox have no size of their own */
+@media (min-width: 761px) { .ph.rp .eyebrow, .ph.rp h1 { padding-right: 250px; } }
+@media (max-width: 760px) { .rmark { position: static; float: right; margin: 0 0 8px 14px; height: 46px; min-width: 46px; padding: 0 12px; border-radius: 14px; } .rmark .tk { font-size: 12px; } .rmark.has { padding: 8px 12px; } .rmark img { height: calc(var(--lh, 36px) * .72); max-width: 104px; } }
+@media (max-width: 380px) { .rmark { height: 40px; padding: 0 10px; margin-left: 10px; } .rmark.has { padding: 6px 10px; } .rmark img { height: calc(var(--lh, 36px) * .62); max-width: 84px; } }
+@media (max-width: 340px) { .rmark { float: none; display: inline-grid; margin: 4px 0 10px; } }

@@ -213,7 +213,7 @@ def body():
              field=[('Analyst targets', 470, 1450, 1172, '')])
     G['call'], G['gap'], G['rel'] = ratings.rate(WT, PRICE)
     _, p1, p2 = ratings.REC['GEV']
-    c9 = chap('09', 'rec', 'Rating', G['call'] + '. ' + ratings.REC['GEV'][0], prose(p1, '<b>What would change the value:</b> ' + p2) + rating_block(G) + f'''
+    c9 = chap('09', 'rec', 'Rating', G['call'] + '. ' + ratings.REC['GEV'][0], prose(p1, '<b>What would change the value:</b> ' + p2) + rating_block(G) + rep.industry('GEV').replace('R_NAME_HOLDER', 'GE Vernova') + f'''
 <div class="band sm"><div class="eyebrow mono">Final view</div><h2>A great business, <em>priced for a greater one.</em></h2><p>GE Vernova is one of the clearest beneficiaries of rising power demand. On the company&rsquo;s own targets the shares are fully valued; the upside depends on what comes after 2028.</p></div>
 {src(('q3', 'Q3 2026 results webcast, Oct 28'), ('bofa', 'BofA Q3 preview'))}''')
     return head + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + '''

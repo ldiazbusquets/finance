@@ -242,13 +242,84 @@ def rec_body(R, original):
         text = prose(p1, '<b>What would change the value:</b> ' + p2)
     else:
         text = original[:band.start()] if band else original
-    return text + rating_block(R) + (band.group(0) if band else '')
+    return text + rating_block(R) + industry(R['t']).replace('R_NAME_HOLDER', R['name']) + (band.group(0) if band else '')
 
 
 def rec_title(R, h2):
     if R['t'] in ratings.REC:
         return (R['call'] + '. ' if not R.get('private') else '') + ratings.REC[R['t']][0]
     return h2
+
+
+# ---------------- against its industry: the same four measures for every S&P 500 company in its sub-industry ----------------
+_UNI = None
+
+
+def _metrics(t, px):
+    try:
+        d = json.load(open(os.path.join(DATA, t + '.json')))
+    except Exception:
+        return None
+    f = d.get('f') or {}; q = (d.get('q') or {}).get('ttm') or {}
+    def last(k, n=1):
+        v = [x for x in (f.get(k) or []) if x is not None]
+        return v[-n] if len(v) >= n else None
+    p = (px.get(t) or {}).get('p'); sh = d.get('sh') or (d.get('q') or {}).get('dil') or last('dil')
+    if not p or not sh or not f.get('rev'):
+        return None
+    mc = p * sh
+    rev = q.get('rev') or last('rev'); ni = q.get('ni') or last('ni'); ebit = q.get('ebit') or last('ebit')
+    cfo = q.get('cfo') if q.get('cfo') is not None else last('cfo'); capex = q.get('capex') if q.get('capex') is not None else last('capex')
+    r1, r0 = last('rev'), last('rev', 2)
+    return {'Revenue growth, last fiscal year': (r1 / r0 - 1) if r1 and r0 else None,
+            'Operating margin': (ebit / rev) if ebit is not None and rev else None,
+            'Price to earnings': (mc / ni) if ni and ni > 0 else None,
+            'Free cash flow yield': ((cfo - capex) / mc) if cfo is not None and capex is not None else None}
+
+
+def industry(t):
+    global _UNI
+    if _UNI is None:
+        try:
+            _UNI = {c[0]: c for c in json.load(open(os.path.join(DATA, '..', 'universe.json')))['companies']}
+        except Exception:
+            _UNI = {}
+    try:
+        px = json.load(open(os.path.join(DATA, 'prices.json')))['px']
+    except Exception:
+        return ''
+    try:
+        me = json.load(open(os.path.join(DATA, t + '.json')))
+    except Exception:
+        return ''
+    sub, sec = me.get('sub'), me.get('sec')
+    peers = [k for k, c in _UNI.items() if c[3] == sub and k != t]
+    group = sub
+    if len(peers) < 4:
+        peers = [k for k, c in _UNI.items() if c[2] == sec and k != t]; group = sec
+    mine = _metrics(t, px)
+    if not mine or not peers:
+        return ''
+    pm = {k: _metrics(k, px) for k in peers}; pm = {k: v for k, v in pm.items() if v}
+    if len(pm) < 3:
+        return ''
+    rows = []
+    higher_better = {'Revenue growth, last fiscal year': True, 'Operating margin': True, 'Price to earnings': False, 'Free cash flow yield': True}
+    for m, v in mine.items():
+        vals = sorted(x[m] for x in pm.values() if x[m] is not None)
+        if v is None or len(vals) < 3:
+            continue
+        med = vals[len(vals) // 2] if len(vals) % 2 else (vals[len(vals) // 2 - 1] + vals[len(vals) // 2]) / 2
+        allv = vals + [v]
+        rank = sorted(allv, reverse=higher_better[m]).index(v) + 1
+        fmt = (lambda x: f'{x:.1f}&times;') if m == 'Price to earnings' else (lambda x: ('&minus;' if x < 0 else '') + f'{abs(x) * 100:.1f}%')
+        better = (v > med) if higher_better[m] else (v < med)
+        rows.append([m, fmt(v), fmt(med), f'{rank} of {len(allv)}', 'Better than the median' if better else 'Worse than the median'])
+    if not rows:
+        return ''
+    names = ', '.join(sorted(pm))
+    return ('<h3 class="sec sm">Against its industry</h3>' + table(['Measure', 'R_NAME_HOLDER', 'Industry median', 'Rank', ''], rows, 'allnum')
+            + f'<p class="fine">Peers: the {len(pm)} other S&amp;P 500 companies in {group.replace('&', '&amp;')} with complete data ({names}). Last twelve months where reported, from SEC filings; prices from the latest close. A lower price-to-earnings ratio ranks higher. These figures update with each data run; the rating does not.</p>')
 
 
 def body(R):

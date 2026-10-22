@@ -158,14 +158,15 @@ SRC_URL = 'https://github.com/ldiazbusquets/finance/blob/main/_source/models/'
 
 
 def checkit(slug):
-    """the 'check the numbers' box: the full model as a CSV and its source code"""
+    """the 'check the numbers' box: the full model as an Excel workbook with live formulas, a plain CSV and its source code"""
     if not os.path.exists(os.path.join(DATA, '..', 'models', slug + '.csv')):
         return ''
     script = SCRIPT.get(slug, 'new_coverage')
     return (f'<div class="checkit"><div><span class="mono">Check the numbers</span><p>Every figure in this valuation comes from one model script, '
-            f'rerun and checked against this page each time the site is built. The download has the inputs and their sources, each year&rsquo;s cash flow, '
-            f'the bridge to the value, the scenarios and the sensitivity table.</p></div>'
-            f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="data/models/{slug}.csv" download>Download the model (CSV)</a>'
+            f'rerun and checked against this page each time the site is built. The Excel model rebuilds it in live formulas: change any blue input and '
+            f'every year&rsquo;s cash flow, the bridge to the value, the scenarios and the sensitivity table recalculate.</p></div>'
+            f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="data/models/{slug}.xlsx" download>Download the model (Excel)</a>'
+            f'<a class="pill gh sm" href="data/models/{slug}.csv" download>CSV</a>'
             f'<a class="pill gh sm" href="{SRC_URL}{script}.py" target="_blank" rel="noopener">Model code &#8599;</a></div></div>')
 
 

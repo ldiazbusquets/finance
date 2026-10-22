@@ -90,10 +90,16 @@ def main():
                               [['Revenue growth, years 1-2 %', '6 / 7', 'Then fades to 3% by year 10'], ['Operating margin %', '11.3 rising to 12 by year 5', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Beta', 0.80, 'Defense peers; measured 0.50']], 'noc')
     vals['CAT'] = generic_dcf('CAT', 'caterpillar', 'Caterpillar (CAT)', 'ct', None, None, 78.0e9, .22, .03, .20, -5.0e9, [.085, .09, .095, .10, .105],
                               [['Revenue growth, years 1-2 %', '8 / 6', 'Then fades to 3% by year 10'], ['Operating margin %', '20 rising to 21 by year 4', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Net debt basis', 'Machinery only', 'Cat Financial debt is matched by its loans']], 'cat')
+    vals['MSFT'] = generic_dcf('MSFT', 'microsoft', 'Microsoft (MSFT)', 'ms', None, None, 331.8e9, .18, .03, .25, 36.5e9 + .27 * 790e9, [.085, .09, .095, .10, .105],
+                               [['Revenue growth, years 1-2 %', '17 / 15', 'Fiscal years to June; then fades to 3% by year 10'], ['Operating margin %', 45, ''], ['Net investment, years 1-4 ($B)', '180 / 140 / 100 / 70', 'Then reinvestment = revenue growth / 2'], ['OpenAI stake ($B)', round(.27 * 790, 1), '27% of this site\'s OpenAI base-case value (estimate)']], 'msft')
+    vals['GOOGL'] = generic_dcf('GOOGL', 'alphabet', 'Alphabet (GOOGL)', 'gg', None, None, 490e9, .17, .03, .25, 100e9 + 218.4e9, [.085, .09, .095, .10, .105],
+                                [['Revenue growth, years 1-2 %', '15 / 13', 'Then fades to 3% by year 10'], ['Operating margin %', '34 rising to 35 by year 4', ''], ['Net investment, years 1-4 ($B)', '150 / 120 / 90 / 60', 'Then reinvestment = revenue growth / 2'], ['Stakes in SpaceX and Anthropic ($B)', 218.4, 'As disclosed in the Q2 2026 10-Q']], 'googl')
+    vals['TSM'] = generic_dcf('TSM', 'tsmc', 'TSMC (TSM ADR)', 'ts', None, None, 176e9, .16, .03, .25, 60e9, [.095, .10, .105, .11, .115],
+                              [['Revenue growth, years 1-2 %', '25 / 20', 'Then fades to 3% by year 10'], ['Operating margin %', '57 easing to 54 by year 5', 'Overseas fab dilution'], ['Sales to capital', 1.3, 'Reinvestment = revenue growth / 1.3'], ['Shares', '5.186B ADR-equivalents', '1 ADR = 5 Taiwan shares']], 'tsm')
     vals['ASML'] = generic_dcf('ASML', 'asml', 'ASML Holding (ASML)', 'asm', None, None, 44.5e9 * 1.123, .16, .03, .30, 9.0e9 * 1.123, [.095, .10, .105, .11, .115],
                                [['Revenue growth, years 1-2 %', '22 / 15', 'Then fades to 3% by year 10'], ['Operating margin %', '41.5 rising to 44 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3'], ['Euro to dollar', 1.123, 'All euro figures converted at this rate']], 'asml')
     # the bear and bull cases also move the discount rate by a point: rebuild them exactly as the scripts do
-    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr'), ('LMT', 'lmt', 'lm'), ('NOC', 'noc', 'nc'), ('CAT', 'cat', 'ct'), ('ASML', 'asml', 'asm')):
+    for key, script, fn in (('AMZN', 'amzn', 'am'), ('META', 'meta', 'mt'), ('VRT', 'vrt', 'vr'), ('LMT', 'lmt', 'lm'), ('NOC', 'noc', 'nc'), ('CAT', 'cat', 'ct'), ('ASML', 'asml', 'asm'), ('MSFT', 'msft', 'ms'), ('GOOGL', 'googl', 'gg'), ('TSM', 'tsm', 'ts')):
         ns = run(script); vals[key] = (ns['b'], ns['bear'], ns['bull'])
     ns = run('nvda'); nv = ns['nv']; W0 = ns['ke'](1.58)
     with contextlib.redirect_stdout(io.StringIO()):

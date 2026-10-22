@@ -52,7 +52,7 @@
       "status": "live",
       "page": "meta.html",
       "holding": true,
-      "call": "Hold",
+      "call": "Buy",
       "value": 531,
       "date": "Oct 22, 2026"
     },
@@ -63,7 +63,7 @@
       "status": "live",
       "page": "jpmorgan.html",
       "holding": true,
-      "call": "Hold",
+      "call": "Buy",
       "value": 284,
       "date": "Oct 20, 2026"
     },
@@ -74,7 +74,7 @@
       "status": "live",
       "page": "gev.html",
       "holding": true,
-      "call": "Hold",
+      "call": "Sell",
       "value": 442,
       "date": "Oct 20, 2026"
     },
@@ -85,7 +85,7 @@
       "status": "live",
       "page": "nvidia.html",
       "holding": true,
-      "call": "Hold",
+      "call": "Buy",
       "value": 166,
       "date": "Oct 20, 2026"
     },
@@ -96,7 +96,7 @@
       "status": "live",
       "page": "boeing.html",
       "holding": true,
-      "call": "Hold",
+      "call": "Buy",
       "value": 197,
       "date": "Oct 20, 2026"
     },
@@ -107,8 +107,8 @@
       "status": "live",
       "page": "spacex.html",
       "holding": true,
-      "call": "Hold",
-      "value": 118,
+      "call": "Buy",
+      "value": 123,
       "date": "2026-10-21",
       "gics": [
         "Industrials",
@@ -122,8 +122,8 @@
       "status": "live",
       "page": "firefly.html",
       "holding": true,
-      "call": "Hold",
-      "value": 20,
+      "call": "Buy",
+      "value": 18,
       "date": "2026-10-21",
       "gics": [
         "Industrials",
@@ -137,7 +137,7 @@
       "status": "live",
       "page": "anthropic.html",
       "private": true,
-      "call": "IPO watch",
+      "call": "Not rated",
       "date": "2026-10-21"
     },
     {
@@ -147,7 +147,7 @@
       "status": "live",
       "page": "openai.html",
       "private": true,
-      "call": "Watch",
+      "call": "Not rated",
       "date": "2026-10-21"
     },
     {
@@ -157,7 +157,7 @@
       "status": "live",
       "page": "anduril.html",
       "private": true,
-      "call": "Wait for IPO",
+      "call": "Not rated",
       "date": "2026-10-21"
     },
     {
@@ -167,7 +167,7 @@
       "status": "live",
       "page": "bloomberg.html",
       "private": true,
-      "call": "IPO watch",
+      "call": "Not rated",
       "date": "2026-10-21"
     },
     {
@@ -176,8 +176,8 @@
       "sector": "Defense",
       "status": "live",
       "page": "kratos.html",
-      "call": "Watch",
-      "value": 23,
+      "call": "Hold",
+      "value": 24,
       "date": "2026-10-21",
       "gics": [
         "Industrials",
@@ -190,8 +190,8 @@
       "sector": "Public safety technology",
       "status": "live",
       "page": "axon.html",
-      "call": "Watch",
-      "value": 289,
+      "call": "Buy",
+      "value": 314,
       "date": "2026-10-21"
     },
     {
@@ -200,8 +200,8 @@
       "sector": "AI software",
       "status": "live",
       "page": "palantir.html",
-      "call": "Watch",
-      "value": 79,
+      "call": "Sell",
+      "value": 87,
       "date": "2026-10-21"
     },
     {
@@ -210,8 +210,8 @@
       "sector": "Semiconductors",
       "status": "live",
       "page": "amd.html",
-      "call": "Watch",
-      "value": 319,
+      "call": "Hold",
+      "value": 353,
       "date": "2026-10-21"
     },
     {
@@ -220,7 +220,7 @@
       "sector": "Memory chips",
       "status": "live",
       "page": "micron.html",
-      "call": "Watch",
+      "call": "Buy",
       "value": 622,
       "date": "2026-10-21"
     },
@@ -230,7 +230,7 @@
       "sector": "Flash storage",
       "status": "live",
       "page": "sandisk.html",
-      "call": "Watch",
+      "call": "Sell",
       "value": 636,
       "date": "2026-10-21"
     },
@@ -268,7 +268,7 @@
       "sector": "Aerospace & defense",
       "status": "live",
       "page": "lockheed-martin.html",
-      "call": "Hold",
+      "call": "Buy",
       "value": 647,
       "date": "2026-10-22"
     },
@@ -278,7 +278,7 @@
       "sector": "Aerospace & defense",
       "status": "live",
       "page": "northrop-grumman.html",
-      "call": "Hold",
+      "call": "Buy",
       "value": 564,
       "date": "2026-10-22"
     },
@@ -288,7 +288,7 @@
       "sector": "Machinery & power",
       "status": "live",
       "page": "caterpillar.html",
-      "call": "Watch",
+      "call": "Hold",
       "value": 442,
       "date": "2026-10-22"
     },
@@ -298,7 +298,7 @@
       "sector": "Chip equipment",
       "status": "live",
       "page": "asml.html",
-      "call": "Watch",
+      "call": "Hold",
       "value": 1081,
       "date": "2026-10-22",
       "gics": [
@@ -312,13 +312,47 @@
       "sector": "Memory chips",
       "status": "live",
       "page": "sk-hynix.html",
-      "call": "Watch",
+      "call": "Buy",
       "value": 111,
       "date": "2026-10-22",
       "gics": [
         "Information Technology",
         "Semiconductors"
       ]
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sector": "Software & cloud",
+      "status": "live",
+      "page": "microsoft.html",
+      "value": 377,
+      "date": "2026-10-22",
+      "call": "Hold"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "sector": "Internet & cloud",
+      "status": "live",
+      "page": "alphabet.html",
+      "value": 249,
+      "date": "2026-10-22",
+      "call": "Buy"
+    },
+    {
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sector": "Semiconductors",
+      "status": "live",
+      "page": "tsmc.html",
+      "value": 411,
+      "date": "2026-10-22",
+      "gics": [
+        "Information Technology",
+        "Semiconductors"
+      ],
+      "call": "Buy"
     }
   ]
 }

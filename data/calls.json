@@ -262,6 +262,16 @@
    "held": true
   },
   {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "alphabet.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 249,
+   "price": 324.22,
+   "held": false
+  },
+  {
    "t": "JPM",
    "name": "JPMorgan Chase",
    "page": "jpmorgan.html",
@@ -310,6 +320,16 @@
    "value": 531,
    "price": 697.52,
    "held": true
+  },
+  {
+   "t": "MSFT",
+   "name": "Microsoft",
+   "page": "microsoft.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 377,
+   "price": 521.08,
+   "held": false
   },
   {
    "t": "MU",
@@ -380,6 +400,16 @@
    "value": 123,
    "price": 162.57,
    "held": true
+  },
+  {
+   "t": "TSM",
+   "name": "TSMC",
+   "page": "tsmc.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 411,
+   "price": 412.35,
+   "held": false
   },
   {
    "t": "VRT",

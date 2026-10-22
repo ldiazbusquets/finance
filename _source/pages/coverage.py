@@ -906,3 +906,180 @@ R['SKHY'] = dict(
          prose('SK hynix earned the AI memory boom: first to HBM at scale, the largest share of Nvidia&rsquo;s supply and a 76% margin. Compared with Micron it looks cheaper, only about 6% above our weighted value against Micron&rsquo;s 27%. But it is still a memory company at the top of its cycle, Samsung is catching up in HBM, and its home currency adds a risk Micron does not have. At $131.69 we would watch the October 29 results; nearer $110, our base case, it would be the better of the two memory makers to own.')
          + band('The HBM leader, <em>closer to fair than its rivals.</em>', 'The cycle still decides; the price leaves less to go wrong than Micron&rsquo;s.')),
     ])
+
+
+# ================================================================ October 22 additions, batch 2: Microsoft, Alphabet, TSMC
+MSQ = 'https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/'
+MSC = 'https://valueaddvc.com/pulse/microsoft-azure-100-billion-fy27-capex-2026'
+R['MSFT'] = dict(
+    t='MSFT', slug='microsoft', name='Microsoft', h1='Microsoft', sector='Software &amp; cloud', date=D22, timing=', ahead of its first-quarter fiscal 2027 results',
+    sub='Microsoft sells the software most businesses run on and rents the second-largest cloud in the world, Azure, which just passed $100 billion of annual revenue growing 43%. It also owns about 27% of OpenAI. The question is what all the AI spending, about $257 billion this fiscal year, will earn.',
+    call='Hold', method='Cash-flow model', price=521.08, pricenote='Close, Oct 22, 2026', base=377, bear=220, bull=559, wt=383, max=700, tick=100,
+    disclosure='The author holds no MSFT shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 220, 559, 377, '$220 to $559, base $377'), ('Probability-weighted', None, None, 383, '$383'),
+           ('Price at writing', None, None, 521.08, '$521.08'), ('52-week range', 349, 554, None, '$349 to $554'), ('Analyst average', None, None, 559, '$559')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Office, Windows, <em>and the cloud behind them.</em>',
+         prose('Microsoft reports three segments. <b>Productivity and Business Processes</b> (42% of last quarter&rsquo;s revenue) is Microsoft 365, LinkedIn and Dynamics. <b>Intelligent Cloud</b> (44%) is Azure, server software and GitHub. <b>More Personal Computing</b> (14%) is Windows, Xbox, Surface and search advertising.',
+               'AI runs through all three: Copilot is sold inside Microsoft 365 (more than 30 million paid seats), and Azure rents computing to companies building AI, including OpenAI, in which Microsoft holds about 27% after OpenAI&rsquo;s 2025 restructuring.')),
+        ('results', 'Latest results', 'Azure up 43%, <em>past $100 billion a year.</em>',
+         stats([('$90.0B', 'Revenue, Q4 FY2026, +18%'), ('$40.6B', 'Operating income, +18%'), ('+43%', 'Azure growth'), ('$678B', 'Commercial backlog, +84%'), ('$331.8B', 'Revenue, fiscal 2026, +18%'), ('$255&ndash;260B', 'Fiscal 2027 capex guidance')])
+         + prose('In the quarter to June, revenue rose 18% to $90.0 billion and operating income 18% to $40.6 billion. Intelligent Cloud grew 32%, Productivity 14% and More Personal Computing fell 4%. Earnings of $4.81 a share included a $3.2 billion gain on Microsoft&rsquo;s stake in Anthropic. For the full fiscal year revenue was $331.8 billion and operating income $155.2 billion.',
+                 'Contracted backlog rose 84% to $678 billion, though only about 25% excluding OpenAI, so one customer drives most of it. Microsoft guided first-quarter Azure growth to about 45% and fiscal 2027 capital spending to $255&ndash;260 billion including finance leases, up from about $190 billion. The shares fell about 28% in the first half of 2026 and then rose 39% in the third quarter, the best quarter since 1991.')
+         + src([('Q4 FY2026 results', MSQ), ('Capex guidance', MSC), ('Share price and targets', 'https://247wallst.com/investing/2026/10/01/microsoft-just-had-its-best-quarter-since-1991/')])),
+        ('fin', 'The numbers', 'Profits up 85% in three years, <em>capex up fourfold.</em>',
+         fin_table('MSFT') + prose('Revenue grew 57% between fiscal 2023 and 2026 and net income 85%, while capital spending (excluding finance leases) went from $28 billion to $116 billion. Free cash flow still rose, to about $67 billion, but it is now growing far more slowly than profit. Fiscal 2026 net income includes gains on the OpenAI and Anthropic stakes.')
+         + src([('Microsoft filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Net cash, <em>and a quarter of OpenAI.</em>',
+         prose('At the end of June Microsoft had $76.8 billion of cash and investments against $40.3 billion of debt. It owns about 27% of OpenAI on an as-converted basis, accounted for under the equity method, and has funded almost all of a $13 billion commitment. This model adds the stake at 27% of this site&rsquo;s own OpenAI base-case value of $790 billion, about $213 billion (an estimate; OpenAI is private). It returned $10.2 billion through dividends and buybacks last quarter.')),
+        ('value', 'Valuation', 'The model gives <em>$377 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, fiscal 2026', '$331.8B', 'Reported'],
+             ['Growth, fiscal 2027 and 2028', '17%, then 15%', 'Azure near 40%, the rest slower; fades to 3% by year 10'],
+             ['Operating margin', '45%', 'Fiscal 2026 was 46.8%; AI depreciation rises'],
+             ['Net investment, fiscal 2027&ndash;2030', '$180B, $140B, $100B, $70B', 'Capex less depreciation as the build-out peaks; then $1 per $2 of new revenue'],
+             ['Discount rate', '10.0%', 'Beta 1.09, almost no net debt'],
+             ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$927B'), ('PV of terminal value', '$1,623B'), ('Enterprise value', '$2,550B'), ('Net cash and OpenAI stake', '$250B'), ('Equity value', '$2,800B'), ('Shares', '7.43B')], '$377')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, FY2027 / FY2028', '12% / 10%', '17% / 15%', '21% / 18%'], ['Long-run operating margin', '40%', '45%', '48%'],
+             ['Net investment, first year', '$200B', '$180B', '$160B'], ['Discount rate', '11.0%', '10.0%', '9.0%'],
+             ['Value per share', '$220', '$377', '$559'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$383</b>. The OpenAI stake is worth about $29 a share of that; without it the base case is about $348.')
+         + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$486', '$443', '$407', '$376', '$350'])),
+        ('implied', 'What the price assumes', 'At $521, <em>about 23% growth for two years.</em>',
+         implied([['Revenue growth of about 23% a year in fiscal 2027 and 2028, then the same fade', '17% and 15%'], ['Or a long-run operating margin far above anything Microsoft has earned', '45%'], ['Or a discount rate near 8.7%', '10.0%']])
+         + prose('The price asks for growth well above the company&rsquo;s recent 15&ndash;18%, or a quicker payback on the AI build-out than the model assumes. Analysts&rsquo; average target is about $559.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Capital spending', 'About $257 billion this fiscal year; if AI demand slows, the depreciation stays.'],
+             ['OpenAI concentration', 'Most of the backlog growth comes from one customer, which is also diversifying to other clouds.'],
+             ['Copilot pricing', 'Seats are growing, but it is not yet clear how much extra revenue per user AI adds.'],
+             ['Competition', 'Amazon and Google are adding cloud capacity just as fast; Google Cloud grew 82% last quarter.'],
+         ]) + prose('<b>Upside:</b> Azure growth staying above 40%, Copilot pricing moving to per-seat plus usage, and OpenAI&rsquo;s value rising toward its latest private marks.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('The best software franchise, <em>in its most expensive build.</em>', 'Azure and Copilot are working; the capex bill decides the return.')),
+    ])
+
+ALQ = 'https://finance.yahoo.com/markets/stocks/articles/alphabet-q2-2026-earnings-revenue-203058727.html'
+ALP = 'https://www.top1markets.com/news/alphabet-q3-2026-earnings-preview-cloud-capex'
+ALS = 'https://valueaddvc.com/pulse/google-94b-spacex-124b-anthropic-stakes-2026'
+R['GOOGL'] = dict(
+    t='GOOGL', slug='alphabet', name='Alphabet', h1='Alphabet', sector='Internet &amp; cloud', date=D22, timing=', ahead of its third-quarter results on October 28',
+    sub='Alphabet owns Google Search, YouTube, Android and Google Cloud, which grew 82% last quarter. It is spending about $200 billion this year on AI data centers and has started selling new shares to help pay for it. It also owns stakes in SpaceX and Anthropic worth more than $200 billion.',
+    call='Hold', method='Cash-flow model', price=324.22, pricenote='Close, Oct 22, 2026 (Class A)', base=249, bear=139, bull=380, wt=254, max=500, tick=100,
+    disclosure='The author holds no Alphabet shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 139, 380, 249, '$139 to $380, base $249'), ('Probability-weighted', None, None, 254, '$254'),
+           ('Price at writing', None, None, 324.22, '$324.22'), ('52-week range', 252, 409, None, '$252 to $409'), ('Analyst average', None, None, 435, '$435')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Search pays for <em>everything else.</em>',
+         prose('<b>Google Services</b> (79% of last quarter&rsquo;s revenue) is Search, YouTube, Android, Chrome and subscriptions such as YouTube Premium and Google One. <b>Google Cloud</b> (21%) rents computing, including Google&rsquo;s own TPU AI chips, and sells Workspace and the Gemini models to businesses. <b>Other Bets</b> includes Waymo.',
+               'Search still produces most of the profit. The AI question for Alphabet runs both ways: Gemini and AI Overviews have to keep Search growing while chatbots compete for the same questions, and Cloud has become one of the main ways AI labs rent computing.')),
+        ('results', 'Latest results', 'Cloud up 82%, <em>free cash flow negative.</em>',
+         stats([('$119.8B', 'Revenue, Q2 2026, +24%'), ('34%', 'Operating margin'), ('$24.8B', 'Google Cloud, +82%'), ('$514B', 'Cloud backlog'), ('&minus;$5.9B', 'Free cash flow, first negative quarter'), ('$195&ndash;205B', '2026 capex guidance')])
+         + prose('Second-quarter revenue rose 24% to $119.8 billion and operating income 30% to $40.8 billion. Search grew 17%, YouTube ads 13% and Cloud 82%, with Cloud&rsquo;s operating income tripling to $8.8 billion. Net income of $112.1 billion included about $98 billion of unrealized gains on the SpaceX and Anthropic stakes.',
+                 'Capital spending was $44.9 billion in the quarter and free cash flow turned negative for the first time. Alphabet raised 2026 capex guidance to $195&ndash;205 billion, sold $49.6 billion of new shares in June, issued $20.3 billion of bonds and plans a $40 billion at-the-market share program. The shares fell 7% the next day. Third-quarter results come on <b>October 28</b>.')
+         + src([('Q2 2026 results', ALQ), ('Q3 preview and funding', ALP)])),
+        ('fin', 'The numbers', 'Profits more than doubled; <em>so did capex.</em>',
+         fin_table('GOOGL') + prose('Revenue grew 42% between 2022 and 2025 and capital spending almost tripled. The last twelve months&rsquo; net income of about $244 billion is inflated by gains on investments; operating income of $148 billion is the better guide. The <a href="snapshot.html?t=GOOGL&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('Alphabet filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Selling shares <em>to fund the build.</em>',
+         prose('Alphabet&rsquo;s June share sale and bond issue mark a turn for a company that had bought back stock for years. This model counts net cash of about $100 billion (an estimate after the new funding) plus the stakes disclosed in its June 10-Q: about 6% of SpaceX, worth $94.1 billion, and about 14% of Anthropic, about $124 billion. The stakes alone add about $18 a share, and about $26 with net cash. Most of the SpaceX stake cannot be sold until lock-ups end.',
+               'The at-the-market program will add shares; the model uses about 12.25 billion, a little above today&rsquo;s count. Larry Page and Sergey Brin control the vote through Class B shares.')
+         + src([('Stakes disclosed', ALS)])),
+        ('value', 'Valuation', 'The model gives <em>$249 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, 2026', '$490B', 'Estimate: first half plus a second half growing as in Q2'],
+             ['Growth, 2027 and 2028', '15%, then 13%', 'Cloud fast, Search low teens; fades to 3% by year 10'],
+             ['Operating margin', '34% rising to 35%', 'Q2 was 34%; depreciation rises with capex'],
+             ['Net investment, 2027&ndash;2030', '$150B, $120B, $90B, $60B', 'Capex less depreciation; then $1 per $2 of new revenue'],
+             ['Discount rate', '10.1%', 'Beta 1.13, little net debt'],
+             ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$1,075B'), ('PV of terminal value', '$1,658B'), ('Enterprise value', '$2,733B'), ('Net cash and stakes', '$318B'), ('Equity value', '$3,051B'), ('Shares', '12.25B')], '$249')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '9% / 7%', '15% / 13%', '19% / 17%'], ['Long-run operating margin', '30%', '35%', '38%'],
+             ['Net investment, first year', '$180B', '$150B', '$130B'], ['Discount rate', '11.1%', '10.1%', '9.1%'],
+             ['Value per share', '$139', '$249', '$380'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$254</b>. The bear case is AI chatbots taking search share while the capex keeps rising; the bull case is Cloud and Gemini turning the spending into a second Search-sized business.')
+         + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$324', '$296', '$273', '$254', '$237'])),
+        ('implied', 'What the price assumes', 'At $324, <em>about 20% growth for two years.</em>',
+         implied([['Revenue growth of about 20% a year in 2027 and 2028, then the same fade', '15% and 13%'], ['Or a long-run operating margin of about 46%', '35%'], ['Or a discount rate near 8.5%', '10.1%']])
+         + prose('Analysts average about $435. They value Alphabet at about 29 times consensus core earnings and give more credit for Cloud&rsquo;s $514 billion backlog than this model does.')),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Search and AI chatbots', 'If ChatGPT and others take commercial queries, Search growth slows where the profit is.'],
+             ['Capital spending', 'About $200 billion this year and more in 2027; free cash flow is already negative.'],
+             ['Dilution', 'The share sale and at-the-market program reverse years of buybacks.'],
+             ['Antitrust', 'Remedies in the U.S. search and ad-tech cases could change how Google pays for distribution and sells ads.'],
+         ]) + prose('<b>Upside:</b> Cloud backlog converting faster, TPUs sold to other AI labs, Waymo scaling, and the SpaceX and Anthropic stakes rising further.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('Search pays for the AI build, <em>for now.</em>', 'Cloud is working; the question is how long Search can fund the rest.')),
+    ])
+
+TQ = 'https://www.fool.com/earnings/call-transcripts/2026/10/15/tsmc-tsm-q3-2026-earnings-call-transcript/'
+R['TSM'] = dict(
+    t='TSM', slug='tsmc', name='TSMC', h1='TSMC', sector='Semiconductors', date=D22, timing=', after its third-quarter results',
+    sub='Taiwan Semiconductor Manufacturing Company makes almost every advanced chip in the world, including Nvidia&rsquo;s, AMD&rsquo;s and Apple&rsquo;s. Revenue is growing about 44% this year at a 66% gross margin. Its shares trade in New York as ADRs (one ADR is five Taiwan shares); figures are in U.S. dollars.',
+    call='Hold', method='Cash-flow model', price=412.35, pricenote='ADR close, Oct 22, 2026', base=411, bear=208, bull=620, wt=412, max=800, tick=100,
+    disclosure='The author holds no TSM shares directly; TSMC is held inside the VanEck Semiconductor ETF (SMH) in the author&rsquo;s portfolio.',
+    fieldnote='Per ADR: the cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 208, 620, 411, '$208 to $620, base $411'), ('Probability-weighted', None, None, 412, '$412'),
+           ('Price at writing', None, None, 412.35, '$412.35'), ('52-week range', 267, 487, None, '$267 to $487'), ('Analyst average', None, None, 529, '$529')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'The world&rsquo;s <em>chip factory.</em>',
+         prose('TSMC does not design chips; it manufactures them for the companies that do. It makes nearly all of the most advanced ones: Nvidia&rsquo;s AI accelerators, Apple&rsquo;s processors, AMD&rsquo;s CPUs and GPUs, and the custom AI chips Google, Amazon and others design. It also packages them together with memory (CoWoS), which has been the tightest bottleneck in AI hardware.',
+               'Its edge is manufacturing at the leading edge, now the 2-nanometer (N2) process, at a scale and yield no rival matches. Most production is in Taiwan, with new fabs in Arizona, Japan and Germany.')),
+        ('results', 'Latest results', 'Revenue up 41%, <em>a 66% gross margin.</em>',
+         stats([('$46.7B', 'Revenue, Q3 2026, +41%'), ('66.4%', 'Gross margin'), ('58.7%', 'Operating margin'), ('+44%', '2026 revenue growth, in dollars'), ('$52.3&ndash;54.3B', 'Q4 revenue guidance'), ('$60&ndash;64B', '2026 capex')])
+         + prose('Third-quarter revenue rose 41% in dollars to $46.7 billion and profit about 69%. The gross margin of 66.4% slipped 1.3 points from the second quarter as the 2-nanometer ramp diluted it. N2 was 8% of wafer revenue, and its capacity should more than double in 2027.',
+                 'TSMC guided fourth-quarter revenue to $52.3&ndash;54.3 billion and expects about 44% growth for 2026. Management said its forecast of mid-to-high-50s% annual growth in AI accelerator revenue through 2029 will &ldquo;probably&rdquo; be higher, but warned that overseas fabs will dilute the gross margin by 3&ndash;4 points in later years. Capital spending of $60&ndash;64 billion this year will rise &ldquo;even more significantly&rdquo; in 2026&ndash;2028.')
+         + src([('Q3 2026 earnings call', TQ)])),
+        ('fin', 'The numbers', 'Revenue nearly doubled <em>in two years.</em>',
+         table(['', '2023', '2024', '2025', '2026 estimate'], [
+             ['Revenue', '$69.3B', '$90.1B', '$122.4B', 'about $176B'],
+             ['Revenue, NT$', 'NT$2,162B', 'NT$2,894B', 'NT$3,809B', '&mdash;'],
+             ['Gross margin', '54.4%', '56.1%', '59.9%', 'about 66%'],
+             ['Operating margin', '42.6%', '45.7%', '50.8%', 'about 58%'],
+             ['Capital spending', '$30.4B', '$29.8B', '$40.9B', '$60&ndash;64B'],
+         ], 'allnum')
+         + prose('TSMC reports in New Taiwan dollars and files a 20-F with the SEC as a foreign company, so the site&rsquo;s automatic tables do not cover it; these figures come from its results releases. The 2026 column uses the first three quarters and fourth-quarter guidance.')
+         + src([('2025 results', 'https://telecomlead.com/semiconductor/tsmc-delivers-record-2025-revenue-and-profit-as-ai-chip-demand-fuels-growth-us-expansion-accelerates-124150'), ('TSMC investor relations', 'https://investor.tsmc.com/fundamentals')])),
+        ('capital', 'Balance sheet and ownership', 'Cash-rich, <em>spending more each year.</em>',
+         prose('TSMC holds far more cash than debt; this model uses net cash of about $60 billion (an estimate from its latest balance sheet). It pays a quarterly dividend it intends to keep raising. There are about 25.9 billion Taiwan shares, or 5.19 billion ADR-equivalents.')),
+        ('value', 'Valuation', 'The model gives <em>$411 an ADR.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, 2026', '$176B', 'About 44% growth, company guidance'],
+             ['Growth, 2027 and 2028', '25%, then 20%', 'AI demand and N2; fades to 3% by year 10'],
+             ['Operating margin', '57% easing to 54%', 'Overseas fabs dilute by 3&ndash;4 points over time'],
+             ['Reinvestment', '$1 for every $1.30 of new revenue', 'Capex far above depreciation'],
+             ['Discount rate', '10.7%', 'Beta 1.24, net cash'],
+             ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$901B'), ('PV of terminal value', '$1,171B'), ('Enterprise value', '$2,072B'), ('Net cash', '$60B'), ('Equity value', '$2,132B'), ('ADR-equivalents', '5.19B')], '$411')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '12% / 8%', '25% / 20%', '32% / 25%'], ['Long-run operating margin', '48%', '54%', '57%'],
+             ['Discount rate', '11.7%', '10.7%', '9.7%'], ['Value per ADR', '$208', '$411', '$620'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$412</b>. The bear case is the usual chip downturn after a capacity boom plus heavier overseas dilution; the bull case is AI demand running ahead of TSMC&rsquo;s own forecast.')
+         + sens('Discount rate', ['9.5%', '10.0%', '10.5%', '11.0%', '11.5%'], ['$495', '$457', '$425', '$396', '$371'])),
+        ('implied', 'What the price assumes', 'At $412, <em>about the base case.</em>',
+         implied([['Revenue growth of about 21% a year for two years, then the same fade', '25% and 20%'], ['Or a long-run operating margin of about 54%', '54%']])
+         + prose('The price matches the base case almost exactly: investors are paying for the growth TSMC itself is forecasting, no more. Analysts average about $529. The shares fell 4.5% on October 22 in the chip-equipment selloff that followed Lam Research&rsquo;s supply warning.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/instant-alerts/filing-guardian-partners-inc-sells-2395-shares-of-taiwan-semiconductor-manufacturing-company-ltd-tsm-2026-10-22/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Taiwan', 'Most capacity is in Taiwan; any conflict or blockade would be the largest single risk to the chip industry.'],
+             ['The chip cycle', 'Capacity booms have always been followed by downturns; capex is rising sharply.'],
+             ['Overseas costs', 'Arizona, Japan and Germany fabs cost more to run and dilute margins.'],
+             ['Customer concentration', 'Apple and Nvidia are a large share of revenue.'],
+             ['Tariffs and export rules', 'U.S. chip tariffs and China export limits could change where and for whom it builds.'],
+         ]) + prose('<b>Upside:</b> AI accelerator growth above management&rsquo;s forecast, N2 pricing, advanced packaging capacity, and a stronger Taiwan dollar lifting dollar results.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('The factory every AI chip needs, <em>priced for its own forecast.</em>', 'The price pays for the plan; the risk is geography and the cycle.')),
+    ])

@@ -1,0 +1,52 @@
+LDB Finance: Alphabet (GOOGL)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/googl.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),490.0,Company filings and guidance
+Tax rate %,17.0,Effective rate
+Discount rate (WACC) %,10.13,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
+Net cash (negative = net debt),318.4,Latest balance sheet
+Diluted shares (billions),12.25,Latest filing
+"Revenue growth, years 1-2 %",15 / 13,Then fades to 3% by year 10
+Operating margin %,34 rising to 35 by year 4,
+"Net investment, years 1-4 ($B)",150 / 120 / 90 / 60,Then reinvestment = revenue growth / 2
+Stakes in SpaceX and Anthropic ($B),218.4,As disclosed in the Q2 2026 10-Q
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,15.0,563.5,34.25,192.999,160.189,150.0,10.189,0.9529,9.709
+2028,13.0,636.755,34.5,219.68,182.335,120.0,62.335,0.8653,53.938
+2029,11.75,711.574,34.75,247.272,205.236,90.0,115.236,0.7857,90.544
+2030,10.5,786.289,35.0,275.201,228.417,60.0,168.417,0.7135,120.163
+2031,9.25,859.021,35.0,300.657,249.546,36.366,213.18,0.6479,138.114
+2032,8.0,927.742,35.0,324.71,269.509,34.361,235.148,0.5883,138.339
+2033,6.75,990.365,35.0,346.628,287.701,31.311,256.39,0.5342,136.966
+2034,5.5,1044.835,35.0,365.692,303.525,27.235,276.29,0.4851,134.025
+2035,4.25,1089.241,35.0,381.234,316.424,22.203,294.222,0.4405,129.6
+2036,3.0,1121.918,35.0,392.671,325.917,16.339,309.578,0.4,123.826
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,1075.225
+Year-11 after-tax operating income,335.695
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),4145.455
+Present value of terminal value,1658.109
+Enterprise value,2733.333
+Plus net cash,318.4
+Equity value,3051.733
+Value per share ($),249.12
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),139.06,249.12,379.79
+Probability,25,50,25
+Probability-weighted value ($),,254.27,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,323.8
+,Discount rate 9.0%,296.48
+,Discount rate 9.5%,273.4
+,Discount rate 10.0%,253.66
+,Discount rate 10.5%,236.58

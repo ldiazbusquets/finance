@@ -1,0 +1,52 @@
+LDB Finance: Microsoft (MSFT)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/msft.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),331.8,Company filings and guidance
+Tax rate %,18.0,Effective rate
+Discount rate (WACC) %,9.99,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
+Net cash (negative = net debt),249.8,Latest balance sheet
+Diluted shares (billions),7.43,Latest filing
+"Revenue growth, years 1-2 %",17 / 15,Fiscal years to June; then fades to 3% by year 10
+Operating margin %,45,
+"Net investment, years 1-4 ($B)",180 / 140 / 100 / 70,Then reinvestment = revenue growth / 2
+OpenAI stake ($B),213.3,27% of this site's OpenAI base-case value (estimate)
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,17.0,388.206,45.0,174.693,143.248,180.0,-36.752,0.9535,-35.043
+2028,15.0,446.437,45.0,200.897,164.735,140.0,24.735,0.8669,21.442
+2029,13.5,506.706,45.0,228.018,186.974,100.0,86.974,0.7881,68.547
+2030,12.0,567.511,45.0,255.38,209.411,70.0,139.411,0.7165,99.893
+2031,10.5,627.099,45.0,282.195,231.4,29.794,201.605,0.6514,131.333
+2032,9.0,683.538,45.0,307.592,252.226,28.219,224.006,0.5923,132.67
+2033,7.5,734.803,45.0,330.662,271.142,25.633,245.51,0.5385,132.196
+2034,6.0,778.892,45.0,350.501,287.411,22.044,265.367,0.4895,129.908
+2035,4.5,813.942,45.0,366.274,300.345,17.525,282.819,0.4451,125.874
+2036,3.0,838.36,45.0,377.262,309.355,12.209,297.146,0.4046,120.236
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,927.056
+Year-11 after-tax operating income,318.636
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),4010.225
+Present value of terminal value,1622.685
+Enterprise value,2549.742
+Plus net cash,249.8
+Equity value,2799.542
+Value per share ($),376.79
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),220.16,376.79,559.44
+Probability,25,50,25
+Probability-weighted value ($),,383.3,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,485.89
+,Discount rate 9.0%,443.21
+,Discount rate 9.5%,407.17
+,Discount rate 10.0%,376.34
+,Discount rate 10.5%,349.68

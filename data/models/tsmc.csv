@@ -1,0 +1,52 @@
+LDB Finance: TSMC (TSM ADR)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/tsm.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),176.0,Company filings and guidance
+Tax rate %,16.0,Effective rate
+Discount rate (WACC) %,10.73,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
+Net cash (negative = net debt),60.0,Latest balance sheet
+Diluted shares (billions),5.186,Latest filing
+"Revenue growth, years 1-2 %",25 / 20,Then fades to 3% by year 10
+Operating margin %,57 easing to 54 by year 5,Overseas fab dilution
+Sales to capital,1.3,Reinvestment = revenue growth / 1.3
+Shares,5.186B ADR-equivalents,1 ADR = 5 Taiwan shares
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,25.0,220.0,56.4,124.08,104.227,33.846,70.381,0.9503,66.884
+2028,20.0,264.0,55.8,147.312,123.742,33.846,89.896,0.8582,77.151
+2029,17.88,311.19,55.2,171.777,144.293,36.3,107.993,0.7751,83.701
+2030,15.75,360.202,54.6,196.671,165.203,37.702,127.501,0.7,89.245
+2031,13.63,409.28,54.0,221.011,185.649,37.752,147.897,0.6321,93.49
+2032,11.5,456.347,54.0,246.427,206.999,36.206,170.794,0.5709,97.502
+2033,9.38,499.13,54.0,269.53,226.405,32.91,193.496,0.5156,99.758
+2034,7.25,535.317,54.0,289.071,242.82,27.836,214.984,0.4656,100.096
+2035,5.12,562.752,54.0,303.886,255.264,21.104,234.16,0.4205,98.46
+2036,3.0,579.634,54.0,313.002,262.922,12.987,249.935,0.3797,94.909
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,901.196
+Year-11 after-tax operating income,270.81
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),3082.957
+Present value of terminal value,1170.704
+Enterprise value,2071.9
+Plus net cash,60.0
+Equity value,2131.9
+Value per share ($),411.09
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),207.59,411.09,619.77
+Probability,25,50,25
+Probability-weighted value ($),,412.38,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 9.5%,494.52
+,Discount rate 10.0%,457.01
+,Discount rate 10.5%,424.58
+,Discount rate 11.0%,396.26
+,Discount rate 11.5%,371.34

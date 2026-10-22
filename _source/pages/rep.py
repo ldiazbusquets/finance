@@ -182,9 +182,11 @@ def body(R):
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
     toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))
+    mk = R['name'].replace(' LP', '') if R.get('private') else R['t']
     head = f'''<header class="ph rp">
   <div class="wrap">
     <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; {R['sector']} &middot; {R['date']}<span class="kind" title="Written and reviewed by Luis Diaz Busquets">Analyst report</span></div>
+    <div class="rmark" data-logo="{R['t']}" aria-hidden="true"><span class="tk">{mk}</span></div>
     <h1>{R['h1']}</h1>
     <p class="sub">{R['sub']}</p>
     <div class="verdict">

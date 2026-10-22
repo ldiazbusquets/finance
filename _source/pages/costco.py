@@ -75,6 +75,7 @@ def body():
     head = f'''<header class="ph rp">
   <div class="wrap">
     <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; FIN 370, Bryant University<span class="kind" title="Coursework, priced section by section during the semester">Course research</span></div>
+    <div class="rmark" data-logo="COST" aria-hidden="true"><span class="tk">COST</span></div>
     <h1>Costco <em>Wholesale</em></h1>
     <p class="sub">A full fundamental analysis of Costco (COST) against Walmart, Target and BJ&rsquo;s: profitability, revenue quality, working capital, debt, cost of capital and two valuation approaches. The conclusion: an excellent business, trading above what its cash flows support.</p>
     <div class="verdict">

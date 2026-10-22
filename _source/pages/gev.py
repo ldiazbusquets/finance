@@ -84,6 +84,7 @@ def body():
     head = f'''<header class="ph rp">
   <div class="wrap">
     <div class="eyebrow mono"><a href="research.html">Research</a>&nbsp;/&nbsp;Equities &middot; Industrials &middot; October 20, 2026<span class="kind" title="Written and reviewed by Luis Diaz Busquets">Analyst report</span></div>
+    <div class="rmark" data-logo="GEV" aria-hidden="true"><span class="tk">GEV</span></div>
     <h1>GE <em>Vernova</em></h1>
     <p class="sub">GE Vernova (GEV) makes the gas turbines, grid equipment and wind turbines behind a large share of the world&rsquo;s electricity, and AI data centers have filled its order book for years ahead. This report values the business on the company&rsquo;s own 2028 targets. The conclusion: an exceptional order book, at a price that already assumes more than those targets.</p>
     <div class="verdict">

@@ -416,3 +416,16 @@
     }).catch(function () { $('#cov').innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures appear here after the update runs for the first time.</div>'; });
   }
 })();
+
+/* report corner mark: swap the ticker for a logo file if one has been uploaded to assets/logos */
+(function () {
+  var m = document.querySelector('.rmark[data-logo]'); if (!m) return;
+  var t = m.getAttribute('data-logo'), ext = ['svg', 'png', 'webp'], i = 0;
+  (function next() {
+    if (i >= ext.length) return;
+    var img = new Image(); img.alt = ''; img.decoding = 'async';
+    img.onload = function () { m.textContent = ''; m.appendChild(img); m.classList.add('has'); };
+    img.onerror = function () { i++; next(); };
+    img.src = 'assets/logos/' + t + '.' + ext[i];
+  })();
+})();

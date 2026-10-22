@@ -43,7 +43,7 @@ class Sheet:
         ws['A3'] = sub; ws['A3'].font = font(size=9, color=MUTED)
         ws.row_dimensions[2].height = 26
         self.r = 6
-        ws.freeze_panes = 'B5' if width > 6 else 'A5'   # wide year-by-year sheets keep labels in view; narrow ones only freeze the title band
+        ws.freeze_panes = None   # nothing frozen: every sheet fits on screen
         ws.page_setup.orientation = 'landscape'; ws.page_setup.fitToWidth = 1; ws.page_setup.fitToHeight = 0
         ws.sheet_properties.pageSetUpPr.fitToPage = True
 

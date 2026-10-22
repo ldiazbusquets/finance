@@ -145,56 +145,57 @@ R['AMZN'] = dict(
 
 # ---------------------------------------------------------------- Meta
 ME = 'https://www.stocktitan.net/news/META/meta-reports-second-quarter-2026-hkjfhayj8l0v.html'
+ME3 = 'https://www.sec.gov/Archives/edgar/data/0001326801/000162828026066700/meta-09302026xexhibit991.htm'
 R['META'] = dict(
-    t='META', slug='meta', name='Meta Platforms', h1='Meta <em>Platforms</em>', sector='Communication services', date=DATE, timing=LATER,
-    sub='Meta owns Facebook, Instagram, WhatsApp and Messenger, used by 3.6 billion people a day, and sells the ads in between. AI has made those ads work better and revenue is growing 28%. But Meta is spending so heavily on AI data centers that free cash flow fell to almost nothing last quarter.',
-    call='Hold', method='Cash-flow model', price=694.25, base=516, bear=215, bull=894, wt=535, max=1000, tick=100,
+    t='META', slug='meta', name='Meta Platforms', h1='Meta <em>Platforms</em>', sector='Communication services', date='October 22, 2026', timing=', the day after its third-quarter results',
+    sub='Meta owns Facebook, Instagram, WhatsApp and Messenger, used by 3.6 billion people a day, and sells the ads in between. AI has made those ads work better and revenue is growing 26%. But Meta is spending so heavily on AI data centers that free cash flow turned negative last quarter.',
+    call='Hold', method='Cash-flow model', price=697.52, base=531, bear=223, bull=918, wt=551, max=1000, tick=100,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 215, 894, 516, '$215 to $894, base $516'), ('Probability-weighted', None, None, 535, '$535'),
-           ('Price at writing', None, None, 694.25, '$694.25'), ('52-week range', 520, 780, None, '$520 to $780')],
+    field=[('Cash-flow model', 223, 918, 531, '$223 to $918, base $531'), ('Probability-weighted', None, None, 551, '$551'),
+           ('Price at writing', None, None, 697.52, '$697.52'), ('52-week range', 520, 780, None, '$520 to $780')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Three billion people <em>and an ad auction.</em>',
          prose('Meta earns nearly all its money from advertising on its Family of Apps. AI ranks what each person sees and which ads they are shown, and tools like Advantage+ let advertisers hand the whole campaign to Meta&rsquo;s systems. Reality Labs, the headset and smart-glasses unit, loses about $4&ndash;5 billion a quarter.',
                'The strategic bet is on building its own frontier AI models and the computing to run them, both to improve ads and to create new products such as Meta AI.')
          + key('Takeaway', 'The ad machine is stronger than ever; the debate is about how much it costs to keep it ahead.')),
-        ('results', 'Latest results', 'Revenue up 28%, <em>free cash flow down 91%.</em>',
-         stats([('$60.8B', 'Revenue, Q2 2026, +28%'), ('3.60B', 'Daily active people, +3%'), ('+14% / +12%', 'Ad impressions / price per ad'), ('31%', 'Operating margin, from 43%'), ('$0.8B', 'Free cash flow, from $8.6B'), ('$130&ndash;145B', '2026 capital spending')])
-         + prose('Revenue grew 28% to $60.8 billion, from both more ads and higher prices. Costs grew 55%, including $2.4 billion of legal charges and $1.2 billion of severance, so operating income fell 8% and EPS fell 13% to $6.18. Capital spending of $31.1 billion consumed almost all of the $31.9 billion of operating cash flow.',
-                 'Meta issued about $25 billion of new long-term debt in the quarter and bought back no stock. The shares fell about 8% the next day. Guidance: third-quarter revenue of $61&ndash;64 billion, 2026 expenses of $165&ndash;169 billion and capex of $130&ndash;145 billion.')
-         + src([('Q2 2026 results', ME), ('Market reaction', 'https://leverageshares.com/en-eu/insights/meta-q2-2026-earnings-ai-capex-turns-market-sentiment/')])),
+        ('results', 'Latest results', 'Revenue up 26%, <em>a $9.9 billion legal bill.</em>',
+         stats([('$64.6B', 'Revenue, Q3 2026, +26%'), ('3.64B', 'Daily active people, +3%'), ('+10% / +14%', 'Ad impressions / price per ad'), ('20%', 'Operating margin, from 40%'), ('&minus;$2.1B', 'Free cash flow'), ('$73&ndash;76B', 'Q4 revenue guidance')])
+         + prose('Revenue grew 26% to $64.6 billion, about $1.2 billion more than analysts expected, with more ads and a 14% rise in the price per ad. Costs grew 68%, mostly because of a $9.89 billion charge for the settlement with state attorneys general over teen mental health, part of an agreement to pay up to about $18.6 billion. Operating income fell 37% to $13.0 billion; without the charge it would have been about $22.9 billion, a 35% margin. EPS was $3.83, or about $7.40 without the charge.',
+                 'Capital spending of $34.9 billion was more than the $32.8 billion of operating cash flow, so free cash flow was negative $2.1 billion. Meta again bought back no stock. Guidance: fourth-quarter revenue of $73&ndash;76 billion, 2026 expenses raised to $175&ndash;179 billion to include the charge, and capex narrowed to $135&ndash;145 billion. There is no 2027 capex figure yet, but management expects strong revenue growth throughout 2027, continued heavy AI investment and Reality Labs losses near $15 billion. Meta also announced a stock dividend of one new non-voting Class C share per share held, in effect a 2-for-1 split, with the new shares expected to trade from January 19, 2027. The shares closed at $697.52 before the report and rose about 4% after hours.')
+         + src([('Q3 2026 results', ME3), ('Market reaction', 'https://www.investing.com/news/company-news/meta-q3-2026-slides-revenue-surges-26-as-margins-compress-sharply-93CH-4964286'), ('Stock split', 'https://www.tradingkey.com/analysis/stocks/us-stocks/262231250-meta-stock-split-better-expected-earnings-tradingkey')])),
         ('fin', 'Five years', 'Back to growth, <em>then into a spending wave.</em>',
          fin_table('META') + prose('2022 was the low point: revenue fell and Reality Labs spending peaked. The &ldquo;year of efficiency&rdquo; in 2023 restored margins above 40%. Capital spending has more than doubled since 2024, and free cash flow has fallen accordingly.')
          + src([('Meta filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K')])),
         ('capital', 'Balance sheet', 'From net cash <em>to borrowing.</em>',
-         prose('Meta had $90.3 billion of cash and securities against $83.7 billion of long-term debt in June, so it is roughly net cash neutral after years of large net cash. Buybacks have stopped for now; the $2.10 annual dividend continues. Management also warned that youth-safety trials in 2026 &ldquo;may ultimately result in a material loss.&rdquo;')),
-        ('value', 'Valuation', 'The model gives <em>$516 a share.</em>',
+         prose('Meta had $82.5 billion of cash and securities against $80.9 billion of long-term debt at the end of September, so it is roughly net cash neutral after years of large net cash. Buybacks have stopped for now; the $2.10 annual dividend continues. The youth-safety settlement removes part of the legal risk management had warned about, but the cash has still to be paid and other cases remain open.')),
+        ('value', 'Valuation', 'The model gives <em>$531 a share.</em>',
          table(['Assumption', 'Base case', 'Basis'], [
-             ['Revenue, 2026', '$248B', 'First half plus Q3 guidance'],
+             ['Revenue, 2026', '$256B', 'First nine months plus Q4 guidance'],
              ['Growth, 2027 and 2028', '18%, then 14%', 'AI-improved ads, slowing from 28%'],
-             ['Operating margin', '34% rising to 38% by 2031', 'Depreciation from the build-out holds it below past highs'],
+             ['Operating margin', '34% rising to 38% by 2031', 'Excluding the one-off legal charge; depreciation from the build-out holds it below past highs'],
              ['Net investment', '$110B, $90B, $60B, $40B, then $1 per $2 of new revenue', 'Spending peaks in 2027'],
              ['Tax rate', '16%', 'Guidance of 15&ndash;17%'],
              ['Discount rate', '11.2%', 'Beta 1.42, 4.5% premium'],
              ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$535B'), ('PV of terminal value', '$781B'), ('Enterprise value', '$1.32T'), ('Plus net cash', '$7B'), ('Equity value', '$1.32T'), ('Shares', '2.57B')], '$516')
+         + bridge([('PV of 10 years of cash flow', '$560B'), ('PV of terminal value', '$804B'), ('Enterprise value', '$1.37T'), ('Plus net cash', '$2B'), ('Equity value', '$1.37T'), ('Shares', '2.57B')], '$531')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
              ['Growth, 2027 / 2028', '10% / 8%', '18% / 14%', '24% / 18%'], ['Long-run operating margin', '30%', '38%', '44%'],
-             ['Discount rate', '12.2%', '11.2%', '10.2%'], ['Value per share', '$215', '$516', '$894'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$535</b>.') + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%'], ['$820', '$743', '$677', '$621'])),
-        ('implied', 'What the price assumes', 'At $694, margins <em>back near 50%.</em>',
-         implied([['A long-run operating margin near 50%', '38%; Meta&rsquo;s peak was in the low 40s'], ['Revenue growth of about 21% a year for two years', '18% and 14%'], ['A discount rate of about 9.4%', '11.2%']])
+             ['Discount rate', '12.2%', '11.2%', '10.2%'], ['Value per share', '$223', '$531', '$918'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$551</b>. The value rose from $516 because 2026 revenue is now expected to be about $8 billion higher; spending plans are unchanged.') + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%'], ['$845', '$766', '$698', '$641'])),
+        ('implied', 'What the price assumes', 'At $697, margins <em>back near 50%.</em>',
+         implied([['A long-run operating margin near 50%', '38%; Meta&rsquo;s peak was in the low 40s'], ['Revenue growth of about 21% a year for two years', '18% and 14%'], ['A discount rate of about 9.5%', '11.2%']])
          + prose('Meta is closer to fair value than Amazon or Vertiv: a slightly lower discount rate or slightly faster growth closes most of the gap.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
              ['AI spending without return', 'Capex of $130&ndash;145 billion a year has to lift revenue or it simply lowers margins.'],
-             ['Legal', 'Youth-safety trials, EU regulation and antitrust can cost money and limit ad targeting.'],
-             ['Reality Labs', 'Losses of roughly $18&ndash;20 billion a year with no clear payoff date.'],
+             ['Legal', 'After the $9.9 billion settlement, other youth-safety cases, EU regulation and antitrust can still cost money and limit ad targeting.'],
+             ['Reality Labs', 'Losses of $18&ndash;19 billion this year and about $15 billion in 2027, with no clear payoff date.'],
              ['Ad cycle', 'Advertising is the first budget cut in a slowdown.'],
          ]) + prose('<b>Upside:</b> WhatsApp business messaging, AI agents that sell for advertisers, and spending easing after 2027 would lift free cash flow quickly.')),
         ('rec', 'Recommendation', 'Hold. <em>Strong ads, heavy bills.</em>',
-         prose('At $694.25 against a base case of $516 ($535 weighted), Meta trades above the model at an 11% discount rate but close to fair at 9.5%. The call is <b>Hold</b>. A move toward the low $500s, or evidence that 2027 spending will fall, would make it a Buy.',
-               '<b>Watch in the third-quarter report:</b> revenue against $61&ndash;64 billion, any first view of 2027 capex, and whether buybacks resume.')
+         prose('At $697.52 against a base case of $531 ($551 weighted), Meta trades above the model at an 11% discount rate but close to fair at 9.5%. The quarter was better than feared: ads grew faster than expected and the legal charge is a one-off. But free cash flow is now negative and there is still no limit on 2027 spending. The call stays <b>Hold</b>. A move toward the mid $500s, or evidence that 2027 spending will fall, would make it a Buy.',
+               '<b>Watch in the fourth-quarter report:</b> revenue against $73&ndash;76 billion, the first 2027 capex guidance, when the settlement is paid, and whether buybacks resume.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The ad machine works. <em>The AI bill is the question.</em></h2><p>Meta can afford the spending; the price needs it to pay off.</p></div>'),
     ])
 

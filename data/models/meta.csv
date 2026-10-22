@@ -4,47 +4,47 @@ Money in US$ billions unless marked; rates in percent. Reproduce with the model 
 Model script: _source/models/meta.py
 
 INPUTS,Value,Basis
-Base revenue (latest year),248.0,Company filings and guidance
+Base revenue (latest year),256.0,Company filings and guidance
 Tax rate %,16.0,Effective rate
-Discount rate (WACC) %,11.2,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Discount rate (WACC) %,11.21,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
 Terminal growth %,3.0,Long-run nominal growth
 Return on new capital in the terminal value %,25.0,Sets reinvestment after year 10
-Net cash (negative = net debt),6.6,Latest balance sheet
-Diluted shares (billions),2.566,Latest filing
+Net cash (negative = net debt),1.5,Latest balance sheet
+Diluted shares (billions),2.573,Latest filing
 "Revenue growth, years 1-2 %",18 / 14,Then fades to 3% by year 10
 Operating margin %,34 rising to 38 by year 5,
 "Heavy AI capex, years 1-4 ($B)",110 / 90 / 60 / 40,Then reinvestment = revenue growth / 2.0
 
 PROJECTION (base case)
 Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
-2027,18.0,292.64,34.8,101.839,85.545,110.0,-24.455,0.9483,-23.191
-2028,14.0,333.61,35.6,118.765,99.763,90.0,9.763,0.8528,8.326
-2029,12.62,375.728,36.4,136.765,114.883,60.0,54.883,0.7669,42.09
-2030,11.25,417.997,37.2,155.495,130.616,40.0,90.616,0.6897,62.495
-2031,9.88,459.274,38.0,174.524,146.6,20.639,125.962,0.6202,78.122
-2032,8.5,498.313,38.0,189.359,159.061,19.519,139.542,0.5577,77.829
-2033,7.13,533.818,38.0,202.851,170.395,17.752,152.642,0.5016,76.561
-2034,5.75,564.512,38.0,214.515,180.192,15.347,164.845,0.4511,74.354
-2035,4.38,589.209,38.0,223.9,188.076,12.349,175.727,0.4056,71.279
-2036,3.0,606.886,38.0,230.617,193.718,8.838,184.88,0.3648,67.439
+2027,18.0,302.08,34.8,105.124,88.304,110.0,-21.696,0.9483,-20.573
+2028,14.0,344.371,35.6,122.596,102.981,90.0,12.981,0.8526,11.068
+2029,12.62,387.848,36.4,141.177,118.588,60.0,58.588,0.7667,44.919
+2030,11.25,431.481,37.2,160.511,134.829,40.0,94.829,0.6894,65.374
+2031,9.88,474.09,38.0,180.154,151.329,21.304,130.025,0.6199,80.6
+2032,8.5,514.387,38.0,195.467,164.192,20.149,144.044,0.5574,80.288
+2033,7.13,551.037,38.0,209.394,175.891,18.325,157.566,0.5012,78.97
+2034,5.75,582.722,38.0,221.434,186.005,15.842,170.163,0.4507,76.685
+2035,4.38,608.216,38.0,231.122,194.143,12.747,181.396,0.4052,73.505
+2036,3.0,626.463,38.0,238.056,199.967,9.123,190.844,0.3644,69.537
 
 BRIDGE (base case),Value
-Present value of 10 years of cash flow,535.302
-Year-11 after-tax operating income,199.529
-Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),2141.41
-Present value of terminal value,781.126
-Enterprise value,1316.428
-Plus net cash,6.6
-Equity value,1323.028
-Value per share ($),515.6
+Present value of 10 years of cash flow,560.373
+Year-11 after-tax operating income,205.966
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),2206.989
+Present value of terminal value,804.154
+Enterprise value,1364.526
+Plus net cash,1.5
+Equity value,1366.026
+Value per share ($),530.91
 
 SCENARIOS,Bear,Base,Bull
-Value per share ($),214.91,515.6,893.61
+Value per share ($),222.68,530.91,918.44
 Probability,25,50,25
-Probability-weighted value ($),,534.93,
+Probability-weighted value ($),,550.73,
 
 SENSITIVITY,Input,Value per share
-,Discount rate 8.5%,819.95
-,Discount rate 9.0%,742.6
-,Discount rate 9.5%,677.28
-,Discount rate 10.0%,621.42
+,Discount rate 8.5%,845.34
+,Discount rate 9.0%,765.69
+,Discount rate 9.5%,698.43
+,Discount rate 10.0%,640.9

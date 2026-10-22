@@ -170,6 +170,16 @@
    "value": 118,
    "price": 162.57,
    "held": true
+  },
+  {
+   "t": "META",
+   "name": "Meta Platforms",
+   "page": "meta.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 531,
+   "price": 697.52,
+   "held": true
   }
  ]
 }

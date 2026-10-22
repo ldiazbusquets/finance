@@ -72,7 +72,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=39">
+<link rel="stylesheet" href="assets/site.css?v=40">
 </head>
 '''
 
@@ -161,10 +161,10 @@ def card(href, n, title, text, go, status=None, art='', ext=False):
 
 
 ART = {
-    'bars': '<path d="M0 85h200" style="stroke:var(--line2)"/><g style="fill:var(--acc)"><rect x="8" y="50" width="22" height="35" rx="2" opacity=".35"/><rect x="40" y="38" width="22" height="47" rx="2" opacity=".5"/><rect x="72" y="30" width="22" height="55" rx="2" opacity=".65"/><rect x="104" y="20" width="22" height="65" rx="2" opacity=".8"/><rect x="136" y="8" width="22" height="77" rx="2"/></g>',
-    'grid': '<g fill="none" style="stroke:var(--line2)"><path d="M0 21h200M0 43h200M0 65h200M50 0v86M100 0v86M150 0v86"/></g><rect x="100" y="43" width="50" height="22" style="fill:var(--acc)" opacity=".85"/><rect x="50" y="21" width="50" height="22" style="fill:var(--acc)" opacity=".3"/>',
-    'curve': '<path d="M0 80C40 80 60 78 80 60s40-50 60-52 40 0 60 0" fill="none" style="stroke:var(--acc)" stroke-width="2"/><path d="M0 80C40 80 60 74 90 50s50-30 110-34" fill="none" style="stroke:var(--t3)" stroke-width="1.2" stroke-dasharray="3 4"/>',
-    'area': '<path d="M0 60 25 52 50 58 75 40 100 46 125 30 150 36 175 18 200 24" fill="none" style="stroke:var(--acc)" stroke-width="2"/><path d="M0 60 25 52 50 58 75 40 100 46 125 30 150 36 175 18 200 24V86H0Z" style="fill:var(--acc)" opacity=".1"/>',
+    'bars': '<path d="M0 85h200" style="stroke:var(--line2)"/><g style="fill:var(--acc)"><rect class="ab" style="--i:0" x="8" y="50" width="22" height="35" rx="2" fill-opacity=".35"/><rect class="ab" style="--i:1" x="40" y="38" width="22" height="47" rx="2" fill-opacity=".5"/><rect class="ab" style="--i:2" x="72" y="30" width="22" height="55" rx="2" fill-opacity=".65"/><rect class="ab" style="--i:3" x="104" y="20" width="22" height="65" rx="2" fill-opacity=".8"/><rect class="ab" style="--i:4" x="136" y="8" width="22" height="77" rx="2"/></g>',
+    'grid': '<g fill="none" style="stroke:var(--line2)"><path d="M0 21h200M0 43h200M0 65h200M50 0v86M100 0v86M150 0v86"/></g><g class="ac"><rect style="--i:0;fill:var(--acc)" x="50" y="21" width="50" height="22" fill-opacity=".3"/><rect style="--i:1;fill:var(--acc)" x="100" y="43" width="50" height="22" fill-opacity=".85"/></g>',
+    'curve': '<path class="ad" d="M0 80C40 80 60 74 90 50s50-30 110-34" fill="none" style="stroke:var(--t3)" stroke-width="1.2" stroke-dasharray="3 4"/><path class="at" pathLength="100" d="M0 80C40 80 60 78 80 60s40-50 60-52 40 0 60 0" fill="none" style="stroke:var(--acc)" stroke-width="2"/>',
+    'area': '<path class="aa" d="M0 60 25 52 50 58 75 40 100 46 125 30 150 36 175 18 200 24V86H0Z" style="fill:var(--acc)" fill-opacity=".1"/><path class="at" pathLength="100" d="M0 60 25 52 50 58 75 40 100 46 125 30 150 36 175 18 200 24" fill="none" style="stroke:var(--acc)" stroke-width="2"/>',
 }
 
 TOWER = '''<div class="tower" aria-hidden="true">

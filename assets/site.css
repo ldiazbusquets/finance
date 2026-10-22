@@ -928,3 +928,14 @@ details.plas[open] summary::after { content: "−"; }
 .rate p { color: var(--t2); font-size: 14.5px; line-height: 1.65; margin: 10px 0 0; max-width: 72ch; }
 .rate p a { color: var(--acc); }
 #ratings .cols > * { min-width: 0; }
+
+/* animated card illustrations: same 5.4s loop as the main site */
+.card .art .ab { transform-box: fill-box; transform-origin: 50% 100%; animation: artBar 5.4s cubic-bezier(.2,.8,.2,1) infinite; animation-delay: calc(var(--i) * .11s); }
+@keyframes artBar { 0% { transform: scaleY(0); opacity: 0; } 4% { opacity: 1; } 26%, 90% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+.card .art .ac rect { transform-box: fill-box; transform-origin: 50% 50%; animation: artCell 5.4s cubic-bezier(.2,.8,.2,1) infinite; animation-delay: calc(var(--i) * .5s); }
+@keyframes artCell { 0%, 6% { transform: scale(.4); opacity: 0; } 24%, 86% { transform: scale(1); opacity: 1; } 96%, 100% { transform: scale(1); opacity: 0; } }
+.card .art .at { stroke-dasharray: 100; animation: artLine 5.4s ease-in-out infinite; }
+@keyframes artLine { 0%, 8% { stroke-dashoffset: 100; opacity: 1; } 50%, 90% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.card .art .ad, .card .art .aa { animation: artFade 5.4s ease-in-out infinite; }
+@keyframes artFade { 0%, 30% { opacity: 0; } 55%, 90% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .card .art .ab, .card .art .ac rect, .card .art .at, .card .art .ad, .card .art .aa { animation: none; } }

@@ -154,7 +154,7 @@ def bridge(items, ps):
 
 
 SCRIPT = {'amazon': 'amzn', 'meta': 'meta', 'nvidia': 'nvda', 'jpmorgan': 'jpm', 'vertiv': 'vrt', 'l3harris': 'lhx', 'american-water': 'awk',
-          'boeing': 'ba', 'gev': 'gev', 'lockheed-martin': 'lmt', 'northrop-grumman': 'noc', 'caterpillar': 'cat', 'asml': 'asml', 'microsoft': 'msft', 'alphabet': 'googl', 'tsmc': 'tsm', 'broadcom': 'avgo', 'rtx': 'rtx', 'general-dynamics': 'gd'}
+          'boeing': 'ba', 'gev': 'gev', 'lockheed-martin': 'lmt', 'northrop-grumman': 'noc', 'caterpillar': 'cat', 'asml': 'asml', 'microsoft': 'msft', 'alphabet': 'googl', 'tsmc': 'tsm', 'broadcom': 'avgo', 'rtx': 'rtx', 'general-dynamics': 'gd', 'constellation-energy': 'ceg', 'unitedhealth': 'unh', 'exxonmobil': 'xom', 'visa': 'v', 'johnson-johnson': 'jnj'}
 SRC_URL = 'https://github.com/ldiazbusquets/finance/blob/main/_source/models/'
 
 

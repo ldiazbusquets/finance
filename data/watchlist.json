@@ -395,6 +395,76 @@
         "Aerospace & Defense"
       ],
       "call": "Buy"
+    },
+    {
+      "ticker": "CEG",
+      "name": "Constellation Energy",
+      "sector": "Power generation",
+      "status": "live",
+      "page": "constellation-energy.html",
+      "value": 185,
+      "date": "2026-10-22",
+      "gics": [
+        "Utilities",
+        "Electric Utilities"
+      ],
+      "call": "Hold"
+    },
+    {
+      "ticker": "UNH",
+      "name": "UnitedHealth",
+      "sector": "Health insurance & services",
+      "status": "live",
+      "page": "unitedhealth.html",
+      "value": 516,
+      "date": "2026-10-22",
+      "gics": [
+        "Health Care",
+        "Managed Health Care"
+      ],
+      "call": "Buy"
+    },
+    {
+      "ticker": "XOM",
+      "name": "ExxonMobil",
+      "sector": "Oil & gas",
+      "status": "live",
+      "page": "exxonmobil.html",
+      "value": 89,
+      "date": "2026-10-22",
+      "gics": [
+        "Energy",
+        "Integrated Oil & Gas"
+      ],
+      "call": "Sell"
+    },
+    {
+      "ticker": "V",
+      "name": "Visa",
+      "sector": "Payments",
+      "status": "live",
+      "page": "visa.html",
+      "value": 291,
+      "date": "2026-10-22",
+      "gics": [
+        "Financials",
+        "Transaction & Payment Processing Services"
+      ],
+      "call": "Hold"
+    },
+    {
+      "ticker": "JNJ",
+      "name": "Johnson & Johnson",
+      "sector": "Pharmaceuticals & medtech",
+      "status": "live",
+      "page": "johnson-johnson.html",
+      "value": 194,
+      "date": "2026-10-22",
+      "gics": [
+        "Health Care",
+        "Pharmaceuticals"
+      ],
+      "call": "Hold"
     }
   ]
 }

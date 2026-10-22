@@ -1274,3 +1274,281 @@ R['GD'] = dict(
          prose('placeholder')
          + band('Submarines and Gulfstreams, <em>out of Anduril&rsquo;s reach.</em>', 'The steadiest of the primes, at about the plan&rsquo;s price.')),
     ])
+
+# ================================================================ Constellation Energy
+EQ = 'https://www.sec.gov/Archives/edgar/data/0001868275/000186827526000097/ceg-20260806991.htm'
+R['CEG'] = dict(
+    t='CEG', slug='constellation-energy', name='Constellation Energy', h1='Constellation <em>Energy</em>', sector='Power generation', date=D22, timing=', ahead of its third-quarter results in early November',
+    sub='Constellation runs the largest fleet of nuclear plants in America and, since buying Calpine in January, one of the largest fleets of gas plants. It sells carbon-free power to Microsoft, Meta and others building data centers. The shares are down about 37% from their high as investors question how fast that demand turns into earnings.',
+    call='Hold', method='Cash-flow model', price=255.21, pricenote='Close, Oct 22, 2026', base=185, bear=71, bull=351, wt=198, max=450, tick=50,
+    disclosure='The author holds no CEG shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 71, 351, 185, '$71 to $351, base $185'), ('Probability-weighted', None, None, 198, '$198'),
+           ('Price at writing', None, None, 255.21, '$255.21'), ('52-week range', 229, 406, None, '$229 to $406'), ('Analyst average', None, None, 348, '$348')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Nuclear power, <em>now with gas.</em>',
+         prose('Constellation owns the largest nuclear fleet in America, roughly a fifth of the country&rsquo;s nuclear output, and since January the Calpine fleet of gas-fired and geothermal plants. It sells power wholesale and directly to large businesses and homes. Its nuclear plants run around the clock without carbon emissions, which is what technology companies want for data centers: Microsoft signed a 20-year contract to restart the former Three Mile Island unit, and Meta one for the Clinton plant in Illinois.',
+               'Most of its earnings come from selling power at market prices or under contracts, which makes results depend on electricity prices, capacity auctions and how many long-term contracts it signs.')),
+        ('results', 'Latest results', 'Guidance raised, <em>new contracts from 2029.</em>',
+         stats([('$2.55', 'Adjusted EPS, Q2 2026, +34%'), ('$11.50&ndash;12.50', '2026 adjusted EPS guidance, raised'), ('920 MW', 'New long-term contracts'), ('93.0%', 'Nuclear capacity factor'), ('$2.0B', 'Buybacks, first half'), ('&gt;10%', 'Base EPS growth target, a year')])
+         + prose('Second-quarter adjusted earnings rose to $2.55 a share from $1.91, mostly from Calpine; reported earnings fell to $1.42 on mark-to-market and merger costs. Constellation raised 2026 guidance to $11.50&ndash;12.50 a share from $11&ndash;12, signed 920 megawatts of new 15&ndash;20 year contracts starting in 2029&ndash;2032 (including Walmart), and is selling a Texas gas plant to LS Power for $860 million to meet the Calpine merger conditions.',
+                 'The March outlook disappointed investors: base earnings growth of more than 20% in total from 2026 to 2029, slower in the first years, against expectations of much faster growth from data-center demand. That is the main reason the shares are down a third.')
+         + src([('Q2 2026 results (8-K)', EQ), ('Guidance raise', 'https://www-web.itiger.com/news/2657310056'), ('The March outlook', 'https://finance.yahoo.com/markets/stocks/articles/why-constellation-energy-stock-flopped-143413044.html')])),
+        ('fin', 'The numbers', 'A merchant generator, <em>now much larger.</em>',
+         fin_table('CEG') + prose('Constellation was spun off from Exelon in 2022. Its cash flow was negative in 2022&ndash;2024 mainly because of collateral posted on hedges and the way it accounts for customer receivables it sells, not losses in the business. The last column includes Calpine for six months. The <a href="snapshot.html?t=CEG&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('Constellation filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001868275&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Debt tripled <em>to buy Calpine.</em>',
+         prose('At June 30 Constellation had $24.7 billion of debt and little cash, about triple a year earlier, after the Calpine deal, which also added shares (360 million diluted, from 314 million). It still bought back $2.0 billion of stock in the first half. Capital spending is well above depreciation as it uprates reactors and adds gas capacity.')),
+        ('value', 'Valuation', 'The model gives <em>$185 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, 2026', 'about $40B', 'Calpine for a full year (estimate)'],
+             ['Growth, 2027 and 2028', '5%, then 7%', 'New contracts start in 2029; fades to 3% by year 10'],
+             ['Operating margin', '16.5% rising to 19%', 'Matches 2026 guidance, then contract repricing'],
+             ['Net investment', '$2.5B a year to 2028', 'Uprates and new gas plants'],
+             ['Discount rate', '9.3%', 'Beta 1.24, 21% debt'],
+             ['Terminal growth', '3.0%', 'With a 12% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$39B'), ('PV of terminal value', '$52B'), ('Enterprise value', '$91B'), ('Net debt', '&minus;$24.0B'), ('Equity value', '$67B'), ('Diluted shares', '360M')], '$185')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '2% / 3%', '5% / 7%', '8% / 10%'], ['Long-run operating margin', '15%', '19%', '23%'],
+             ['Discount rate', '10.3%', '9.3%', '8.3%'], ['Value per share', '$71', '$185', '$351'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$198</b>. The range is wide because power prices move earnings a lot. The bear case is lower power prices and a slower data-center build; the bull case is a wave of long-term contracts at high prices.')
+         + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$221', '$197', '$177', '$159', '$144'])),
+        ('implied', 'What the price assumes', 'At $255, <em>a 24% margin.</em>',
+         implied([['Revenue growth of about 12% a year in 2027 and 2028, then the same fade', '5% and 7%'], ['Or a long-run operating margin of about 24%', '19%'], ['Or a discount rate of about 7.9%', '9.3%']])
+         + prose('Even after a 37% fall, the price assumes more than the company&rsquo;s own outlook: roughly the bull case for margins. Analysts average about $348, assuming more contracts at higher prices sooner.')
+         + src([('Analyst targets', 'https://marketbeat.com/stocks/NASDAQ/CEG/price-target')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Power prices', 'Most earnings depend on wholesale prices and capacity auctions.'],
+             ['Data-center pace', 'Some states are slowing large data-center connections; contracts start only in 2029.'],
+             ['Debt', 'Leverage tripled with Calpine.'],
+             ['Regulation', 'Regulators may limit plants supplying data centers directly or cap capacity prices.'],
+             ['Nuclear operations', 'An outage at a large plant costs hundreds of millions.'],
+         ]) + prose('<b>Upside:</b> more 20-year contracts with technology companies, reactor uprates, higher capacity prices and the federal nuclear production tax credit.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('The best nuclear fleet, <em>at a price still ahead of the plan.</em>', 'Demand is real; the earnings arrive later than investors hoped.')),
+    ])
+
+# ================================================================ UnitedHealth
+UQ = 'https://www.sec.gov/Archives/edgar/data/0000731766/000073176626000255/earningsrelease3q26unh.htm'
+R['UNH'] = dict(
+    t='UNH', slug='unitedhealth', name='UnitedHealth', h1='United<em>Health</em>', sector='Health insurance &amp; services', date=D22, timing=', after its third-quarter results',
+    sub='UnitedHealth is America&rsquo;s largest health insurer and, through Optum, its largest employer of doctors and one of the three big pharmacy-benefit managers. After profits collapsed in 2025, margins are recovering and guidance has been raised three times this year.',
+    call='Hold', method='Cash-flow model', price=425.06, pricenote='Close, Oct 22, 2026', base=516, bear=282, bull=839, wt=538, max=900, tick=100,
+    disclosure='The author holds no UNH shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 282, 839, 516, '$282 to $839, base $516'), ('Probability-weighted', None, None, 538, '$538'),
+           ('Price at writing', None, None, 425.06, '$425.06'), ('52-week range', 256, 462, None, '$256 to $462'), ('Analyst average', None, None, 481, '$481')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Insurer, doctor <em>and pharmacy manager.</em>',
+         prose('<b>UnitedHealthcare</b> insures tens of millions of people through employers, Medicare Advantage and Medicaid. <b>Optum Health</b> employs or contracts with tens of thousands of doctors; <b>Optum Insight</b> sells data, software and claims services to hospitals and insurers; <b>Optum Rx</b> manages drug benefits.',
+               'The combination is the point and the controversy: UnitedHealth earns money on both sides of many transactions, which lowers costs when it works and draws scrutiny from regulators.')),
+        ('results', 'Latest results', 'Profit up 52%, <em>guidance raised a third time.</em>',
+         stats([('$112.7B', 'Revenue, Q3 2026, flat'), ('$4.69', 'Adjusted EPS, +61%'), ('88.4%', 'Medical care ratio, from 89.9%'), ('$6.6B', 'Earnings from operations'), ('&ge;$20.50', '2026 adjusted EPS guidance'), ('13&ndash;16%', 'Long-term EPS growth target')])
+         + prose('Third-quarter revenue was flat at $112.7 billion as UnitedHealth shed unprofitable members, but earnings from operations rose 52% to $6.6 billion and adjusted earnings to $4.69 a share, well above forecasts. The medical care ratio, the share of premiums paid out in care, fell to 88.4% from 89.9%, helped by $610 million of favorable reserve releases. Optum Health&rsquo;s profit rose to $735 million from $41 million.',
+                 'Guidance was raised for the third time, to at least $20.50 a share. Medicare Advantage margins should end the year near the top of the 2&ndash;4% target and Medicaid margins return to target by the end of 2028; commercial medical costs remain above the 11% trend the company assumed.')
+         + src([('Q3 2026 results (8-K)', UQ), ('Earnings call coverage', 'https://insurancenewsnet.com/innarticle/unitedhealth-beats-q3-expectations-hikes-2026-guidance')])),
+        ('fin', 'The numbers', 'Margins halved, <em>now recovering.</em>',
+         fin_table('UNH') + prose('The operating margin fell from more than 8% to about 4% in 2025 as medical costs, especially in Medicare Advantage, ran far ahead of what UnitedHealth had priced, and it changed chief executive and faced a federal investigation of its Medicare billing. The last column is to June 2026, before the third-quarter recovery. The <a href="snapshot.html?t=UNH&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('UnitedHealth filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000731766&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Debt to capital <em>above target.</em>',
+         prose('At September 30 UnitedHealth had $74.3 billion of debt and $28.5 billion of cash and short-term investments, much of it held by regulated insurance subsidiaries. Its debt-to-capital ratio was 41.7%, above its 40% target. It bought back $5.0 billion of shares and paid $6.2 billion of dividends in the first nine months.')),
+        ('value', 'Valuation', 'The model gives <em>$516 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, 2026', 'about $450B', 'Run rate'],
+             ['Growth, 2027 and 2028', '4%, then 7%', 'Repricing first, membership growth later; fades to 3% by year 10'],
+             ['Operating margin', '5.5% rising to 7%', 'Guidance-implied today; still below the 8&ndash;9% before 2025'],
+             ['Reinvestment', '$1 for every $6 of new revenue', 'Capital-light, but insurers must hold reserves'],
+             ['Discount rate', '8.0%', 'Beta 0.80, this site&rsquo;s floor (measured 0.61), 16% debt'],
+             ['Terminal growth', '3.0%', 'With a 20% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$178B'), ('PV of terminal value', '$332B'), ('Enterprise value', '$511B'), ('Net debt', '&minus;$45.8B'), ('Equity value', '$465B'), ('Diluted shares', '902M')], '$516')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '2% / 4%', '4% / 7%', '6% / 9%'], ['Long-run operating margin', '5.5%', '7%', '8%'],
+             ['Discount rate', '9.0%', '8.0%', '7.0%'], ['Value per share', '$282', '$516', '$839'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$538</b>. The bear case is margins stuck near today&rsquo;s level as Medicare and drug-pricing rules tighten; the bull case is margins back to their pre-2025 level.')
+         + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$655', '$576', '$512', '$460', '$417'])),
+        ('implied', 'What the price assumes', 'At $425, <em>a partial recovery.</em>',
+         implied([['Revenue growth of about 2% a year for two years, then the same fade', '4% and 7%'], ['Or a long-run operating margin of about 5.9%', '7%']])
+         + prose('The price assumes margins recover only a little from here. The shares rose about 12% after the results, to near their 52-week high; analysts average about $481.')
+         + src([('Analyst targets', 'https://beinsure.com/news/unitedhealth-stock-price-forecast-earnings/')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Medical costs', 'Commercial cost trend is still above plan; specialty drugs and hospital use keep rising.'],
+             ['Medicare Advantage', 'Government rates, star ratings and coding rules set most of the profit.'],
+             ['Investigations', 'Federal scrutiny of Medicare billing and of Optum&rsquo;s ties to the insurer.'],
+             ['Pharmacy benefits', 'Rebate pass-through by 2028 and drug-pricing reform reshape Optum Rx.'],
+             ['Reserve releases', 'Part of this year&rsquo;s improvement came from one-off releases.'],
+         ]) + prose('<b>Upside:</b> margins back to pre-2025 levels, Optum Health recovering further, and buybacks resuming at scale once debt is back at target.')),
+        ('rec', 'Rating', 'Buy.',
+         prose('placeholder')
+         + band('A recovery the price only partly believes.', 'Margins are coming back; the price assumes they stop short.')),
+    ])
+
+# ================================================================ ExxonMobil
+XQ = 'https://investor.exxonmobil.com/company-information/press-releases/detail/1208'
+XC = 'https://www.sec.gov/Archives/edgar/data/0002115436/000211543626000013/f8k3q991101626.htm'
+R['XOM'] = dict(
+    t='XOM', slug='exxonmobil', name='ExxonMobil', h1='Exxon<em>Mobil</em>', sector='Oil &amp; gas', date=D22, timing=', ahead of its third-quarter results on October 30',
+    sub='ExxonMobil is the largest Western oil company: record Permian output, the fast-growing Guyana fields, and refineries and chemical plants. Brent crude is near $110 after attacks on Saudi targets, and the shares are at a record. The question is what oil price the shares assume.',
+    call='Hold', method='Cash-flow model', price=178.19, pricenote='Close, Oct 22, 2026', base=89, bear=53, bull=151, wt=95, max=200, tick=25,
+    disclosure='The author holds no XOM shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 53, 151, 89, '$53 to $151, base $89'), ('Probability-weighted', None, None, 95, '$95'),
+           ('Price at writing', None, None, 178.19, '$178.19'), ('52-week range', 113, 180, None, '$113 to $180'), ('Analyst average', None, None, 168, '$168')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Oil, gas, refining <em>and chemicals.</em>',
+         prose('<b>Upstream</b> produces about 4.5 million barrels of oil and gas a day, more than 1.8 million of it in the Permian Basin after the 2024 purchase of Pioneer, and a fast-growing share from Guyana. <b>Energy Products</b> refines crude into fuels; <b>Chemical Products</b> and <b>Specialty Products</b> make plastics, lubricants and other materials.',
+               'Upstream earns most of the profit and moves with oil and gas prices; refining moves with fuel margins, which often rise when crude supply is disrupted.')),
+        ('results', 'Latest results', 'Record Permian output, <em>$17B of free cash flow.</em>',
+         stats([('$14.5B', 'Earnings, Q2 2026'), ('$3.48', 'Earnings per share'), ('$17.2B', 'Free cash flow'), ('$9.4B', 'Dividends and buybacks'), ('4.51M', 'Barrels of oil equivalent a day'), ('Q4 2026', 'Fifth Guyana vessel starts up')])
+         + prose('Second-quarter earnings were $14.5 billion ($3.48 a share) on higher oil prices and record Permian output, with free cash flow of $17.2 billion and $9.4 billion returned to shareholders. Exxon plans Permian growth of about 9% a year through 2030, and a fifth Guyana production vessel should start in the fourth quarter, adding 250,000 barrels a day of capacity.',
+                 'Its third-quarter guide points to much higher refining margins (+$4.5 billion) but lower oil realizations (&minus;$1.3 billion) than the second quarter. Brent has since jumped to about $110 after Houthi attacks on Saudi targets. Results come on October 30.')
+         + src([('Q2 2026 results', XQ), ('Q3 earnings considerations (8-K)', XC), ('Oil price, October 22', 'https://www.nationthailand.com/news/world/40072588')])),
+        ('fin', 'The numbers', 'Earnings follow <em>the oil price.</em>',
+         fin_table('XOM') + prose('2022 shows what a price spike does: earnings of $56 billion. Since then profits have settled near $30 billion with Brent at $70&ndash;80, while capital spending rose to about $29 billion for the Permian and Guyana. The <a href="snapshot.html?t=XOM&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('ExxonMobil filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000034088&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Low debt, <em>steady payouts.</em>',
+         prose('At June 30 ExxonMobil had about $42 billion of debt and $11 billion of cash, about $32 billion of net debt: very low for a company of its size. It pays $1.03 a share each quarter and bought back $5.1 billion of stock in the second quarter.')),
+        ('value', 'Valuation', 'The model gives <em>$89 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, last 12 months', 'about $370B', 'With oil well above its five-year average'],
+             ['Growth, 2027 and 2028', '&minus;5%, then flat', 'Oil prices ease from the spike; fades to 3% by year 10'],
+             ['Operating margin', '13% easing to 12%', 'In 2025, with Brent near $69, it was 12.6%'],
+             ['Net investment', '$6B a year, falling', 'Capital spending above depreciation'],
+             ['Discount rate', '8.5%', 'Beta 0.80, this site&rsquo;s floor (measured 0.30), 5% debt'],
+             ['Terminal growth', '3.0%', 'With a 12% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$180B'), ('PV of terminal value', '$219B'), ('Enterprise value', '$399B'), ('Net debt', '&minus;$31.8B'), ('Equity value', '$367B'), ('Diluted shares', '4.14B')], '$89')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '&minus;15% / 0%', '&minus;5% / 0%', '3% / 2%'], ['Long-run operating margin', '10%', '12%', '14%'],
+             ['Discount rate', '9.5%', '8.5%', '7.5%'], ['Value per share', '$53', '$89', '$151'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$95</b>. The bear case is oil back near $60; the bull case is today&rsquo;s prices lasting, with Guyana and the Permian growing on top.')
+         + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$121', '$108', '$97', '$89', '$81'])),
+        ('implied', 'What the price assumes', 'At $178, <em>today&rsquo;s oil, for good.</em>',
+         implied([['Revenue growth of about 15% a year for two years, then the same fade', '&minus;5% and 0%'], ['Or a long-run operating margin of about 23%', '12%'], ['Or a discount rate of about 5.7%', '8.5%']])
+         + prose('The price needs oil to stay near its current spike or rise further: margins roughly twice the 2025 level. Even the analysts&rsquo; average, about $168, is below the price.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/stocks/NYSE/XOM/price-target')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Oil prices', 'A peace deal or calmer shipping lanes could take $30 off Brent quickly.'],
+             ['Demand', 'Electric vehicles and slower growth in China weigh on long-run demand.'],
+             ['Costs', 'Capital spending of about $29 billion a year must earn its return.'],
+             ['Policy', 'Climate rules and windfall taxes in some countries.'],
+         ]) + prose('<b>Upside:</b> a longer disruption in the Gulf, Guyana growth, Permian efficiency, and low-carbon businesses such as lithium and carbon capture.')),
+        ('rec', 'Rating', 'Sell.',
+         prose('placeholder')
+         + band('A great oil company, <em>priced for a spike.</em>', 'The business is strong; the price assumes $110 oil lasts.')),
+    ])
+
+# ================================================================ Visa
+VQ = 'https://www.sec.gov/Archives/edgar/data/0001403161/000140316126000103/q32026earningsrelease.htm'
+R['V'] = dict(
+    t='V', slug='visa', name='Visa', h1='Visa', sector='Payments', date=D22, timing=', ahead of its fiscal fourth-quarter results on October 27',
+    sub='Visa runs the world&rsquo;s largest card network, moving more than $4 trillion a quarter between banks, shops and shoppers, at a profit margin few businesses match. The shares are at a record. The question is how much growth is left to pay for.',
+    call='Hold', method='Cash-flow model', price=414.26, pricenote='Close, Oct 22, 2026', base=291, bear=190, bull=405, wt=294, max=500, tick=50,
+    disclosure='The author holds no V shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 190, 405, 291, '$190 to $405, base $291'), ('Probability-weighted', None, None, 294, '$294'),
+           ('Price at writing', None, None, 414.26, '$414.26'), ('52-week range', 294, 415, None, '$294 to $415'), ('Analyst average', None, None, 426, '$426')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'A toll road <em>for card payments.</em>',
+         prose('Visa does not lend money or issue cards. Banks issue Visa cards, and Visa charges a small fee on each payment that runs over its network, plus more for cross-border payments, currency conversion and services such as fraud tools. Costs barely rise with volume, so most extra revenue becomes profit.',
+               'Growth comes from cash and checks moving to cards, travel abroad, and newer flows such as payments between businesses and to individuals.')),
+        ('results', 'Latest results', 'Revenue up 14%, <em>cross-border up 13%.</em>',
+         stats([('$11.6B', 'Net revenue, fiscal Q3, +14%'), ('$3.32', 'Adjusted EPS, +11%'), ('+10%', 'Payments volume, constant dollars'), ('+13%', 'Cross-border volume'), ('71.7B', 'Transactions processed'), ('$4.9B', 'Buybacks in the quarter')])
+         + prose('In the quarter to June 30, net revenue rose 14% to $11.6 billion and adjusted earnings 11% to $3.32 a share. Payments volume grew 10% in constant dollars and cross-border volume 13%. Visa bought back $4.9 billion of stock.',
+                 'Fiscal fourth-quarter and full-year results come on October 27, with the outlook for fiscal 2027.')
+         + src([('Fiscal Q3 2026 results (8-K)', VQ), ('Q4 results date', 'https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.22841.html')])),
+        ('fin', 'The numbers', 'A 60%-plus <em>operating margin.</em>',
+         fin_table('V') + prose('The margin dipped in fiscal 2025 because of provisions for U.S. litigation over card fees; underlying profitability has barely changed. Fiscal years end September 30; the last column is to March 2026. The <a href="snapshot.html?t=V&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('Visa filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001403161&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'Almost all profit <em>returned.</em>',
+         prose('At June 30 Visa had $23.9 billion of debt and $13.9 billion of cash and investments, about $10 billion of net debt. It returns nearly all of its free cash flow through buybacks and a dividend of $0.67 a quarter, and has about 1.90 billion diluted shares.')),
+        ('value', 'Valuation', 'The model gives <em>$291 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Net revenue, fiscal 2026', 'about $45B', 'Three quarters reported plus an estimate for the fourth'],
+             ['Growth, 2027 and 2028', '11%, then 10%', 'Recent pace; fades to 3% by year 10'],
+             ['Operating margin', '62% rising to 63%', 'Reported, including litigation provisions'],
+             ['Reinvestment', '$1 for every $4 of new revenue', 'Technology and acquisitions'],
+             ['Discount rate', '8.7%', 'Beta 0.83, 3% debt'],
+             ['Terminal growth', '3.0%', 'With a 40% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$226B'), ('PV of terminal value', '$336B'), ('Enterprise value', '$562B'), ('Net debt', '&minus;$10.0B'), ('Equity value', '$552B'), ('Diluted shares', '1.90B')], '$291')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '7% / 6%', '11% / 10%', '13% / 12%'], ['Long-run operating margin', '58%', '63%', '66%'],
+             ['Discount rate', '9.7%', '8.7%', '7.7%'], ['Value per share', '$190', '$291', '$405'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$294</b>. The bear case is fee regulation in the U.S. and new payment rails taking share; the bull case is faster growth in business payments and value-added services.')
+         + sens('Discount rate', ['7.5%', '8.0%', '8.5%', '9.0%', '9.5%'], ['$372', '$335', '$304', '$278', '$256'])),
+        ('implied', 'What the price assumes', 'At $414, <em>18% growth, or a 7% discount rate.</em>',
+         implied([['Revenue growth of about 18% a year for two years, then the same fade', '11% and 10%'], ['Or a discount rate of about 7.0%', '8.7%']])
+         + prose('No plausible margin closes the gap; the price needs either faster growth for longer or a lower required return than the model uses. Analysts average about $426, close to the price.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/stocks/NYSE/V/price-target')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Fee regulation', 'Proposals such as the Credit Card Competition Act would route payments over rival networks.'],
+             ['Antitrust', 'The U.S. Justice Department&rsquo;s debit-card case and merchant litigation.'],
+             ['New rails', 'Real-time bank payments and stablecoins could bypass cards in some markets.'],
+             ['Travel', 'Cross-border fees are the most profitable and the most cyclical.'],
+         ]) + prose('<b>Upside:</b> business-to-business payments, value-added services, and Visa itself carrying stablecoin and AI-agent payments on its network.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('The best toll road in finance, <em>at a record price.</em>', 'The business is near flawless; the price assumes it gets better.')),
+    ])
+
+# ================================================================ Johnson & Johnson
+JQ = 'https://www.sec.gov/Archives/edgar/data/0000200406/000020040626000189/a2026q3exhibit991.htm'
+R['JNJ'] = dict(
+    t='JNJ', slug='johnson-johnson', name='Johnson &amp; Johnson', h1='Johnson <em>&amp; Johnson</em>', sector='Pharmaceuticals &amp; medtech', date=D22, timing=', after its third-quarter results',
+    sub='Johnson &amp; Johnson is now two businesses: prescription drugs, led by cancer and immunology, and medical devices. It is growing through the loss of its biggest drug, Stelara, to cheaper copies, and has proposed a $5.5 billion settlement to end its talc lawsuits.',
+    call='Hold', method='Cash-flow model', price=267.68, pricenote='Close, Oct 22, 2026', base=194, bear=124, bull=279, wt=198, max=300, tick=50,
+    disclosure='The author holds no JNJ shares directly.',
+    fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
+    field=[('Cash-flow model', 124, 279, 194, '$124 to $279, base $194'), ('Probability-weighted', None, None, 198, '$198'),
+           ('Price at writing', None, None, 267.68, '$267.68'), ('52-week range', 185, 281, None, '$185 to $281'), ('Analyst average', None, None, 276, '$276')],
+    toc=TOCP, chapters=[
+        ('overview', 'The business', 'Drugs <em>and devices.</em>',
+         prose('<b>Innovative Medicine</b> (about two-thirds of sales) sells cancer drugs such as Darzalex and Carvykti, immunology drugs such as Tremfya, and neuroscience drugs such as Spravato. <b>MedTech</b> sells heart devices, surgical tools, orthopaedics and contact lenses. The consumer business was spun off as Kenvue in 2023.',
+               'The challenge is replacing Stelara, its top seller, which lost U.S. patent protection in 2025. New drugs have so far more than made up for it.')),
+        ('results', 'Latest results', 'Sales up 6%, <em>through the Stelara cliff.</em>',
+         stats([('$25.4B', 'Sales, Q3 2026, +5.9%'), ('+7.7%', 'Innovative Medicine'), ('+2.5%', 'MedTech'), ('$2.59', 'Adjusted EPS'), ('$101.2B', '2026 sales guidance, midpoint'), ('$11.10', '2026 adjusted EPS guidance, midpoint')])
+         + prose('Third-quarter sales rose 5.9% to $25.4 billion. Innovative Medicine grew 7.7% even though Stelara&rsquo;s decline took about 6.9 points off its growth; Tremfya, Darzalex, Carvykti, Rybrevant and Spravato led. MedTech grew 2.5%. Adjusted earnings were $2.59 a share; reported earnings were only $0.09 because of a one-time charge for the proposed talc settlement and two pipeline deals.',
+                 'Guidance was nudged up to sales of about $101.2 billion and adjusted earnings of $11.05&ndash;11.15 a share. The chief executive spoke of returning to double-digit growth by the end of the decade.')
+         + src([('Q3 2026 results (8-K)', JQ), ('Talc settlement', 'https://www.claimsjournal.com/news/national/2026/07/28/339110.htm')])),
+        ('fin', 'The numbers', 'Steady sales, <em>noisy profits.</em>',
+         fin_table('JNJ') + prose('Reported profit swings with one-off items: the Kenvue separation gain in 2023, talc charges and acquired research in other years. Sales and cash flow are much steadier. The <a href="snapshot.html?t=JNJ&amp;view=q">quarterly view</a> shows each quarter.')
+         + src([('Johnson &amp; Johnson filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000200406&type=10-K')])),
+        ('capital', 'Balance sheet and ownership', 'AAA-rated, <em>buying pipeline.</em>',
+         prose('At September 27 J&amp;J had $44.7 billion of debt and $17.2 billion of cash, about $27 billion of net debt; this model also deducts the proposed $5.5 billion talc settlement. It is one of two U.S. companies with a AAA credit rating and has raised its dividend every year for six decades. It buys much of its pipeline: free cash flow of about $15 billion so far this year is shared between dividends and acquisitions.')),
+        ('value', 'Valuation', 'The model gives <em>$194 a share.</em>',
+         table(['Assumption', 'Base case', 'Basis'], [
+             ['Sales, 2026', '$101.2B', 'Guidance midpoint'],
+             ['Growth, 2027 and 2028', '5%, then 6%', 'Stelara erosion fades; fades to 3% by year 10'],
+             ['Operating margin', '31% rising to 32%', 'Adjusted margin less amortization (estimate)'],
+             ['Reinvestment', '$1 for every $2 of new sales', 'Includes buying pipeline drugs'],
+             ['Discount rate', '8.4%', 'Beta 0.80, this site&rsquo;s floor (measured 0.33), 6% debt'],
+             ['Terminal growth', '3.0%', 'With a 15% return on new capital'],
+         ], 'mid')
+         + bridge([('PV of 10 years of cash flow', '$215B'), ('PV of terminal value', '$294B'), ('Enterprise value', '$509B'), ('Net debt and talc', '&minus;$32.9B'), ('Equity value', '$476B'), ('Diluted shares', '2.45B')], '$194')
+         + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
+             ['Growth, 2027 / 2028', '2% / 3%', '5% / 6%', '7% / 8%'], ['Long-run operating margin', '28%', '32%', '34%'],
+             ['Discount rate', '9.4%', '8.4%', '7.4%'], ['Value per share', '$124', '$194', '$279'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$198</b>. The bear case is Medicare price negotiation and tariffs squeezing drug margins while MedTech stays slow; the bull case is the double-digit growth management describes.')
+         + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$265', '$236', '$212', '$192', '$176'])),
+        ('implied', 'What the price assumes', 'At $268, <em>a 7% discount rate.</em>',
+         implied([['Sales growth of about 13% a year for two years, then the same fade', '5% and 6%'], ['Or a discount rate of about 7.0%', '8.4%']])
+         + prose('Investors treat J&amp;J almost like a bond: the price implies a required return of about 7%, close to what its own measured beta of 0.33 would give. On this site&rsquo;s 0.80 floor the value is lower. Analysts average about $276.')
+         + src([('Analyst targets', 'https://www.marketbeat.com/stocks/NYSE/JNJ/price-target')])),
+        ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
+         table(['Risk', 'Why it matters'], [
+             ['Stelara and patents', 'Biosimilars are still eroding Stelara; Darzalex faces its own patent dates later in the decade.'],
+             ['Drug pricing', 'Medicare negotiation and U.S. pricing deals reduce prices on older drugs.'],
+             ['Talc', 'The settlement still needs approval; earlier attempts failed in bankruptcy court.'],
+             ['MedTech', 'Growth of 2&ndash;3% lags rivals.'],
+         ]) + prose('<b>Upside:</b> Tremfya, Rybrevant and Carvykti growing faster, new launches from acquired pipeline, and a final end to the talc litigation.')),
+        ('rec', 'Rating', 'Hold.',
+         prose('placeholder')
+         + band('Through the Stelara cliff, <em>priced like a bond.</em>', 'A reliable business at a price that assumes little risk.')),
+    ])

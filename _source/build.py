@@ -5,6 +5,7 @@ import costco
 import gev
 import rep
 import titlecase
+import html as html_mod
 import holdings
 import notes
 import coverage
@@ -304,6 +305,11 @@ def build():
       {card('broadcom.html', 'AVGO &middot; ' + coverage.R['AVGO']['call'], 'Broadcom', 'Custom AI chips for Google, Anthropic and OpenAI, and the question of who pays. Value $358 against $323.', 'Read the report &rarr;', 'live')}
       {card('rtx.html', 'RTX &middot; ' + coverage.R['RTX']['call'], 'RTX', 'Raytheon missiles, Pratt engines and a $340 billion backlog, against Anduril&rsquo;s cheaper weapons. Value $146 against $195.', 'Read the report &rarr;', 'live')}
       {card('general-dynamics.html', 'GD &middot; ' + coverage.R['GD']['call'], 'General Dynamics', 'Nuclear submarines and Gulfstreams, the prime least exposed to Anduril. Value $336 against $351.', 'Read the report &rarr;', 'live')}
+      {card('unitedhealth.html', 'UNH &middot; ' + coverage.R['UNH']['call'], 'UnitedHealth', 'Margins recovering after the 2025 collapse; the price believes only part of it. Value $516 against $425.', 'Read the report &rarr;', 'live')}
+      {card('johnson-johnson.html', 'JNJ &middot; ' + coverage.R['JNJ']['call'], 'Johnson &amp; Johnson', 'Through the Stelara cliff, with a talc settlement proposed. Value $194 against $268.', 'Read the report &rarr;', 'live')}
+      {card('visa.html', 'V &middot; ' + coverage.R['V']['call'], 'Visa', 'The best toll road in finance, at a record price. Value $291 against $414.', 'Read the report &rarr;', 'live')}
+      {card('exxonmobil.html', 'XOM &middot; ' + coverage.R['XOM']['call'], 'ExxonMobil', 'Record Permian output and $110 Brent; what oil price the shares assume. Value $89 against $178.', 'Read the report &rarr;', 'live')}
+      {card('constellation-energy.html', 'CEG &middot; ' + coverage.R['CEG']['call'], 'Constellation Energy', 'The largest U.S. nuclear fleet, now with Calpine&rsquo;s gas plants. Value $185 against $255.', 'Read the report &rarr;', 'live')}
       {card('lockheed-martin.html', 'LMT &middot; ' + coverage.R['LMT']['call'], 'Lockheed Martin', 'A record $292 billion backlog, and where Anduril can and can&rsquo;t compete. Value $647 against $590.', 'Read the report &rarr;', 'live')}
       {card('northrop-grumman.html', 'NOC &middot; ' + coverage.R['NOC']['call'], 'Northrop Grumman', 'The B-21 and Sentinel, and a private Anduril now worth more. Value $564 against $553.', 'Read the report &rarr;', 'live')}
       {card('caterpillar.html', 'CAT &middot; ' + coverage.R['CAT']['call'], 'Caterpillar', 'Engines and turbines for AI data centers, inside a cyclical machinery company. Value $442 against $704.', 'Read the report &rarr;', 'live')}
@@ -395,7 +401,7 @@ def build():
     wlh = {c['ticker']: c for c in json.load(open(os.path.join(SRC, 'data', 'watchlist.json')))['companies']}
     cur_calls = []
     for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
-        cur_calls.append({'t': t, 'name': r['name'], 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
+        cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
     cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
     lp = os.path.join(SRC, 'data', 'calls.json')
     ledger = json.load(open(lp)) if os.path.exists(lp) else {'_note': 'Every published call, appended when a report is written or its call changes. Never edit past rows.', 'calls': []}

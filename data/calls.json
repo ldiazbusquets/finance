@@ -252,6 +252,16 @@
    "held": false
   },
   {
+   "t": "CEG",
+   "name": "Constellation Energy",
+   "page": "constellation-energy.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 185,
+   "price": 255.21,
+   "held": false
+  },
+  {
    "t": "FLY",
    "name": "Firefly Aerospace",
    "page": "firefly.html",
@@ -289,6 +299,16 @@
    "call": "Buy",
    "value": 249,
    "price": 324.22,
+   "held": false
+  },
+  {
+   "t": "JNJ",
+   "name": "Johnson & Johnson",
+   "page": "johnson-johnson.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 194,
+   "price": 267.68,
    "held": false
   },
   {
@@ -442,6 +462,26 @@
    "held": false
   },
   {
+   "t": "UNH",
+   "name": "UnitedHealth",
+   "page": "unitedhealth.html",
+   "date": "2026-10-22",
+   "call": "Buy",
+   "value": 516,
+   "price": 425.06,
+   "held": false
+  },
+  {
+   "t": "V",
+   "name": "Visa",
+   "page": "visa.html",
+   "date": "2026-10-22",
+   "call": "Hold",
+   "value": 291,
+   "price": 414.26,
+   "held": false
+  },
+  {
    "t": "VRT",
    "name": "Vertiv",
    "page": "vertiv.html",
@@ -450,6 +490,16 @@
    "value": 117,
    "price": 203.56,
    "held": true
+  },
+  {
+   "t": "XOM",
+   "name": "ExxonMobil",
+   "page": "exxonmobil.html",
+   "date": "2026-10-22",
+   "call": "Sell",
+   "value": 89,
+   "price": 178.19,
+   "held": false
   }
  ]
 }

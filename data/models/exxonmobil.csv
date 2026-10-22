@@ -1,0 +1,52 @@
+LDB Finance: ExxonMobil (XOM)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/xom.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),370.0,Company filings and guidance
+Tax rate %,30.0,Effective rate
+Discount rate (WACC) %,8.49,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,12.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-31.8,Latest balance sheet
+Diluted shares (billions),4.14,Latest filing
+"Revenue growth, years 1-2 %",-5 / 0,Oil eases; then fades to 3% by year 10
+Operating margin %,13 easing to 12 by year 3,2025: 12.6% at about $69 Brent
+"Net investment, years 1-4 ($B)",6 / 6 / 5 / 5,Then reinvestment = revenue growth / 2
+Beta,0.8,Site floor; measured 0.30
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,-5.0,351.5,12.67,44.523,31.166,6.0,25.166,0.9601,24.162
+2028,0,351.5,12.33,43.352,30.346,6.0,24.346,0.885,21.545
+2029,0.38,352.818,12.0,42.338,29.637,5.0,24.637,0.8157,20.096
+2030,0.75,355.464,12.0,42.656,29.859,5.0,24.859,0.7519,18.691
+2031,1.12,359.463,12.0,43.136,30.195,1.999,28.195,0.693,19.541
+2032,1.5,364.855,12.0,43.783,30.648,2.696,27.952,0.6388,17.856
+2033,1.88,371.696,12.0,44.604,31.222,3.421,27.802,0.5888,16.371
+2034,2.25,380.059,12.0,45.607,31.925,4.182,27.743,0.5428,15.058
+2035,2.62,390.036,12.0,46.804,32.763,4.988,27.775,0.5003,13.895
+2036,3.0,401.737,12.0,48.208,33.746,5.851,27.895,0.4611,12.864
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,180.079
+Year-11 after-tax operating income,34.758
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),474.917
+Present value of terminal value,219.002
+Enterprise value,399.081
+Plus net cash,-31.8
+Equity value,367.281
+Value per share ($),88.72
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),52.55,88.72,150.63
+Probability,25,50,25
+Probability-weighted value ($),,95.15,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 7.0%,121.4
+,Discount rate 7.5%,108.04
+,Discount rate 8.0%,97.33
+,Discount rate 8.5%,88.54
+,Discount rate 9.0%,81.2

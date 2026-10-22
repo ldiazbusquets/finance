@@ -1,0 +1,53 @@
+LDB Finance: Johnson & Johnson (JNJ)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/jnj.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),101.2,Company filings and guidance
+Tax rate %,17.0,Effective rate
+Discount rate (WACC) %,8.44,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,15.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-32.9,Latest balance sheet
+Diluted shares (billions),2.45,Latest filing
+"Revenue growth, years 1-2 %",5 / 6,Then fades to 3% by year 10
+Operating margin %,31 rising to 32 by year 4,Estimate
+Sales to capital,2,Includes buying pipeline drugs
+Net debt includes,$5.5B talc settlement,Proposed July 2026
+Beta,0.8,Site floor; measured 0.33
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,5.0,106.26,31.25,33.206,27.561,2.53,25.031,0.9603,24.037
+2028,6.0,112.636,31.5,35.48,29.449,3.188,26.261,0.8855,23.254
+2029,5.62,118.971,31.75,37.773,31.352,3.168,28.184,0.8166,23.014
+2030,5.25,125.217,32.0,40.07,33.258,3.123,30.135,0.753,22.691
+2031,4.88,131.322,32.0,42.023,34.879,3.052,31.827,0.6943,22.099
+2032,4.5,137.231,32.0,43.914,36.449,2.955,33.494,0.6403,21.445
+2033,4.12,142.892,32.0,45.725,37.952,2.83,35.122,0.5904,20.737
+2034,3.75,148.25,32.0,47.44,39.375,2.679,36.696,0.5444,19.979
+2035,3.38,153.254,32.0,49.041,40.704,2.502,38.202,0.5021,19.18
+2036,3.0,157.851,32.0,50.512,41.925,2.299,39.627,0.463,18.346
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,214.781
+Year-11 after-tax operating income,43.183
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),634.575
+Present value of terminal value,293.785
+Enterprise value,508.566
+Plus net cash,-32.9
+Equity value,475.666
+Value per share ($),194.15
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),123.86,194.15,278.57
+Probability,25,50,25
+Probability-weighted value ($),,197.68,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 7.0%,265.45
+,Discount rate 7.5%,235.63
+,Discount rate 8.0%,211.72
+,Discount rate 8.5%,192.13
+,Discount rate 9.0%,175.78

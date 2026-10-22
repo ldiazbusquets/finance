@@ -1,0 +1,51 @@
+LDB Finance: Constellation Energy (CEG)
+Method: Ten-year discounted cash flow (free cash flow to the firm)
+Money in US$ billions unless marked; rates in percent. Reproduce with the model script named below.
+Model script: _source/models/ceg.py
+
+INPUTS,Value,Basis
+Base revenue (latest year),40.0,Company filings and guidance
+Tax rate %,21.0,Effective rate
+Discount rate (WACC) %,9.29,"CAPM: 5.15% 10-year Treasury + beta x 4.5% equity risk premium, blended with after-tax debt"
+Terminal growth %,3.0,Long-run nominal growth
+Return on new capital in the terminal value %,12.0,Sets reinvestment after year 10
+Net cash (negative = net debt),-24.0,Latest balance sheet
+Diluted shares (billions),0.36,Latest filing
+"Revenue growth, years 1-2 %",5 / 7,Then fades to 3% by year 10
+Operating margin %,16.5 rising to 19 by year 5,Matches 2026 guidance (estimate)
+"Net investment, years 1-4 ($B)",2.5 / 2.5 / 2 / 2,Then reinvestment = revenue growth / 2
+
+PROJECTION (base case)
+Year,Revenue growth %,Revenue,Operating margin %,Operating income,After-tax operating income,Reinvestment,Free cash flow to the firm,Discount factor (mid-year),Present value
+2027,5.0,42.0,17.0,7.14,5.641,2.5,3.141,0.9565,3.004
+2028,7.0,44.94,17.5,7.865,6.213,2.5,3.713,0.8752,3.25
+2029,6.5,47.861,18.0,8.615,6.806,2.0,4.806,0.8008,3.848
+2030,6.0,50.733,18.5,9.386,7.415,2.0,5.415,0.7327,3.967
+2031,5.5,53.523,19.0,10.169,8.034,1.395,6.639,0.6704,4.45
+2032,5.0,56.199,19.0,10.678,8.436,1.338,7.097,0.6134,4.353
+2033,4.5,58.728,19.0,11.158,8.815,1.264,7.551,0.5612,4.238
+2034,4.0,61.077,19.0,11.605,9.168,1.175,7.993,0.5135,4.105
+2035,3.5,63.215,19.0,12.011,9.489,1.069,8.42,0.4698,3.956
+2036,3.0,65.111,19.0,12.371,9.773,0.948,8.825,0.4299,3.794
+
+BRIDGE (base case),Value
+Present value of 10 years of cash flow,38.965
+Year-11 after-tax operating income,10.066
+Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),119.963
+Present value of terminal value,51.571
+Enterprise value,90.536
+Plus net cash,-24.0
+Equity value,66.536
+Value per share ($),184.82
+
+SCENARIOS,Bear,Base,Bull
+Value per share ($),70.75,184.82,351.19
+Probability,25,50,25
+Probability-weighted value ($),,197.89,
+
+SENSITIVITY,Input,Value per share
+,Discount rate 8.5%,221.42
+,Discount rate 9.0%,197.24
+,Discount rate 9.5%,176.75
+,Discount rate 10.0%,159.18
+,Discount rate 10.5%,143.93

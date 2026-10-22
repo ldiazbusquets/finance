@@ -549,7 +549,7 @@ def build():
   </div>
 </section>
 '''
-    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=1"></script>')
+    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=2"></script>')
 
     # ---------------- markets ----------------
     markets = ph('Markets', 'The markets, <em>in numbers</em>', 'Rates, the yield curve, inflation, credit and the S&amp;P 500, refreshed from the Federal Reserve every weekday evening.',

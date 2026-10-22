@@ -13,6 +13,7 @@
   /* ---------- formatting ---------- */
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function fdate(s) { var p = s.split('-'); return MON[+p[1] - 1] + ' ' + (+p[2]) + ', ' + p[0]; }
+  function fri(s) { var p = s.split('-'), d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2] + 4)); return MON[d.getUTCMonth()] + ' ' + d.getUTCDate() + ', ' + d.getUTCFullYear(); }   /* weeks are dated by their Monday */
   function cm(v, dp) { return v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
   function usd(v) { return (v < 0 ? '−' : '') + '$' + cm(Math.abs(Math.round(v)), 0); }
   function pc(v, dp) { var r = +(v * 100).toFixed(dp == null ? 1 : dp); return (r < 0 ? '−' : '') + cm(Math.abs(r), dp == null ? 1 : dp) + '%'; }
@@ -197,7 +198,7 @@
     lines($('#rkG'), xs, [{ v: sb.curve.map(function (x) { return x * 10000; }), color: css('--t3'), w: 1.5, dash: '4 5' }, { v: sp.curve.map(function (x) { return x * 10000; }), color: css('--acc'), w: 2.2 }], function (v) { return '$' + cm(v / 1000, v < 20000 ? 1 : 0) + 'k'; });
     lines($('#rkD'), xs, [{ v: sb.dds.map(function (x) { return x * 100; }), color: css('--t3'), w: 1.3, dash: '4 5' }, { v: sp.dds.map(function (x) { return x * 100; }), color: css('--dn'), w: 1.8, area: true }], function (v) { return v.toFixed(0) + '%'; }, { zeroTop: true });
     $('#rkGNote').innerHTML = '$10,000 in this mix, rebalanced every week, against the S&amp;P 500 (dashed). It ended at <b>' + usd(sp.curve[sp.curve.length - 1] * 10000) + '</b>; the index at ' + usd(sb.curve[sb.curve.length - 1] * 10000) + '.';
-    $('#rkDNote').innerHTML = 'How far below its last high the mix was each week. Its deepest fall bottomed out on <b>' + fdate(o.dates[Math.max(0, sp.tr - 1)]) + '</b>.';
+    $('#rkDNote').innerHTML = 'How far below its last high the mix was each week. Its deepest fall bottomed out in the week ending <b>' + fri(o.dates[Math.max(0, sp.tr - 1)]) + '</b>.';
   }
   function contrib(o, rc) {
     var el = $('#rkC'); if (!el) return;

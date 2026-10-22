@@ -424,7 +424,14 @@
   (function next() {
     if (i >= ext.length) return;
     var img = new Image(); img.alt = ''; img.decoding = 'async';
-    img.onload = function () { m.textContent = ''; m.appendChild(img); m.classList.add('has'); };
+    img.onload = function () {
+      /* optical sizing: wide wordmarks get less height, compact marks more, so every logo carries similar weight */
+      var r = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 4;
+      var h = Math.max(20, Math.min(38, 38 * Math.pow(3 / r, .45)));
+      h = Math.min(h, 180 / r);
+      m.style.setProperty('--lh', h.toFixed(1) + 'px');
+      m.textContent = ''; m.appendChild(img); m.classList.add('has');
+    };
     img.onerror = function () { i++; next(); };
     img.src = 'assets/logos/' + t + '.' + ext[i];
   })();

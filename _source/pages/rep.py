@@ -392,6 +392,7 @@ def body(R):
     now = '' if R.get('private') else f'''<div class="panel now" id="now">
         <div class="hd"><div><h3 class="sec">Since the report</h3><p>Today&rsquo;s close against the report&rsquo;s numbers, updated every weekday. The analysis is as of {R['date']}; the rating as of {R.get('rated', R['date'])}. Both change only when the report is revised.</p></div>{'' if R.get('noauto') or not os.path.exists(os.path.join(DATA, R['t'] + '.json')) else f'<div class="cta" style="margin:0;gap:8px"><a class="pill gh sm" href="snapshot.html?t={R["t"]}&amp;view=q">Quarterly figures &rarr;</a><a class="pill gh sm" href="valuation.html?t={R["t"]}">Today&rsquo;s automatic model &rarr;</a></div>'}</div>
         {since(R['t'], P, B)}
+        <div class="revnote" id="revnote" hidden></div>
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
     toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))

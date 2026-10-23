@@ -68,6 +68,16 @@ assets/            CSS and the browser JavaScript for tools, the research hub an
 
 4. **Audit against filings** (by hand): the build can't catch a figure copied wrong from a filing, so reports are also checked against the company's own release or SEC filing. Each pass, with any corrections, is logged on the About page (`about.html#audit`).
 
+## Keeping reports current
+
+Each weekday the data job runs `scripts/review_data.py`. It applies the rating rule at the latest close, keeping each report's value fixed, and writes `data/review.json`. The Research page and each report then flag reports where:
+
+- the rating would change at today's price, or is within 3 points of a threshold;
+- the company has filed a 10-Q or 10-K, or reported results, since the report;
+- the price has moved 15% or more since the report.
+
+Values and ratings change only when a report is revised. The flags only say which reports to revise first.
+
 ## Reproducing a valuation
 
 ```

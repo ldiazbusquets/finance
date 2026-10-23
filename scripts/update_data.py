@@ -354,6 +354,12 @@ if __name__ == '__main__':
         news_data.run()
     except Exception as e:
         print(f'  FAIL headlines {e}', file=sys.stderr)
+    print('Reports to review')
+    try:
+        import review_data
+        print(f'  {review_data.run()} reports need review')
+    except Exception as e:
+        print(f'  FAIL review {e}', file=sys.stderr)
     print('Weekly returns (portfolio risk tool)')
     try:
         import risk_data

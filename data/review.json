@@ -1,0 +1,571 @@
+{
+ "updated": "2026-10-23T18:42:37Z",
+ "today": "2026-10-23",
+ "rules": {
+  "band": 0.15,
+  "near": 0.03,
+  "move": 0.15,
+  "due_days": 7,
+  "benchmark": 0.6779303181613743
+ },
+ "rows": [
+  {
+   "t": "META",
+   "name": "Meta Platforms",
+   "page": "meta.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 697.52,
+   "now": 648.85,
+   "asof": "2026-10-22",
+   "move": -0.0698,
+   "call_now": "Buy",
+   "rel_now": 0.1996,
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Buy, not Hold"
+    ]
+   ]
+  },
+  {
+   "t": "SNDK",
+   "name": "Sandisk",
+   "page": "sandisk.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 1378.22,
+   "now": 1260.93,
+   "asof": "2026-10-22",
+   "move": -0.0851,
+   "call_now": "Hold",
+   "rel_now": -0.1199,
+   "due": "2026-10-29",
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Hold, not Sell"
+    ],
+    [
+     "due",
+     "Results due 2026-10-29"
+    ]
+   ]
+  },
+  {
+   "t": "AXON",
+   "name": "Axon Enterprise",
+   "page": "axon.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 396.3,
+   "now": 414.6,
+   "asof": "2026-10-22",
+   "move": 0.0462,
+   "call_now": "Buy",
+   "rel_now": 0.1795,
+   "flags": [
+    [
+     "near",
+     "Within 3 points of the Buy line at today&rsquo;s price"
+    ]
+   ]
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "alphabet.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 324.22,
+   "now": 324.22,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Hold",
+   "rel_now": 0.1204,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "near",
+     "Within 3 points of the Buy line at today&rsquo;s price"
+    ],
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "amazon.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 262.63,
+   "now": 250.38,
+   "asof": "2026-10-22",
+   "move": -0.0466,
+   "call_now": "Hold",
+   "rel_now": -0.0786,
+   "due": "2026-10-29",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-29"
+    ]
+   ]
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "american-water.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 135.79,
+   "now": 143.23,
+   "asof": "2026-10-22",
+   "move": 0.0548,
+   "call_now": "Hold",
+   "rel_now": 0.0075,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "BA",
+   "name": "Boeing",
+   "page": "boeing.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 190.47,
+   "now": 187.55,
+   "asof": "2026-10-22",
+   "move": -0.0153,
+   "call_now": "Buy",
+   "rel_now": 0.51,
+   "due": "2026-10-27",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-27"
+    ]
+   ]
+  },
+  {
+   "t": "CAT",
+   "name": "Caterpillar",
+   "page": "caterpillar.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 703.84,
+   "now": 704.05,
+   "asof": "2026-10-22",
+   "move": 0.0003,
+   "call_now": "Hold",
+   "rel_now": -0.0799,
+   "due": "2026-10-29",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-29"
+    ]
+   ]
+  },
+  {
+   "t": "GD",
+   "name": "General Dynamics",
+   "page": "general-dynamics.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 350.755,
+   "now": 350.79,
+   "asof": "2026-10-22",
+   "move": 0.0001,
+   "call_now": "Buy",
+   "rel_now": 0.4386,
+   "due": "2026-10-30",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-30"
+    ]
+   ]
+  },
+  {
+   "t": "GEV",
+   "name": "GE Vernova",
+   "page": "gev.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 890.33,
+   "now": 827.42,
+   "asof": "2026-10-22",
+   "move": -0.0707,
+   "call_now": "Sell",
+   "rel_now": -0.2007,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "LHX",
+   "name": "L3Harris",
+   "page": "l3harris.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 248.77,
+   "now": 254.23,
+   "asof": "2026-10-22",
+   "move": 0.0219,
+   "call_now": "Buy",
+   "rel_now": 1.4655,
+   "due": "2026-10-29",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-29"
+    ]
+   ]
+  },
+  {
+   "t": "MSFT",
+   "name": "Microsoft",
+   "page": "microsoft.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 521.08,
+   "now": 521.08,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Hold",
+   "rel_now": 0.0572,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "V",
+   "name": "Visa",
+   "page": "visa.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 414.26,
+   "now": 414.34,
+   "asof": "2026-10-22",
+   "move": 0.0002,
+   "call_now": "Hold",
+   "rel_now": 0.0256,
+   "due": "2026-10-27",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-27"
+    ]
+   ]
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "vertiv.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 203.56,
+   "now": 195.59,
+   "asof": "2026-10-22",
+   "move": -0.0392,
+   "call_now": "Hold",
+   "rel_now": -0.1114,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "XOM",
+   "name": "ExxonMobil",
+   "page": "exxonmobil.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 178.19,
+   "now": 178.23,
+   "asof": "2026-10-22",
+   "move": 0.0002,
+   "call_now": "Sell",
+   "rel_now": -0.2316,
+   "due": "2026-10-30",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-30"
+    ]
+   ]
+  },
+  {
+   "t": "AMD",
+   "name": "Advanced Micro Devices",
+   "page": "amd.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 552.72,
+   "now": 507.93,
+   "asof": "2026-10-22",
+   "move": -0.081,
+   "call_now": "Hold",
+   "rel_now": 0.0636,
+   "flags": []
+  },
+  {
+   "t": "ASML",
+   "name": "ASML Holding",
+   "page": "asml.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 1560.54,
+   "now": 1560.54,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Hold",
+   "rel_now": -0.0222,
+   "flags": []
+  },
+  {
+   "t": "AVGO",
+   "name": "Broadcom",
+   "page": "broadcom.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 323.24,
+   "now": 323.24,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Buy",
+   "rel_now": 0.8152,
+   "flags": []
+  },
+  {
+   "t": "CEG",
+   "name": "Constellation Energy",
+   "page": "constellation-energy.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 255.21,
+   "now": 255.21,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Hold",
+   "rel_now": 0.0923,
+   "flags": []
+  },
+  {
+   "t": "FLY",
+   "name": "Firefly Aerospace",
+   "page": "firefly.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 17.41,
+   "now": 17.52,
+   "asof": "2026-10-22",
+   "move": 0.0063,
+   "call_now": "Buy",
+   "rel_now": 0.8502,
+   "flags": []
+  },
+  {
+   "t": "JNJ",
+   "name": "Johnson & Johnson",
+   "page": "johnson-johnson.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 267.68,
+   "now": 267.61,
+   "asof": "2026-10-22",
+   "move": -0.0003,
+   "call_now": "Hold",
+   "rel_now": 0.0645,
+   "flags": []
+  },
+  {
+   "t": "JPM",
+   "name": "JPMorgan Chase",
+   "page": "jpmorgan.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 335.26,
+   "now": 336.54,
+   "asof": "2026-10-22",
+   "move": 0.0038,
+   "call_now": "Buy",
+   "rel_now": 0.2682,
+   "flags": []
+  },
+  {
+   "t": "KTOS",
+   "name": "Kratos Defense",
+   "page": "kratos.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 38.81,
+   "now": 38.27,
+   "asof": "2026-10-22",
+   "move": -0.0139,
+   "call_now": "Hold",
+   "rel_now": 0.0139,
+   "flags": []
+  },
+  {
+   "t": "LMT",
+   "name": "Lockheed Martin",
+   "page": "lockheed-martin.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 590.2,
+   "now": 589.91,
+   "asof": "2026-10-22",
+   "move": -0.0005,
+   "call_now": "Buy",
+   "rel_now": 0.6264,
+   "flags": []
+  },
+  {
+   "t": "MU",
+   "name": "Micron Technology",
+   "page": "micron.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 913.67,
+   "now": 856.49,
+   "asof": "2026-10-22",
+   "move": -0.0626,
+   "call_now": "Buy",
+   "rel_now": 0.2281,
+   "flags": []
+  },
+  {
+   "t": "NOC",
+   "name": "Northrop Grumman",
+   "page": "northrop-grumman.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 552.53,
+   "now": 552.35,
+   "asof": "2026-10-22",
+   "move": -0.0003,
+   "call_now": "Buy",
+   "rel_now": 0.5073,
+   "flags": []
+  },
+  {
+   "t": "NVDA",
+   "name": "Nvidia",
+   "page": "nvidia.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 216.47,
+   "now": 212.21,
+   "asof": "2026-10-22",
+   "move": -0.0197,
+   "call_now": "Buy",
+   "rel_now": 0.2031,
+   "flags": []
+  },
+  {
+   "t": "PLTR",
+   "name": "Palantir Technologies",
+   "page": "palantir.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 201.72,
+   "now": 196.19,
+   "asof": "2026-10-22",
+   "move": -0.0274,
+   "call_now": "Sell",
+   "rel_now": -0.1951,
+   "flags": []
+  },
+  {
+   "t": "RTX",
+   "name": "RTX",
+   "page": "rtx.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 194.745,
+   "now": 194.71,
+   "asof": "2026-10-22",
+   "move": -0.0002,
+   "call_now": "Hold",
+   "rel_now": 0.117,
+   "flags": []
+  },
+  {
+   "t": "SKHY",
+   "name": "SK hynix",
+   "page": "sk-hynix.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 131.69,
+   "now": 131.69,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Buy",
+   "rel_now": 0.3758,
+   "flags": []
+  },
+  {
+   "t": "SPCX",
+   "name": "SpaceX",
+   "page": "spacex.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 162.57,
+   "now": 144.75,
+   "asof": "2026-10-22",
+   "move": -0.1096,
+   "call_now": "Buy",
+   "rel_now": 0.4661,
+   "flags": []
+  },
+  {
+   "t": "TSM",
+   "name": "TSMC",
+   "page": "tsmc.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 412.35,
+   "now": 412.35,
+   "asof": "2026-10-22",
+   "move": 0.0,
+   "call_now": "Buy",
+   "rel_now": 0.4093,
+   "flags": []
+  },
+  {
+   "t": "UNH",
+   "name": "UnitedHealth",
+   "page": "unitedhealth.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 425.06,
+   "now": 424.98,
+   "asof": "2026-10-22",
+   "move": -0.0002,
+   "call_now": "Buy",
+   "rel_now": 0.8017,
+   "flags": []
+  }
+ ]
+}

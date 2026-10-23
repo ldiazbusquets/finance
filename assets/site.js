@@ -415,6 +415,32 @@
     }
   }
 
+  /* ---------- reports that need reviewing (data/review.json, written by scripts/review_data.py every weekday) ---------- */
+  var REVLAB = { rating: 'Rating', results: 'New results', price: 'Price move', near: 'Near a line', due: 'Results due' };
+  if (page === 'research' || page === 'report') {
+    getJSON('data/review.json').then(function (rv) {
+      var rows = (rv && rv.rows) || [];
+      if (page === 'report') {
+        var me = rows.filter(function (r) { return r.t === document.body.getAttribute('data-ticker'); })[0], note = $('#revnote');
+        if (!me || !note || !me.flags.length) return;
+        var key = me.flags.filter(function (f) { return f[0] !== 'due'; });
+        note.innerHTML = (key.length ? '<b>Due for review.</b> ' : '') + me.flags.map(function (f) { return f[1]; }).join(' &middot; ') + '.';
+        note.hidden = false; return;
+      }
+      var box = $('#review'), list = $('#revlist'); if (!box) return;
+      var main = rows.filter(function (r) { return r.flags.some(function (f) { return f[0] !== 'due'; }); });
+      var due = rows.filter(function (r) { return r.flags.length && r.flags.every(function (f) { return f[0] === 'due'; }); });
+      if (!main.length && !due.length) return;
+      list.innerHTML = (main.length ? '<div class="revrows">' + main.map(function (r) {
+        return '<a href="' + r.page + '"><b>' + r.t + '</b><span class="nm">' + esc(r.name) + '</span><span class="cl">' + r.call + (r.call_now && r.call_now !== r.call ? ' &rarr; ' + r.call_now : '') + '</span><span class="why">' +
+          r.flags.filter(function (f) { return f[0] !== 'due'; }).map(function (f) { return '<i class="' + f[0] + '">' + REVLAB[f[0]] + '</i>' + f[1]; }).join('<br>') + '</span></a>';
+      }).join('') + '</div>' : '<p class="fine">No report needs review today.</p>') +
+        (due.length ? '<p class="fine" style="margin-top:12px">Results due in the next week: ' + due.map(function (r) { return '<a href="' + r.page + '">' + r.t + '</a> (' + fdate(r.due, false) + ')'; }).join(', ') + '.</p>' : '');
+      $('#revstamp').textContent = 'Checked ' + fdate(rv.today, false);
+      box.hidden = false;
+    }).catch(function () {});
+  }
+
   if (page === 'research') {
     $$('.chip').forEach(function (c) {
       c.onclick = function () {

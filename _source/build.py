@@ -76,7 +76,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=45">
+<link rel="stylesheet" href="assets/site.css?v=46">
 </head>
 '''
 
@@ -123,7 +123,7 @@ def foot(extra=''):
   <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=22"></script>{extra}
+<script src="assets/site.js?v=23"></script>{extra}
 <script src="assets/chat.js?v=4" defer></script>
 </body>
 </html>
@@ -297,6 +297,7 @@ def build():
       <a href="earnings.html"><span class="mono">Calendar</span><b>Earnings hub</b><p>Upcoming reports and what the latest quarter changed.</p></a>
       <a href="insiders.html"><span class="mono">Ownership</span><b>Insiders and funds</b><p>Executive trades and what famous investors own.</p></a>
     </div>
+    <div class="panel review" id="review" hidden><div class="hd"><div><h3 class="sec">Needs review</h3><p>Checked every weekday against the latest close and SEC filings: reports whose rating would change at today&rsquo;s price, whose company has filed results since, or whose price has moved 15% or more. Values and ratings change only when a report is revised.</p></div><span class="mono" id="revstamp"></span></div><div id="revlist"></div></div>
     <a class="snapcta" href="snapshot.html"><div><span class="mono">Any S&amp;P 500 company</span><b>Search a company for an instant research snapshot</b><p>Growth, margins, cash, debt, a bear-to-bull valuation and peers, with annual 10-K and quarterly 10-Q figures, written from its filings in seconds.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Search</span></a>
     <div class="split" style="align-items:end;margin-bottom:30px;margin-top:56px"><div><div class="eyebrow mono">Equities</div><h3 class="sec">Holdings</h3></div><p>Every stock in the portfolio, valued with the same method. Written October 20, 2026 and refreshed after each quarter&rsquo;s results.</p></div>
     <div class="grid3 rcards">{holding_cards}</div>
@@ -848,6 +849,9 @@ def build():
 if __name__ == '__main__':
     build()
     print('built', sorted(f for f in os.listdir(OUT) if f.endswith('.html')))
+    sys.path.insert(0, os.path.join(SRC, 'scripts'))
+    import review_data
+    review_data.run()
     import consistency
     n, runs, errs = consistency.run(OUT, list(holdings.R.values()) + list(coverage.R.values()))
     # the simulation must rerun the same model the report publishes: its unshocked run must give the report's base case

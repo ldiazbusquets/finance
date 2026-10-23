@@ -536,18 +536,27 @@ def build():
 
 <section class="tight" style="padding-top:20px">
   <div class="wrap">
-    <div class="eyebrow mono">More tools &middot; in LDB Lab</div><h3 class="sec">Ready to try</h3>
+    <div class="eyebrow mono">Trading and options</div><h3 class="sec">Ready to try</h3>
     <div class="grid3" style="margin-top:30px">
-      {card(LAB + 'options.html', 'TOOL-01', 'Options builder', 'Build spreads, straddles and condors. Payoff at expiry and today, Black-Scholes prices and the Greeks.', 'Open &#8599;', 'live', ext=True)}
-      {card(LAB + 'kelly.html', 'TOOL-02', 'Kelly challenge', 'How much to bet when you have an edge, and what happens when you bet too much.', 'Open &#8599;', 'live', ext=True)}
-      {card(LAB + 'market-maker.html', 'TOOL-03', 'Market-making game', 'Quote a bid and ask against traders who know more than you, with Bayesian updating.', 'Open &#8599;', 'live', ext=True)}
-      {card(LAB + 'montecarlo.html', 'TOOL-04', 'Monte Carlo planner', 'Thousands of simulated lifetimes, and a planner that learns how much stock to hold.', 'Open &#8599;', 'live', ext=True)}
-      {card(LAB + 'models.html', 'TOOL-05', 'Model Playground', 'FinBERT, BERT, Qwen3 and Llama 3.2 read the same financial headline side by side.', 'Open &#8599;', 'live', ext=True)}
+      {card('options.html', 'TOOL-01', 'Options builder', 'Build spreads, straddles and condors. Payoff at expiry and today, Black-Scholes prices and the Greeks.', 'Open &rarr;', 'live')}
+      {card('kelly.html', 'TOOL-02', 'Kelly challenge', 'How much to bet when you have an edge, and what happens when you bet too much.', 'Open &rarr;', 'live')}
+      {card('market-maker.html', 'TOOL-03', 'Market-making game', 'Quote a bid and ask against traders who know more than you, with Bayesian updating.', 'Open &rarr;', 'live')}
+    </div>
+    <div class="eyebrow mono" style="margin-top:48px">AI on financial data &middot; in LDB Lab</div>
+    <div class="grid3" style="margin-top:24px">
+      {card(LAB + 'montecarlo.html', 'LAB', 'Monte Carlo planner', 'Thousands of simulated lifetimes, and a planner that learns how much stock to hold.', 'Open &#8599;', 'live', ext=True)}
+      {card(LAB + 'models.html', 'LAB', 'Model Playground', 'FinBERT, BERT, Qwen3 and Llama 3.2 read the same financial headline side by side.', 'Open &#8599;', 'live', ext=True)}
     </div>
   </div>
 </section>
 '''
     page('tools.html', 'tools.html', 'Tools', 'Position sizing, a portfolio x-ray and more finance tools that run in the browser.', 'tools', tools, '\n<script src="assets/tools.js?v=1"></script>')
+
+    # ---------------- trading and options tools (moved from LDB Lab; see labport.py) ----------------
+    import labport
+    for name in ('options', 'market-maker', 'kelly'):
+        t_, d_, b_, j_ = labport.port(name)
+        page(name + '.html', 'tools.html', t_, d_, 'tool', b_, j_)
 
     # ---------------- financial planner ----------------
     plan = ph('Tools<span class="kind auto" title="Calculated by code from your inputs, with no analyst review">Automated model</span>', 'Financial <em>plan</em>', 'A whole household on one page: pay, taxes, spending, debts, goals and Social Security, projected year by year and run through 1,000 different markets. The question it answers is the one a planner asks first: will the money last?',

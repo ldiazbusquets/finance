@@ -39,37 +39,64 @@ def text(s):
     return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', s))).strip()
 
 
-def check_report(R, page):
-    errs = []
+# Reports where a check legitimately has nothing to check, with the reason. Anything not listed here must run every check.
+NO_BRIDGE = {}          # filled from method: only cash-flow models publish a valuation bridge
+NO_CASH_TABLE = {
+    'TSM': 'files a 20-F in New Taiwan dollars; its table is hand-built from releases, without a cash-flow row',
+    'ASML': 'files a 20-F in euros; hand-built table',
+    'SKHY': 'Korean filer; hand-built table',
+    'SPCX': 'private until its 2026 listing; no five-year SEC history',
+    'JPM': 'a bank: operating cash flow and capital spending say little about it, so its table shows revenue and net income only',
+}
+
+
+def check_report(R, page, has_data=True):
+    """returns (errors, checks that ran)"""
+    errs, ran = [], set()
     t = R['t']
-    if R.get('private'):
-        return errs
-    bear, base, bull, wt, price = R.get('bear'), R.get('base'), R.get('bull'), R.get('wt'), R.get('price')
+    priv = bool(R.get('private'))
+    field = {f[0]: f for f in R.get('field', [])}
+    model_row = next((f for k, f in field.items() if k.endswith('model')), None)
+    if priv:   # private companies: whole-company values in billions, read from the price field
+        bear, bull, base = (model_row[1], model_row[2], model_row[3]) if model_row else (None, None, None)
+        wt = field.get('Probability-weighted', (None,) * 4)[3]
+        price = None
+    else:
+        bear, base, bull, wt, price = R.get('bear'), R.get('base'), R.get('bull'), R.get('wt'), R.get('price')
     # 1 scenario weights
     if None not in (bear, base, bull, wt):
+        ran.add('weights')
         w = .25 * bear + .5 * base + .25 * bull
         if not close(w, wt, .015, TOL_ABS):
             errs.append(f'{t}: weighted value {wt} but 25/50/25 of {bear}/{base}/{bull} is {w:.1f}')
     # 2 field chart
-    for f in R.get('field', []):
-        lab, lo, hi, mid = f[0], f[1], f[2], f[3]
-        if lab.startswith('Probability-weighted') and wt is not None and mid is not None and not close(mid, wt, 0, 0.5):
-            errs.append(f'{t}: field chart weighted {mid} vs report {wt}')
-        if lab.startswith('Price at writing') and price is not None and mid is not None and not close(mid, price, 0, 0.01):
-            errs.append(f'{t}: field chart price {mid} vs report {price}')
-        if lo is not None and hi is not None and mid is not None and lab.endswith('model') and None not in (bear, base, bull):
-            if not (close(lo, bear, 0, 0.5) and close(hi, bull, 0, 0.5) and close(mid, base, 0, 0.5)):
-                errs.append(f'{t}: field chart {lo}/{mid}/{hi} vs bear/base/bull {bear}/{base}/{bull}')
-    # 3 scenario table: the "Value per share" row of the Bear/Base/Bull table
+    if model_row and 'Probability-weighted' in field:
+        ran.add('field')
+        for f in R.get('field', []):
+            lab, lo, hi, mid = f[0], f[1], f[2], f[3]
+            if lab.startswith('Probability-weighted') and wt is not None and mid is not None and not close(mid, wt, 0, 0.5):
+                errs.append(f'{t}: field chart weighted {mid} vs report {wt}')
+            if lab.startswith('Price at writing') and price is not None and mid is not None and not close(mid, price, 0, 0.01):
+                errs.append(f'{t}: field chart price {mid} vs report {price}')
+            if lo is not None and hi is not None and mid is not None and lab.endswith('model') and None not in (bear, base, bull):
+                if not (close(lo, bear, 0, 0.5) and close(hi, bull, 0, 0.5) and close(mid, base, 0, 0.5)):
+                    errs.append(f'{t}: field chart {lo}/{mid}/{hi} vs bear/base/bull {bear}/{base}/{bull}')
+    # 3 scenario table: the value row of the Bear/Base/Bull table
     for tb in re.findall(r'<table[^>]*>.*?</table>', page, re.S):
         if '<th>Bear</th>' not in tb or '<th>Bull</th>' not in tb:
             continue
         for row in re.findall(r'<tr>(.*?)</tr>', tb, re.S):
             cells = re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', row, re.S)
-            if cells and text(cells[0]).startswith('Value per') and len(cells) >= 4 and None not in (bear, base, bull):
+            lab = text(cells[0]) if cells else ''
+            if lab.startswith('Value per') or (priv and lab.lower().startswith(('value', 'company value', 'equity value'))):
+                if len(cells) < 4 or None in (bear, base, bull):
+                    continue
                 got = [money(c) for c in cells[1:4]]
                 if None in got:
                     continue
+                if priv:
+                    got = [g / 1e9 if g > 1e6 else g for g in got]
+                ran.add('scenario table')
                 if not (close(got[0], bear, .005, 0.5) and close(got[1], base, .005, 0.5) and close(got[2], bull, .005, 0.5)):
                     errs.append(f'{t}: scenario table {got} vs bear/base/bull {bear}/{base}/{bull}')
     # 4 valuation bridge
@@ -83,6 +110,8 @@ def check_report(R, page):
         sh = next((v for k, v in d.items() if k in ('shares', 'diluted shares', 'adr-equivalents', 'units')), None)
         ps = next((v for k, v in d.items() if k.startswith('per share') or k.startswith('per adr') or k.startswith('per unit')), None)
         net_k = next((k for k in d if k.startswith('net') or k.startswith('less net') or k.startswith('plus net')), None)
+        if None not in (pv, tv, ev, eq, ps) and sh:
+            ran.add('bridge')
         if pv is not None and tv is not None and ev is not None and not close(pv + tv, ev):
             errs.append(f'{t}: bridge PV {pv:.4g} + TV {tv:.4g} != EV {ev:.4g}')
         if ev is not None and eq is not None and net_k:
@@ -101,6 +130,7 @@ def check_report(R, page):
             if cells:
                 rows[text(cells[0])] = [money(c) for c in cells[1:]]
         if {'Operating cash flow', 'Capital spending', 'Free cash flow'} <= set(rows):
+            ran.add('cash-flow table')
             for i, (o, c, f) in enumerate(zip(rows['Operating cash flow'], rows['Capital spending'], rows['Free cash flow'])):
                 if None in (o, c, f):
                     continue
@@ -113,16 +143,27 @@ def check_report(R, page):
             v = money(m.group(1))
             if v is not None and not close(v, ttm_fcf, 0, 0.11e9) and 'defines' not in m.group(2).lower():
                 errs.append(f'{t}: "{text(m.group(2))}" shows {text(m.group(1))} but the five-year table has {ttm_fcf / 1e9:.1f}B, with no definition given')
-    return errs
+    # every check this report should have must actually have run: a layout change cannot silently skip a rule
+    need = {'weights', 'field', 'scenario table'}
+    if not priv and R.get('method', '').startswith('Cash-flow') and R.get('bridge', True):
+        need.add('bridge')
+    if not priv and has_data and t not in NO_CASH_TABLE and R.get('cashtable', True):
+        need.add('cash-flow table')
+    for c in sorted(need - ran):
+        errs.append(f'{t}: the {c} check could not run (expected structure not found on {R["slug"]}.html)')
+    return errs, ran
 
 
-def run(out_dir, reports):
-    errs = []
-    n = 0
+def run(out_dir, reports, data_dir=None):
+    errs, n, runs = [], 0, 0
+    data_dir = data_dir or os.path.join(out_dir, 'data', 'co')
     for R in reports:
         p = os.path.join(out_dir, R['slug'] + '.html')
         if not os.path.exists(p):
+            errs.append(f"{R['t']}: {R['slug']}.html was not generated")
             continue
         n += 1
-        errs += check_report(R, open(p, encoding='utf-8').read())
-    return n, errs
+        e, ran = check_report(R, open(p, encoding='utf-8').read(), os.path.exists(os.path.join(data_dir, R['t'] + '.json')))
+        errs += e
+        runs += len(ran)
+    return n, runs, errs

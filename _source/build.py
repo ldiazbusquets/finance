@@ -821,7 +821,12 @@ if __name__ == '__main__':
     build()
     print('built', sorted(f for f in os.listdir(OUT) if f.endswith('.html')))
     import consistency
-    n, errs = consistency.run(OUT, list(holdings.R.values()) + list(coverage.R.values()))
+    n, runs, errs = consistency.run(OUT, list(holdings.R.values()) + list(coverage.R.values()))
     if errs:
         sys.exit('Consistency check failed; nothing should be published until these agree:\n  ' + '\n  '.join(errs))
-    print(f'consistency: checked {n} reports (scenario weights, price field, scenario table, valuation bridge, cash-flow table, reconciled figures); all agree')
+    import subprocess
+    r = subprocess.run([sys.executable, os.path.join(HERE, 'tests', 'test_consistency.py')], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit('The consistency checker failed its own tests:\n' + r.stderr[-2000:])
+    print(r.stdout.strip())
+    print(f'consistency: {runs} checks on {n} reports (scenario weights, price field, scenario table, valuation bridge, cash-flow table, reconciled figures); all ran and all agree')

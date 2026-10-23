@@ -63,6 +63,7 @@ assets/            CSS and the browser JavaScript for tools, the research hub an
    - The valuation bridge adds up. PV of cash flows plus PV of the terminal value equals enterprise value; EV plus or minus net cash equals equity; and equity divided by shares equals the per-share value.
    - In the five-year table, free cash flow equals operating cash flow minus capital spending in every column.
    - A trailing free-cash-flow figure elsewhere in the report must match that table or name whose definition it uses. Amazon's own figure, for example, nets $4.0 billion of equipment proceeds.
+   Every check a report should have must actually run. If a layout change hides the structure a rule looks for, the build fails instead of skipping it. The few exemptions (foreign filers with hand-built tables, the bank) are listed in the code with a reason. Private companies are checked too, in billions. `_source/tests/test_consistency.py` breaks a real report in specific ways and confirms that the checker catches each one; the build runs it every time.
 3. **Spreadsheet check** (`models/xlsx_models.py --check`, run whenever a model changes): every Excel workbook is recalculated in LibreOffice and compared with the Python models.
 
 ## Reproducing a valuation

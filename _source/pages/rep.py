@@ -95,6 +95,15 @@ def fin_table(t, years=5, bank=False):
         cols.append(('TTM ' + {'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'}[q['end'][5:7]] + ' ' + q['end'][:4], m))
     def g(c, k):
         return c[1].get(k)
+    small = max(abs(g(c, 'rev') or 0) for c in cols) < 5e9   # smaller companies in millions, so $0.1B does not hide the detail
+    def money(v):   # noqa: shadows the module helper for this table only
+        if v is None:
+            return '&mdash;'
+        sg = '&minus;' if v < 0 else ''
+        a = abs(v)
+        if small:
+            return f'{sg}${a / 1e6:,.0f}M'
+        return f'{sg}${a / 1e9:,.1f}B' if a < 1e12 else f'{sg}${a / 1e12:,.2f}T'
     rows = [['Revenue'] + [money(g(c, 'rev')) for c in cols]]
     if not bank:
         rows.append(['Operating margin'] + [pct(g(c, 'ebit') / g(c, 'rev')) if g(c, 'ebit') is not None and g(c, 'rev') else '&mdash;' for c in cols])

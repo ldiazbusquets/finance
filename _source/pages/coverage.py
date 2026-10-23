@@ -94,7 +94,7 @@ R['FLY'] = dict(
          + prose('Second-quarter revenue reached $117.7 million, almost all from spacecraft work for NASA lunar missions and defense. Launch revenue was only $9.4 million, because Alpha flies rarely. Net loss was $92.3 million. Management kept 2026 revenue guidance at $420&ndash;450 million, with 95% of the midpoint already booked, and plans three Alpha launches this year, with Flight 8 in the fourth quarter.')
          + src([('Q2 2026 results summary', FF), ('Firefly investor news', 'https://investors.fireflyspace.com/news')])),
         ('fin', 'The numbers', 'Growth is real; <em>profit is years away.</em>',
-         table(['', 'Value'], [['Revenue, last twelve months', '$287M'], ['Net loss, last twelve months', '&minus;$370M'], ['Gross margin, Q2 2026', '20.3%'],
+         fin_table('FLY') + table(['', 'Latest'], [['Revenue, last twelve months', '$287M'], ['Net loss, last twelve months', '&minus;$370M'], ['Gross margin, Q2 2026', '20.3%'],
                                 ['Alpha flight record', '7 flights: 3 successes, 2 partial, 2 failures'], ['Blue Ghost', '1 landing, 1 success; Mission 2 and a far-side mission in development']], 'mid')
          + prose('Alpha&rsquo;s record is the weak point: a failure in April 2025 and an explosion during a ground test in September 2025 grounded it until a successful flight in March 2026. Launch is what would lift margins, so the cadence of Alpha flights matters more than any single contract.')),
         ('capital', 'Balance sheet and ownership', 'Enough cash, <em>with dilution along the way.</em>',
@@ -266,7 +266,7 @@ R['KTOS'] = dict(
          + prose('Second-quarter revenue beat guidance, led by rocket systems (+50% organic) and engines (+43%). Net income was only $4.4 million ($0.02 a share) and the company had a small operating loss, because it is spending heavily on new factories. Management raised 2026 revenue guidance to $1.75&ndash;1.81 billion and expects free cash flow of <b>minus $85&ndash;105 million</b> this year, with $250&ndash;275 million of investment, including the Prometheus rocket-motor joint venture and capacity for about 40 Valkyries a year from 2028.')
          + src([('Q2 2026 results', KQ), ('Earnings call', 'https://www.fool.com/earnings/call-transcripts/2026/08/11/kratos-ktos-q2-2026-earnings-call-transcript/')])),
         ('fin', 'The numbers', 'Fast growth, <em>thin profit.</em>',
-         table(['', 'Value'], [['Revenue, last twelve months', '$1.52B (+25%)'], ['Net income, last twelve months', '$31M'], ['Adjusted EBITDA guidance, 2026', '$173&ndash;176M (about 10%)'],
+         fin_table('KTOS') + table(['', 'Latest'], [['Revenue, last twelve months', '$1.52B (+25%)'], ['Net income, last twelve months', '$31M'], ['Adjusted EBITDA guidance, 2026', '$173&ndash;176M (about 10%)'],
                                 ['Free cash flow guidance, 2026', '&minus;$85 to &minus;105M'], ['Stock-based pay guidance, 2026', '$60&ndash;64M'], ['Trailing P/E', 'About 230&times;']], 'mid')
          + prose('Margins are low because much of the work is cost-plus or fixed-price government contracting and because development spending runs through the income statement. Management expects the 2027 EBITDA margin to rise about one percentage point; 2027 guidance comes with the third-quarter results.')),
         ('capital', 'Balance sheet and ownership', '$1.4 billion of cash, <em>paid for with new shares.</em>',

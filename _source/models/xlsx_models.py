@@ -255,7 +255,7 @@ def generic_cases():
                      bear=dict(g1=.12, g2=.10, m0=.42, mT=.40, heavy=(200, 170, 130, 90), shift=.01), bull=dict(g1=.21, g2=.18, m0=.47, mT=.48, heavy=(160, 110, 70, 40), shift=-.01)),
         'GOOGL': dict(slug='alphabet', title='Alphabet (GOOGL)', script='googl', rev0n='2026 estimate, $490B', price=324.22, W=[.085, .09, .095, .10, .105],
                       wacc=dict(beta=1.13, price=324.22, shares=12.25, debt=70, kd=.05),
-                      base=dict(rev0=490, g1=.15, g2=.13, m0=.34, mT=.35, ny=4, tax=.17, s2c=2.0, ronic=.25, net=318.4, shares=12.25, heavy=(150, 120, 90, 60), shift=0),
+                      base=dict(rev0=490, g1=.15, g2=.13, m0=.34, mT=.35, ny=4, tax=.17, s2c=2.0, ronic=.25, net=268.6, shares=12.25, heavy=(150, 120, 90, 60), shift=0),
                       bear=dict(g1=.09, g2=.07, m0=.31, mT=.30, heavy=(180, 150, 110, 80), shift=.01), bull=dict(g1=.19, g2=.17, m0=.36, mT=.38, heavy=(130, 100, 70, 40), shift=-.01)),
         'TSM': dict(slug='tsmc', title='TSMC (TSM ADR), per ADR', script='tsm', rev0n='2026 estimate, $176B', price=412.35, W=[.095, .10, .105, .11, .115],
                     wacc=dict(beta=1.24),

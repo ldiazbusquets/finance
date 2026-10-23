@@ -964,16 +964,16 @@ R['MSFT'] = dict(
          + band('The best software franchise, <em>in its most expensive build.</em>', 'Azure and Copilot are working; the capex bill decides the return.')),
     ])
 
-ALQ = 'https://finance.yahoo.com/markets/stocks/articles/alphabet-q2-2026-earnings-revenue-203058727.html'
+ALQ = 'https://www.sec.gov/Archives/edgar/data/0001652044/000165204426000066/googexhibit991q22026.htm'
 ALP = 'https://www.top1markets.com/news/alphabet-q3-2026-earnings-preview-cloud-capex'
 ALS = 'https://valueaddvc.com/pulse/google-94b-spacex-124b-anthropic-stakes-2026'
 R['GOOGL'] = dict(
     t='GOOGL', slug='alphabet', name='Alphabet', h1='Alphabet', sector='Internet &amp; cloud', date=D22, timing=', ahead of its third-quarter results on October 28',
     sub='Alphabet owns Google Search, YouTube, Android and Google Cloud, which grew 82% last quarter. It is spending about $200 billion this year on AI data centers and has started selling new shares to help pay for it. It also owns stakes in SpaceX and Anthropic worth more than $200 billion.',
-    call='Hold', method='Cash-flow model', price=324.22, pricenote='Close, Oct 22, 2026 (Class A)', base=249, bear=139, bull=380, wt=254, max=500, tick=100,
+    call='Hold', method='Cash-flow model', price=324.22, pricenote='Close, Oct 22, 2026 (Class A)', base=245, bear=135, bull=376, wt=250, max=500, tick=100,
     disclosure='The author holds no Alphabet shares directly.',
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Cash-flow model', 139, 380, 249, '$139 to $380, base $249'), ('Probability-weighted', None, None, 254, '$254'),
+    field=[('Cash-flow model', 135, 376, 245, '$135 to $376, base $245'), ('Probability-weighted', None, None, 250, '$250'),
            ('Price at writing', None, None, 324.22, '$324.22'), ('52-week range', 252, 409, None, '$252 to $409'), ('Analyst average', None, None, 435, '$435')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Search pays for <em>everything else.</em>',
@@ -982,31 +982,31 @@ R['GOOGL'] = dict(
         ('results', 'Latest results', 'Cloud up 82%, <em>free cash flow negative.</em>',
          stats([('$119.8B', 'Revenue, Q2 2026, +24%'), ('34%', 'Operating margin'), ('$24.8B', 'Google Cloud, +82%'), ('$514B', 'Cloud backlog'), ('&minus;$5.9B', 'Free cash flow, first negative quarter'), ('$195&ndash;205B', '2026 capex guidance')])
          + prose('Second-quarter revenue rose 24% to $119.8 billion and operating income 30% to $40.8 billion. Search grew 17%, YouTube ads 13% and Cloud 82%, with Cloud&rsquo;s operating income tripling to $8.8 billion. Net income of $112.1 billion included about $98 billion of unrealized gains on the SpaceX and Anthropic stakes.',
-                 'Capital spending was $44.9 billion in the quarter and free cash flow turned negative for the first time. Alphabet raised 2026 capex guidance to $195&ndash;205 billion, sold $49.6 billion of new shares in June, issued $20.3 billion of bonds and plans a $40 billion at-the-market share program. The shares fell 7% the next day. Third-quarter results come on <b>October 28</b>.')
-         + src([('Q2 2026 results', ALQ), ('Q3 preview and funding', ALP)])),
+                 'Capital spending was $44.9 billion in the quarter and free cash flow turned negative for the first time. Alphabet raised 2026 capex guidance to $195&ndash;205 billion, raised $49.6 billion in June by selling new stock ($30.5 billion of common shares and $19.1 billion of mandatory convertible preferred), issued $20.3 billion of bonds and authorized a $40 billion at-the-market share program, unused at the end of June. The shares fell 7% the next day. Third-quarter results come on <b>October 28</b>.')
+         + src([('Q2 2026 results (8-K)', ALQ), ('Q3 preview and funding', ALP)])),
         ('fin', 'The numbers', 'Profits more than doubled; <em>so did capex.</em>',
          fin_table('GOOGL') + prose('Revenue grew 42% between 2022 and 2025 and capital spending almost tripled. The last twelve months&rsquo; net income of about $244 billion is inflated by gains on investments; operating income of $148 billion is the better guide. The <a href="snapshot.html?t=GOOGL&amp;view=q">quarterly view</a> shows each quarter.')
          + src([('Alphabet filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K')])),
         ('capital', 'Balance sheet and ownership', 'Selling shares <em>to fund the build.</em>',
-         prose('Alphabet&rsquo;s June share sale and bond issue mark a turn for a company that had bought back stock for years. This model counts net cash of about $100 billion (an estimate after the new funding) plus the stakes disclosed in its June 10-Q: about 6% of SpaceX, worth $94.1 billion, and about 14% of Anthropic, about $124 billion. The stakes alone add about $18 a share, and about $26 with net cash. Most of the SpaceX stake cannot be sold until lock-ups end.',
+         prose('Alphabet&rsquo;s June share sale and bond issue mark a turn for a company that had bought back stock for years. At the end of June it had $242.5 billion of cash and marketable securities and $98.2 billion of long-term debt. The marketable securities include the SpaceX stake, a listed share since the June IPO, so this model takes it out of cash to avoid counting it twice: net cash is about $50 billion. To that it adds the stakes disclosed in the June 10-Q: about 6% of SpaceX, worth $94.1 billion, and about 14% of Anthropic, about $124 billion. The stakes alone add about $18 a share, and about $22 with net cash. Most of the SpaceX stake cannot be sold until lock-ups end.',
                'The at-the-market program will add shares; the model uses about 12.25 billion, a little above today&rsquo;s count. Larry Page and Sergey Brin control the vote through Class B shares.')
-         + src([('Stakes disclosed', ALS)])),
-        ('value', 'Valuation', 'The model gives <em>$249 a share.</em>',
+         + src([('Q2 2026 balance sheet (8-K)', ALQ), ('Stakes disclosed', ALS)])),
+        ('value', 'Valuation', 'The model gives <em>$245 a share.</em>',
          table(['Assumption', 'Base case', 'Basis'], [
              ['Revenue, 2026', '$490B', 'Estimate: first half plus a second half growing as in Q2'],
              ['Growth, 2027 and 2028', '15%, then 13%', 'Cloud fast, Search low teens; fades to 3% by year 10'],
              ['Operating margin', '34% rising to 35%', 'Q2 was 34%; depreciation rises with capex'],
              ['Net investment, 2027&ndash;2030', '$150B, $120B, $90B, $60B', 'Capex less depreciation; then $1 per $2 of new revenue'],
-             ['Discount rate', '10.1%', 'Beta 1.13, little net debt'],
+             ['Discount rate', '10.1%', 'Beta 1.13, about $50B net cash'],
              ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$1,075B'), ('PV of terminal value', '$1,658B'), ('Enterprise value', '$2,733B'), ('Net cash and stakes', '$318B'), ('Equity value', '$3,051B'), ('Shares', '12.25B')], '$249')
+         + bridge([('PV of 10 years of cash flow', '$1,075B'), ('PV of terminal value', '$1,658B'), ('Enterprise value', '$2,733B'), ('Net cash and stakes', '$269B'), ('Equity value', '$3,002B'), ('Shares', '12.25B')], '$245')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
              ['Growth, 2027 / 2028', '9% / 7%', '15% / 13%', '19% / 17%'], ['Long-run operating margin', '30%', '35%', '38%'],
              ['Net investment, first year', '$180B', '$150B', '$130B'], ['Discount rate', '11.1%', '10.1%', '9.1%'],
-             ['Value per share', '$139', '$249', '$380'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$254</b>. The bear case is AI chatbots taking search share while the capex keeps rising; the bull case is Cloud and Gemini turning the spending into a second Search-sized business.')
-         + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$324', '$296', '$273', '$254', '$237'])),
+             ['Value per share', '$135', '$245', '$376'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$250</b>. The bear case is AI chatbots taking search share while the capex keeps rising; the bull case is Cloud and Gemini turning the spending into a second Search-sized business.')
+         + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%', '10.5%'], ['$320', '$292', '$269', '$250', '$233'])),
         ('implied', 'What the price assumes', 'At $324, <em>about 20% growth for two years.</em>',
          implied([['Revenue growth of about 20% a year in 2027 and 2028, then the same fade', '15% and 13%'], ['Or a long-run operating margin of about 46%', '35%'], ['Or a discount rate near 8.5%', '10.1%']])
          + prose('Analysts average about $435. They value Alphabet at about 29 times consensus core earnings and give more credit for Cloud&rsquo;s $514 billion backlog than this model does.')),
@@ -1159,7 +1159,7 @@ R['RTX'] = dict(
                'About half of sales are commercial. That makes RTX the prime most tied to airline traffic and aftermarket parts, and the least dependent on U.S. defense budgets alone.')),
         ('results', 'Latest results', 'Sales up 11%, <em>guidance raised again.</em>',
          stats([('$25.0B', 'Sales, Q3 2026, +11%'), ('$2.26', 'Adjusted earnings per share, +33%'), ('$2.1B', 'Free cash flow'), ('$340B', 'Backlog, a record'), ('$97.0&ndash;97.5B', '2026 sales guidance, raised'), ('$9.0&ndash;9.2B', '2026 free cash flow guidance')])
-         + prose('Third-quarter sales rose 11% (12% organic) to $25.0 billion. Adjusted earnings rose 33% to $2.26 a share, including $0.25 from a tariff refund; reported earnings were $1.89. Collins earned a 21.3% margin and Raytheon 14.1%. Pratt &amp; Whitney earned 6.6% as reported and 10.5% adjusted, the gap being items RTX excludes from adjusted results.',
+         + prose('Third-quarter sales rose 11% (12% organic) to $25.0 billion. Adjusted earnings rose 33% to $2.26 a share, including $0.25 from recovering tariff costs (IEEPA cost recovery, as RTX calls it); reported earnings were $1.89. Collins earned a 21.3% margin and Raytheon 14.1%. Pratt &amp; Whitney earned 6.6% as reported and 10.5% adjusted, the gap being items RTX excludes from adjusted results.',
                  'Backlog reached $340 billion, $164 billion of it defense. RTX raised 2026 guidance to sales of $97.0&ndash;97.5 billion, adjusted earnings of $7.65&ndash;7.75 a share and free cash flow of $9.0&ndash;9.2 billion.')
          + src([('Q3 2026 results (8-K)', RQ)])),
         ('threat', 'The Anduril question', 'Cheap missiles <em>against expensive ones.</em>',

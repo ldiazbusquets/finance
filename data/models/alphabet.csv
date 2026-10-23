@@ -36,17 +36,17 @@ Terminal value = NOPAT11 x (1 - g/RONIC) / (WACC - g),4145.455
 Present value of terminal value,1658.109
 Enterprise value,2733.333
 Plus net cash,318.4
-Equity value,3051.733
-Value per share ($),249.12
+Equity value,3001.933
+Value per share ($),245.06
 
 SCENARIOS,Bear,Base,Bull
-Value per share ($),139.06,249.12,379.79
+Value per share ($),134.99,245.06,375.73
 Probability,25,50,25
-Probability-weighted value ($),,254.27,
+Probability-weighted value ($),,250.21,
 
 SENSITIVITY,Input,Value per share
-,Discount rate 8.5%,323.8
-,Discount rate 9.0%,296.48
-,Discount rate 9.5%,273.4
-,Discount rate 10.0%,253.66
-,Discount rate 10.5%,236.58
+,Discount rate 8.5%,319.74
+,Discount rate 9.0%,292.42
+,Discount rate 9.5%,269.34
+,Discount rate 10.0%,249.59
+,Discount rate 10.5%,232.51

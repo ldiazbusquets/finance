@@ -671,11 +671,27 @@ def prevclose(new, old):
         new['pp'], new['pd'] = old['pp'], old['pd']
 
 
+def _session_open():
+    """True while the U.S. market is open or still settling (9:30 am to 4:15 pm New York, weekdays): Yahoo's
+    'regularMarketPrice' is then a live price, not a close, so it must not be stored as one"""
+    try:
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo('America/New_York'))
+    except Exception:
+        now = datetime.now(timezone.utc) - timedelta(hours=4)
+    mins = now.hour * 60 + now.minute
+    return now.weekday() < 5 and 9 * 60 + 30 <= mins < 16 * 60 + 15, now.strftime('%Y-%m-%d')
+
+
 def update_prices(cos):
     """closing prices + beta for everyone in one small file, so daily runs
     don't rewrite 500 company files"""
     path = os.path.join(CO, 'prices.json')
     P = load(path, {}).get('px', {})
+    live, today = _session_open()
+    if live:
+        print('  market still open: keeping yesterday\'s closes (a run during the session would store live prices as closes)')
+        return 0
     try:
         spx, mkt = yahoo('%5EGSPC')
         if spx.get('p'):

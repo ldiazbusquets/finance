@@ -769,7 +769,7 @@ def build():
 '''
     dbody = ph('Research &middot; Defend this call', 'Defend <em>this call.</em>', 'Five flagship reports, each reduced to what has to hold up when someone pushes back: the thesis in a sentence, the numbers to know, the hardest questions with answers taken from the report, and what would change the call.',
                '<div class="cta">' + ''.join(f'<a class="pill gh" href="#{D["t"].lower()}">{D["t"]}</a>' for D in defend.SHEETS) + '</div>') + dsec
-    page('defend.html', 'research.html', 'Defend This Call', 'The hardest questions about five flagship reports, with answers from the reports themselves.', 'research', dbody)
+    page('defend.html', 'research.html', 'Defend This Call', 'The hardest questions about five flagship reports, with answers from the reports themselves.', 'defend', dbody)
 
     page('about.html', 'about.html', 'About', 'Who builds LDB Finance, where the data comes from and how research is done.', 'about', about)
 

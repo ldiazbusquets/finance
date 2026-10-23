@@ -75,7 +75,7 @@
       g += '<path d="' + d + '" fill="none" stroke="' + PAL[j % 4] + '" stroke-width="2"/>';
       s.v.forEach(function (x, i) { if (isn(x)) g += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(x).toFixed(1) + '" r="2.6" fill="' + PAL[j % 4] + '"/>'; });
     });
-    return '<svg class="hchart" viewBox="0 0 ' + W + ' ' + H + '" role="img">' + g + '</svg><div class="hlgd">' + series.map(function (s, j) { return '<span><i style="background:' + PAL[j % 4] + '"></i>' + esc(s.name) + '</span>'; }).join('') + '</div>';
+    return '<svg class="hchart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc('Chart of ' + series.map(function (s) { return s.name || s.t || ''; }).filter(Boolean).join(', ')) + '">' + g + '</svg><div class="hlgd">' + series.map(function (s, j) { return '<span><i style="background:' + PAL[j % 4] + '"></i>' + esc(s.name) + '</span>'; }).join('') + '</div>';
   }
 
   /* ---------- quarterly helpers ---------- */

@@ -342,10 +342,10 @@ addEventListener("scroll", function () { document.documentElement.classList.togg
     for (var i = -400; i <= 400; i++) { var z = i / 80, w = n(z), S = Math.exp(m + s * z), v = pnl(S, 0); ev += w * v; if (v > 0) pp += w; tot += w; }
     return { ev: ev / tot * Math.exp(-rate * T), pop: pp / tot }; }
   function table() { $('legs').innerHTML = legs.map(function (l, i) { var o = legVal(l, S0, days / 365, vol);
-    return '<tr><td><select data-i="' + i + '" data-k="side"><option value="B"' + (l.side === 'B' ? ' selected' : '') + '>Buy</option><option value="S"' + (l.side === 'S' ? ' selected' : '') + '>Sell</option></select></td>' +
-      '<td><select data-i="' + i + '" data-k="type"><option value="C"' + (l.type === 'C' ? ' selected' : '') + '>Call</option><option value="P"' + (l.type === 'P' ? ' selected' : '') + '>Put</option><option value="S"' + (l.type === 'S' ? ' selected' : '') + '>Stock</option></select></td>' +
-      '<td><input class="q" type="number" min="1" max="50" step="1" data-i="' + i + '" data-k="q" value="' + l.q + '"></td>' +
-      '<td>' + (l.type === 'S' ? '-' : '<input type="number" step="1" min="1" data-i="' + i + '" data-k="K" value="' + l.K + '">') + '</td>' +
+    return '<tr><td><select aria-label="Leg ' + (i + 1) + ' side" data-i="' + i + '" data-k="side"><option value="B"' + (l.side === 'B' ? ' selected' : '') + '>Buy</option><option value="S"' + (l.side === 'S' ? ' selected' : '') + '>Sell</option></select></td>' +
+      '<td><select aria-label="Leg ' + (i + 1) + ' type" data-i="' + i + '" data-k="type"><option value="C"' + (l.type === 'C' ? ' selected' : '') + '>Call</option><option value="P"' + (l.type === 'P' ? ' selected' : '') + '>Put</option><option value="S"' + (l.type === 'S' ? ' selected' : '') + '>Stock</option></select></td>' +
+      '<td><input class="q" aria-label="Leg ' + (i + 1) + ' quantity" type="number" min="1" max="50" step="1" data-i="' + i + '" data-k="q" value="' + l.q + '"></td>' +
+      '<td>' + (l.type === 'S' ? '-' : '<input type="number" aria-label="Leg ' + (i + 1) + ' strike" step="1" min="1" data-i="' + i + '" data-k="K" value="' + l.K + '">') + '</td>' +
       '<td>$' + o.p.toFixed(2) + '</td><td>' + (o.d * (l.side === 'B' ? 1 : -1) * l.q * (l.type === 'S' ? 100 : 100)).toFixed(0) + '</td><td><button type="button" class="x" data-del="' + i + '" aria-label="Remove leg">&times;</button></td></tr>'; }).join('');
   }
   $('legs').addEventListener('change', function (e) { var t = e.target, i = +t.dataset.i, k = t.dataset.k; if (isNaN(i)) return; var v = t.value; legs[i][k] = k === 'q' ? Math.max(1, Math.min(50, +v | 0)) : k === 'K' ? Math.max(1, +v) : v; if (k === 'type' && v !== 'S' && !legs[i].K) legs[i].K = R1(S0); clearPreset(); table(); draw(); });

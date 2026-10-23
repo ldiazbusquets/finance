@@ -76,7 +76,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=46">
+<link rel="stylesheet" href="assets/site.css?v=50">
 </head>
 '''
 
@@ -439,7 +439,7 @@ def build():
   </div>
 </section>
 '''
-        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=7"></script>')
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=8"></script>')
 
     tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
               'Every call this site publishes is logged on the day it is made and never edited, then scored the same way: total return against the S&amp;P 500 over exactly the same days.', 'track',
@@ -626,7 +626,7 @@ def build():
   </div>
 </section>
 '''
-    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=3"></script>')
+    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=5"></script>')
 
     # ---------------- markets ----------------
     markets = ph('Markets', 'The markets, <em>in numbers</em>', 'Rates, the yield curve, inflation, credit and the S&amp;P 500, refreshed from the Federal Reserve every weekday evening.',

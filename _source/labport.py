@@ -20,10 +20,13 @@ TOKENS = """
   --teal: #6BD38A; --good: #6BD38A; --lock: #F06262; --gold: #F2C14C; --warm: #F2C14C; --mag: #C59BF5; --g: 0px; color: var(--ink); }
 .labtool .panel, .labtool .box, .labtool .toast, .labtool .tape, .labtool .over, .labtool .pc {
   --bg: #0C0A08; --s1: #13100D; --s2: #1A1612; --gs1: #13100D; --gs2: #1A1612; --line: rgba(255,248,239,.08); --line2: rgba(255,248,239,.14); --ln2: rgba(255,248,239,.14); --gln2: rgba(255,248,239,.14);
-  --pill: rgba(255,248,239,.07); --pill-on: rgba(255,248,239,.16); --ink: #FFF8EF; --soft: #B9AB9C; --dim: #8A6F5A; --acc: #D9A273; --mint: #D9A273; --crim: #D9A273; --orange: #FFF8EF; --bone: #FFF8EF; color: var(--ink); }
+  --pill: rgba(255,248,239,.07); --pill-on: rgba(255,248,239,.16); --ink: #FFF8EF; --soft: #B9AB9C; --dim: #A08670; --acc: #D9A273; --mint: #D9A273; --crim: #D9A273; --orange: #FFF8EF; --bone: #FFF8EF; color: var(--ink); }
 """
 AFTER = """
+html.lt .labtool .panel, html.lt .labtool .box, html.lt .labtool .toast, html.lt .labtool .tape, html.lt .labtool .over, html.lt .labtool .pc,
+.labtool .panel, .labtool .box, .labtool .toast, .labtool .tape, .labtool .over, .labtool .pc { --soft: #B9AB9C; --dim: #A08670; --ink: #FFF8EF; }
 .labtool .page { padding: 34px 0 40px; max-width: none; }
+.labtool .act kbd, .labtool kbd { color: #34383B; opacity: 1; }
 .labtool .edu { margin-top: 28px; }
 """
 

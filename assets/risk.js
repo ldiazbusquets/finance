@@ -216,7 +216,7 @@
     var n = o.tick.length, acc = css('--acc'), s = '<div class="hm" style="grid-template-columns:56px repeat(' + n + ',minmax(0,1fr))"><span></span>' + o.tick.map(function (t) { return '<span class="hx">' + esc(t) + '</span>'; }).join('');
     for (var i = 0; i < n; i++) {
       s += '<span class="hy">' + esc(o.tick[i]) + '</span>';
-      for (var j = 0; j < n; j++) { var c = C[i][j], a = Math.abs(c); s += '<span class="hc" style="background:' + (c >= 0 ? 'color-mix(in srgb, ' + acc + ' ' + Math.round(a * 85) + '%, transparent)' : 'color-mix(in srgb, var(--up) ' + Math.round(a * 85) + '%, transparent)') + '" title="' + esc(o.tick[i]) + ' and ' + esc(o.tick[j]) + ': ' + c.toFixed(2) + '">' + (n <= 8 ? c.toFixed(2) : '') + '</span>'; }
+      for (var j = 0; j < n; j++) { var c = C[i][j], a = Math.abs(c); s += '<span class="hc" style="background:' + (c >= 0 ? 'color-mix(in srgb, ' + acc + ' ' + Math.round(a * 60) + '%, transparent)' : 'color-mix(in srgb, var(--up) ' + Math.round(a * 60) + '%, transparent)') + '" title="' + esc(o.tick[i]) + ' and ' + esc(o.tick[j]) + ': ' + c.toFixed(2) + '">' + (n <= 8 ? c.toFixed(2) : '') + '</span>'; }
     }
     el.innerHTML = s + '</div>';
   }

@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=46">
+<link rel="stylesheet" href="assets/site.css?v=50">
 </head>
 <body data-page="tool">
 <nav class="top"><div class="wrap">
@@ -53,7 +53,7 @@
   --teal: #6BD38A; --good: #6BD38A; --lock: #F06262; --gold: #F2C14C; --warm: #F2C14C; --mag: #C59BF5; --g: 0px; color: var(--ink); }
 .labtool .panel, .labtool .box, .labtool .toast, .labtool .tape, .labtool .over, .labtool .pc {
   --bg: #0C0A08; --s1: #13100D; --s2: #1A1612; --gs1: #13100D; --gs2: #1A1612; --line: rgba(255,248,239,.08); --line2: rgba(255,248,239,.14); --ln2: rgba(255,248,239,.14); --gln2: rgba(255,248,239,.14);
-  --pill: rgba(255,248,239,.07); --pill-on: rgba(255,248,239,.16); --ink: #FFF8EF; --soft: #B9AB9C; --dim: #8A6F5A; --acc: #D9A273; --mint: #D9A273; --crim: #D9A273; --orange: #FFF8EF; --bone: #FFF8EF; color: var(--ink); }
+  --pill: rgba(255,248,239,.07); --pill-on: rgba(255,248,239,.16); --ink: #FFF8EF; --soft: #B9AB9C; --dim: #A08670; --acc: #D9A273; --mint: #D9A273; --crim: #D9A273; --orange: #FFF8EF; --bone: #FFF8EF; color: var(--ink); }
 
 .labtool button, .labtool input, .labtool select { font-family: inherit; }
 .labtool .page { padding: 110px var(--g) 60px; max-width: 1500px; margin: 0 auto; }
@@ -191,7 +191,10 @@ html.lt .labtool .prompt input, html.lt .labtool .cfg input, html.lt .labtool .c
 html.lt .labtool .prompt button, html.lt .labtool .cfg button { background: rgba(255,255,255,.7); color: var(--ink); border-color: rgba(24,34,44,.14); }
 html.lt .labtool .prompt button.primary, html.lt .labtool .cfg button.primary, html.lt .labtool .prompt .primary { background: #15191C !important; color: #F2F4F5 !important; }
 
+html.lt .labtool .panel, html.lt .labtool .box, html.lt .labtool .toast, html.lt .labtool .tape, html.lt .labtool .over, html.lt .labtool .pc,
+.labtool .panel, .labtool .box, .labtool .toast, .labtool .tape, .labtool .over, .labtool .pc { --soft: #B9AB9C; --dim: #A08670; --ink: #FFF8EF; }
 .labtool .page { padding: 34px 0 40px; max-width: none; }
+.labtool .act kbd, .labtool kbd { color: #34383B; opacity: 1; }
 .labtool .edu { margin-top: 28px; }
 
 </style>
@@ -295,10 +298,10 @@ addEventListener("scroll", function () { document.documentElement.classList.togg
     for (var i = -400; i <= 400; i++) { var z = i / 80, w = n(z), S = Math.exp(m + s * z), v = pnl(S, 0); ev += w * v; if (v > 0) pp += w; tot += w; }
     return { ev: ev / tot * Math.exp(-rate * T), pop: pp / tot }; }
   function table() { $('legs').innerHTML = legs.map(function (l, i) { var o = legVal(l, S0, days / 365, vol);
-    return '<tr><td><select data-i="' + i + '" data-k="side"><option value="B"' + (l.side === 'B' ? ' selected' : '') + '>Buy</option><option value="S"' + (l.side === 'S' ? ' selected' : '') + '>Sell</option></select></td>' +
-      '<td><select data-i="' + i + '" data-k="type"><option value="C"' + (l.type === 'C' ? ' selected' : '') + '>Call</option><option value="P"' + (l.type === 'P' ? ' selected' : '') + '>Put</option><option value="S"' + (l.type === 'S' ? ' selected' : '') + '>Stock</option></select></td>' +
-      '<td><input class="q" type="number" min="1" max="50" step="1" data-i="' + i + '" data-k="q" value="' + l.q + '"></td>' +
-      '<td>' + (l.type === 'S' ? '-' : '<input type="number" step="1" min="1" data-i="' + i + '" data-k="K" value="' + l.K + '">') + '</td>' +
+    return '<tr><td><select aria-label="Leg ' + (i + 1) + ' side" data-i="' + i + '" data-k="side"><option value="B"' + (l.side === 'B' ? ' selected' : '') + '>Buy</option><option value="S"' + (l.side === 'S' ? ' selected' : '') + '>Sell</option></select></td>' +
+      '<td><select aria-label="Leg ' + (i + 1) + ' type" data-i="' + i + '" data-k="type"><option value="C"' + (l.type === 'C' ? ' selected' : '') + '>Call</option><option value="P"' + (l.type === 'P' ? ' selected' : '') + '>Put</option><option value="S"' + (l.type === 'S' ? ' selected' : '') + '>Stock</option></select></td>' +
+      '<td><input class="q" aria-label="Leg ' + (i + 1) + ' quantity" type="number" min="1" max="50" step="1" data-i="' + i + '" data-k="q" value="' + l.q + '"></td>' +
+      '<td>' + (l.type === 'S' ? '-' : '<input type="number" aria-label="Leg ' + (i + 1) + ' strike" step="1" min="1" data-i="' + i + '" data-k="K" value="' + l.K + '">') + '</td>' +
       '<td>$' + o.p.toFixed(2) + '</td><td>' + (o.d * (l.side === 'B' ? 1 : -1) * l.q * (l.type === 'S' ? 100 : 100)).toFixed(0) + '</td><td><button type="button" class="x" data-del="' + i + '" aria-label="Remove leg">&times;</button></td></tr>'; }).join('');
   }
   $('legs').addEventListener('change', function (e) { var t = e.target, i = +t.dataset.i, k = t.dataset.k; if (isNaN(i)) return; var v = t.value; legs[i][k] = k === 'q' ? Math.max(1, Math.min(50, +v | 0)) : k === 'K' ? Math.max(1, +v) : v; if (k === 'type' && v !== 'S' && !legs[i].K) legs[i].K = R1(S0); clearPreset(); table(); draw(); });

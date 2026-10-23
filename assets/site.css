@@ -2,7 +2,7 @@
 :root {
   color-scheme: dark;
   --bg: #0C0A08; --s1: #13100D; --s2: #1A1612; --line: rgba(255,248,239,.08); --line2: rgba(255,248,239,.14);
-  --ink: #FFF8EF; --t2: #B9AB9C; --t3: #8A6F5A; --acc: #B07A4F;
+  --ink: #FFF8EF; --t2: #B9AB9C; --t3: #A08670; --acc: #B07A4F;
   --cu1: #8C593A; --cu2: #723F20; --cu3: #855233;
   --up: #7FB58A; --dn: #D9826B;
   --glass1: #2A1E16; --glass2: #120E0B; --win: rgba(232,170,110,.55);
@@ -11,7 +11,7 @@
 html.lt {
   color-scheme: light;
   --bg: #F7F2E9; --s1: #FBF8F2; --s2: #FFFDF8; --line: rgba(36,23,15,.09); --line2: rgba(36,23,15,.16);
-  --ink: #24170F; --t2: #6E5A4B; --t3: #A08C7A; --acc: #7A4526;
+  --ink: #24170F; --t2: #6E5A4B; --t3: #736252; --acc: #7A4526;
   --up: #3F7A4C; --dn: #A9442C;
   --glass1: #3A2A20; --glass2: #1A130E; --win: rgba(240,190,130,.7);
 }
@@ -782,7 +782,7 @@ details.sched[open] summary { margin-bottom: 16px; }
 .ti em { font-style: normal; font-size: 11.5px; color: var(--t3); }
 .ti em.up { color: var(--up); } .ti em.dn { color: var(--dn); }
 .ti:hover b, .ti:hover span { color: var(--acc); }
-.th { font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--acc); opacity: .85; padding: 2px 8px; border: 1px solid color-mix(in srgb, var(--acc) 35%, transparent); border-radius: 999px; }
+.th { font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--acc); padding: 2px 8px; border: 1px solid color-mix(in srgb, var(--acc) 35%, transparent); border-radius: 999px; }
 .tdot { display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--line2); margin: 0 16px; flex: none; }
 @media (prefers-reduced-motion: reduce) { .tt { animation: none; } .tv { overflow-x: auto; scrollbar-width: none; } .tv::-webkit-scrollbar { display: none; } .tt .tcopy { display: none; } }
 @media (max-width: 640px) { .tape .tl { font-size: 9.5px; padding-right: 10px; } .tape .wrap { gap: 10px; } }
@@ -791,7 +791,7 @@ details.sched[open] summary { margin-bottom: 16px; }
 html.lt {
   --bg: #F3EBDD; --s1: #FBF7F0; --s2: #FFFCF7;
   --line: rgba(92,52,28,.11); --line2: rgba(92,52,28,.2);
-  --ink: #26150C; --t2: #6A5345; --t3: #958981; --acc: #7A4526;
+  --ink: #26150C; --t2: #6A5345; --t3: #71665F; --acc: #7A4526;
   --cu1: #8C593A; --cu2: #723F20; --cu3: #855233;
   --up: #3E7552; --dn: #B4472B;
   --win: rgba(150,90,52,.6);
@@ -1018,3 +1018,9 @@ body[data-page="screener"] .panel { min-height: 1400px; }
 .revnote { margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line2); font-size: 14px; color: var(--t2); }
 .revnote b { color: var(--ink); }
 @media (max-width: 640px) { .revrows a { grid-template-columns: 56px 1fr; } .revrows .why { grid-column: 1 / -1; } }
+
+/* accessibility: links inside running text are underlined (not colour alone); small inline links get a 24px target */
+.prose a, .rate p a, .relabs a, p.fine a, .disc a, .revnote a { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
+.lk a { display: inline-block; padding: 5px 0; }
+section p a:not([class]), section dd a:not([class]), section li > p a:not([class]) { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
+header .sub a:not([class]), .askbox a:not([class]), .ans a:not([class]), .ait a:not([class]) { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }

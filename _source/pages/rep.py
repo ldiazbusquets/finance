@@ -456,6 +456,28 @@ def sources(R):
     return out
 
 
+# private companies: capital still to be raised before 2030 (scenarios, $B) and the model's discount rate
+DILUTION = {'ANTHROPIC': (.15, [0, 50, 100, 200]), 'OPENAI': (.15, [0, 50, 100, 200]), 'ANDURIL': (.13, [0, 2.5, 5, 10])}
+
+
+def dilution(R):
+    """the model values the whole company in 2030; cash raised before then belongs to the new investors"""
+    d = DILUTION.get(R['t'])
+    if not d:
+        return ''
+    r, grid = d
+    pv = sum(1 / (1 + r) ** (t + .5) for t in range(4)) / 4      # raised evenly over four years, valued today
+    B, P = R['base'], R['price']
+    f = lambda x: f'${x:,.0f}B' if x >= 10 else f'${x:,.1f}B'
+    rows = []
+    for c in grid:
+        own = B - c * pv
+        rows.append([f(c) if c else 'None', f'{c / (P + c) * 100:.0f}%' if c else '0%', f(own), f'{(own / P - 1) * 100:+.0f}%'.replace('-', '&minus;')])
+    return ('<h3 class="sec sm">Dilution: what today&rsquo;s owners keep</h3>'
+            + prose(f'The values above are for the whole company in 2030. A private company that is still burning cash pays for it by selling new shares, and the money those buyers put in is theirs, not today&rsquo;s owners&rsquo;. So the value of a stake bought today is the whole-company value less the present value of the capital still to be raised. The table shows that for several amounts raised evenly over the next four years, discounted at the model&rsquo;s {r * 100:.0f}%. &ldquo;Share sold&rdquo; is how much of the company those raises would buy at the last valuation of {f(P)}; at a lower price, the share sold would be larger.')
+            + table(['Capital raised before 2030', 'Share sold at the last valuation', 'Value to today&rsquo;s owners (base case)', 'Against the last valuation'], rows, 'allnum'))
+
+
 def versions(R):
     try:
         import archive
@@ -503,7 +525,7 @@ def body(R):
       </div>
 '''
     chs = ''.join(chap(n, c[0], c[1], rec_title(R, c[2]) if c[0] == 'rec' else c[2],
-                       rec_body(R, c[3]) if c[0] == 'rec' else c[3] + (checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
+                       rec_body(R, c[3]) if c[0] == 'rec' else c[3] + ((dilution(R) if R.get('private') else '') + checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
     chs += chap(len(R['chapters']) + 1, 'sources', 'Figures and sources', 'Where the numbers <em>come from.</em>', sources(R))
     return head + chs + '''
     </div>

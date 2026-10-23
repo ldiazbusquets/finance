@@ -1,5 +1,5 @@
 {
-"method": "Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).",
+"method": "Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. The rating is relative to the market; separately, a stock is undervalued on its own if its value is at least 10% above its price, overvalued if at least 10% below, otherwise near fair value. A Buy can still be overvalued on its own. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).",
 "ratings": [
 {
 "t": "NVDA",

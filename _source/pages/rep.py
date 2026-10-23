@@ -214,6 +214,15 @@ def robust(W, P):
     return f'The rating depends on that assumption: it would be <b>{calls[0]}</b> if the index grows 6% a year and <b>{calls[1]}</b> at 10%, against 8% here.'
 
 
+def absolute(g):
+    """the stock on its own, before the market comparison: probability-weighted value against price"""
+    if g >= .10:
+        return 'Undervalued', f'on its own the stock trades {abs(g) * 100:.0f}% below our estimated value'
+    if g <= -.10:
+        return 'Overvalued', f'on its own the stock trades above our estimated value, which is {abs(g) * 100:.0f}% below the price'
+    return 'Near fair value', f'on its own the stock trades within 10% of our estimated value'
+
+
 def rating_block(R):
     if R.get('private'):
         return ('<div class="rate"><div class="rh"><span class="mono">Rating</span><b>Not rated</b></div>'
@@ -221,12 +230,14 @@ def rating_block(R):
     W, P = weighted(R), R['price']
     a = analyst(R)
     street = ratings.STREET.get(R['t'], '')
-    rows = [('Probability-weighted value', d(W)), ('Price at writing', f'${P:,.2f}'), ('Value against price', pct_s(R['gap'])),
+    lab, why = absolute(R['gap'])
+    rows = [('Probability-weighted value', d(W)), ('Price at writing', f'${P:,.2f}'), ('Value against price', pct_s(R['gap'])), ('On its own', lab),
             ('S&amp;P 500 value / price', f'{ratings.MKT * 100:.0f}%'), ('Against the market', pct_s(R['rel']))]
     if a:
         rows.append(('Analysts&rsquo; average target', d(a)))
     cells = ''.join(f'<div><span class="mono">{k}</span><b>{v}</b></div>' for k, v in rows)
-    return (f'<div class="rate"><div class="rh"><span class="mono">Rating, {R["rated"]}</span><b>{R["call"]}</b></div><div class="kv rk">{cells}</div>'
+    return (f'<div class="rate"><div class="rh"><span class="mono">Rating against the S&amp;P 500, {R["rated"]}</span><b>{R["call"]}</b></div><div class="kv rk">{cells}</div>'
+            f'<p class="relabs"><b>Two different questions.</b> The rating is <b>relative</b>: it asks whether the stock is cheaper or dearer than the S&amp;P 500 on the same assumptions. The <b>absolute</b> view asks whether it is worth its price at all: {why}.</p>'
             f'<p>On the same assumptions every report uses (a 5.15% Treasury yield and a 4.5% equity premium), the S&amp;P 500 itself is worth about {ratings.MKT * 100:.0f}% of its price. '
             f'The rating compares each stock with that: <b>Buy</b> if it is at least 15% cheaper than the market on this basis, <b>Sell</b> if at least 15% dearer, <b>Hold</b> in between. '
             f'It is the same rule for every company, whoever owns it. {robust(W, P)} <a href="about.html#ratings">How ratings work</a></p>'
@@ -343,7 +354,7 @@ def body(R):
     <h1>{R['h1']}</h1>
     <p class="sub">{R['sub']}</p>
     <div class="verdict">
-      <div class="call"><span class="mono">{'Rating' if not R.get('private') else 'Rating'}</span><b>{R['call']}</b></div>
+      <div class="call"><span class="mono">{'Rating vs S&amp;P 500' if not R.get('private') else 'Rating'}</span><b>{R['call']}</b>{'' if R.get('private') or 'gap' not in R else f'<small>On its own: {absolute(R["gap"])[0].lower()}</small>'}</div>
       {cells}
     </div>
   </div>

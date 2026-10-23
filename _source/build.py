@@ -72,7 +72,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=43">
+<link rel="stylesheet" href="assets/site.css?v=44">
 </head>
 '''
 
@@ -405,7 +405,7 @@ def build():
         cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
     cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
     with open(os.path.join(OUT, 'assets', 'ctx.json'), 'w') as f:
-        json.dump({'method': 'Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).',
+        json.dump({'method': 'Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. The rating is relative to the market; separately, a stock is undervalued on its own if its value is at least 10% above its price, overvalued if at least 10% below, otherwise near fair value. A Buy can still be overvalued on its own. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).',
                    'ratings': [{'t': c['t'], 'name': c['name'], 'page': c['page'], 'call': c['call'], 'value': (coverage.R.get(c['t']) or holdings.R.get(c['t']) or {}).get('wt') or c['value'], 'price': c['price']} for c in cur_calls]}, f, indent=0)
     lp = os.path.join(SRC, 'data', 'calls.json')
     ledger = json.load(open(lp)) if os.path.exists(lp) else {'_note': 'Every published call, appended when a report is written or its call changes. Never edit past rows.', 'calls': []}
@@ -677,6 +677,8 @@ def build():
         <p>Every public company gets a <b>Buy</b>, <b>Hold</b> or <b>Sell</b> from the same rule, whoever owns it. The rule starts from the report&rsquo;s probability-weighted value (25% bear, 50% base, 25% bull) and the price at writing.</p>
         <p>Because the value depends on the discount rate, the same assumptions are first applied to the whole S&amp;P 500: a 5.15% 10-year Treasury yield and a 4.5% equity risk premium. On those assumptions the index is worth about <b>{{MKT_PCT}}% of its price</b>, so part of every stock&rsquo;s gap is the method, not the stock. The rating compares each stock with the market on that same basis:</p>
         <ul class="dl"><li><b>Buy</b>: at least 15% cheaper than the market.</li><li><b>Hold</b>: within 15% either way.</li><li><b>Sell</b>: at least 15% dearer than the market.</li></ul>
+        <p><b>Relative, not absolute.</b> A Buy means cheaper than the market on the same assumptions, not necessarily cheaper than its own value. So each rating also carries an absolute label, based on the probability-weighted value against the price: <b>undervalued</b> (value at least 10% above the price), <b>near fair value</b> (within 10%) or <b>overvalued</b> (value at least 10% below). A stock can be a relative Buy and still overvalued on its own, when the whole market is.</p>
+        <p>The 25/50/25 weights are a convention, not a measured probability: they keep the middle case central and treat the upside and downside symmetrically, so the bear and bull cases move the value only as far as their distance from the base. Each report shows all three values, so a reader can apply other weights.</p>
         <p>Each report shows both numbers, the absolute value and the comparison with the market, and says whether the rating would change if the index grew 6% or 10% a year instead of 8%. Private companies are not rated, since there is no price to buy them at; the Costco report is university coursework and is left as written.</p>
       </div>
       <div>
@@ -809,3 +811,8 @@ def build():
 if __name__ == '__main__':
     build()
     print('built', sorted(f for f in os.listdir(OUT) if f.endswith('.html')))
+    import consistency
+    n, errs = consistency.run(OUT, list(holdings.R.values()) + list(coverage.R.values()))
+    if errs:
+        sys.exit('Consistency check failed; nothing should be published until these agree:\n  ' + '\n  '.join(errs))
+    print(f'consistency: checked {n} reports (scenario weights, price field, scenario table, valuation bridge, cash-flow table, reconciled figures); all agree')

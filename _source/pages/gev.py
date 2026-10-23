@@ -17,6 +17,7 @@ L = {
 }
 PRICE, BASE, BEAR, BULL, WT = 890.33, 442, 272, 682, 460
 CALL = ratings.rate(WT, PRICE)[0]
+ABS = ('undervalued' if WT / PRICE - 1 >= .10 else 'overvalued' if WT / PRICE - 1 <= -.10 else 'near fair value')
 
 
 def src(*items):
@@ -91,7 +92,7 @@ def body():
     <h1>GE <em>Vernova</em></h1>
     <p class="sub">GE Vernova (GEV) makes the gas turbines, grid equipment and wind turbines behind a large share of the world&rsquo;s electricity, and AI data centers have filled its order book for years ahead. This report values the business on the company&rsquo;s own 2028 targets. The conclusion: an exceptional order book, at a price that already assumes more than those targets.</p>
     <div class="verdict">
-      <div class="call"><span class="mono">Rating</span><b>{CALL}</b></div>
+      <div class="call"><span class="mono">Rating vs S&amp;P 500</span><b>{CALL}</b><small>On its own: {ABS}</small></div>
       <div><span class="mono">Value per share</span><b>${BASE}</b><small>Cash-flow model, base case</small></div>
       <div><span class="mono">Price at writing</span><b>${PRICE:,.2f}</b><small>Close, October 20, 2026</small></div>
       <div><span class="mono">Implied return</span><b class="dn">&minus;{(1 - BASE / PRICE) * 100:.1f}%</b><small>Price to value</small></div>

@@ -997,3 +997,6 @@ details.plas[open] summary::after { content: "−"; }
 }
 @media (prefers-reduced-motion: reduce) { .aib-btn svg, .aib-panel { animation: none; } }
 @media print { .aib { display: none; } }
+
+.verdict .call small { display: block; margin-top: 6px; font-size: 12.5px; color: rgba(255,248,239,.75); }
+.rate .relabs { margin-top: 14px; }

@@ -382,6 +382,80 @@ def industry(t):
             + f'<p class="fine">Peers: the {len(pm)} other S&amp;P 500 companies in {group.replace('&', '&amp;')} with complete data ({names}). Last twelve months where reported, from SEC filings; prices from the latest close. A lower price-to-earnings ratio ranks higher. These figures update with each data run; the rating does not.</p>')
 
 
+LABEL = {'g1': 'Growth, first forecast year', 'g2': 'Growth, second forecast year', 'g': 'Growth, first years', 'g27': 'Growth, 2027',
+         'g28': 'Growth, 2028', 'gT': 'Growth after year ten', 'conv': 'Free cash flow / revenue', 'path': 'Growth path',
+         'm0': 'Operating margin, near term', 'mT': 'Operating margin, long run', 'heavy': 'Net investment, first years ($B)',
+         'W': 'Discount rate', 'ke': 'Cost of equity', 'roe': 'Return on equity', 'rev': 'Revenue, target year', 'm': 'Margin, target year',
+         'mult': 'Exit multiple', 'revs': 'Revenue path', 'fcfm': 'Free-cash-flow margin path', 'nrev': 'Normal-year revenue',
+         'nm': 'Normal-year margin', 'disc': 'Discount rate'}
+
+
+def _fmt_in(k, v):
+    if isinstance(v, list):
+        return '/'.join(_fmt_in(k, x) for x in v)
+    if k in ('mult', 'heavy') or not isinstance(v, (int, float)):
+        return f'{v:g}&times;' if k == 'mult' else f'{v:g}'
+    if abs(v) >= 1e8:
+        return f'${v / 1e9:,.0f}B'
+    if abs(v) < 1:
+        return f'{v * 100:.1f}%'
+    return f'{v:g}'
+
+
+def sources(R):
+    """appendix: where each kind of figure comes from, and the ranges the simulation draws from"""
+    import json
+    rows = []
+    res = next((c for c in R['chapters'] if c[0] == 'results'), None)
+    if res:
+        links = re.findall(r'<a href="(https?://[^"]+)"[^>]*>(.*?)<', res[3])
+        heads = re.findall(r'<div><b>(.*?)</b><span>(.*?)</span></div>', res[3])
+        if heads:
+            src_html = '; '.join(f'<a href="{u}" target="_blank" rel="noopener">{t}</a>' for u, t in links[:3]) or 'As linked in the chapter'
+            rows.append(['Latest results', ', '.join(f'{b} ({a})' for a, b in [(h[1], h[0]) for h in heads][:4]) + (' and others' if len(heads) > 4 else ''), src_html])
+    co = os.path.join(DATA, R['t'] + '.json')
+    if os.path.exists(co) and not R.get('private'):
+        try:
+            fl = json.load(open(co)).get('filings', [])
+            k = next((f for f in fl if f.get('form') in ('10-K', '20-F')), None)
+            q = next((f for f in fl if f.get('form') in ('10-Q', '6-K')), None)
+            parts = [f'<a href="{f["url"]}" target="_blank" rel="noopener">{f["form"]} for the period to {f["per"]}</a>' for f in (k, q) if f and f.get('url')]
+            rows.append(['The numbers (five-year table)', 'Five years of annual figures and the last twelve months', 'SEC XBRL company facts; latest: ' + ', '.join(parts) if parts else 'SEC XBRL company facts'])
+        except Exception:
+            pass
+    if not R.get('private'):
+        rows.append(['Price at writing', f'${R["price"]:,.2f} ({R.get("pricenote", "close")})', 'Yahoo Finance; the time of the quote is stated beside the price'])
+    rows.append(['Discount rate inputs', '10-year Treasury 5.15%, equity risk premium 4.5%', 'Fixed for every report so they can be compared; <a href="about.html#ratings">How ratings work</a>'])
+    rows.append(['Valuation', 'Every value, case and sensitivity', f'This site&rsquo;s model: <a href="data/models/{R["slug"]}.xlsx" download>XLSX</a>, <a href="data/models/{R["slug"]}.csv" download>CSV</a>'])
+    try:
+        import audit
+        a = audit.DONE.get(R['slug'])
+    except Exception:
+        a = None
+    rows.append(['Checked by hand', f'{a[1]} figures on {a[0]}' if a else 'Not yet', (a[2] + '. <a href="about.html#audit">Audit log</a>') if a else 'Reports are added to the <a href="about.html#audit">audit log</a> as they are revised'])
+    out = table(['What', 'Figures', 'Source'], rows, 'srct')
+    mc = None
+    try:
+        mc = json.load(open(os.path.join(DATA, '..', 'models', 'montecarlo.json')))['reports'].get(R['t'])
+    except Exception:
+        pass
+    if mc and mc.get('inputs'):
+        unit = 'B' if R.get('private') else ''
+        def money(v):
+            return f'${v:,.0f}{unit}' if unit else f'${v:,.2f}'
+        ir = [[LABEL.get(k, k), _fmt_in(k, x), _fmt_in(k, b), _fmt_in(k, y)] for k, x, b, y in mc['inputs']]
+        out += '<h3 class="sec sm" style="margin-top:34px">Ranges used in the simulation</h3>' + table(['Input', 'Bear (10th percentile)', 'Base (median)', 'Bull (90th percentile)'], ir, 'allnum')
+        res_rows = [['Expected value (average of 4,000 runs)', money(mc['mean'])], ['Likely range, 10th to 90th percentile', f'{money(mc["p10"])} to {money(mc["p90"])}'],
+                    ['Median', money(mc['p50'])]]
+        if mc.get('price'):
+            res_rows += [['Chance the value is above the price', f'{mc["p_above_price"] * 100:.0f}%'], ['Chance it is cheaper than the S&amp;P 500', f'{mc["p_cheaper_than_market"] * 100:.0f}%']]
+        out += '<div style="margin-top:22px"></div>' + table(['Simulation result', ''], res_rows, 'allnum')
+        out += ('<p class="fine">Each input is drawn from a split normal: its bear and bull values are the 10th and 90th percentiles, so the two sides can differ. '
+                'Business inputs share a common factor (correlation 0.6)' + ('; the discount rate moves on its own' if any(r[0] in ('W', 'ke', 'disc') for r in mc['inputs']) else '; the discount rate is the same in every case, so it is not drawn') + '. Inputs not listed are held at their base value. '
+                '<a href="about.html#ranges">How the simulation works</a>.</p>')
+    return out
+
+
 def versions(R):
     try:
         import archive
@@ -403,7 +477,7 @@ def body(R):
         <div class="revnote" id="revnote" hidden></div>
       </div>'''
     disc = R.get('disclosure', f'The author holds {R["t"]} shares.')
-    toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(R['toc'], 1))
+    toc = ''.join(f'<a href="#{c[0]}"><i>{n:02d}</i>{c[1]}</a>' for n, c in enumerate(list(R['toc']) + [('sources', 'Figures and sources')], 1))
     mk = R['name'].replace(' LP', '') if R.get('private') else R['t']
     head = f'''<header class="ph rp">
   <div class="wrap">
@@ -430,6 +504,7 @@ def body(R):
 '''
     chs = ''.join(chap(n, c[0], c[1], rec_title(R, c[2]) if c[0] == 'rec' else c[2],
                        rec_body(R, c[3]) if c[0] == 'rec' else c[3] + (checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
+    chs += chap(len(R['chapters']) + 1, 'sources', 'Figures and sources', 'Where the numbers <em>come from.</em>', sources(R))
     return head + chs + '''
     </div>
   </div>

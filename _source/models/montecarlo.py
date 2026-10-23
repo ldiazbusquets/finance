@@ -177,26 +177,57 @@ def simulate_cases(key, fn, cases, unit=1):
     return vals, fn(*cases['base']) / unit
 
 
+def _plain(v):
+    if isinstance(v, (tuple, list)):
+        return [_plain(x) for x in v]
+    return round(v, 6) if isinstance(v, float) else v
+
+
+def inputs_spec(key):
+    """the ranges this report's simulation draws from: (input, bear = 10th pct, base = median, bull = 90th pct)"""
+    script, fn, names, bear, bull, extra = SPECS[key]
+    ns = run_script(script)
+    sig = inspect.signature(ns[fn])
+    rows = [[k, _plain(x), _plain(sig.parameters[k].default), _plain(y)] for k, x, y in zip(names, bear, bull)]
+    if extra.get('heavy'):
+        rows.append(['heavy', _plain(extra['heavy'][0]), _plain(sig.parameters['heavy'].default), _plain(extra['heavy'][1])])
+    wbase = eval(extra['wbase'], ns) if 'wbase' in extra else ns['W0']
+    dw = extra.get('dw', (.01, -.01))
+    rows.append(['W', _plain(wbase + dw[0]), _plain(wbase), _plain(wbase + dw[1])])
+    return rows
+
+
+def inputs_cases(fn, cases):
+    names = list(inspect.signature(fn).parameters)
+    rows = []
+    for k, x, b, y in zip(names, cases['bear'], cases['base'], cases['bull']):
+        if isinstance(b, str) or b is None or b == x == y:
+            continue
+        rows.append([k, _plain(x), _plain(b), _plain(y)])
+    return rows
+
+
 def run_all(mkt=None):
     if mkt is None:
         mkt = json.load(open(os.path.join(HERE, '..', '..', 'data', 'models', 'market.json')))['scenarios']['0.08']['value_to_price']
     out = {}
     for key in SPECS:
         price, vals, b = simulate_spec(key)
-        out[key] = dict(stats(vals, price, mkt), base=b, price=price)
+        out[key] = dict(stats(vals, price, mkt), base=b, price=price, inputs=inputs_spec(key))
     price, vals, b = simulate_jpm()
-    out['JPM'] = dict(stats(vals, price, mkt), base=b, price=price)
+    jk = run_script('jpm')['k']
+    out['JPM'] = dict(stats(vals, price, mkt), base=b, price=price, inputs=[['roe', .145, .16, .18], ['ke', _plain(jk + .005), _plain(jk), _plain(jk - .005)]])
     nc = run_script('new_coverage')
     prices = {'SPCX': 162.57, 'FLY': 17.41, 'KTOS': 38.81, 'AXON': 396.30, 'PLTR': 201.72, 'AMD': 552.72, 'MU': 913.67, 'SNDK': 1378.22, 'SKHY': 131.69}
     for key in SCEN:
         vals, b = simulate_cases(key, nc['val'], nc['REG'][key])
-        out[key] = dict(stats(vals, prices[key], mkt), base=b, price=prices[key])
+        out[key] = dict(stats(vals, prices[key], mkt), base=b, price=prices[key], inputs=inputs_cases(nc['val'], nc['REG'][key]))
     for key in CYCLE:
         vals, b = simulate_cases(key, nc['cyc'], nc[key])
-        out[key] = dict(stats(vals, prices[key], mkt), base=b, price=prices[key])
+        out[key] = dict(stats(vals, prices[key], mkt), base=b, price=prices[key], inputs=inputs_cases(nc['cyc'], nc[key]))
     for key, name in (('ANTHROPIC', 'Anthropic'), ('OPENAI', 'OpenAI'), ('ANDURIL', 'Anduril'), ('BLOOMBERG', 'Bloomberg')):
         vals, b = simulate_cases(key, nc['val'], nc['REG'][name], unit=1e9)
-        out[key] = dict(stats(vals, None, mkt), base=b, price=None)
+        out[key] = dict(stats(vals, None, mkt), base=b, price=None, inputs=inputs_cases(nc['val'], nc['REG'][name]))
     return out
 
 

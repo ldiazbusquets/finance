@@ -91,7 +91,7 @@ python3 nvda.py          # prints the base, bear and bull cases, the weighted va
 python3 market.py        # the S&P 500 on the same assumptions (the rating benchmark)
 ```
 
-Each report also links its spreadsheet, CSV and script.
+Each report also links its spreadsheet, CSV and script, and ends with a **Figures and sources** chapter: where each kind of figure comes from (with links to the release and the latest 10-K and 10-Q), whether the report has been checked by hand, and the exact ranges its simulation draws from with the results.
 
 ## Notes
 

@@ -64,9 +64,10 @@ assets/            CSS and the browser JavaScript for tools, the research hub an
    - In the five-year table, free cash flow equals operating cash flow minus capital spending in every column.
    - A trailing free-cash-flow figure elsewhere in the report must match that table or name whose definition it uses. Amazon's own figure, for example, nets $4.0 billion of equipment proceeds.
    Every check a report should have must actually run. If a layout change hides the structure a rule looks for, the build fails instead of skipping it. The few exemptions (foreign filers with hand-built tables, the bank) are listed in the code with a reason. Private companies are checked too, in billions. `_source/tests/test_consistency.py` breaks a real report in specific ways and confirms that the checker catches each one; the build runs it every time.
-3. **Spreadsheet check** (`models/xlsx_models.py --check`, run whenever a model changes): every Excel workbook is recalculated in LibreOffice and compared with the Python models.
+3. **Formula tests** (`tests/test_formulas.py`): the building blocks are checked against numbers worked out by hand or taken from textbooks: CAPM and WACC, the growth fade, a two-year DCF and a steady-state DCF that must equal the growing-perpetuity formula, the bridge to per-share value, the dividend model, the bank excess-return model (a bank earning its cost of equity is worth book value), the S&P 500 benchmark, the rating lines, the Monte Carlo draws (percentiles and the 0.6 correlation), and the bond pricer (a 5% ten-year bond at 6% is $925.61; a ten-year zero has a duration of exactly ten years).
+4. **Spreadsheet check** (`models/xlsx_models.py --check`, run whenever a model changes): every Excel workbook is recalculated in LibreOffice and compared with the Python models.
 
-4. **Audit against filings** (by hand): the build can't catch a figure copied wrong from a filing, so reports are also checked against the company's own release or SEC filing. Each pass, with any corrections, is logged on the About page (`about.html#audit`).
+5. **Audit against filings** (by hand): the build can't catch a figure copied wrong from a filing, so reports are also checked against the company's own release or SEC filing. Each pass, with any corrections, is logged on the About page (`about.html#audit`).
 
 ## Keeping reports current
 

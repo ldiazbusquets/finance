@@ -866,4 +866,8 @@ if __name__ == '__main__':
     if r.returncode:
         sys.exit('The consistency checker failed its own tests:\n' + r.stderr[-2000:])
     print(r.stdout.strip())
+    r = subprocess.run([sys.executable, os.path.join(HERE, 'tests', 'test_formulas.py')], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit('A hand-checked formula test failed:\n' + r.stderr[-2000:])
+    print(r.stdout.strip())
     print(f'consistency: {runs} checks on {n} reports (scenario weights, price field, scenario table, valuation bridge, cash-flow table, reconciled figures); all ran and all agree')

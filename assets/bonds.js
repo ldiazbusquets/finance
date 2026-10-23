@@ -323,7 +323,7 @@
   }
   var base = (document.querySelector('script[src*="bonds.js"]') || {}).src || '';
   base = base.slice(0, base.indexOf('assets/'));
-  fetch(base + 'data/markets.json?t=' + Math.floor(Date.now() / 600000), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+  (window.LDBget ? window.LDBget('data/markets.json').catch(function () { return null; }) : fetch(base + 'data/markets.json').then(function (r) { return r.ok ? r.json() : null; })).then(function (m) {
     var c = m && m.curve, set = c && c.sets && c.sets[0];
     if (set) { CURVE = c.tenors.map(function (k, i) { return [TEN[k], set.v[i] / 100]; }).filter(function (p) { return p[0] != null && p[1] != null && !isNaN(p[1]); }); CDATE = set.date || ''; var y10 = curveAt(10); if (y10 != null) { B.y = Math.round(y10 * 1e5) / 1e5; B.c = Math.round(y10 * 800) / 800; } }
   }).catch(function () {}).then(start);

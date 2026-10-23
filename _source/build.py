@@ -72,7 +72,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=44">
+<link rel="stylesheet" href="assets/site.css?v=45">
 </head>
 '''
 
@@ -119,8 +119,8 @@ def foot(extra=''):
   <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=20"></script>{extra}
-<script src="assets/chat.js?v=3" defer></script>
+<script src="assets/site.js?v=22"></script>{extra}
+<script src="assets/chat.js?v=4" defer></script>
 </body>
 </html>
 '''
@@ -372,7 +372,7 @@ def build():
   </div>
 </section>
 '''
-    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=14"></script>')
+    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=15"></script>')
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
@@ -392,7 +392,7 @@ def build():
   </div>
 </section>
 '''
-    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=14"></script>')
+    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=15"></script>')
 
     # ---------------- calls ledger (track record) ----------------
     MONTHS = {m: i + 1 for i, m in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])}
@@ -425,7 +425,7 @@ def build():
   </div>
 </section>
 '''
-        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=6"></script>')
+        page(fn, cur, title, desc, kind, body, '\n<script src="assets/hub.js?v=7"></script>')
 
     tool_page('track.html', 'research.html', 'Research', 'Track <em>record</em>',
               'Every call this site publishes is logged on the day it is made and never edited, then scored the same way: total return against the S&amp;P 500 over exactly the same days.', 'track',
@@ -550,7 +550,7 @@ def build():
   </div>
 </section>
 '''
-    page('tools.html', 'tools.html', 'Tools', 'Position sizing, a portfolio x-ray and more finance tools that run in the browser.', 'tools', tools, '\n<script src="assets/tools.js?v=1"></script>')
+    page('tools.html', 'tools.html', 'Tools', 'Position sizing, a portfolio x-ray and more finance tools that run in the browser.', 'tools', tools, '\n<script src="assets/tools.js?v=2"></script>')
 
     # ---------------- trading and options tools (moved from LDB Lab; see labport.py) ----------------
     import labport
@@ -583,7 +583,7 @@ def build():
   </div>
 </section>
 '''
-    page('plan.html', 'tools.html', 'Financial plan', 'Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.', 'plan', plan, '\n<script src="assets/plan.js?v=2"></script>')
+    page('plan.html', 'tools.html', 'Financial plan', 'Model a household year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets to see whether the money lasts, with what-ifs and what it would take.', 'plan', plan, '\n<script src="assets/plan.js?v=3"></script>')
 
     # ---------------- portfolio risk ----------------
     risk = ph('Tools<span class="kind auto" title="Calculated by code from historical prices, with no analyst review">Automated model</span>', 'Portfolio <em>risk</em>', 'How a mix of stocks, funds and bonds actually behaved: how much it swung, how far it fell, which holding carried the risk and what the same holdings could have done with different weights.',
@@ -612,7 +612,7 @@ def build():
   </div>
 </section>
 '''
-    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=2"></script>')
+    page('risk.html', 'tools.html', 'Portfolio risk', 'Volatility, drawdowns, beta, value at risk, risk contribution, correlations and the efficient frontier for any mix of stocks and ETFs, from five years of weekly returns.', 'risk', risk, '\n<script src="assets/risk.js?v=3"></script>')
 
     # ---------------- markets ----------------
     markets = ph('Markets', 'The markets, <em>in numbers</em>', 'Rates, the yield curve, inflation, credit and the S&amp;P 500, refreshed from the Federal Reserve every weekday evening.',
@@ -762,7 +762,7 @@ def build():
   </div>
 </section>
 '''
-    page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=2"></script>')
+    page('bonds.html', 'models.html', 'Bond pricer and rate shock', 'Price any bond, see its duration and convexity, and test a bond portfolio against rate moves on the live Treasury curve.', 'bonds', bonds, '\n<script src="assets/bonds.js?v=3"></script>')
 
     # ---------------- fixed-income portfolio ----------------
     fi = ph('Models &middot; Fixed income', 'Bond portfolio, <em>stress-tested</em>', 'Build a portfolio of Treasuries and corporate bonds, then bend the yield curve and widen credit spreads. Every payment is repriced at the curve on its own date, so twists and humps show up bond by bond.',
@@ -789,7 +789,7 @@ def build():
   </div>
 </section>
 '''
-    page('fixed-income.html', 'models.html', 'Bond portfolio stress test', 'Build a portfolio of Treasuries and corporate bonds and test it against curve twists, humps and credit-spread shocks, with key-rate durations, cash flows and a goal to fund.', 'fi', fi, '\n<script src="assets/fi.js?v=1"></script>')
+    page('fixed-income.html', 'models.html', 'Bond portfolio stress test', 'Build a portfolio of Treasuries and corporate bonds and test it against curve twists, humps and credit-spread shocks, with key-rate durations, cash flows and a goal to fund.', 'fi', fi, '\n<script src="assets/fi.js?v=2"></script>')
 
     # ---------------- loans ----------------
     loans = ph('Models &middot; MOD-09', 'Loans and <em>mortgages</em>', 'What a loan really costs: the monthly payment, every year of interest, what extra payments save, and the APR once points and fees are counted. The mortgage rate starts at this week&rsquo;s national average.') + '''
@@ -806,7 +806,7 @@ def build():
   </div>
 </section>
 '''
-    page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=3"></script>')
+    page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=4"></script>')
 
     # ---------------- research reports ----------------
     page('costco.html', 'research.html', 'Costco Wholesale (COST) research', 'A full fundamental analysis of Costco against Walmart, Target and BJ\u2019s, ending in a cash-flow value of $831.50 a share and a Hold / Wait.', 'report', costco.body(), attrs=' data-ticker="COST" data-then="970.31" data-val="831.50"')

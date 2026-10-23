@@ -179,7 +179,7 @@
   inputs(); calc();
   var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(calc, 150); });
   new MutationObserver(function () { calc(); }).observe(d, { attributes: true, attributeFilter: ['class'] });
-  fetch('data/markets.json?t=' + Math.floor(Date.now() / 600000), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (m) {
+  (window.LDBget ? window.LDBget('data/markets.json') : fetch('data/markets.json').then(function (r) { return r.json(); })).then(function (m) {
     var s = m.series && m.series.MORTGAGE30US; if (!s || !s.last) return;
     RATE = s.last; if (kind === 'mortgage') { L.rate = RATE.v / 100; KINDS.mortgage.rate = L.rate; } inputs(); calc();
   }).catch(function () {});

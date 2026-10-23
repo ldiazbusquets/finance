@@ -17,7 +17,7 @@
   };
   var base = (document.querySelector('script[src*="tools.js"]') || {}).src || '';
   base = base.slice(0, base.indexOf('assets/'));
-  function getJSON(p) { return fetch(base + p + '?t=' + Math.floor(Date.now() / 600000), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function getJSON(p) { if (window.LDBget) return window.LDBget(p); return fetch(base + p + '?t=' + Math.floor(Date.now() / 600000), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
   var IX = null, PX = {}, BY = {};
   var ETF = { SPY: 'cap', VOO: 'cap', IVV: 'cap', SPLG: 'cap', SPYM: 'cap', RSP: 'eq' };

@@ -259,7 +259,7 @@
   window.LDBPLAN = { life: life, sim: sim, avgPath: avgPath, P: P };
   var base = (document.querySelector('script[src*="plan.js"]') || {}).src || '';
   base = base.slice(0, base.indexOf('assets/'));
-  fetch(base + 'data/markets.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+  (window.LDBget ? window.LDBget('data/markets.json').catch(function () { return null; }) : fetch(base + 'data/markets.json').then(function (r) { return r.ok ? r.json() : null; })).then(function (m) {
     var s = m && m.series;
     if (s && s.T10YIE && s.T10YIE.last) { P.infl = Math.round(s.T10YIE.last.v * 4) / 400; var n = $('#plInfl'); if (n) n.textContent = 'Inflation starts at the market’s 10-year breakeven, ' + s.T10YIE.last.v.toFixed(2) + '%, rounded.'; }
     if (s && s.DGS3MO && s.DGS3MO.last) P.rc = Math.round(Math.max(0, s.DGS3MO.last.v - 0.5) * 4) / 400;

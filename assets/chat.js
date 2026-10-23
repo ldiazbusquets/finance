@@ -149,7 +149,7 @@
   }
   /* ---------- market brief: latest closes, biggest S&P 500 moves, rates, and recent headlines ---------- */
   var MKT = /\b(market|markets|stocks?|s&p|sp ?500|nasdaq|dow|index|indexes|today|yesterday|this week|last week|red|green|rall(y|ied)|sell-?off|selloff|crash|news|headlines?|fed|rates?|yields?|treasur(y|ies)|oil|brent|inflation|cpi|jobs|vix|why did|why is|what happened)\b/i;
-  function getJSON(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function getJSON(u) { return (window.LDBget ? window.LDBget(u) : fetch(u).then(function (r) { return r.ok ? r.json() : null; })).catch(function () { return null; }); }
   function getMkt(q) {
     var need = MKT.test(q);
     if (!S.news) S.news = getJSON('data/news.json');

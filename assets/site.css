@@ -766,7 +766,7 @@ details.sched[open] summary { margin-bottom: 16px; }
 }
 
 /* ---------- market tape ---------- */
-.tape { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--s1) 70%, transparent); height: 0; overflow: hidden; transition: height .4s ease; }
+.tape { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--s1) 70%, transparent); height: 36px; overflow: hidden; }
 .tape.on { height: 36px; }
 .tape .wrap { display: flex; align-items: center; height: 36px; gap: 14px; }
 .tape .tl { flex: none; font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--acc); padding-right: 14px; border-right: 1px solid var(--line); white-space: nowrap; }
@@ -1000,3 +1000,9 @@ details.plas[open] summary::after { content: "−"; }
 
 .verdict .call small { display: block; margin-top: 6px; font-size: 12.5px; color: rgba(255,248,239,.75); }
 .rate .relabs { margin-top: 14px; }
+
+/* reserve the space data will fill, so the page does not jump when it arrives (layout shift) */
+#mtiles:empty { min-height: 169px; }
+#t-rates:empty { min-height: 517px; } #t-macro:empty, #t-cross:empty { min-height: 309px; }
+body[data-page="screener"] .panel { min-height: 1400px; }
+@media (max-width: 640px) { #mtiles:empty { min-height: 308px; } #t-rates:empty { min-height: 536px; } #t-cross:empty { min-height: 328px; } }

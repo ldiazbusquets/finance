@@ -273,7 +273,7 @@
   window.LDBRISK = { simplex: simplex, frontier: frontier, quant: quant, annRet: annRet };
   Promise.all([
     fetch(base + 'data/risk/index.json?t=' + Math.floor(Date.now() / 3600000)).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
-    fetch(base + 'data/markets.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+    (window.LDBget ? window.LDBget('data/markets.json').catch(function () { return null; }) : fetch(base + 'data/markets.json').then(function (r) { return r.ok ? r.json() : null; })).catch(function () { return null; })
   ]).then(function (x) {
     IDX = x[0];
     var m = x[1], tb = m && m.series && m.series.DGS3MO;

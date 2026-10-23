@@ -6,7 +6,7 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var page = document.body.getAttribute('data-page');
   var bust = '?d=' + new Date().toISOString().slice(0, 13);
-  function getJSON(p) { return fetch(p + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function getJSON(p) { if (window.LDBget) return window.LDBget(p); return fetch(p + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
   function opt(p) { return getJSON(p).catch(function () { return null; }); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var isn = function (v) { return typeof v === 'number' && isFinite(v); };

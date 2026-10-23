@@ -105,7 +105,13 @@
 
   /* ---------- data ---------- */
   var base = (document.body.getAttribute('data-root') || '');
-  function getJSON(p) { return fetch(base + p + '?t=' + Math.floor(Date.now() / 600000), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  /* one request per file per page, shared by every script; the 10-minute key lets the browser cache it between pages */
+  var JS = window.LDBJSON = window.LDBJSON || {};
+  function getJSON(p) {
+    if (!JS[p]) JS[p] = fetch(base + p + '?t=' + Math.floor(Date.now() / 600000)).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+    return JS[p].then(function (j) { return JSON.parse(JSON.stringify(j)); });   // each caller gets its own copy
+  }
+  window.LDBget = getJSON;
 
   /* ---------- charts ---------- */
   var NS = 'http://www.w3.org/2000/svg';
@@ -360,7 +366,13 @@
   };
 
   if (page === 'markets') {
-    getJSON('data/markets.json').then(function (m) {
+    Promise.all([getJSON('data/markets.json'), getJSON('data/co/prices.json').catch(function () { return null; })]).then(function (r) {
+      var m = r[0], sp = r[1] && r[1].px && r[1].px['^GSPC'], S = m.series && m.series.SP500;
+      // FRED publishes the S&P 500 a day late; use the index's own close when it is newer, so this page and the tape agree
+      if (S && sp && sp.p && S.last && sp.d > S.last.d) {
+        S.prev = S.last; S.last = { d: sp.d, v: sp.p }; S.chg = +(sp.p - S.prev.v).toFixed(2); S.chgPct = (sp.p / S.prev.v - 1) * 100;
+        if (S.y1) S.y1.push([sp.d, sp.p]);
+      }
       M = m;
       if (!m.updated) { $$('[data-need]').forEach(function (e) { e.style.display = 'none'; }); return waiting($('#mwait')); }
       $('#mwait').style.display = 'none';

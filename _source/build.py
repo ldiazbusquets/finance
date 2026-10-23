@@ -523,7 +523,7 @@ def build():
 
     # ---------------- tools ----------------
     tools = ph('Tools', 'Tools you can <em>use</em>', 'Interactive finance tools that run in your browser. Company data comes from the same nightly update as the rest of the site.',
-               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a><a class="pill gh" href="risk.html">Portfolio risk</a><a class="pill gh" href="plan.html">Financial plan</a></div>') + f'''
+               '<div class="cta">' + pill('#sizer', 'Position sizer') + '<a class="pill gh" href="#xray">Portfolio x-ray</a><a class="pill gh" href="risk.html">Portfolio risk</a><a class="pill gh" href="plan.html">Financial plan</a><a class="pill gh" href="wealth.html">Withdrawals and tax-loss harvesting</a></div>') + f'''
 <section class="tight" id="sizer">
   <div class="wrap">
     <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-06</div><h3 class="sec">Position sizer</h3></div><p>Decide the loss you can accept first; the number of shares follows from the distance to your stop.</p></div>
@@ -545,6 +545,7 @@ def build():
     <p class="disc">S&amp;P 500 weights here are by total market value, which is close to, but not exactly, the index&rsquo;s float-adjusted weights. Companies outside the S&amp;P 500 are counted as &ldquo;not covered&rdquo;.</p>
     <a class="snapcta" href="risk.html" style="margin-top:24px"><div><span class="mono">TOOL-08 &middot; Next step</span><b>Measure the risk of a portfolio</b><p>Volatility, drawdowns, beta, value at risk, which holding carries the risk, correlations and the efficient frontier, from five years of weekly returns.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
     <a class="snapcta" href="plan.html" style="margin-top:16px"><div><span class="mono">TOOL-09 &middot; Wealth planning</span><b>Will the money last?</b><p>A household projected year by year: pay, taxes, spending, debts, goals and Social Security, run through 1,000 markets, with what-ifs and the savings it would take.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
+    <a class="snapcta" href="wealth.html" style="margin-top:16px"><div><span class="mono">TOOL-10 &middot; TOOL-11 &middot; Wealth management</span><b>Spend it safely, keep more of it</b><p>Retirement withdrawals with guardrails against the 4% rule, and tax-loss harvesting stock by stock against an index fund, each through thousands of simulated markets.</p></div><span class="pill cu"><span class="ic">{ARROW}</span>Open</span></a>
   </div>
 </section>
 
@@ -851,6 +852,37 @@ def build():
   </div>
 </section>
 '''
+    wealth = ph('Tools &middot; Wealth management', 'Make the money <em>last, and keep more of it</em>', 'Two questions advisers answer every week: how much can a retiree spend, and is harvesting tax losses worth it? Both tools run thousands of simulated markets in your browser.',
+                '<div class="cta">' + pill('#withdraw', 'Retirement withdrawals') + '<a class="pill gh" href="#harvest">Tax-loss harvesting</a><a class="pill gh" href="plan.html">Full financial plan</a></div>') + '''
+<section class="tight" id="withdraw">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-10</div><h3 class="sec">Fixed withdrawals or guardrails?</h3></div><p>The &ldquo;4% rule&rdquo; spends the same amount, raised with inflation, whatever markets do. Guardrails (after Guyton and Klinger) start higher and adjust: spending is cut when the withdrawal rate drifts too far above where it started, and raised when it falls too far below.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The retiree</h3><p>Both plans start with the same spending.</p></div></div><div id="gIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">2,000 markets</h3><p>Stocks average 7.5% a year (16% volatility), bonds 4.5% (6%).</p></div></div><div id="gOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What guardrails do to spending</h3><p>Spending each year in today&rsquo;s dollars, as a share of the first year: the median market (line) and the middle 80% (shaded). The dashed line is the fixed plan, which never changes until the money runs out.</p></div></div><svg class="chart" id="gChart" role="img" aria-label="Guardrails spending path chart"></svg></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The portfolio, median market</h3><p>In today&rsquo;s dollars. Guardrails in copper, the fixed plan dashed.</p></div></div><svg class="chart" id="gBal" role="img" aria-label="Median portfolio balance chart"></svg></div>
+    <p style="max-width:760px;margin-top:18px" id="gNote"></p>
+    <p class="disc">The rules, simplified from Guyton and Klinger (2006): no inflation raise after a losing year if spending is already above its starting rate; a cut when the withdrawal rate is more than the guardrail width above the starting rate (not in the last 15 years); a raise when it is that far below. Returns are drawn independently each year from a lognormal distribution, which understates long bear markets. Before fees and taxes. For education only.</p>
+  </div>
+</section>
+
+<section class="tight" id="harvest" style="padding-top:30px">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-11</div><h3 class="sec">Tax-loss harvesting and direct indexing</h3></div><p>Selling an investment at a loss and buying something similar keeps the portfolio invested while banking a loss to offset gains. An index fund rarely falls far enough to harvest; its individual stocks often do, even in a good year. That is the case for direct indexing.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The investor</h3><p>Stocks follow the market plus their own ups and downs.</p></div></div><div id="hIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">300 markets</h3><p>The market averages 7.5% a year with 16% volatility.</p></div></div><div id="hOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Losses harvested each year</h3><p>As a share of the amount invested, averaged over the markets: stock by stock in copper, a single index fund dashed.</p></div></div><svg class="chart" id="hChart" role="img" aria-label="Losses harvested each year chart"></svg></div>
+    <p style="max-width:760px;margin-top:18px" id="hNote"></p>
+    <p class="disc">Assumes each sold stock is replaced at once by a similar one that moves the same way, so the 30-day wash-sale rule is not triggered and there is no tracking difference; in practice the replacement differs a little. Losses offset other capital gains first, then up to $3,000 a year of income, and the rest carries forward. Tax saved is invested in the market. Short- and long-term gains are taxed at one rate here. State taxes are ignored. For education only, not tax advice.</p>
+  </div>
+</section>
+'''
+    page('wealth.html', 'tools.html', 'Wealth management tools', 'Retirement withdrawals with guardrails against the 4% rule, and tax-loss harvesting with direct indexing against an index fund, each run through thousands of simulated markets.', 'wealth', wealth, '\n<script src="assets/wealth.js?v=1"></script>')
+
     page('loans.html', 'models.html', 'Loan and mortgage calculator', 'Monthly payments, amortisation, extra payments, PMI and APR for mortgages and other loans, starting from today’s mortgage rate.', 'loans', loans, '\n<script src="assets/loans.js?v=4"></script>')
 
     # ---------------- research reports ----------------

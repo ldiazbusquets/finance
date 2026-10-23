@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wealth Management Tools | LDB Finance</title>
+<meta name="description" content="Retirement withdrawals with guardrails against the 4% rule, and tax-loss harvesting with direct indexing against an index fund, each run through thousands of simulated markets.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LDB Finance">
+<meta property="og:title" content="Wealth Management Tools | LDB Finance">
+<meta property="og:description" content="Retirement withdrawals with guardrails against the 4% rule, and tax-loss harvesting with direct indexing against an index fund, each run through thousands of simulated markets.">
+<meta property="og:url" content="https://ldiazbusquets.github.io/finance/wealth.html">
+<meta property="og:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wealth Management Tools | LDB Finance">
+<meta name="twitter:description" content="Retirement withdrawals with guardrails against the 4% rule, and tax-loss harvesting with direct indexing against an index fund, each run through thousands of simulated markets.">
+<meta name="twitter:image" content="https://ldiazbusquets.github.io/finance/preview.png">
+<meta name="theme-color" content="#0C0A08">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=3">
+<link rel="shortcut icon" href="/favicon.ico?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<script>
+/* light 7am-7pm local time, dark otherwise; a manual pick lasts for this visit */
+(function () {
+  var h = new Date().getHours(), byHour = h >= 7 && h < 19, pick = null;
+  try { var v = (sessionStorage.getItem('theme') || '').split('|'); if (v[0] && v[1] === String(byHour)) pick = v[0]; } catch (e) {}
+  if (pick ? pick === 'light' : byHour) document.documentElement.classList.add('lt');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=50">
+</head>
+<body data-page="wealth">
+<nav class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="LDB Finance, home"><svg class="lg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 9.5V4.8A1.8 1.8 0 0 1 4.8 3h4.7M14.5 21h4.7a1.8 1.8 0 0 0 1.8-1.8v-4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg> LDB <span>Finance</span></a>
+  <div class="links"><a href="research.html">Research</a><a href="valuation.html">Valuation</a><a href="models.html">Models</a><a href="tools.html" class=on>Tools</a><a href="markets.html">Markets</a><a href="about.html">About</a></div>
+  <div class="right">
+    <button class="tg" id="tg" aria-label="Switch theme"></button>
+    <button class="mb" id="mb" aria-label="Menu" aria-expanded="false"></button>
+    <span class="sites" role="navigation" aria-label="Luis Diaz Busquets sites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></span>
+  </div>
+</div></nav>
+<div class="menu" id="menu"><a href="research.html">Research<span>&rarr;</span></a><a href="valuation.html">Valuation<span>&rarr;</span></a><a href="models.html">Models<span>&rarr;</span></a><a href="tools.html" class=on>Tools<span>&rarr;</span></a><a href="markets.html">Markets<span>&rarr;</span></a><a href="about.html">About<span>&rarr;</span></a><div class="msites"><a href="https://ldiazbusquets.github.io/">Portfolio</a><b aria-current="page">Finance</b><a href="https://ldiazbusquets.github.io/lab/">Lab</a></div></div>
+<header class="ph"><div class="wrap">
+  <div class="eyebrow mono">Tools &middot; Wealth management</div>
+  <h1>Make the Money <em>Last, and Keep More of It</em></h1>
+  <p class="sub">Two questions advisers answer every week: how much can a retiree spend, and is harvesting tax losses worth it? Both tools run thousands of simulated markets in your browser.</p><div class="cta"><a class="pill cu" href="#withdraw"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Retirement Withdrawals</a><a class="pill gh" href="#harvest">Tax-Loss Harvesting</a><a class="pill gh" href="plan.html">Full Financial Plan</a></div>
+</div></header>
+
+<section class="tight" id="withdraw">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-10</div><h3 class="sec">Fixed withdrawals or guardrails?</h3></div><p>The &ldquo;4% rule&rdquo; spends the same amount, raised with inflation, whatever markets do. Guardrails (after Guyton and Klinger) start higher and adjust: spending is cut when the withdrawal rate drifts too far above where it started, and raised when it falls too far below.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The Retiree</h3><p>Both plans start with the same spending.</p></div></div><div id="gIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">2,000 Markets</h3><p>Stocks average 7.5% a year (16% volatility), bonds 4.5% (6%).</p></div></div><div id="gOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">What Guardrails Do to Spending</h3><p>Spending each year in today&rsquo;s dollars, as a share of the first year: the median market (line) and the middle 80% (shaded). The dashed line is the fixed plan, which never changes until the money runs out.</p></div></div><svg class="chart" id="gChart" role="img" aria-label="Guardrails spending path chart"></svg></div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">The Portfolio, Median Market</h3><p>In today&rsquo;s dollars. Guardrails in copper, the fixed plan dashed.</p></div></div><svg class="chart" id="gBal" role="img" aria-label="Median portfolio balance chart"></svg></div>
+    <p style="max-width:760px;margin-top:18px" id="gNote"></p>
+    <p class="disc">The rules, simplified from Guyton and Klinger (2006): no inflation raise after a losing year if spending is already above its starting rate; a cut when the withdrawal rate is more than the guardrail width above the starting rate (not in the last 15 years); a raise when it is that far below. Returns are drawn independently each year from a lognormal distribution, which understates long bear markets. Before fees and taxes. For education only.</p>
+  </div>
+</section>
+
+<section class="tight" id="harvest" style="padding-top:30px">
+  <div class="wrap">
+    <div class="split" style="margin-bottom:34px"><div><div class="eyebrow mono">TOOL-11</div><h3 class="sec">Tax-Loss Harvesting and Direct Indexing</h3></div><p>Selling an investment at a loss and buying something similar keeps the portfolio invested while banking a loss to offset gains. An index fund rarely falls far enough to harvest; its individual stocks often do, even in a good year. That is the case for direct indexing.</p></div>
+    <div class="cols2 bond">
+      <div class="panel"><div class="hd"><div><h3 class="sec">The Investor</h3><p>Stocks follow the market plus their own ups and downs.</p></div></div><div id="hIn"></div></div>
+      <div class="panel"><div class="hd"><div><h3 class="sec">300 Markets</h3><p>The market averages 7.5% a year with 16% volatility.</p></div></div><div id="hOut"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="hd"><div><h3 class="sec">Losses Harvested Each Year</h3><p>As a share of the amount invested, averaged over the markets: stock by stock in copper, a single index fund dashed.</p></div></div><svg class="chart" id="hChart" role="img" aria-label="Losses harvested each year chart"></svg></div>
+    <p style="max-width:760px;margin-top:18px" id="hNote"></p>
+    <p class="disc">Assumes each sold stock is replaced at once by a similar one that moves the same way, so the 30-day wash-sale rule is not triggered and there is no tracking difference; in practice the replacement differs a little. Losses offset other capital gains first, then up to $3,000 a year of income, and the rest carries forward. Tax saved is invested in the market. Short- and long-term gains are taxed at one rate here. State taxes are ignored. For education only, not tax advice.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+  <span>&copy; <span class="yr">2026</span> Luis Diaz Busquets &middot; LDB Finance &middot; For education only. Nothing here is investment advice.</span>
+  <span class="fl"><a href="about.html">About &amp; sources</a><a href="https://ldiazbusquets.github.io/">Main site</a><a href="https://ldiazbusquets.github.io/lab/">LDB Lab</a></span>
+</div></footer>
+<script src="assets/site.js?v=24"></script>
+<script src="assets/wealth.js?v=1"></script>
+<script src="assets/chat.js?v=4" defer></script>
+</body>
+</html>

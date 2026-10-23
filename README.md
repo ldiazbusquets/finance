@@ -11,7 +11,7 @@
 | **Research** | Analyst reports on more than 30 public companies and four private ones (Anthropic, OpenAI, Anduril, Bloomberg). Each one includes the business, latest results, five years of figures, the balance sheet, a valuation with bear/base/bull cases, what the price assumes, risks, a comparison with its S&P 500 industry peers, and a rating. There are also notes on rates, inflation, credit and Puerto Rico. |
 | **Valuation** | Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model, built from its SEC filings and the last close. |
 | **Models** | Every report's valuation as a downloadable spreadsheet in live formulas, a CSV, and the Python script that produced it. |
-| **Tools** | Portfolio x-ray and risk, a household financial plan run through 1,000 simulated markets, bond math, loans and options payoffs. All of them run in the browser. |
+| **Tools** | Portfolio x-ray and risk, a household financial plan run through 1,000 simulated markets, retirement withdrawals with guardrails against the 4% rule, tax-loss harvesting with direct indexing, bond math, loans and options payoffs. All of them run in the browser. |
 | **Markets** | Rates, the yield curve, inflation, credit spreads and oil, refreshed every weekday. |
 | **Research hub** | Ask the filings, a stock screener, side-by-side comparisons, an earnings calendar, insider and fund holdings, and a public track record of every call. |
 | **Ask AI** | A chat bubble on every page. A small open model (Qwen3) runs privately in the visitor's browser and answers from the page being read, the site's ratings, market data and recent headlines. |

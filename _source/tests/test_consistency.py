@@ -11,7 +11,7 @@ import holdings  # noqa: E402
 
 ROOT = os.path.dirname(SRC)
 AMZN = holdings.R['AMZN']
-PAGE = open(os.path.join(ROOT, 'amazon.html'), encoding='utf-8').read()
+PAGE = open(os.path.join(ROOT, 'reports', 'amazon.html'), encoding='utf-8').read()
 
 
 def errs(R=AMZN, page=PAGE):

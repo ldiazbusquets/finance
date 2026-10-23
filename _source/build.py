@@ -37,7 +37,7 @@ SITE = 'https://ldiazbusquets.github.io/finance/'
 def head(title, desc, fn='index.html', root=''):
     t = 'Finance | Luis Diaz Busquets' if title is None else f'{title} | {NAME}'   # the home page is named like the Lab's
     url = SITE + ('' if fn == 'index.html' else fn)
-    ogf = fn.replace('.html', '.jpg')
+    ogf = os.path.basename(fn).replace('.html', '.jpg')
     own = os.path.exists(os.path.join(OUT, 'og', ogf))
     img = f'{SITE}og/{ogf}' if own else f'{SITE}preview.png'
     alt = t if own else 'LDB Finance: Benjamin Franklin from the $100 note, drawn in copper tiles'
@@ -123,19 +123,42 @@ def foot(extra=''):
   <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=24"></script>{extra}
+<script src="assets/site.js?v=25"></script>{extra}
 <script src="assets/chat.js?v=4" defer></script>
 </body>
 </html>
 '''
 
 
+# Where pages live. Reports sit in reports/ and notes in notes/, so the top of the repo holds only the site's
+# own pages. Everything is written with the short names; page() moves the file and rewrites every link to it.
+MOVED = {'costco.html': 'reports/costco.html', 'gev.html': 'reports/gev.html'}
+for _r in list(holdings.R.values()) + list(coverage.R.values()):
+    MOVED[_r['slug'] + '.html'] = 'reports/' + _r['slug'] + '.html'
+for _n in notes.NOTES:
+    MOVED[_n['slug'] + '.html'] = 'notes/' + _n['slug'].replace('note-', '', 1) + '.html'
+_LINK = re.compile(r'((?:href|src|data-href)=")(?:\./)?([a-z0-9-]+\.html)((?:[?#][^"]*)?")')
+
+
+def relink(html):
+    """point every link at a moved page to its new address"""
+    return _LINK.sub(lambda m: m.group(1) + MOVED.get(m.group(2), m.group(2)) + m.group(3), html)
+
+
 def page(fn, cur, title, desc, kind, body, extra='', root='', attrs=''):
-    html = head(title, desc, fn) + f'<body data-page="{kind}"{attrs}>\n' + nav(cur) + body + foot(extra)
+    out = MOVED.get(fn, fn)
+    html = head(title, desc, out) + f'<body data-page="{kind}"{attrs}>\n' + nav(cur) + body + foot(extra)
+    html = relink(html)
     if root:   # pages GitHub serves at other addresses (404) need absolute links
         html = re.sub(r'(href|src)="(?!https?:|/|#|data:|mailto:)([^"]*)"', lambda m: f'{m.group(1)}="{root}{m.group(2)}"', html)
+    if out != fn:
+        # one folder down: a <base> keeps every relative link, fetch and image resolving from the site root, as before;
+        # in-page anchors then need the page's own path
+        html = html.replace('<head>\n', '<head>\n<base href="../">\n', 1)
+        html = html.replace('href="#', f'href="{out}#')
     html = titlecase.apply_all(html)
-    with open(os.path.join(OUT, fn), 'w') as f:
+    os.makedirs(os.path.dirname(os.path.join(OUT, out)), exist_ok=True)
+    with open(os.path.join(OUT, out), 'w') as f:
         f.write(html)
 
 
@@ -407,8 +430,8 @@ def build():
     wlh = {c['ticker']: c for c in json.load(open(os.path.join(SRC, 'data', 'watchlist.json')))['companies']}
     cur_calls = []
     for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
-        cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
-    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
+        cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': MOVED[r['slug'] + '.html'], 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
+    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': MOVED['gev.html'], 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
     with open(os.path.join(OUT, 'assets', 'ctx.json'), 'w') as f:
         json.dump({'method': 'Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. The rating is relative to the market; separately, a stock is undervalued on its own if its value is at least 10% above its price, overvalued if at least 10% below, otherwise near fair value. A Buy can still be overvalued on its own. Private companies are not rated. Value is the expected value from 4,000 simulations of the report\'s model, with bear and bull cases as the 10th and 90th percentiles.',
                    'ratings': [{'t': c['t'], 'name': c['name'], 'page': c['page'], 'call': c['call'], 'value': round((coverage.R.get(c['t']) or holdings.R.get(c['t']) or {}).get('expected') or c['value']), 'price': c['price']} for c in cur_calls]}, f, indent=0)
@@ -899,14 +922,18 @@ def build():
     page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book, a cash-flow value of $442 a share and a Hold.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="890.33" data-val="442"')
 
     # ---------------- sitemap ----------------
-    pages = sorted(f for f in os.listdir(OUT) if f.endswith('.html') and f != '404.html')
+    pages = sorted([f for f in os.listdir(OUT) if f.endswith('.html') and f != '404.html'] + [v for v in MOVED.values() if os.path.exists(os.path.join(OUT, v))])
     with open(os.path.join(OUT, 'sitemap.xml'), 'w') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{SITE}{"" if p == "index.html" else p}</loc></url>\n' for p in pages) + '</urlset>\n')
 
     # ---------------- 404 ----------------
     nf = ph('Error 404', 'Page <em>not found</em>', 'That page doesn\u2019t exist, or it has moved. Try one of these instead.',
             '<div class="cta">' + pill('./', 'Home') + '<a class="pill gh" href="valuation.html">Value a company</a><a class="pill gh" href="markets.html">Markets</a></div>')
-    page('404.html', None, 'Page not found', 'This page does not exist.', 'nf', nf, root='/finance/')
+    # reports and notes moved into folders: old addresses forward to the new ones (GitHub Pages serves this page for any missing path)
+    moved_js = ('\n<script id="moved" type="application/json">' + json.dumps(MOVED, separators=(',', ':')) + '</script>'
+                '\n<script>(function () { var M = JSON.parse(document.getElementById("moved").textContent), m = /\\/finance\\/([a-z0-9-]+\\.html)$/.exec(location.pathname);'
+                ' if (m && M[m[1]]) location.replace("/finance/" + M[m[1]] + location.search + location.hash); })();</script>')
+    page('404.html', None, 'Page not found', 'This page does not exist.', 'nf', nf, moved_js, root='/finance/')
 
 
 if __name__ == '__main__':

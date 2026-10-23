@@ -49,15 +49,17 @@ def freeze(html, R, when, current):
     body = re.sub(r'<div class="panel now" id="now">.*?<div class="revnote" id="revnote" hidden></div>\s*</div>', '', body, flags=re.S)
     head = re.sub(r'<script\b.*?</script>', '', html[:head_end], flags=re.S)
     head = re.sub(r'<link rel="canonical"[^>]*>', '', head)
+    head = re.sub(r'<base [^>]*>\n?', '', head)          # reports live in reports/ and use <base>; the frozen copy has its own paths
     head = head.replace('<head>', '<head>\n<meta name="robots" content="noindex">', 1)
     if theme:
         head += theme.group(0)
     head += '<style>#tg, #mb { display: none !important; }</style>'
     html = head + body
+    html = html.replace(f'href="reports/{R["slug"]}.html#', 'href="#')     # its own anchors stay on the frozen page
     html = re.sub(r'(href|src)="(?!https?:|/|#|data:|mailto:|tel:)([^"]*)"', lambda m: f'{m.group(1)}="../../{m.group(2)}"', html)
     banner = (f'<div class="archived" role="note" style="background:var(--s2);border-bottom:1px solid var(--line2);padding:12px 0;font-size:14px">'
               f'<div class="wrap"><b>Archived version</b> as published on {when}: rated {R["call"]}' + (f' at ${R["price"]:,.2f}' if isinstance(R.get('price'), (int, float)) else '') + '. '
-              f'It is kept unchanged so the call can be checked. <a href="../../{R["slug"]}.html" style="color:var(--acc);text-decoration:underline">Current version &rarr;</a></div></div>')
+              f'It is kept unchanged so the call can be checked. <a href="../../reports/{R["slug"]}.html" style="color:var(--acc);text-decoration:underline">Current version &rarr;</a></div></div>')
     html = re.sub(r'(<body[^>]*>)', lambda m: m.group(1) + '\n' + banner, html, count=1)
     return html
 
@@ -68,7 +70,7 @@ def run(out, reports, today=None):
     made = []
     for R in reports:
         slug = R.get('slug')
-        page = os.path.join(out, f'{slug}.html')
+        page = os.path.join(out, 'reports', f'{slug}.html')
         if not slug or not os.path.exists(page):
             continue
         vs = idx['reports'].setdefault(slug, [])

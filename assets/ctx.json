@@ -4,7 +4,7 @@
 {
 "t": "NVDA",
 "name": "Nvidia",
-"page": "nvidia.html",
+"page": "reports/nvidia.html",
 "call": "Buy",
 "value": 173,
 "price": 216.47
@@ -12,7 +12,7 @@
 {
 "t": "AMZN",
 "name": "Amazon",
-"page": "amazon.html",
+"page": "reports/amazon.html",
 "call": "Hold",
 "value": 156,
 "price": 262.63
@@ -20,7 +20,7 @@
 {
 "t": "META",
 "name": "Meta Platforms",
-"page": "meta.html",
+"page": "reports/meta.html",
 "call": "Hold",
 "value": 528,
 "price": 697.52
@@ -28,7 +28,7 @@
 {
 "t": "JPM",
 "name": "JPMorgan Chase",
-"page": "jpmorgan.html",
+"page": "reports/jpmorgan.html",
 "call": "Buy",
 "value": 289,
 "price": 335.26
@@ -36,7 +36,7 @@
 {
 "t": "VRT",
 "name": "Vertiv",
-"page": "vertiv.html",
+"page": "reports/vertiv.html",
 "call": "Hold",
 "value": 118,
 "price": 203.56
@@ -44,7 +44,7 @@
 {
 "t": "LHX",
 "name": "L3Harris",
-"page": "l3harris.html",
+"page": "reports/l3harris.html",
 "call": "Buy",
 "value": 425,
 "price": 248.77
@@ -52,7 +52,7 @@
 {
 "t": "AWK",
 "name": "American Water Works",
-"page": "american-water.html",
+"page": "reports/american-water.html",
 "call": "Hold",
 "value": 98,
 "price": 135.79
@@ -60,7 +60,7 @@
 {
 "t": "BA",
 "name": "Boeing",
-"page": "boeing.html",
+"page": "reports/boeing.html",
 "call": "Buy",
 "value": 192,
 "price": 190.47
@@ -68,7 +68,7 @@
 {
 "t": "SPCX",
 "name": "SpaceX",
-"page": "spacex.html",
+"page": "reports/spacex.html",
 "call": "Buy",
 "value": 144,
 "price": 162.57
@@ -76,7 +76,7 @@
 {
 "t": "FLY",
 "name": "Firefly Aerospace",
-"page": "firefly.html",
+"page": "reports/firefly.html",
 "call": "Buy",
 "value": 22,
 "price": 17.41
@@ -84,7 +84,7 @@
 {
 "t": "KTOS",
 "name": "Kratos Defense",
-"page": "kratos.html",
+"page": "reports/kratos.html",
 "call": "Hold",
 "value": 26,
 "price": 38.81
@@ -92,7 +92,7 @@
 {
 "t": "AXON",
 "name": "Axon Enterprise",
-"page": "axon.html",
+"page": "reports/axon.html",
 "call": "Buy",
 "value": 332,
 "price": 396.3
@@ -100,7 +100,7 @@
 {
 "t": "PLTR",
 "name": "Palantir Technologies",
-"page": "palantir.html",
+"page": "reports/palantir.html",
 "call": "Sell",
 "value": 107,
 "price": 201.72
@@ -108,7 +108,7 @@
 {
 "t": "AMD",
 "name": "Advanced Micro Devices",
-"page": "amd.html",
+"page": "reports/amd.html",
 "call": "Hold",
 "value": 366,
 "price": 552.72
@@ -116,7 +116,7 @@
 {
 "t": "MU",
 "name": "Micron Technology",
-"page": "micron.html",
+"page": "reports/micron.html",
 "call": "Buy",
 "value": 713,
 "price": 913.67
@@ -124,7 +124,7 @@
 {
 "t": "SNDK",
 "name": "Sandisk",
-"page": "sandisk.html",
+"page": "reports/sandisk.html",
 "call": "Sell",
 "value": 752,
 "price": 1378.22
@@ -132,7 +132,7 @@
 {
 "t": "LMT",
 "name": "Lockheed Martin",
-"page": "lockheed-martin.html",
+"page": "reports/lockheed-martin.html",
 "call": "Buy",
 "value": 650,
 "price": 590.2
@@ -140,7 +140,7 @@
 {
 "t": "NOC",
 "name": "Northrop Grumman",
-"page": "northrop-grumman.html",
+"page": "reports/northrop-grumman.html",
 "call": "Buy",
 "value": 564,
 "price": 552.53
@@ -148,7 +148,7 @@
 {
 "t": "CAT",
 "name": "Caterpillar",
-"page": "caterpillar.html",
+"page": "reports/caterpillar.html",
 "call": "Hold",
 "value": 439,
 "price": 703.84
@@ -156,7 +156,7 @@
 {
 "t": "ASML",
 "name": "ASML Holding",
-"page": "asml.html",
+"page": "reports/asml.html",
 "call": "Hold",
 "value": 1034,
 "price": 1560.54
@@ -164,7 +164,7 @@
 {
 "t": "SKHY",
 "name": "SK hynix",
-"page": "sk-hynix.html",
+"page": "reports/sk-hynix.html",
 "call": "Buy",
 "value": 123,
 "price": 131.69
@@ -172,7 +172,7 @@
 {
 "t": "MSFT",
 "name": "Microsoft",
-"page": "microsoft.html",
+"page": "reports/microsoft.html",
 "call": "Hold",
 "value": 373,
 "price": 521.08
@@ -180,7 +180,7 @@
 {
 "t": "GOOGL",
 "name": "Alphabet",
-"page": "alphabet.html",
+"page": "reports/alphabet.html",
 "call": "Hold",
 "value": 242,
 "price": 324.22
@@ -188,7 +188,7 @@
 {
 "t": "TSM",
 "name": "TSMC",
-"page": "tsmc.html",
+"page": "reports/tsmc.html",
 "call": "Buy",
 "value": 394,
 "price": 412.35
@@ -196,7 +196,7 @@
 {
 "t": "AVGO",
 "name": "Broadcom",
-"page": "broadcom.html",
+"page": "reports/broadcom.html",
 "call": "Buy",
 "value": 398,
 "price": 323.24
@@ -204,7 +204,7 @@
 {
 "t": "RTX",
 "name": "RTX",
-"page": "rtx.html",
+"page": "reports/rtx.html",
 "call": "Hold",
 "value": 147,
 "price": 194.745
@@ -212,7 +212,7 @@
 {
 "t": "GD",
 "name": "General Dynamics",
-"page": "general-dynamics.html",
+"page": "reports/general-dynamics.html",
 "call": "Buy",
 "value": 342,
 "price": 350.755
@@ -220,7 +220,7 @@
 {
 "t": "CEG",
 "name": "Constellation Energy",
-"page": "constellation-energy.html",
+"page": "reports/constellation-energy.html",
 "call": "Hold",
 "value": 189,
 "price": 255.21
@@ -228,7 +228,7 @@
 {
 "t": "UNH",
 "name": "UnitedHealth",
-"page": "unitedhealth.html",
+"page": "reports/unitedhealth.html",
 "call": "Buy",
 "value": 519,
 "price": 425.06
@@ -236,7 +236,7 @@
 {
 "t": "XOM",
 "name": "ExxonMobil",
-"page": "exxonmobil.html",
+"page": "reports/exxonmobil.html",
 "call": "Sell",
 "value": 93,
 "price": 178.19
@@ -244,7 +244,7 @@
 {
 "t": "V",
 "name": "Visa",
-"page": "visa.html",
+"page": "reports/visa.html",
 "call": "Hold",
 "value": 288,
 "price": 414.26
@@ -252,7 +252,7 @@
 {
 "t": "JNJ",
 "name": "Johnson & Johnson",
-"page": "johnson-johnson.html",
+"page": "reports/johnson-johnson.html",
 "call": "Hold",
 "value": 193,
 "price": 267.68
@@ -260,7 +260,7 @@
 {
 "t": "GEV",
 "name": "GE Vernova",
-"page": "gev.html",
+"page": "reports/gev.html",
 "call": "Sell",
 "value": 442,
 "price": 890.33

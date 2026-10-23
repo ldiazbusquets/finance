@@ -4,7 +4,7 @@
   {
    "t": "AMZN",
    "name": "Amazon",
-   "page": "amazon.html",
+   "page": "reports/amazon.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 153,
@@ -14,7 +14,7 @@
   {
    "t": "AWK",
    "name": "American Water Works",
-   "page": "american-water.html",
+   "page": "reports/american-water.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 100,
@@ -24,7 +24,7 @@
   {
    "t": "BA",
    "name": "Boeing",
-   "page": "boeing.html",
+   "page": "reports/boeing.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 197,
@@ -34,7 +34,7 @@
   {
    "t": "GEV",
    "name": "GE Vernova",
-   "page": "gev.html",
+   "page": "reports/gev.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 442,
@@ -44,7 +44,7 @@
   {
    "t": "JPM",
    "name": "JPMorgan Chase",
-   "page": "jpmorgan.html",
+   "page": "reports/jpmorgan.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 284,
@@ -54,7 +54,7 @@
   {
    "t": "LHX",
    "name": "L3Harris",
-   "page": "l3harris.html",
+   "page": "reports/l3harris.html",
    "date": "2026-10-20",
    "call": "Buy",
    "value": 436,
@@ -64,7 +64,7 @@
   {
    "t": "META",
    "name": "Meta Platforms",
-   "page": "meta.html",
+   "page": "reports/meta.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 516,
@@ -74,7 +74,7 @@
   {
    "t": "NVDA",
    "name": "Nvidia",
-   "page": "nvidia.html",
+   "page": "reports/nvidia.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 166,
@@ -84,7 +84,7 @@
   {
    "t": "VRT",
    "name": "Vertiv",
-   "page": "vertiv.html",
+   "page": "reports/vertiv.html",
    "date": "2026-10-20",
    "call": "Hold",
    "value": 117,
@@ -94,7 +94,7 @@
   {
    "t": "AMD",
    "name": "Advanced Micro Devices",
-   "page": "amd.html",
+   "page": "reports/amd.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 319,
@@ -104,7 +104,7 @@
   {
    "t": "AXON",
    "name": "Axon Enterprise",
-   "page": "axon.html",
+   "page": "reports/axon.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 289,
@@ -114,7 +114,7 @@
   {
    "t": "FLY",
    "name": "Firefly Aerospace",
-   "page": "firefly.html",
+   "page": "reports/firefly.html",
    "date": "2026-10-21",
    "call": "Hold",
    "value": 20,
@@ -124,7 +124,7 @@
   {
    "t": "KTOS",
    "name": "Kratos Defense",
-   "page": "kratos.html",
+   "page": "reports/kratos.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 23,
@@ -134,7 +134,7 @@
   {
    "t": "MU",
    "name": "Micron Technology",
-   "page": "micron.html",
+   "page": "reports/micron.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 622,
@@ -144,7 +144,7 @@
   {
    "t": "PLTR",
    "name": "Palantir Technologies",
-   "page": "palantir.html",
+   "page": "reports/palantir.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 79,
@@ -154,7 +154,7 @@
   {
    "t": "SNDK",
    "name": "Sandisk",
-   "page": "sandisk.html",
+   "page": "reports/sandisk.html",
    "date": "2026-10-21",
    "call": "Watch",
    "value": 636,
@@ -164,7 +164,7 @@
   {
    "t": "SPCX",
    "name": "SpaceX",
-   "page": "spacex.html",
+   "page": "reports/spacex.html",
    "date": "2026-10-21",
    "call": "Hold",
    "value": 118,
@@ -174,7 +174,7 @@
   {
    "t": "AMD",
    "name": "Advanced Micro Devices",
-   "page": "amd.html",
+   "page": "reports/amd.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 353,
@@ -184,7 +184,7 @@
   {
    "t": "AMZN",
    "name": "Amazon",
-   "page": "amazon.html",
+   "page": "reports/amazon.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 153,
@@ -194,7 +194,7 @@
   {
    "t": "ASML",
    "name": "ASML Holding",
-   "page": "asml.html",
+   "page": "reports/asml.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 1081,
@@ -204,7 +204,7 @@
   {
    "t": "AVGO",
    "name": "Broadcom",
-   "page": "broadcom.html",
+   "page": "reports/broadcom.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 358,
@@ -214,7 +214,7 @@
   {
    "t": "AWK",
    "name": "American Water Works",
-   "page": "american-water.html",
+   "page": "reports/american-water.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 100,
@@ -224,7 +224,7 @@
   {
    "t": "AXON",
    "name": "Axon Enterprise",
-   "page": "axon.html",
+   "page": "reports/axon.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 314,
@@ -234,7 +234,7 @@
   {
    "t": "BA",
    "name": "Boeing",
-   "page": "boeing.html",
+   "page": "reports/boeing.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 197,
@@ -244,7 +244,7 @@
   {
    "t": "CAT",
    "name": "Caterpillar",
-   "page": "caterpillar.html",
+   "page": "reports/caterpillar.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 442,
@@ -254,7 +254,7 @@
   {
    "t": "CEG",
    "name": "Constellation Energy",
-   "page": "constellation-energy.html",
+   "page": "reports/constellation-energy.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 185,
@@ -264,7 +264,7 @@
   {
    "t": "FLY",
    "name": "Firefly Aerospace",
-   "page": "firefly.html",
+   "page": "reports/firefly.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 18,
@@ -274,7 +274,7 @@
   {
    "t": "GD",
    "name": "General Dynamics",
-   "page": "general-dynamics.html",
+   "page": "reports/general-dynamics.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 336,
@@ -284,7 +284,7 @@
   {
    "t": "GEV",
    "name": "GE Vernova",
-   "page": "gev.html",
+   "page": "reports/gev.html",
    "date": "2026-10-22",
    "call": "Sell",
    "value": 442,
@@ -294,7 +294,7 @@
   {
    "t": "GOOGL",
    "name": "Alphabet",
-   "page": "alphabet.html",
+   "page": "reports/alphabet.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 249,
@@ -304,7 +304,7 @@
   {
    "t": "JNJ",
    "name": "Johnson & Johnson",
-   "page": "johnson-johnson.html",
+   "page": "reports/johnson-johnson.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 194,
@@ -314,7 +314,7 @@
   {
    "t": "JPM",
    "name": "JPMorgan Chase",
-   "page": "jpmorgan.html",
+   "page": "reports/jpmorgan.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 284,
@@ -324,7 +324,7 @@
   {
    "t": "KTOS",
    "name": "Kratos Defense",
-   "page": "kratos.html",
+   "page": "reports/kratos.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 24,
@@ -334,7 +334,7 @@
   {
    "t": "LHX",
    "name": "L3Harris",
-   "page": "l3harris.html",
+   "page": "reports/l3harris.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 436,
@@ -344,7 +344,7 @@
   {
    "t": "LMT",
    "name": "Lockheed Martin",
-   "page": "lockheed-martin.html",
+   "page": "reports/lockheed-martin.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 647,
@@ -354,7 +354,7 @@
   {
    "t": "META",
    "name": "Meta Platforms",
-   "page": "meta.html",
+   "page": "reports/meta.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 531,
@@ -364,7 +364,7 @@
   {
    "t": "MSFT",
    "name": "Microsoft",
-   "page": "microsoft.html",
+   "page": "reports/microsoft.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 377,
@@ -374,7 +374,7 @@
   {
    "t": "MU",
    "name": "Micron Technology",
-   "page": "micron.html",
+   "page": "reports/micron.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 622,
@@ -384,7 +384,7 @@
   {
    "t": "NOC",
    "name": "Northrop Grumman",
-   "page": "northrop-grumman.html",
+   "page": "reports/northrop-grumman.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 564,
@@ -394,7 +394,7 @@
   {
    "t": "NVDA",
    "name": "Nvidia",
-   "page": "nvidia.html",
+   "page": "reports/nvidia.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 166,
@@ -404,7 +404,7 @@
   {
    "t": "PLTR",
    "name": "Palantir Technologies",
-   "page": "palantir.html",
+   "page": "reports/palantir.html",
    "date": "2026-10-22",
    "call": "Sell",
    "value": 87,
@@ -414,7 +414,7 @@
   {
    "t": "RTX",
    "name": "RTX",
-   "page": "rtx.html",
+   "page": "reports/rtx.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 146,
@@ -424,7 +424,7 @@
   {
    "t": "SKHY",
    "name": "SK hynix",
-   "page": "sk-hynix.html",
+   "page": "reports/sk-hynix.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 111,
@@ -434,7 +434,7 @@
   {
    "t": "SNDK",
    "name": "Sandisk",
-   "page": "sandisk.html",
+   "page": "reports/sandisk.html",
    "date": "2026-10-22",
    "call": "Sell",
    "value": 636,
@@ -444,7 +444,7 @@
   {
    "t": "SPCX",
    "name": "SpaceX",
-   "page": "spacex.html",
+   "page": "reports/spacex.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 123,
@@ -454,7 +454,7 @@
   {
    "t": "TSM",
    "name": "TSMC",
-   "page": "tsmc.html",
+   "page": "reports/tsmc.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 411,
@@ -464,7 +464,7 @@
   {
    "t": "UNH",
    "name": "UnitedHealth",
-   "page": "unitedhealth.html",
+   "page": "reports/unitedhealth.html",
    "date": "2026-10-22",
    "call": "Buy",
    "value": 516,
@@ -474,7 +474,7 @@
   {
    "t": "V",
    "name": "Visa",
-   "page": "visa.html",
+   "page": "reports/visa.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 291,
@@ -484,7 +484,7 @@
   {
    "t": "VRT",
    "name": "Vertiv",
-   "page": "vertiv.html",
+   "page": "reports/vertiv.html",
    "date": "2026-10-22",
    "call": "Hold",
    "value": 117,
@@ -494,7 +494,7 @@
   {
    "t": "XOM",
    "name": "ExxonMobil",
-   "page": "exxonmobil.html",
+   "page": "reports/exxonmobil.html",
    "date": "2026-10-22",
    "call": "Sell",
    "value": 89,
@@ -504,7 +504,7 @@
   {
    "t": "GOOGL",
    "name": "Alphabet",
-   "page": "alphabet.html",
+   "page": "reports/alphabet.html",
    "date": "2026-10-23",
    "call": "Hold",
    "value": 249,
@@ -514,7 +514,7 @@
   {
    "t": "META",
    "name": "Meta Platforms",
-   "page": "meta.html",
+   "page": "reports/meta.html",
    "date": "2026-10-23",
    "call": "Hold",
    "value": 531,
@@ -524,7 +524,7 @@
   {
    "t": "RTX",
    "name": "RTX",
-   "page": "rtx.html",
+   "page": "reports/rtx.html",
    "date": "2026-10-23",
    "call": "Hold",
    "value": 146,

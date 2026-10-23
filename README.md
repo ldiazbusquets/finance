@@ -31,7 +31,11 @@ The rating is relative. Each report also gives an absolute label: **undervalued*
 Static HTML on GitHub Pages: no server, no accounts, no tracking.
 
 ```
-_source/           the generator: edit here, never the HTML in the root
+reports/           every company report (generated)
+notes/             research notes on rates, inflation, credit and Puerto Rico (generated)
+archive/           frozen published versions of each report
+*.html             the site's own pages: home, research, tools, markets, about (generated)
+_source/           the generator: edit here, never the generated HTML
   build.py         layout, every non-report page, and the build checks
   pages/           report content (holdings.py, coverage.py), report template (rep.py), ratings rule (ratings.py), notes
   models/          one Python valuation script per report, plus export.py (CSV) and xlsx_models.py (Excel)

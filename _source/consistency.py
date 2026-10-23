@@ -158,7 +158,7 @@ def run(out_dir, reports, data_dir=None):
     errs, n, runs = [], 0, 0
     data_dir = data_dir or os.path.join(out_dir, 'data', 'co')
     for R in reports:
-        p = os.path.join(out_dir, R['slug'] + '.html')
+        p = os.path.join(out_dir, 'reports', R['slug'] + '.html')
         if not os.path.exists(p):
             errs.append(f"{R['t']}: {R['slug']}.html was not generated")
             continue

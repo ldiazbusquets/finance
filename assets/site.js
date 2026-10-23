@@ -449,7 +449,7 @@
         $$('[data-cat]').forEach(function (b) { b.style.display = f === 'all' || b.getAttribute('data-cat') === f ? '' : 'none'; });
       };
     });
-    var REPORTS = {'LHX': 'l3harris.html', 'VRT': 'vertiv.html', 'AWK': 'american-water.html', 'AMZN': 'amazon.html', 'META': 'meta.html', 'JPM': 'jpmorgan.html', 'GEV': 'gev.html', 'NVDA': 'nvidia.html', 'BA': 'boeing.html', 'COST': 'costco.html', 'SPCX': 'spacex.html', 'FLY': 'firefly.html', 'ANTHROPIC': 'anthropic.html', 'OPENAI': 'openai.html', 'ANDURIL': 'anduril.html', 'KTOS': 'kratos.html', 'BLOOMBERG': 'bloomberg.html', 'AXON': 'axon.html', 'PLTR': 'palantir.html', 'AMD': 'amd.html', 'MU': 'micron.html', 'SNDK': 'sandisk.html'};
+    var REPORTS = {'LHX': 'reports/l3harris.html', 'VRT': 'reports/vertiv.html', 'AWK': 'reports/american-water.html', 'AMZN': 'reports/amazon.html', 'META': 'reports/meta.html', 'JPM': 'reports/jpmorgan.html', 'GEV': 'reports/gev.html', 'NVDA': 'reports/nvidia.html', 'BA': 'reports/boeing.html', 'COST': 'reports/costco.html', 'SPCX': 'reports/spacex.html', 'FLY': 'reports/firefly.html', 'ANTHROPIC': 'reports/anthropic.html', 'OPENAI': 'reports/openai.html', 'ANDURIL': 'reports/anduril.html', 'KTOS': 'reports/kratos.html', 'BLOOMBERG': 'reports/bloomberg.html', 'AXON': 'reports/axon.html', 'PLTR': 'reports/palantir.html', 'AMD': 'reports/amd.html', 'MU': 'reports/micron.html', 'SNDK': 'reports/sandisk.html'};
     getJSON('data/companies/index.json').then(function (ix) {
       var el = $('#cov');
       if (!ix.updated || !ix.companies || !ix.companies.length) return el.innerHTML = '<div class="wait"><b>Waiting for the first data update.</b> Company figures come straight from SEC filings and appear here after the update runs for the first time.</div>';

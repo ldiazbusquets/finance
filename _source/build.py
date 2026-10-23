@@ -120,7 +120,7 @@ def foot(extra=''):
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
 <script src="assets/site.js?v=20"></script>{extra}
-<script src="assets/chat.js?v=2" defer></script>
+<script src="assets/chat.js?v=3" defer></script>
 </body>
 </html>
 '''

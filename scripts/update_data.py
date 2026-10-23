@@ -348,6 +348,12 @@ if __name__ == '__main__':
         hub_data.run(ua if ua and '@' in ua else '')
     except Exception as e:
         print(f'  FAIL hub data {e}', file=sys.stderr)
+    print('Headlines (Ask AI)')
+    try:
+        import news_data
+        news_data.run()
+    except Exception as e:
+        print(f'  FAIL headlines {e}', file=sys.stderr)
     print('Weekly returns (portfolio risk tool)')
     try:
         import risk_data

@@ -1,0 +1,31 @@
+name: Update headlines
+
+on:
+  schedule:
+    - cron: '20 12,15,18 * * 1-5'   # weekdays: before the open, midday and mid-afternoon (New York)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Download headlines
+        run: python scripts/news_data.py
+      - name: Save
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898268+github-actions[bot]@users.noreply.github.com"
+          git add data/news.json
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "Update headlines"; git pull --rebase --autostash; git push; fi

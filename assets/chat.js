@@ -121,8 +121,8 @@
   }
   var STOP = /^(the|a|an|and|or|of|to|in|on|is|are|was|for|what|why|how|does|do|this|that|it|its|with|about|me|i|you|be|by|at|as|can|from|which|who|will|would|should)$/;
   function words(s) { return (s.toLowerCase().match(/[a-z0-9$%.]+/g) || []).filter(function (w) { return w.length > 1 && !STOP.test(w); }); }
-  function pageContext(q) {
-    var cs = chunks(), qw = words(q), budget = 3200, out = [], used = 0;
+  function pageContext(q, budget) {
+    budget = budget || 3200; var cs = chunks(), qw = words(q), out = [], used = 0;
     var head = cs.slice(0, 3).map(function (c) { return c.t; }).join('\n');
     var rate = document.querySelector('.rate'); if (rate) head += '\n' + rate.innerText.replace(/\s+/g, ' ').slice(0, 900);
     used = head.length;
@@ -147,6 +147,55 @@
     var lines = list.map(function (x) { return x.t + ' (' + x.name + '): ' + x.call + (x.value ? ', model value $' + x.value : '') + (x.price ? ' vs price $' + x.price : '') + ' [' + x.page + ']'; });
     return (S.ctx.method ? 'How ratings work: ' + S.ctx.method + '\n' : '') + (lines.length ? 'Site ratings (Oct 2026):\n' + lines.join('\n') : '');
   }
+  /* ---------- market brief: latest closes, biggest S&P 500 moves, rates, and recent headlines ---------- */
+  var MKT = /\b(market|markets|stocks?|s&p|sp ?500|nasdaq|dow|index|indexes|today|yesterday|this week|last week|red|green|rall(y|ied)|sell-?off|selloff|crash|news|headlines?|fed|rates?|yields?|treasur(y|ies)|oil|brent|inflation|cpi|jobs|vix|why did|why is|what happened)\b/i;
+  function getJSON(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function getMkt(q) {
+    var need = MKT.test(q);
+    if (!S.news) S.news = getJSON('data/news.json');
+    if (need && !S.px) { S.px = getJSON('data/co/prices.json'); S.mk = getJSON('data/markets.json'); }
+    return Promise.all([S.news, need ? S.px : null, need ? S.mk : null]).then(function (a) { return { news: a[0], px: a[1], mk: a[2], need: need }; });
+  }
+  function fd(iso) { var d = new Date(iso.length <= 10 ? iso + 'T12:00:00Z' : iso); return isNaN(d) ? iso : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'America/New_York' }); }
+  function pct(a, b) { return ((a / b - 1) * 100); }
+  function sgn(x, d) { return (x >= 0 ? '+' : '') + x.toFixed(d == null ? 2 : d); }
+  function marketContext(q, M) {
+    var out = [], names = {};
+    ((S.ctx && S.ctx.ratings) || []).forEach(function (r) { names[r.t] = r.name; });
+    if (M.need && M.px && M.px.px) {
+      var px = M.px.px, sp = px['^GSPC'];
+      if (sp && sp.pp) out.push('S&P 500 close ' + fd(sp.d) + ': ' + sp.p.toFixed(2) + ' (' + sgn(pct(sp.p, sp.pp)) + '% from ' + fd(sp.pd) + ')');
+      var mv = Object.keys(px).filter(function (k) { var x = px[k]; return k[0] !== '^' && x && x.p && x.pp && sp && x.d === sp.d; }).map(function (k) { return [k, pct(px[k].p, px[k].pp)]; });
+      if (mv.length > 20) {
+        mv.sort(function (a, b) { return a[1] - b[1]; });
+        var up = mv.filter(function (x) { return x[1] > 0; }).length;
+        var lab = function (x) { return x[0] + (names[x[0]] ? ' (' + names[x[0]] + ')' : '') + ' ' + sgn(x[1], 1) + '%'; };
+        out.push('S&P 500 members up / down that day: ' + up + ' / ' + (mv.length - up));
+        out.push('Biggest falls: ' + mv.slice(0, 6).map(lab).join(', '));
+        out.push('Biggest gains: ' + mv.slice(-6).reverse().map(lab).join(', '));
+      }
+    }
+    if (M.need && M.mk && M.mk.series) {
+      ['DGS10', 'DGS2', 'VIXCLS', 'DCOILWTICO', 'BAMLH0A0HYM2', 'DFF'].forEach(function (k) {
+        var s = M.mk.series[k]; if (!s || !s.last) return;
+        out.push(s.name + ': ' + s.last.v + (s.fmt === 'pct' || /Treasury|spread|funds/i.test(s.name) ? '%' : '') + ' on ' + fd(s.last.d) + (s.prev ? ' (previous ' + s.prev.v + ')' : ''));
+      });
+    }
+    var items = (M.news && M.news.items) || [], qw = words(q), picked = [];
+    if (items.length) {
+      var sc = items.map(function (x, i) { var lt = x.t.toLowerCase(), s2 = 0; qw.forEach(function (w) { if (w.length > 2 && lt.indexOf(w) >= 0) s2 += w.length > 4 ? 2 : 1; }); return { x: x, s: s2, i: i }; });
+      var top = sc.filter(function (o) { return o.s > 0; }).sort(function (a, b) { return b.s - a.s || a.i - b.i; }).slice(0, 10);
+      var recent = M.need ? sc.slice(0, 14) : [];
+      var seen = {};
+      top.concat(recent).forEach(function (o) { if (!seen[o.i]) { seen[o.i] = 1; picked.push(o); } });
+      picked.sort(function (a, b) { return a.i - b.i; });
+    }
+    var txt = '';
+    if (out.length) txt += '--- Market data (from the site\'s daily data) ---\n' + out.join('\n') + '\n';
+    if (picked.length) txt += '--- Recent headlines (titles only, newest first; feeds updated ' + fd(M.news.updated) + ') ---\n' + picked.map(function (o) { return '- [' + fd(o.x.d || M.news.updated) + ', ' + o.x.s + '] ' + o.x.t; }).join('\n') + '\n';
+    else if (M.need) txt += '--- Recent headlines: none available ---\n';
+    return txt;
+  }
   function getCtx() { if (S.ctx !== null) return Promise.resolve(); return fetch('assets/ctx.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (j) { S.ctx = j; }).catch(function () { S.ctx = {}; }); }
 
   /* ---------- asking ---------- */
@@ -166,12 +215,17 @@
   function ask(q) {
     var el = document.createElement('div'); el.className = 'aib-m a'; el.innerHTML = '<span class="aib-dots"><i></i><i></i><i></i></span>'; log.appendChild(el); log.scrollTop = log.scrollHeight;
     var tok = {}; S.busy = tok; send.classList.add('stop'); sug.innerHTML = '';
-    getCtx().then(function () {
+    var MK = null;
+    getCtx().then(function () { return getMkt(q); }).then(function (M) {
+      MK = M;
       var title = document.title.replace(/\s*\|.*$/, '');
-      var sys = 'You are the assistant on LDB Finance, a finance research website written by a finance student. Help visitors understand the page they are reading, the companies the site covers, and finance concepts. ' +
-        'Rules: answer in plain English in at most about 150 words unless asked for more; use the page excerpt and site data below for any figures about the site\'s companies and copy numbers exactly; if the excerpt does not contain something, say you do not see it on this page rather than guessing; ' +
-        'for general finance concepts you may use your own knowledge; never invent prices, dates or news; do not give personal buy or sell advice (you may explain the site\'s published rating and its reasons); when it helps, point to the page name the answer comes from.\n\n' +
-        'Current page: ' + title + ' (' + location.pathname.split('/').pop() + ')\n--- Page excerpt ---\n' + pageContext(q) + '\n--- End of excerpt ---\n' + siteContext(q);
+      var today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' });
+      var sys = 'You are the assistant on LDB Finance, a finance research website written by a finance student. Help visitors understand the page they are reading, the companies the site covers, markets and finance concepts. Today is ' + today + ' (New York). ' +
+        'Rules: answer in plain English in at most about 150 words unless asked for more. Use the page excerpt, market data and headlines below for any facts and copy numbers exactly. ' +
+        'You cannot browse the web: the headlines below are ALL the news you know. Never invent a cause for a market move, a news event, a price or a date. To explain why markets moved, use only the market data and headlines given, and say which headlines you are relying on. ' +
+        'If the user mentions a news story that does not appear in the headlines, say plainly that you cannot see that story in the latest headlines, so you can neither confirm nor rule it out, and then explain what the data and headlines do show; do not agree or disagree with the claim. ' +
+        'For general finance concepts and history you may use your own knowledge. Do not give personal buy or sell advice (you may explain the site\'s published rating and its reasons).\n\n' +
+        'Current page: ' + title + ' (' + location.pathname.split('/').pop() + ')\n--- Page excerpt ---\n' + pageContext(q, M.need ? 1200 : 3200) + '\n--- End of excerpt ---\n' + marketContext(q, MK) + siteContext(q);
       var hist = S.msgs.slice(-7, -1).map(function (m) { return { role: m.role, content: m.content.slice(0, 900) }; });
       var msgs = [{ role: 'system', content: sys }].concat(hist, [{ role: 'user', content: q }]);
       return S.eng.chat.completions.create({ messages: msgs, stream: true, temperature: 0.4, top_p: 0.9, max_tokens: 420, extra_body: { enable_thinking: false } });

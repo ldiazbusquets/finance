@@ -72,7 +72,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=40">
+<link rel="stylesheet" href="assets/site.css?v=43">
 </head>
 '''
 
@@ -120,6 +120,7 @@ def foot(extra=''):
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
 <script src="assets/site.js?v=20"></script>{extra}
+<script src="assets/chat.js?v=2" defer></script>
 </body>
 </html>
 '''
@@ -403,6 +404,9 @@ def build():
     for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
         cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': r['slug'] + '.html', 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
     cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': 'gev.html', 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
+    with open(os.path.join(OUT, 'assets', 'ctx.json'), 'w') as f:
+        json.dump({'method': 'Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).',
+                   'ratings': [{'t': c['t'], 'name': c['name'], 'page': c['page'], 'call': c['call'], 'value': (coverage.R.get(c['t']) or holdings.R.get(c['t']) or {}).get('wt') or c['value'], 'price': c['price']} for c in cur_calls]}, f, indent=0)
     lp = os.path.join(SRC, 'data', 'calls.json')
     ledger = json.load(open(lp)) if os.path.exists(lp) else {'_note': 'Every published call, appended when a report is written or its call changes. Never edit past rows.', 'calls': []}
     have = {(c['t'], c['date']) for c in ledger['calls']}

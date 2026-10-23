@@ -1,0 +1,269 @@
+{
+"method": "Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. Private companies are not rated. Value is the probability-weighted value (25% bear, 50% base, 25% bull).",
+"ratings": [
+{
+"t": "NVDA",
+"name": "Nvidia",
+"page": "nvidia.html",
+"call": "Buy",
+"value": 180,
+"price": 216.47
+},
+{
+"t": "AMZN",
+"name": "Amazon",
+"page": "amazon.html",
+"call": "Hold",
+"value": 162,
+"price": 262.63
+},
+{
+"t": "META",
+"name": "Meta Platforms",
+"page": "meta.html",
+"call": "Buy",
+"value": 551,
+"price": 697.52
+},
+{
+"t": "JPM",
+"name": "JPMorgan Chase",
+"page": "jpmorgan.html",
+"call": "Buy",
+"value": 290,
+"price": 335.26
+},
+{
+"t": "VRT",
+"name": "Vertiv",
+"page": "vertiv.html",
+"call": "Hold",
+"value": 122,
+"price": 203.56
+},
+{
+"t": "LHX",
+"name": "L3Harris",
+"page": "l3harris.html",
+"call": "Buy",
+"value": 439,
+"price": 248.77
+},
+{
+"t": "AWK",
+"name": "American Water Works",
+"page": "american-water.html",
+"call": "Hold",
+"value": 101,
+"price": 135.79
+},
+{
+"t": "BA",
+"name": "Boeing",
+"page": "boeing.html",
+"call": "Buy",
+"value": 197,
+"price": 190.47
+},
+{
+"t": "SPCX",
+"name": "SpaceX",
+"page": "spacex.html",
+"call": "Buy",
+"value": 144,
+"price": 162.57
+},
+{
+"t": "FLY",
+"name": "Firefly Aerospace",
+"page": "firefly.html",
+"call": "Buy",
+"value": 22,
+"price": 17.41
+},
+{
+"t": "KTOS",
+"name": "Kratos Defense",
+"page": "kratos.html",
+"call": "Hold",
+"value": 26,
+"price": 38.81
+},
+{
+"t": "AXON",
+"name": "Axon Enterprise",
+"page": "axon.html",
+"call": "Buy",
+"value": 335,
+"price": 396.3
+},
+{
+"t": "PLTR",
+"name": "Palantir Technologies",
+"page": "palantir.html",
+"call": "Sell",
+"value": 107,
+"price": 201.72
+},
+{
+"t": "AMD",
+"name": "Advanced Micro Devices",
+"page": "amd.html",
+"call": "Hold",
+"value": 374,
+"price": 552.72
+},
+{
+"t": "MU",
+"name": "Micron Technology",
+"page": "micron.html",
+"call": "Buy",
+"value": 717,
+"price": 913.67
+},
+{
+"t": "SNDK",
+"name": "Sandisk",
+"page": "sandisk.html",
+"call": "Sell",
+"value": 766,
+"price": 1378.22
+},
+{
+"t": "LMT",
+"name": "Lockheed Martin",
+"page": "lockheed-martin.html",
+"call": "Buy",
+"value": 667,
+"price": 590.2
+},
+{
+"t": "NOC",
+"name": "Northrop Grumman",
+"page": "northrop-grumman.html",
+"call": "Buy",
+"value": 582,
+"price": 552.53
+},
+{
+"t": "CAT",
+"name": "Caterpillar",
+"page": "caterpillar.html",
+"call": "Hold",
+"value": 454,
+"price": 703.84
+},
+{
+"t": "ASML",
+"name": "ASML Holding",
+"page": "asml.html",
+"call": "Hold",
+"value": 1085,
+"price": 1560.54
+},
+{
+"t": "SKHY",
+"name": "SK hynix",
+"page": "sk-hynix.html",
+"call": "Buy",
+"value": 124,
+"price": 131.69
+},
+{
+"t": "MSFT",
+"name": "Microsoft",
+"page": "microsoft.html",
+"call": "Hold",
+"value": 383,
+"price": 521.08
+},
+{
+"t": "GOOGL",
+"name": "Alphabet",
+"page": "alphabet.html",
+"call": "Buy",
+"value": 254,
+"price": 324.22
+},
+{
+"t": "TSM",
+"name": "TSMC",
+"page": "tsmc.html",
+"call": "Buy",
+"value": 412,
+"price": 412.35
+},
+{
+"t": "AVGO",
+"name": "Broadcom",
+"page": "broadcom.html",
+"call": "Buy",
+"value": 421,
+"price": 323.24
+},
+{
+"t": "RTX",
+"name": "RTX",
+"page": "rtx.html",
+"call": "Buy",
+"value": 152,
+"price": 194.745
+},
+{
+"t": "GD",
+"name": "General Dynamics",
+"page": "general-dynamics.html",
+"call": "Buy",
+"value": 349,
+"price": 350.755
+},
+{
+"t": "CEG",
+"name": "Constellation Energy",
+"page": "constellation-energy.html",
+"call": "Hold",
+"value": 198,
+"price": 255.21
+},
+{
+"t": "UNH",
+"name": "UnitedHealth",
+"page": "unitedhealth.html",
+"call": "Buy",
+"value": 538,
+"price": 425.06
+},
+{
+"t": "XOM",
+"name": "ExxonMobil",
+"page": "exxonmobil.html",
+"call": "Sell",
+"value": 95,
+"price": 178.19
+},
+{
+"t": "V",
+"name": "Visa",
+"page": "visa.html",
+"call": "Hold",
+"value": 294,
+"price": 414.26
+},
+{
+"t": "JNJ",
+"name": "Johnson & Johnson",
+"page": "johnson-johnson.html",
+"call": "Hold",
+"value": 198,
+"price": 267.68
+},
+{
+"t": "GEV",
+"name": "GE Vernova",
+"page": "gev.html",
+"call": "Sell",
+"value": 442,
+"price": 890.33
+}
+]
+}

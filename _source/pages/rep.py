@@ -382,6 +382,14 @@ def industry(t):
             + f'<p class="fine">Peers: the {len(pm)} other S&amp;P 500 companies in {group.replace('&', '&amp;')} with complete data ({names}). Last twelve months where reported, from SEC filings; prices from the latest close. A lower price-to-earnings ratio ranks higher. These figures update with each data run; the rating does not.</p>')
 
 
+def versions(R):
+    try:
+        import archive
+        return archive.versions_line(os.path.join(_HERE, '..', '..'), R)
+    except Exception:
+        return ''
+
+
 def body(R):
     P, B = R['price'], R['base']
     imp = B / P - 1
@@ -417,7 +425,7 @@ def body(R):
       <div class="panel" style="margin-top:{'0' if R.get('private') else '16px'}">
         <div class="hd"><div><h3 class="sec">Where each method lands, {'company value' if R.get('private') else 'per share'}</h3><p>{R['fieldnote']} <span class="nowkey">The copper line marks the base case{'.' if R.get('private') else '; the fine dotted line is today&rsquo;s close.'}</span></p></div></div>
         {field(R)}{field(R, True)}
-        <p class="fine">Written on {R['date']}{R.get('timing', '')}. {'Figures are from company statements and news reports, as linked; they are not audited.' if R.get('private') else 'Figures are from the company&rsquo;s filings and releases unless noted.'} Not investment advice. {disc}</p>
+        <p class="fine">Written on {R['date']}{R.get('timing', '')}. {'Figures are from company statements and news reports, as linked; they are not audited.' if R.get('private') else 'Figures are from the company&rsquo;s filings and releases unless noted.'} Not investment advice. {disc}{versions(R)}</p>
       </div>
 '''
     chs = ''.join(chap(n, c[0], c[1], rec_title(R, c[2]) if c[0] == 'rec' else c[2],

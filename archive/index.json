@@ -1,0 +1,448 @@
+{
+ "note": "Frozen published versions of every report.",
+ "reports": {
+  "alphabet": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 249,
+    "wt": 254,
+    "price": 324.22,
+    "file": "archive/alphabet/2026-10-22.html",
+    "frozen": "2026-10-22",
+    "name": "Alphabet",
+    "note": "Before the Oct 23 audit correction of net cash"
+   },
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 245,
+    "wt": 250,
+    "price": 324.22,
+    "file": "archive/alphabet/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Alphabet"
+   }
+  ],
+  "nvidia": [
+   {
+    "date": "October 20, 2026",
+    "call": "Buy",
+    "base": 166,
+    "wt": 180,
+    "price": 216.47,
+    "file": "archive/nvidia/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Nvidia"
+   }
+  ],
+  "amazon": [
+   {
+    "date": "October 20, 2026",
+    "call": "Hold",
+    "base": 153,
+    "wt": 162,
+    "price": 262.63,
+    "file": "archive/amazon/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Amazon"
+   }
+  ],
+  "meta": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 531,
+    "wt": 551,
+    "price": 697.52,
+    "file": "archive/meta/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Meta Platforms"
+   }
+  ],
+  "jpmorgan": [
+   {
+    "date": "October 20, 2026",
+    "call": "Buy",
+    "base": 284,
+    "wt": 290,
+    "price": 335.26,
+    "file": "archive/jpmorgan/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "JPMorgan Chase"
+   }
+  ],
+  "vertiv": [
+   {
+    "date": "October 20, 2026",
+    "call": "Hold",
+    "base": 117,
+    "wt": 122,
+    "price": 203.56,
+    "file": "archive/vertiv/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Vertiv"
+   }
+  ],
+  "l3harris": [
+   {
+    "date": "October 20, 2026",
+    "call": "Buy",
+    "base": 436,
+    "wt": 439,
+    "price": 248.77,
+    "file": "archive/l3harris/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "L3Harris"
+   }
+  ],
+  "american-water": [
+   {
+    "date": "October 20, 2026",
+    "call": "Hold",
+    "base": 100,
+    "wt": 101,
+    "price": 135.79,
+    "file": "archive/american-water/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "American Water Works"
+   }
+  ],
+  "boeing": [
+   {
+    "date": "October 20, 2026",
+    "call": "Buy",
+    "base": 197,
+    "wt": 197,
+    "price": 190.47,
+    "file": "archive/boeing/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Boeing"
+   }
+  ],
+  "spacex": [
+   {
+    "date": "October 21, 2026",
+    "call": "Buy",
+    "base": 123,
+    "wt": 144,
+    "price": 162.57,
+    "file": "archive/spacex/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "SpaceX"
+   }
+  ],
+  "firefly": [
+   {
+    "date": "October 21, 2026",
+    "call": "Buy",
+    "base": 18,
+    "wt": 22,
+    "price": 17.41,
+    "file": "archive/firefly/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Firefly Aerospace"
+   }
+  ],
+  "anthropic": [
+   {
+    "date": "October 21, 2026",
+    "call": "Not rated",
+    "base": 847,
+    "wt": null,
+    "price": 965,
+    "file": "archive/anthropic/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Anthropic"
+   }
+  ],
+  "openai": [
+   {
+    "date": "October 21, 2026",
+    "call": "Not rated",
+    "base": 790,
+    "wt": null,
+    "price": 852,
+    "file": "archive/openai/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "OpenAI"
+   }
+  ],
+  "anduril": [
+   {
+    "date": "October 21, 2026",
+    "call": "Not rated",
+    "base": 20,
+    "wt": null,
+    "price": 90,
+    "file": "archive/anduril/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Anduril"
+   }
+  ],
+  "kratos": [
+   {
+    "date": "October 21, 2026",
+    "call": "Hold",
+    "base": 24,
+    "wt": 26,
+    "price": 38.81,
+    "file": "archive/kratos/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Kratos Defense"
+   }
+  ],
+  "bloomberg": [
+   {
+    "date": "October 21, 2026",
+    "call": "Not rated",
+    "base": 62,
+    "wt": null,
+    "price": 80,
+    "file": "archive/bloomberg/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Bloomberg LP"
+   }
+  ],
+  "axon": [
+   {
+    "date": "October 21, 2026",
+    "call": "Buy",
+    "base": 314,
+    "wt": 335,
+    "price": 396.3,
+    "file": "archive/axon/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Axon Enterprise"
+   }
+  ],
+  "palantir": [
+   {
+    "date": "October 21, 2026",
+    "call": "Sell",
+    "base": 87,
+    "wt": 107,
+    "price": 201.72,
+    "file": "archive/palantir/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Palantir Technologies"
+   }
+  ],
+  "amd": [
+   {
+    "date": "October 21, 2026",
+    "call": "Hold",
+    "base": 353,
+    "wt": 374,
+    "price": 552.72,
+    "file": "archive/amd/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Advanced Micro Devices"
+   }
+  ],
+  "micron": [
+   {
+    "date": "October 21, 2026",
+    "call": "Buy",
+    "base": 622,
+    "wt": 717,
+    "price": 913.67,
+    "file": "archive/micron/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Micron Technology"
+   }
+  ],
+  "sandisk": [
+   {
+    "date": "October 21, 2026",
+    "call": "Sell",
+    "base": 636,
+    "wt": 766,
+    "price": 1378.22,
+    "file": "archive/sandisk/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Sandisk"
+   }
+  ],
+  "lockheed-martin": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 647,
+    "wt": 667,
+    "price": 590.2,
+    "file": "archive/lockheed-martin/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Lockheed Martin"
+   }
+  ],
+  "northrop-grumman": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 564,
+    "wt": 582,
+    "price": 552.53,
+    "file": "archive/northrop-grumman/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Northrop Grumman"
+   }
+  ],
+  "caterpillar": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 442,
+    "wt": 454,
+    "price": 703.84,
+    "file": "archive/caterpillar/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Caterpillar"
+   }
+  ],
+  "asml": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 1081,
+    "wt": 1085,
+    "price": 1560.54,
+    "file": "archive/asml/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "ASML Holding"
+   }
+  ],
+  "sk-hynix": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 111,
+    "wt": 124,
+    "price": 131.69,
+    "file": "archive/sk-hynix/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "SK hynix"
+   }
+  ],
+  "microsoft": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 377,
+    "wt": 383,
+    "price": 521.08,
+    "file": "archive/microsoft/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Microsoft"
+   }
+  ],
+  "tsmc": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 411,
+    "wt": 412,
+    "price": 412.35,
+    "file": "archive/tsmc/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "TSMC"
+   }
+  ],
+  "broadcom": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 358,
+    "wt": 421,
+    "price": 323.24,
+    "file": "archive/broadcom/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Broadcom"
+   }
+  ],
+  "rtx": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 146,
+    "wt": 152,
+    "price": 194.745,
+    "file": "archive/rtx/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "RTX"
+   }
+  ],
+  "general-dynamics": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 336,
+    "wt": 349,
+    "price": 350.755,
+    "file": "archive/general-dynamics/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "General Dynamics"
+   }
+  ],
+  "constellation-energy": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 185,
+    "wt": 198,
+    "price": 255.21,
+    "file": "archive/constellation-energy/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Constellation Energy"
+   }
+  ],
+  "unitedhealth": [
+   {
+    "date": "October 22, 2026",
+    "call": "Buy",
+    "base": 516,
+    "wt": 538,
+    "price": 425.06,
+    "file": "archive/unitedhealth/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "UnitedHealth"
+   }
+  ],
+  "exxonmobil": [
+   {
+    "date": "October 22, 2026",
+    "call": "Sell",
+    "base": 89,
+    "wt": 95,
+    "price": 178.19,
+    "file": "archive/exxonmobil/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "ExxonMobil"
+   }
+  ],
+  "visa": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 291,
+    "wt": 294,
+    "price": 414.26,
+    "file": "archive/visa/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Visa"
+   }
+  ],
+  "johnson-johnson": [
+   {
+    "date": "October 22, 2026",
+    "call": "Hold",
+    "base": 194,
+    "wt": 198,
+    "price": 267.68,
+    "file": "archive/johnson-johnson/2026-10-23.html",
+    "frozen": "2026-10-23",
+    "name": "Johnson &amp; Johnson"
+   }
+  ]
+ }
+}

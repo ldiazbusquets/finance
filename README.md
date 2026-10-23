@@ -79,6 +79,10 @@ Each weekday the data job runs `scripts/review_data.py`. It applies the rating r
 
 Values and ratings change only when a report is revised. The flags only say which reports to revise first.
 
+## Published versions
+
+When a report's published numbers change (its date, rating, base case, weighted value or price at writing), the build freezes a copy of the new version in `archive/<report>/<date>.html` (`_source/archive.py`). Frozen copies keep the page as published, without the live parts, and are never edited. `archive/index.json` lists every version, and each report links its earlier ones.
+
 ## Reproducing a valuation
 
 ```

@@ -66,6 +66,8 @@ assets/            CSS and the browser JavaScript for tools, the research hub an
    Every check a report should have must actually run. If a layout change hides the structure a rule looks for, the build fails instead of skipping it. The few exemptions (foreign filers with hand-built tables, the bank) are listed in the code with a reason. Private companies are checked too, in billions. `_source/tests/test_consistency.py` breaks a real report in specific ways and confirms that the checker catches each one; the build runs it every time.
 3. **Spreadsheet check** (`models/xlsx_models.py --check`, run whenever a model changes): every Excel workbook is recalculated in LibreOffice and compared with the Python models.
 
+4. **Audit against filings** (by hand): the build can't catch a figure copied wrong from a filing, so reports are also checked against the company's own release or SEC filing. Each pass, with any corrections, is logged on the About page (`about.html#audit`).
+
 ## Reproducing a valuation
 
 ```

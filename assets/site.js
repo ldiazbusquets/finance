@@ -370,7 +370,7 @@
       var m = r[0], sp = r[1] && r[1].px && r[1].px['^GSPC'], S = m.series && m.series.SP500;
       // FRED publishes the S&P 500 a day late; use the index's own close when it is newer, so this page and the tape agree
       if (S && sp && sp.p && S.last && sp.d > S.last.d) {
-        S.prev = S.last; S.last = { d: sp.d, v: sp.p }; S.chg = +(sp.p - S.prev.v).toFixed(2); S.chgPct = (sp.p / S.prev.v - 1) * 100;
+        S.prev = sp.pp ? { d: sp.pd, v: sp.pp } : S.last; S.last = { d: sp.d, v: sp.p }; S.chg = +(sp.p - S.prev.v).toFixed(2); S.chgPct = (sp.p / S.prev.v - 1) * 100;
         if (S.y1) S.y1.push([sp.d, sp.p]);
       }
       M = m;

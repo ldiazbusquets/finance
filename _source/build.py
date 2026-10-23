@@ -123,7 +123,7 @@ def foot(extra=''):
   <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
   <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
 </div></footer>
-<script src="assets/site.js?v=23"></script>{extra}
+<script src="assets/site.js?v=24"></script>{extra}
 <script src="assets/chat.js?v=4" defer></script>
 </body>
 </html>

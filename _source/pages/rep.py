@@ -478,6 +478,16 @@ def dilution(R):
             + table(['Capital raised before 2030', 'Share sold at the last valuation', 'Value to today&rsquo;s owners (base case)', 'Against the last valuation'], rows, 'allnum'))
 
 
+def defend_link(R):
+    try:
+        import defend
+    except Exception:
+        return ''
+    if not any(D['slug'] == R['slug'] for D in defend.SHEETS):
+        return ''
+    return f'<p class="fine" style="margin-top:14px"><a href="defend.html#{R["t"].lower()}">Defend this call</a>: the hardest questions about this report, answered from it.</p>'
+
+
 def versions(R):
     try:
         import archive
@@ -525,7 +535,7 @@ def body(R):
       </div>
 '''
     chs = ''.join(chap(n, c[0], c[1], rec_title(R, c[2]) if c[0] == 'rec' else c[2],
-                       rec_body(R, c[3]) if c[0] == 'rec' else c[3] + ((dilution(R) if R.get('private') else '') + checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
+                       rec_body(R, c[3]) + defend_link(R) if c[0] == 'rec' else c[3] + ((dilution(R) if R.get('private') else '') + checkit(R['slug']) if c[0] == 'value' else '')) for n, c in enumerate(R['chapters'], 1))
     chs += chap(len(R['chapters']) + 1, 'sources', 'Figures and sources', 'Where the numbers <em>come from.</em>', sources(R))
     return head + chs + '''
     </div>

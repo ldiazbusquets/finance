@@ -286,7 +286,7 @@ def build():
         return card(r['slug'] + '.html', f"Private &middot; {r['call']}", r['name'], PCARDS[t] + f" Model value ${r['base']:,}B against ${r['price']:,}B.", 'Read the report &rarr;', 'live')
     priv_cards = ''.join(pcard(t) for t in ('ANTHROPIC', 'OPENAI', 'ANDURIL', 'BLOOMBERG'))
     research = ph('Research', 'Research', 'Deep dives on single companies, plus notes on bonds and the economy. Company figures are pulled from SEC filings automatically, so the numbers stay current between reports.',
-                  '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div>') + f'''
+                  '<div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="eq">Equities</button><button class="chip" data-f="fi">Fixed income</button><button class="chip" data-f="mac">Macro</button></div><p class="fine" style="margin-top:14px">New: <a href="defend.html">Defend this call</a>, the hardest questions about five flagship reports, answered from the reports.</p>') + f'''
 <section class="tight" data-cat="eq">
   <div class="wrap">
     <div class="tools6">
@@ -751,6 +751,26 @@ def build():
     about = about.replace('{MKT_PCT}', f'{ratings.MKT * 100:.0f}').replace('{MKT_N}', str(_mk['companies'])).replace('{RATED}', ratings.RATED)
     about = about.replace('{MKT_ROWS}', ''.join(f"<tr><td>{float(g) * 100:.0f}%</td><td>{v['value_to_price'] * 100:.0f}%</td><td>{v['implied_premium'] * 100:.1f}%</td></tr>" for g, v in _mk['scenarios'].items()))
     about = about.replace('${MKT_MC:.1f}', f"${_mk['market_value'] / 1e12:.1f}").replace('${MKT_FCF:,.0f}', f"${_mk['free_cash_flow'] / 1e9:,.0f}")
+    # ---------------- defend this call ----------------
+    import defend
+    dsec = ''
+    for n, D in enumerate(defend.SHEETS, 1):
+        kv = '<div class="kv">' + ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in D['numbers']) + '</div>'
+        pb = ''.join(f'<tr><td>{q}</td><td>{a}</td></tr>' for q, a in D['pushback'])
+        dsec += f'''<section class="tight" id="{D['t'].lower()}" style="padding-top:{'10px' if n > 1 else '30px'}">
+  <div class="wrap">
+    <div class="eyebrow mono">{n:02d} &middot; {D['t']} &middot; {D['call']}</div><h3 class="sec"><a href="{D['slug']}.html">{D['name']}</a></h3>
+    <p class="lead" style="max-width:760px;margin-top:10px">{D['thesis']}</p>
+    {kv}
+    <div class="scroll" tabindex="0" role="region" aria-label="Pushback and answers" style="margin-top:18px"><table class="tbl txt"><thead><tr><th>The pushback</th><th>The answer, from the report</th></tr></thead><tbody>{pb}</tbody></table></div>
+    <p style="max-width:760px;margin-top:14px"><b>What would change the call:</b> {D['change']}</p>
+  </div>
+</section>
+'''
+    dbody = ph('Research &middot; Defend this call', 'Defend <em>this call.</em>', 'Five flagship reports, each reduced to what has to hold up when someone pushes back: the thesis in a sentence, the numbers to know, the hardest questions with answers taken from the report, and what would change the call.',
+               '<div class="cta">' + ''.join(f'<a class="pill gh" href="#{D["t"].lower()}">{D["t"]}</a>' for D in defend.SHEETS) + '</div>') + dsec
+    page('defend.html', 'research.html', 'Defend This Call', 'The hardest questions about five flagship reports, with answers from the reports themselves.', 'research', dbody)
+
     page('about.html', 'about.html', 'About', 'Who builds LDB Finance, where the data comes from and how research is done.', 'about', about)
 
 

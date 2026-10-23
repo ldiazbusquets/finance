@@ -196,6 +196,7 @@ def body():
 {table(['Method', 'Value', 'Weight', 'Contribution'], [['Cash-flow model', '$831.50', '70%', '$582.05'], ['Peer multiples, midpoint', '$447.50', '30%', '$134.25'], ['Blended value', '', '', '<b>$716.30</b>']], 'allnum')}
 <p class="key"><b>Read.</b> A blend lowers the value to about $716, 26% below the $970.31 price, so it strengthens the Hold / Wait call. The official number stays at $831.50, the figure submitted for FIN 370.</p>
 <div class="band sm"><div class="eyebrow mono">Final view</div><h2>Own the business, <em>wait for the price.</em></h2><p>Costco remains a high-quality, well-managed company with strong long-term fundamentals. Its valuation is what limits the upside.</p></div>
+<p class="fine" style="margin-top:14px"><a href="defend.html#cost">Defend this call</a>: the hardest questions about this report, answered from it.</p>
 {src(('sum', 'Valuation summary sheet'), (MODEL, 'Full financial model'))}''')
     return head + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + '''
     </div>

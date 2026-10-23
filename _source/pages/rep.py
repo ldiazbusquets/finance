@@ -24,7 +24,7 @@ def stats(rows):
 def table(head, rows, cls=''):
     h = ''.join(f'<th>{x}</th>' for x in head)
     b = ''.join('<tr>' + ''.join(f'<td>{x}</td>' for x in r) + '</tr>' for r in rows)
-    return f'<div class="scroll"><table class="tbl txt {cls}"><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table></div>'
+    return f'<div class="scroll" tabindex="0" role="region" aria-label="Table"><table class="tbl txt {cls}"><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table></div>'
 
 
 def prose(*ps):

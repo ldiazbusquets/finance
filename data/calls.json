@@ -500,6 +500,36 @@
    "value": 89,
    "price": 178.19,
    "held": false
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "alphabet.html",
+   "date": "2026-10-23",
+   "call": "Hold",
+   "value": 249,
+   "price": 324.22,
+   "held": false
+  },
+  {
+   "t": "META",
+   "name": "Meta Platforms",
+   "page": "meta.html",
+   "date": "2026-10-23",
+   "call": "Hold",
+   "value": 531,
+   "price": 697.52,
+   "held": true
+  },
+  {
+   "t": "RTX",
+   "name": "RTX",
+   "page": "rtx.html",
+   "date": "2026-10-23",
+   "call": "Hold",
+   "value": 146,
+   "price": 194.745,
+   "held": false
   }
  ]
 }

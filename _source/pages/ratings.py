@@ -1,7 +1,8 @@
 """How every report is rated, and the neutral closing text for each.
 
 The rating is mechanical, so it does not depend on who owns the stock:
-  1. Take the report's probability-weighted value (25% bear, 50% base, 25% bull).
+  1. Take the report's expected value: the mean of 4,000 runs of its own model with every input drawn from a range
+     (models/montecarlo.py; bear = 10th percentile, base = median, bull = 90th).
   2. Compare it with the price at writing.
   3. Compare that with the S&P 500 valued on the same assumptions (_source/models/market.py): on a 5.15%
      Treasury yield and a 4.5% equity premium the index is worth about 68% of its price, so a stock whose
@@ -166,3 +167,10 @@ STREET = {
     'JNJ': 'Analysts average about $276, near the price. The gap with this model is mainly the discount rate: J&amp;J&rsquo;s measured beta of 0.33 against this site&rsquo;s floor of 0.80.',
     'GEV': 'Analysts average about $1,172 and value GE Vernova on earnings well beyond 2028 at premium multiples. This model uses the company&rsquo;s own 2028 targets and then fades growth.',
 }
+
+
+def long_date(iso):
+    """'2026-10-23' -> 'October 23, 2026'"""
+    import datetime
+    d = datetime.date.fromisoformat(iso[:10])
+    return d.strftime('%B ') + str(d.day) + d.strftime(', %Y')

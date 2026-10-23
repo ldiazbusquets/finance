@@ -18,13 +18,13 @@
 
 ## How ratings work
 
-Every report values its company with the same assumptions: a 5.15% 10-year Treasury yield, a 4.5% equity risk premium and the CAPM. On those assumptions the S&P 500 itself is worth about 68% of its price (`_source/models/market.py`). Each stock's probability-weighted value against its price is compared with that figure:
+Every report values its company with the same assumptions: a 5.15% 10-year Treasury yield, a 4.5% equity risk premium and the CAPM. On those assumptions the S&P 500 itself is worth about 68% of its price (`_source/models/market.py`). Each report's model is rerun 4,000 times with every input drawn from a range: the base case is the middle, and the bear and bull cases are the 10th and 90th percentiles. Business inputs move together (correlation 0.6), and the discount rate moves on its own (`_source/models/montecarlo.py`). The average of those runs, the **expected value**, is compared with the price, and that is compared with the market figure:
 
 - **Buy:** at least 15% cheaper than the market.
 - **Hold:** within 15% either way.
 - **Sell:** at least 15% dearer than the market.
 
-The rating is relative. Each report also gives an absolute label: **undervalued**, **near fair value** or **overvalued**, based on its value against its price. It also says whether the rating would change if the index grew 6% or 10% a year instead of 8%. The same rule applies whoever owns the stock, and the author's holdings appear only in each report's disclosure. The full method is on the About page.
+The rating is relative. Each report also gives an absolute label: **undervalued**, **near fair value** or **overvalued**, based on its value against its price. Each report also shows the likely range (10th to 90th percentile), the chance the value beats the price and the chance the stock is cheaper than the market. It also says whether the rating would change if the index grew 6% or 10% a year instead of 8%. The same rule applies whoever owns the stock, and the author's holdings appear only in each report's disclosure. The full method is on the About page.
 
 ## Architecture
 
@@ -58,7 +58,7 @@ assets/            CSS and the browser JavaScript for tools, the research hub an
 
 1. **Model check** (`models/export.py --check`): every model script reruns, and each report's bear, base, bull and weighted values must match what its model produces.
 2. **Consistency check** (`consistency.py`): inside each generated report:
-   - The weighted value equals 25% bear, 50% base and 25% bull.
+   - The weighted value equals 25% bear, 50% base and 25% bull, and the simulation's unshocked run reproduces each report's base case.
    - The price chart, the scenario table and the report agree.
    - The valuation bridge adds up. PV of cash flows plus PV of the terminal value equals enterprise value; EV plus or minus net cash equals equity; and equity divided by shares equals the per-share value.
    - In the five-year table, free cash flow equals operating cash flow minus capital spending in every column.

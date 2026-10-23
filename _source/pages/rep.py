@@ -196,14 +196,47 @@ def analyst(R):
     return None
 
 
+_MC = None
+_LEDGER = None
+
+
+def sim(t):
+    """the report's simulation (models/montecarlo.py, written to data/models/montecarlo.json by the build)"""
+    global _MC
+    if _MC is None:
+        p = os.path.join(_HERE, '..', '..', 'data', 'models', 'montecarlo.json')
+        _MC = json.load(open(p))['reports'] if os.path.exists(p) else {}
+    return _MC.get(t)
+
+
+def expected(R):
+    """the value the rating uses: the mean of the simulated values; the 25/50/25 weighting if there is no simulation"""
+    m = sim(R['t'])
+    return m['mean'] if m else weighted(R)
+
+
+def rated_on(t, call):
+    """a rating keeps its original date until the call changes; a changed call is dated the day it changed"""
+    global _LEDGER
+    if _LEDGER is None:
+        p = os.path.join(_HERE, '..', '..', 'data', 'calls.json')
+        _LEDGER = json.load(open(p))['calls'] if os.path.exists(p) else []
+    rows = [c for c in _LEDGER if c['t'] == t]
+    if not rows or rows[-1]['call'] == call:
+        return ratings.RATED if not rows else ratings.long_date(rows[-1]['date'])
+    import datetime
+    return ratings.long_date(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-4))).strftime('%Y-%m-%d'))
+
+
 def apply_ratings(Rs):
     """Set every public report's call from the published rule (ratings.py); private companies are not rated."""
     for t, R in Rs.items():
         if R.get('private'):
             R['call'] = 'Not rated'
             continue
-        R['call'], R['gap'], R['rel'] = ratings.rate(weighted(R), R['price'])
-        R['rated'] = ratings.RATED
+        R['expected'] = expected(R)
+        R['call'], R['gap'], R['rel'] = ratings.rate(R['expected'], R['price'])
+        R['rated'] = rated_on(t, R['call'])
     return Rs
 
 
@@ -236,16 +269,23 @@ def rating_block(R):
     if R.get('private'):
         return ('<div class="rate"><div class="rh"><span class="mono">Rating</span><b>Not rated</b></div>'
                 '<p>Private companies are not rated: there is no price at which to buy them. The values above are for the whole company, before the dilution that future funding rounds would bring. <a href="about.html#ratings">How ratings work</a></p></div>')
-    W, P = weighted(R), R['price']
+    W, P = R.get('expected') or weighted(R), R['price']
     a = analyst(R)
     street = ratings.STREET.get(R['t'], '')
     lab, why = absolute(R['gap'])
-    rows = [('Probability-weighted value', d(W)), ('Price at writing', f'${P:,.2f}'), ('Value against price', pct_s(R['gap'])), ('On its own', lab),
-            ('S&amp;P 500 value / price', f'{ratings.MKT * 100:.0f}%'), ('Against the market', pct_s(R['rel']))]
+    m = sim(R['t'])
+    rows = [('Expected value' if m else 'Probability-weighted value', d(W))]
+    if m:
+        rows.append(('Likely range, 10th&ndash;90th percentile', f"{d(m['p10'])}&ndash;{d(m['p90'])}"))
+    rows += [('Price at writing', f'${P:,.2f}'), ('Value against price', pct_s(R['gap'])), ('On its own', lab),
+             ('S&amp;P 500 value / price', f'{ratings.MKT * 100:.0f}%'), ('Against the market', pct_s(R['rel']))]
+    if m:
+        rows += [('Chance the value beats the price', f"{m['p_above_price'] * 100:.0f}%"), ('Chance it is cheaper than the market', f"{m['p_cheaper_than_market'] * 100:.0f}%")]
     if a:
         rows.append(('Analysts&rsquo; average target', d(a)))
     cells = ''.join(f'<div><span class="mono">{k}</span><b>{v}</b></div>' for k, v in rows)
     return (f'<div class="rate"><div class="rh"><span class="mono">Rating against the S&amp;P 500, {R["rated"]}</span><b>{R["call"]}</b></div><div class="kv rk">{cells}</div>'
+            + (f'<p class="relabs"><b>Ranges, not three cases.</b> The expected value is the average of {m["n"]:,} runs of this report&rsquo;s own model, with every input drawn from a range: the base case is the middle, and the bear and bull cases are the 10th and 90th percentiles. Business inputs move together; the discount rate moves on its own. The 25/50/25 weighting in the valuation section gives {d(weighted(R))}. <a href="about.html#ranges">How the ranges work</a></p>' if m else '') +
             f'<p class="relabs"><b>Two different questions.</b> The rating is <b>relative</b>: it asks whether the stock is cheaper or dearer than the S&amp;P 500 on the same assumptions. The <b>absolute</b> view asks whether it is worth its price at all: {why}.</p>'
             f'<p>On the same assumptions every report uses (a 5.15% Treasury yield and a 4.5% equity premium), the S&amp;P 500 itself is worth about {ratings.MKT * 100:.0f}% of its price. '
             f'The rating compares each stock with that: <b>Buy</b> if it is at least 15% cheaper than the market on this basis, <b>Sell</b> if at least 15% dearer, <b>Hold</b> in between. '

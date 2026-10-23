@@ -52,7 +52,7 @@
       "status": "live",
       "page": "meta.html",
       "holding": true,
-      "call": "Buy",
+      "call": "Hold",
       "value": 531,
       "date": "Oct 22, 2026"
     },
@@ -338,7 +338,7 @@
       "page": "alphabet.html",
       "value": 249,
       "date": "2026-10-22",
-      "call": "Buy"
+      "call": "Hold"
     },
     {
       "ticker": "TSM",
@@ -380,7 +380,7 @@
         "Industrials",
         "Aerospace & Defense"
       ],
-      "call": "Buy"
+      "call": "Hold"
     },
     {
       "ticker": "GD",

@@ -16,8 +16,10 @@ L = {
     'edgar': 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001996810&type=10-K',
 }
 PRICE, BASE, BEAR, BULL, WT = 890.33, 442, 272, 682, 460
-CALL = ratings.rate(WT, PRICE)[0]
-ABS = ('undervalued' if WT / PRICE - 1 >= .10 else 'overvalued' if WT / PRICE - 1 <= -.10 else 'near fair value')
+import rep as _rep
+EXP = (_rep.sim('GEV') or {}).get('mean', WT)   # expected value from the simulation, as for every report
+CALL = ratings.rate(EXP, PRICE)[0]
+ABS = ('undervalued' if EXP / PRICE - 1 >= .10 else 'overvalued' if EXP / PRICE - 1 <= -.10 else 'near fair value')
 
 
 def src(*items):

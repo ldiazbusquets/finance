@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-26T23:11:49Z",
- "today": "2026-10-26",
+ "updated": "2026-10-27T23:10:20Z",
+ "today": "2026-10-27",
  "rules": {
   "band": 0.15,
   "near": 0.03,
@@ -10,21 +10,59 @@
  },
  "rows": [
   {
+   "t": "AXON",
+   "name": "Axon Enterprise",
+   "page": "reports/axon.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 396.3,
+   "now": 425.87,
+   "asof": "2026-10-27",
+   "move": 0.0746,
+   "call_now": "Hold",
+   "rel_now": 0.1482,
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Hold, not Buy"
+    ]
+   ]
+  },
+  {
    "t": "META",
    "name": "Meta Platforms",
    "page": "reports/meta.html",
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 697.52,
-   "now": 630.56,
-   "asof": "2026-10-26",
-   "move": -0.096,
+   "now": 620.19,
+   "asof": "2026-10-27",
+   "move": -0.1109,
    "call_now": "Buy",
-   "rel_now": 0.2344,
+   "rel_now": 0.255,
    "flags": [
     [
      "rating",
      "At today&rsquo;s price the rule gives Buy, not Hold"
+    ]
+   ]
+  },
+  {
+   "t": "MU",
+   "name": "Micron Technology",
+   "page": "reports/micron.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 913.67,
+   "now": 928.76,
+   "asof": "2026-10-27",
+   "move": 0.0165,
+   "call_now": "Hold",
+   "rel_now": 0.1325,
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Hold, not Buy"
     ]
    ]
   },
@@ -35,11 +73,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 1378.22,
-   "now": 1255.58,
-   "asof": "2026-10-26",
-   "move": -0.089,
+   "now": 1304.84,
+   "asof": "2026-10-27",
+   "move": -0.0532,
    "call_now": "Hold",
-   "rel_now": -0.1161,
+   "rel_now": -0.1495,
    "due": "2026-10-29",
    "flags": [
     [
@@ -53,88 +91,103 @@
    ]
   },
   {
-   "t": "AXON",
-   "name": "Axon Enterprise",
-   "page": "reports/axon.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 396.3,
-   "now": 424.77,
-   "asof": "2026-10-26",
-   "move": 0.0718,
-   "call_now": "Buy",
-   "rel_now": 0.1512,
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
-    ]
-   ]
-  },
-  {
-   "t": "GOOGL",
-   "name": "Alphabet",
-   "page": "reports/alphabet.html",
-   "call": "Hold",
-   "rated": "2026-10-23",
-   "price": 324.22,
-   "now": 316.8,
-   "asof": "2026-10-26",
-   "move": -0.0229,
-   "call_now": "Hold",
-   "rel_now": 0.1277,
-   "due": "2026-10-28",
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
-    ],
-    [
-     "due",
-     "Results due 2026-10-28"
-    ]
-   ]
-  },
-  {
-   "t": "MU",
-   "name": "Micron Technology",
-   "page": "reports/micron.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 913.67,
-   "now": 903.7,
-   "asof": "2026-10-26",
-   "move": -0.0109,
-   "call_now": "Buy",
-   "rel_now": 0.1639,
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
-    ]
-   ]
-  },
-  {
    "t": "VRT",
    "name": "Vertiv",
    "page": "reports/vertiv.html",
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 203.56,
-   "now": 199.78,
-   "asof": "2026-10-26",
-   "move": -0.0186,
-   "call_now": "Hold",
-   "rel_now": -0.1301,
+   "now": 208.56,
+   "asof": "2026-10-27",
+   "move": 0.0246,
+   "call_now": "Sell",
+   "rel_now": -0.1667,
    "due": "2026-10-28",
    "flags": [
     [
-     "near",
-     "Within 3 points of the Sell line at today&rsquo;s price"
+     "rating",
+     "At today&rsquo;s price the rule gives Sell, not Hold"
     ],
     [
      "due",
      "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "BA",
+   "name": "Boeing",
+   "page": "reports/boeing.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 190.47,
+   "now": 168.18,
+   "asof": "2026-10-27",
+   "move": -0.117,
+   "call_now": "Buy",
+   "rel_now": 0.6839,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-27, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "V",
+   "name": "Visa",
+   "page": "reports/visa.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 414.26,
+   "now": 401.86,
+   "asof": "2026-10-27",
+   "move": -0.0299,
+   "call_now": "Hold",
+   "rel_now": 0.0575,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-27, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "NVDA",
+   "name": "Nvidia",
+   "page": "reports/nvidia.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 216.47,
+   "now": 217.94,
+   "asof": "2026-10-27",
+   "move": 0.0068,
+   "call_now": "Buy",
+   "rel_now": 0.1715,
+   "flags": [
+    [
+     "near",
+     "Within 3 points of the Buy line at today&rsquo;s price"
+    ]
+   ]
+  },
+  {
+   "t": "AMD",
+   "name": "Advanced Micro Devices",
+   "page": "reports/amd.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 552.72,
+   "now": 560.26,
+   "asof": "2026-10-27",
+   "move": 0.0136,
+   "call_now": "Hold",
+   "rel_now": -0.0357,
+   "due": "2026-11-03",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-11-03"
     ]
    ]
   },
@@ -145,11 +198,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 262.63,
-   "now": 249.09,
-   "asof": "2026-10-26",
-   "move": -0.0516,
+   "now": 253.1,
+   "asof": "2026-10-27",
+   "move": -0.0363,
    "call_now": "Hold",
-   "rel_now": -0.0739,
+   "rel_now": -0.0885,
    "due": "2026-10-29",
    "flags": [
     [
@@ -165,36 +218,16 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 135.79,
-   "now": 141.7,
-   "asof": "2026-10-26",
-   "move": 0.0435,
+   "now": 141.1,
+   "asof": "2026-10-27",
+   "move": 0.0391,
    "call_now": "Hold",
-   "rel_now": 0.0184,
+   "rel_now": 0.0227,
    "due": "2026-10-28",
    "flags": [
     [
      "due",
      "Results due 2026-10-28"
-    ]
-   ]
-  },
-  {
-   "t": "BA",
-   "name": "Boeing",
-   "page": "reports/boeing.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 190.47,
-   "now": 188.31,
-   "asof": "2026-10-26",
-   "move": -0.0113,
-   "call_now": "Buy",
-   "rel_now": 0.5039,
-   "due": "2026-10-27",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-27"
     ]
    ]
   },
@@ -205,11 +238,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 703.84,
-   "now": 692.13,
-   "asof": "2026-10-26",
-   "move": -0.0166,
+   "now": 713.31,
+   "asof": "2026-10-27",
+   "move": 0.0135,
    "call_now": "Hold",
-   "rel_now": -0.064,
+   "rel_now": -0.0918,
    "due": "2026-10-29",
    "flags": [
     [
@@ -225,11 +258,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 350.755,
-   "now": 357.04,
-   "asof": "2026-10-26",
-   "move": 0.0179,
+   "now": 354.89,
+   "asof": "2026-10-27",
+   "move": 0.0118,
    "call_now": "Buy",
-   "rel_now": 0.4134,
+   "rel_now": 0.4219,
    "due": "2026-10-30",
    "flags": [
     [
@@ -245,16 +278,56 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 890.33,
-   "now": 855.12,
-   "asof": "2026-10-26",
-   "move": -0.0395,
+   "now": 895.08,
+   "asof": "2026-10-27",
+   "move": 0.0053,
    "call_now": "Sell",
-   "rel_now": -0.2266,
+   "rel_now": -0.2611,
    "due": "2026-10-28",
    "flags": [
     [
      "due",
      "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "reports/alphabet.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 324.22,
+   "now": 320.58,
+   "asof": "2026-10-27",
+   "move": -0.0112,
+   "call_now": "Hold",
+   "rel_now": 0.1144,
+   "due": "2026-10-28",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-10-28"
+    ]
+   ]
+  },
+  {
+   "t": "KTOS",
+   "name": "Kratos Defense",
+   "page": "reports/kratos.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 38.81,
+   "now": 41.315,
+   "asof": "2026-10-27",
+   "move": 0.0645,
+   "call_now": "Hold",
+   "rel_now": -0.0608,
+   "due": "2026-11-03",
+   "flags": [
+    [
+     "due",
+     "Results due 2026-11-03"
     ]
    ]
   },
@@ -265,11 +338,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 248.77,
-   "now": 260.23,
-   "asof": "2026-10-26",
-   "move": 0.0461,
+   "now": 259.4,
+   "asof": "2026-10-27",
+   "move": 0.0427,
    "call_now": "Buy",
-   "rel_now": 1.4086,
+   "rel_now": 1.4163,
    "due": "2026-10-29",
    "flags": [
     [
@@ -285,11 +358,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 521.08,
-   "now": 532.6,
-   "asof": "2026-10-26",
-   "move": 0.0221,
+   "now": 531.33,
+   "asof": "2026-10-27",
+   "move": 0.0197,
    "call_now": "Hold",
-   "rel_now": 0.0343,
+   "rel_now": 0.0368,
    "due": "2026-10-28",
    "flags": [
     [
@@ -305,36 +378,16 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 201.72,
-   "now": 198.84,
-   "asof": "2026-10-26",
-   "move": -0.0143,
+   "now": 198.73,
+   "asof": "2026-10-27",
+   "move": -0.0148,
    "call_now": "Sell",
-   "rel_now": -0.2058,
+   "rel_now": -0.2054,
    "due": "2026-11-02",
    "flags": [
     [
      "due",
      "Results due 2026-11-02"
-    ]
-   ]
-  },
-  {
-   "t": "V",
-   "name": "Visa",
-   "page": "reports/visa.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 414.26,
-   "now": 404.16,
-   "asof": "2026-10-26",
-   "move": -0.0244,
-   "call_now": "Hold",
-   "rel_now": 0.0515,
-   "due": "2026-10-27",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-27"
     ]
    ]
   },
@@ -345,11 +398,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 178.19,
-   "now": 184.54,
-   "asof": "2026-10-26",
-   "move": 0.0356,
+   "now": 179.91,
+   "asof": "2026-10-27",
+   "move": 0.0097,
    "call_now": "Sell",
-   "rel_now": -0.2579,
+   "rel_now": -0.2388,
    "due": "2026-10-30",
    "flags": [
     [
@@ -359,31 +412,17 @@
    ]
   },
   {
-   "t": "AMD",
-   "name": "Advanced Micro Devices",
-   "page": "reports/amd.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 552.72,
-   "now": 531.28,
-   "asof": "2026-10-26",
-   "move": -0.0388,
-   "call_now": "Hold",
-   "rel_now": 0.0169,
-   "flags": []
-  },
-  {
    "t": "ASML",
    "name": "ASML Holding",
    "page": "reports/asml.html",
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 1560.54,
-   "now": 1590.9,
-   "asof": "2026-10-26",
-   "move": 0.0195,
+   "now": 1635.57,
+   "asof": "2026-10-27",
+   "move": 0.0481,
    "call_now": "Hold",
-   "rel_now": -0.0409,
+   "rel_now": -0.0671,
    "flags": []
   },
   {
@@ -393,11 +432,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 323.24,
-   "now": 329.17,
-   "asof": "2026-10-26",
-   "move": 0.0183,
+   "now": 342.33,
+   "asof": "2026-10-27",
+   "move": 0.0591,
    "call_now": "Buy",
-   "rel_now": 0.7825,
+   "rel_now": 0.7139,
    "flags": []
   },
   {
@@ -407,11 +446,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 255.21,
-   "now": 252.48,
-   "asof": "2026-10-26",
-   "move": -0.0107,
+   "now": 258.98,
+   "asof": "2026-10-27",
+   "move": 0.0148,
    "call_now": "Hold",
-   "rel_now": 0.1041,
+   "rel_now": 0.0764,
    "flags": []
   },
   {
@@ -421,11 +460,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 17.41,
-   "now": 18.25,
-   "asof": "2026-10-26",
-   "move": 0.0482,
+   "now": 19.895,
+   "asof": "2026-10-27",
+   "move": 0.1427,
    "call_now": "Buy",
-   "rel_now": 0.7762,
+   "rel_now": 0.6294,
    "flags": []
   },
   {
@@ -435,11 +474,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 267.68,
-   "now": 266.3,
-   "asof": "2026-10-26",
-   "move": -0.0052,
+   "now": 268.73,
+   "asof": "2026-10-27",
+   "move": 0.0039,
    "call_now": "Hold",
-   "rel_now": 0.0698,
+   "rel_now": 0.0601,
    "flags": []
   },
   {
@@ -449,25 +488,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 335.26,
-   "now": 334.04,
-   "asof": "2026-10-26",
-   "move": -0.0036,
+   "now": 335.79,
+   "asof": "2026-10-27",
+   "move": 0.0016,
    "call_now": "Buy",
-   "rel_now": 0.2777,
-   "flags": []
-  },
-  {
-   "t": "KTOS",
-   "name": "Kratos Defense",
-   "page": "reports/kratos.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 38.81,
-   "now": 40.43,
-   "asof": "2026-10-26",
-   "move": 0.0417,
-   "call_now": "Hold",
-   "rel_now": -0.0403,
+   "rel_now": 0.271,
    "flags": []
   },
   {
@@ -477,11 +502,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 590.2,
-   "now": 635.2,
-   "asof": "2026-10-26",
-   "move": 0.0762,
+   "now": 622.99,
+   "asof": "2026-10-27",
+   "move": 0.0556,
    "call_now": "Buy",
-   "rel_now": 0.5105,
+   "rel_now": 0.5401,
    "flags": []
   },
   {
@@ -491,25 +516,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 552.53,
-   "now": 565.41,
-   "asof": "2026-10-26",
-   "move": 0.0233,
+   "now": 551.23,
+   "asof": "2026-10-27",
+   "move": -0.0024,
    "call_now": "Buy",
-   "rel_now": 0.4725,
-   "flags": []
-  },
-  {
-   "t": "NVDA",
-   "name": "Nvidia",
-   "page": "reports/nvidia.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 216.47,
-   "now": 216.0,
-   "asof": "2026-10-26",
-   "move": -0.0022,
-   "call_now": "Buy",
-   "rel_now": 0.182,
+   "rel_now": 0.5104,
    "flags": []
   },
   {
@@ -519,11 +530,11 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 194.745,
-   "now": 197.48,
-   "asof": "2026-10-26",
-   "move": 0.014,
+   "now": 194.6,
+   "asof": "2026-10-27",
+   "move": -0.0007,
    "call_now": "Hold",
-   "rel_now": 0.1014,
+   "rel_now": 0.1177,
    "flags": []
   },
   {
@@ -533,11 +544,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 131.69,
-   "now": 142.62,
-   "asof": "2026-10-26",
-   "move": 0.083,
+   "now": 145.36,
+   "asof": "2026-10-27",
+   "move": 0.1038,
    "call_now": "Buy",
-   "rel_now": 0.2703,
+   "rel_now": 0.2464,
    "flags": []
   },
   {
@@ -547,11 +558,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 162.57,
-   "now": 146.9,
-   "asof": "2026-10-26",
-   "move": -0.0964,
+   "now": 148.58,
+   "asof": "2026-10-27",
+   "move": -0.0861,
    "call_now": "Buy",
-   "rel_now": 0.4447,
+   "rel_now": 0.4283,
    "flags": []
   },
   {
@@ -561,11 +572,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 412.35,
-   "now": 424.37,
-   "asof": "2026-10-26",
-   "move": 0.0291,
+   "now": 436.87,
+   "asof": "2026-10-27",
+   "move": 0.0595,
    "call_now": "Buy",
-   "rel_now": 0.3694,
+   "rel_now": 0.3302,
    "flags": []
   },
   {
@@ -575,11 +586,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 425.06,
-   "now": 410.7,
-   "asof": "2026-10-26",
-   "move": -0.0338,
+   "now": 410.39,
+   "asof": "2026-10-27",
+   "move": -0.0345,
    "call_now": "Buy",
-   "rel_now": 0.8643,
+   "rel_now": 0.8657,
    "flags": []
   }
  ]

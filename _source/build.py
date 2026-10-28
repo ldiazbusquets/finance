@@ -406,7 +406,7 @@ def build():
   </div>
 </section>
 '''
-    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=16"></script>')
+    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=17"></script>')
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
@@ -426,7 +426,7 @@ def build():
   </div>
 </section>
 '''
-    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=16"></script>')
+    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=17"></script>')
 
     # ---------------- calls ledger (track record) ----------------
     MONTHS = {m: i + 1 for i, m in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])}

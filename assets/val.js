@@ -479,7 +479,8 @@
   /* when the automatic model can't be trusted for this company: say why instead of showing a reading */
   function fitNote(c, a, gap) {
     var f = c.f, Q = newQ(c);
-    if (a.model !== 'bank' && a.debtMissing && (last(f.intexp) || 0) > 0)
+    var ie = last(f.intexp) || 0, rv = last(f.rev) || 0;   /* interest above 0.3% of revenue: real borrowing, not just leases */
+    if (a.model !== 'bank' && a.debtMissing && ie > 0 && (!rv || ie > rv * 0.003))
       return 'It pays interest, but its debt is missing from the filings data this site reads, so the model would count it as debt-free and overstate its value.';
     if (isn(gap) && gap > 1.5) return 'The model puts its value at more than 2.5 times the price. A gap that large usually means the model doesn\u2019t fit the company (a carmaker or lender with a finance arm, a one-off loss, or an unusual balance sheet), not a bargain.';
     if (isn(gap) && gap < -0.8) return 'The model puts its value at less than a fifth of the price. A gap that large usually means the model doesn\u2019t fit the company (very early profits, heavy reinvestment or a one-off), not that it is worthless.';

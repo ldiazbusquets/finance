@@ -130,6 +130,7 @@ STOCK = {
     'debtall': ['DebtLongtermAndShorttermCombinedAmount', 'DebtAndCapitalLeaseObligations', 'DebtInstrumentCarryingAmount'],
     # pieces, used only when nothing above is tagged; the largest one is taken, so overlapping tags never add up twice
     'notes':  ['SeniorNotes', 'NotesPayable', 'LongTermNotesPayable', 'ConvertibleNotesPayable', 'ConvertibleDebtNoncurrent',
+               'ConvertibleLongTermNotesPayable', 'ConvertibleDebt', 'ConvertibleNotesPayableCurrent',
                'OtherLongTermDebtNoncurrent', 'LongTermLineOfCredit'],
     'secured': ['SecuredDebt'],
     'unsec':  ['UnsecuredDebt'],
@@ -569,7 +570,7 @@ SHAREFAC = {}
 SHARESOV = {}
 DEBTTAGS = {}
 CUR_T = None
-FVER = 11   # bump when the extraction rules change, so every file is rebuilt
+FVER = 12   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -669,7 +670,8 @@ def update_fundamentals(cos, ua, limit):
                       'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'qs': qs, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)
             done += 1
-            if last(f['debt']) is None and (last(f['intexp']) or 0) > 0:
+            # the latest year has no debt (an older year's figure doesn't count) but the company pays interest
+            if f['debt'] and f['debt'][-1] is None and (f['intexp'][-1] or 0) > 0:
                 quality[t] = debt_candidates(facts, ends[-1])
         except Exception as e:
             fails += 1

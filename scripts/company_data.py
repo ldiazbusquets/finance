@@ -130,7 +130,7 @@ STOCK = {
     'debtall': ['DebtLongtermAndShorttermCombinedAmount', 'DebtAndCapitalLeaseObligations', 'DebtInstrumentCarryingAmount'],
     # pieces, used only when nothing above is tagged; the largest one is taken, so overlapping tags never add up twice
     'notes':  ['SeniorNotes', 'NotesPayable', 'LongTermNotesPayable', 'ConvertibleNotesPayable', 'ConvertibleDebtNoncurrent',
-               'ConvertibleLongTermNotesPayable', 'ConvertibleDebt', 'ConvertibleNotesPayableCurrent',
+               'ConvertibleLongTermNotesPayable', 'ConvertibleDebt', 'ConvertibleNotesPayableCurrent', 'UnsecuredLongTermDebt',
                'OtherLongTermDebtNoncurrent', 'LongTermLineOfCredit'],
     'secured': ['SecuredDebt'],
     'unsec':  ['UnsecuredDebt'],
@@ -568,13 +568,15 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
+DEBTVAL = {}
+FINARM = {}
 DEBTTAGS = {}
 CUR_T = None
 FVER = 12   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
-    v = [EXTRA.get(t), SHAREFAC.get(t), SHARESOV.get(t)]
+    v = [EXTRA.get(t), SHAREFAC.get(t), SHARESOV.get(t)] + ([DEBTVAL.get(t), FINARM.get(t)] if (DEBTVAL.get(t) or FINARM.get(t)) else [])
     return json.dumps(v) if any(v) else ''
 
 
@@ -594,7 +596,9 @@ def update_fundamentals(cos, ua, limit):
     ov = load(os.path.join(DATA, 'overrides.json'), {})
     EXTRA = ov.get('predecessorCik', {})
     SHAREFAC = ov.get('shareClassFactor', {})
-    global SHARESOV, DEBTTAGS, CUR_T
+    global SHARESOV, DEBTTAGS, CUR_T, DEBTVAL, FINARM
+    DEBTVAL = {k: v for k, v in ov.get('debtValue', {}).items() if not k.startswith('_')}
+    FINARM = {k: v for k, v in ov.get('financeArm', {}).items() if not k.startswith('_')}
     SHARESOV = ov.get('sharesOutstanding', {})
     DEBTTAGS = {t: [tuple(x.split(':', 1)) if ':' in x else ('us-gaap', x) for x in v] for t, v in ov.get('debtTags', {}).items() if not t.startswith('_')}
     quality = {}
@@ -667,11 +671,12 @@ def update_fundamentals(cos, ua, limit):
                 if fy and tr and not 0.6 < tr / fy < 1.7:
                     print(f'  note quarter {t:6} twelve-month revenue {tr} vs last year {fy}; keeping annual figures', file=sys.stderr); qd = None
             d.update({'t': t, 'n': name, 'sec': sec, 'sub': sub, 'cik': cik, 'model': model_of(sec, sub),
-                      'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'qs': qs, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
+                      'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'qs': qs, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t),
+                      'debtOv': DEBTVAL.get(t), 'finArm': FINARM.get(t)})
             save(path, d)
             done += 1
             # the latest year has no debt (an older year's figure doesn't count) but the company pays interest
-            if f['debt'] and f['debt'][-1] is None and (f['intexp'][-1] or 0) > 0:
+            if f['debt'] and f['debt'][-1] is None and (f['intexp'][-1] or 0) > 0 and not DEBTVAL.get(t):
                 quality[t] = debt_candidates(facts, ends[-1])
         except Exception as e:
             fails += 1

@@ -131,6 +131,8 @@
       model: c.model === 'bank' ? 'bank' : 'dcf', rf: rf, beta: beta, erp: ERP_DEFAULT, kd: kd, tax: tax, gT: gT,
       price: price, shares: shares, debt: debt, cash: cash, debtMissing: debtNow === null
     };
+    /* debt read from the filing by hand, where the SEC feed lacks it */
+    if (c.debtOv && isn(c.debtOv.debt)) { a.debt = c.debtOv.debt; a.debtMissing = false; }
     if (a.model === 'dcf') {
       var g1 = cagr(f.rev, 3, i); a.g1 = isn(g1) ? clip(g1, -0.05, c.model === 'reit' ? 0.10 : 0.25) : 0.04;
       var m0 = isn(f.ebit[i]) && f.rev[i] ? f.ebit[i] / f.rev[i] : null, mT = avgRatio(f.ebit, f.rev, 3, i);
@@ -162,6 +164,7 @@
     if (Q) {
       var tt = Q.ttm, bs = Q.bs || {};
       if (isn(bs.debt)) { a.debt = bs.debt; a.debtMissing = false; }
+      if (c.debtOv && isn(c.debtOv.debt)) { a.debt = c.debtOv.debt; a.debtMissing = false; }
       if (isn(bs.cash)) a.cash = bs.cash;
       if (a.model === 'dcf' && tt.rev > 0) {
         a.rev0 = tt.rev;
@@ -479,6 +482,7 @@
   /* when the automatic model can't be trusted for this company: say why instead of showing a reading */
   function fitNote(c, a, gap) {
     var f = c.f, Q = newQ(c);
+    if (c.finArm) return 'Its reported figures include ' + esc(c.finArm) + ', a large lending business whose debt funds customer loans. A cash-flow model on the combined numbers can\u2019t value that properly, so it gives no reliable reading here.';
     var ie = last(f.intexp) || 0, rv = last(f.rev) || 0;   /* interest above 0.3% of revenue: real borrowing, not just leases */
     if (a.model !== 'bank' && a.debtMissing && ie > 0 && (!rv || ie > rv * 0.003))
       return 'It pays interest, but its debt is missing from the filings data this site reads, so the model would count it as debt-free and overstate its value.';

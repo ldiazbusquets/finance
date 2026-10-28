@@ -15,5 +15,26 @@
   "shareClassFactor": {},
   "debtTags": {
     "_note": "ticker: list of XBRL tags (namespace:Tag, us-gaap by default) whose values add up to total debt, for companies that report debt under their own tag names. data/co/_quality.json lists candidates after each refresh."
+  },
+  "debtValue": {
+    "_note": "Total debt from the filing itself, for companies whose debt is only tagged with dimensions or company-specific tags (which the SEC companyfacts feed leaves out). Update when a new 10-Q is filed.",
+    "F": {
+      "debt": 23619000000,
+      "asOf": "2026-06-30",
+      "source": "Ford Q2 2026 results (8-K Exhibit 99), balance sheet: Company excluding Ford Credit debt, $4,381M payable within one year plus $19,238M long-term. Ford Credit\u2019s $137.3B of debt funds its loans and is left with Ford Credit."
+    },
+    "AES": {
+      "debt": 32117000000,
+      "asOf": "2026-06-30",
+      "source": "AES 10-Q for the quarter ended June 30, 2026, balance sheet: recourse debt $300M short-term and $5,800M long-term; non-recourse debt $3,162M short-term and $22,855M long-term."
+    }
+  },
+  "financeArm": {
+    "_note": "Companies whose consolidated figures include a large captive lending arm; a cash-flow model on the consolidated numbers does not value them properly, so the snapshot says so.",
+    "F": "Ford Credit",
+    "GM": "GM Financial",
+    "PCAR": "PACCAR Financial Services",
+    "CAT": "Cat Financial",
+    "DE": "John Deere Financial"
   }
 }

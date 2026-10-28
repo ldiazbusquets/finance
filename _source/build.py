@@ -76,7 +76,7 @@ def head(title, desc, fn='index.html', root=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=50">
+<link rel="stylesheet" href="assets/site.css?v=51">
 </head>
 '''
 
@@ -119,9 +119,15 @@ def nav(cur):
 
 
 def foot(extra=''):
+    col = lambda title, links: f'<div><h5>{title}</h5>' + ''.join(f'<p><a href="{h}"{" rel=noopener" if h.startswith("http") else ""}>{n}</a></p>' for h, n in links) + '</div>'
     return f'''<footer><div class="wrap">
-  <span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME} &middot; For education only. Nothing here is investment advice.</span>
-  <span class="fl"><a href="about.html">About &amp; sources</a><a href="{MAIN}">Main site</a><a href="{LAB}">LDB Lab</a></span>
+  <div class="fgrid">
+    <div><p class="big4">Thanks for reading. <em>Let&rsquo;s talk markets.</em></p><p style="margin-top:16px">Built by Luis Diaz Busquets. Figures come from SEC filings and public market data.</p></div>
+    {col('Finance', [('research.html', 'Research'), ('valuation.html', 'Valuation'), ('models.html', 'Models'), ('tools.html', 'Tools'), ('markets.html', 'Markets')])}
+    {col('Start here', [('track.html', 'Track record'), ('snapshot.html', 'Research snapshot'), ('screener.html', 'Screener'), ('earnings.html', 'Earnings hub'), ('about.html', 'About &amp; sources')])}
+    {col('Elsewhere', [(MAIN, 'Main site'), (LAB, 'LDB Lab'), ('https://github.com/ldiazbusquets', 'GitHub'), ('https://www.linkedin.com/in/luis-diaz-busquets', 'LinkedIn')])}
+  </div>
+  <div class="fbar"><span>&copy; <span class="yr">{datetime.date.today().year}</span> Luis Diaz Busquets &middot; {NAME}</span><span>For education only. Nothing here is investment advice.</span></div>
 </div></footer>
 <script src="assets/site.js?v=25"></script>{extra}
 <script src="assets/chat.js?v=4" defer></script>
@@ -400,7 +406,7 @@ def build():
   </div>
 </section>
 '''
-    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=15"></script>')
+    page('valuation.html', 'valuation.html', 'Valuation', 'Search any S&P 500 company for an automatic DCF, peer multiples and a dividend model.', 'valuation', valuation, '\n<script src="assets/val.js?v=16"></script>')
 
     # ---------------- research snapshot ----------------
     hq = ''.join(f'<button class="chip" type="button" data-pick="{t}">{t}</button>' for t in ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA'])
@@ -420,7 +426,7 @@ def build():
   </div>
 </section>
 '''
-    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=15"></script>')
+    page('snapshot.html', 'research.html', 'Research snapshot', 'Search any S&P 500 company for an automatic research snapshot from its SEC filings: growth, margins, cash, debt, valuation and peers.', 'snapshot', snapshot, '\n<script src="assets/val.js?v=16"></script>')
 
     # ---------------- calls ledger (track record) ----------------
     MONTHS = {m: i + 1 for i, m in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])}

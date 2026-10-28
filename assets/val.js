@@ -121,14 +121,15 @@
     var price = c.p && c.p.p, shares = c.sh || last(f.dil);
     var tax = avgRatio(f.tax, f.pretax, 3, i); tax = isn(tax) && tax > 0 ? clip(tax, 0.10, 0.30) : 0.21;
     var beta = c.p && isn(c.p.b) ? clip(c.p.b, 0.4, 2.5) : 1.0;
-    var debt = last(f.debt) || 0, cash = last(f.cash) || 0;
+    /* debt from the latest year only: an old year's figure would be stale, and a missing one is flagged, not read as zero */
+    var debtNow = i >= 0 && isn(f.debt[i]) ? f.debt[i] : null, debt = debtNow || 0, cash = last(f.cash) || 0;
     var kd = null, di = lastIdx(f.debt);
     if (isn(f.intexp[i]) && di >= 0 && f.debt[di] > 0) kd = f.intexp[i] / ((f.debt[di] + (isn(f.debt[di - 1]) ? f.debt[di - 1] : f.debt[di])) / 2);
     kd = isn(kd) ? clip(kd, rf + 0.005, rf + 0.06) : rf + 0.015;
     var gT = Math.max(0.01, Math.min(0.025, rf - 0.01));
     var a = {
       model: c.model === 'bank' ? 'bank' : 'dcf', rf: rf, beta: beta, erp: ERP_DEFAULT, kd: kd, tax: tax, gT: gT,
-      price: price, shares: shares, debt: debt, cash: cash
+      price: price, shares: shares, debt: debt, cash: cash, debtMissing: debtNow === null
     };
     if (a.model === 'dcf') {
       var g1 = cagr(f.rev, 3, i); a.g1 = isn(g1) ? clip(g1, -0.05, c.model === 'reit' ? 0.10 : 0.25) : 0.04;
@@ -160,7 +161,7 @@
     var Q = newQ(c);
     if (Q) {
       var tt = Q.ttm, bs = Q.bs || {};
-      if (isn(bs.debt)) a.debt = bs.debt;
+      if (isn(bs.debt)) { a.debt = bs.debt; a.debtMissing = false; }
       if (isn(bs.cash)) a.cash = bs.cash;
       if (a.model === 'dcf' && tt.rev > 0) {
         a.rev0 = tt.rev;
@@ -350,12 +351,12 @@
     var implied = impliedTxt(c, a, res, G, price, dd);
 
     /* verdict */
-    var v = lines[0].base, up = isn(v) && price ? v / price - 1 : null;
+    var v = lines[0].base, up = isn(v) && price ? v / price - 1 : null, fitV = fitNote(c, a, isn(SC.wt) && price ? SC.wt / price - 1 : up);
     $('#verdict').innerHTML =
       '<div class="vd"><div><div class="mono">' + esc(lines[0].name) + ' &middot; base case</div><div class="big num">' + (isn(v) && v > 0 ? usd(v) : 'n/a') + '</div><p>' +
       (isn(up) && v > 0 ? 'Estimated value per share is <b class="' + (up >= 0 ? 'up' : 'dn') + '">' + (up >= 0 ? sp(up) + ' above' : sp(up).replace('−', '') + ' below') + '</b> the last close of ' + usd(price) + '.' : isn(v) && v <= 0 ? 'With these assumptions the cash flows don\u2019t cover the company\u2019s debt, so there is no positive value. Try a recovery in margins or growth below.' : 'Not enough data to compare with the share price.') +
       '</p>' + (isn(SC.wt) && SC.wt > 0 && price ? '<p class="impl">Weighting bear, base and bull ' + SC.p.map(function (x) { return Math.round(x * 100); }).join('/') + ' gives <b>' + usd(SC.wt) + '</b>, ' + (SC.wt >= price ? sp(SC.wt / price - 1) + ' above' : sp(SC.wt / price - 1).replace('−', '') + ' below') + ' the last close.</p>' : '') + (implied ? '<p class="impl">' + implied + '</p>' : '') + '</div><div class="vnote">' + (a.model === 'bank' ? 'Banks and insurers are valued on what they earn on their equity rather than on cash flow, since debt is their raw material.' : c.model === 'reit' ? 'Real-estate trusts reinvest heavily and pay out most earnings, so read the cash-flow value alongside the dividend model.' : G ? 'Built for fast growers: growth starts high, holds for a few years, then fades to the long-run rate by year 10, and reinvestment grows with each new dollar of revenue.' : 'Ten years of projected free cash flow, discounted at the company’s cost of capital, plus a terminal value.') +
-      (a.flagMargin ? ' <b>Its recent operating margin is near or below zero, so the model assumes it reaches 10%.</b> Adjust this below.' : '') + '</div></div>';
+      (a.flagMargin ? ' <b>Its recent operating margin is near or below zero, so the model assumes it reaches 10%.</b> Adjust this below.' : '') + (fitV ? '<p class="warn"><b>Treat this value with caution.</b> ' + fitV + '</p>' : '') + '</div></div>';
 
     /* football field */
     renderField(lines, price);
@@ -475,19 +476,34 @@
     return h + '</tbody></table></div></div>';
   }
 
+  /* when the automatic model can't be trusted for this company: say why instead of showing a reading */
+  function fitNote(c, a, gap) {
+    var f = c.f, Q = newQ(c);
+    if (a.model !== 'bank' && a.debtMissing && (last(f.intexp) || 0) > 0)
+      return 'It pays interest, but its debt is missing from the filings data this site reads, so the model would count it as debt-free and overstate its value.';
+    if (isn(gap) && gap > 1.5) return 'The model puts its value at more than 2.5 times the price. A gap that large usually means the model doesn\u2019t fit the company (a carmaker or lender with a finance arm, a one-off loss, or an unusual balance sheet), not a bargain.';
+    if (isn(gap) && gap < -0.8) return 'The model puts its value at less than a fifth of the price. A gap that large usually means the model doesn\u2019t fit the company (very early profits, heavy reinvestment or a one-off), not that it is worthless.';
+    return null;
+  }
+
   /* ---------- research snapshot: the same model, written up as a short report ---------- */
   function renderSnap() {
     var c = CO, f = c.f, a = A, r = c.row, price = a.price, i = lastIdx(f.rev) >= 0 ? lastIdx(f.rev) : lastIdx(f.ni), Q = newQ(c);
     var bankM = a.model === 'bank', G = !bankM && a.gm === 'growth', SC = scenarios(a), res = bankM ? bank(a) : model(a), dd = ddm(c, a);
     var base = res.ps, wt = SC.wt, gap = isn(wt) && price ? wt / price - 1 : null;
-    var sig = !isn(gap) ? ['Not enough data', ''] : gap > 0.15 ? ['Below model value', 'up'] : gap < -0.15 ? ['Above model value', 'dn'] : ['Near model value', ''];
+    var rep = WL[r[0]], h = '', fit = fitNote(c, a, gap);
+    /* a published report carries the rating; otherwise the model gives a plain reading, never dressed up as a rating */
+    var sig = rep && rep.call ? ['Our rating', esc(rep.call), 'From the published report' + (rep.date ? ', ' + esc(rep.date) : '')] :
+      fit ? ['Model reading', 'Not reliable here', 'See the note below'] :
+      !isn(gap) ? ['Model reading', 'Not enough data', 'No rating: this company has no published report'] :
+      ['Model reading', gap > 0.15 ? 'Looks undervalued' : gap < -0.15 ? 'Looks overvalued' : 'Close to fair value', 'Automatic, not a rating. ' + (gap > 0.15 ? 'The price is below the model\u2019s value' : gap < -0.15 ? 'The price is above the model\u2019s value' : 'The price is near the model\u2019s value')];
     var yr = function (j) { var e = c.ends[j] || ''; return 'FY' + (e.slice(5, 7) === '01' && +e.slice(8, 10) <= 7 ? +e.slice(0, 4) - 1 : e.slice(0, 4)); };
-    var rep = WL[r[0]], h = '';
     /* signal strip */
-    h += '<div class="snapv"><div class="call"><span class="mono">Model signal</span><b>' + sig[0] + '</b><small>Automatic, not a recommendation</small></div>' +
+    h += '<div class="snapv"><div class="call"><span class="mono">' + sig[0] + '</span><b>' + sig[1] + '</b><small>' + sig[2] + '</small></div>' +
       '<div><span class="mono">Base case</span><b class="num">' + (isn(base) && base > 0 ? usd(base, 0) : 'n/a') + '</b><small>' + (bankM ? 'Excess-return model' : G ? 'Cash-flow model, high growth' : 'Cash-flow model') + '</small></div>' +
       '<div><span class="mono">Probability-weighted</span><b class="num">' + (isn(wt) && wt > 0 ? usd(wt, 0) : 'n/a') + '</b><small>Bear, base, bull at 25/50/25</small></div>' +
-      '<div><span class="mono">Gap to price</span><b class="num ' + (gap >= 0 ? 'up' : 'dn') + '">' + (isn(gap) ? sp(gap) : '—') + '</b><small>Weighted value vs ' + usd(price) + '</small></div></div>';
+      '<div><span class="mono">Gap to price</span><b class="num ' + (fit ? '' : gap >= 0 ? 'up' : 'dn') + '">' + (isn(gap) && !fit ? sp(gap) : '—') + '</b><small>Weighted value vs ' + usd(price) + '</small></div></div>' +
+      (fit ? '<p class="warn snapfit"><b>' + (rep && rep.call ? 'About the automatic figures.' : 'Why there is no reading.') + '</b> ' + fit + (rep && rep.call ? ' The rating and value in the published report are the reviewed view.' : ' The figures below are shown for reference only.') + '</p>' : '');
     if (rep && rep.page) h += '<a class="snaprep" href="' + esc(rep.page) + '"><div><span class="mono">Published report' + (rep.date ? ' &middot; ' + esc(rep.date) : '') + '</span><b>' + (rep.call ? esc(rep.call) + (rep.value ? ', value ' + usd(rep.value, 0) + ' a share' : '') : 'Written research on ' + esc(r[1])) + '</b><small>The reviewed view, with sources. The automatic figures below use only reported numbers.</small></div><span class="go">Read it &rarr;</span></a>';
     /* the story in the numbers */
     var pts = [];
@@ -508,7 +524,8 @@
         pts.push(['Cash', 'Free cash flow was <b>' + big(fcf) + '</b>' + (isn(conv) ? ', ' + pc(conv, 0) + ' of net income' : '') + '. ' + (fcf < 0 ? 'It spends more than it brings in, usually because of heavy investment.' : isn(conv) && conv >= 0.9 ? 'Reported profit is backed by cash.' : isn(conv) && conv < 0.6 ? 'Cash lags reported profit: heavy investment, working capital or one-off gains.' : 'Cash broadly tracks profit.')]);
       }
       var D = a.debt || 0, C = a.cash || 0, eb = (Q && isn(Q.ttm.ebit) ? Q.ttm.ebit : f.ebit[i]) + ((Q && isn(Q.ttm.da) ? Q.ttm.da : f.da[i]) || 0);
-      pts.push(['Balance sheet', C >= D ? 'It holds <b>more cash than debt</b> (' + big(C) + ' against ' + big(D) + ').' : 'Debt exceeds cash on hand by <b>' + big(D - C) + '</b>' + (eb > 0 ? ', about ' + ((D - C) / eb).toFixed(1) + ' times operating profit before depreciation' + ((D - C) / eb > 3 ? ', on the high side.' : ', a comfortable level.') : '.') + ' Marketable securities are not counted as cash here.']);
+      if (a.debtMissing) pts.push(['Balance sheet', 'Its debt is <b>not in the filings data</b> this site reads (it reports it under its own labels), so the balance sheet can\u2019t be summarised here.' + ((last(f.intexp) || 0) > 0 ? ' It paid ' + big(last(f.intexp)) + ' of interest last year, so it does have debt.' : '')]);
+      else pts.push(['Balance sheet', C >= D ? 'It holds <b>more cash than debt</b> (' + big(C) + ' against ' + big(D) + ').' : 'Debt exceeds cash on hand by <b>' + big(D - C) + '</b>' + (eb > 0 ? ', about ' + ((D - C) / eb).toFixed(1) + ' times operating profit before depreciation' + ((D - C) / eb > 3 ? ', on the high side.' : ', a comfortable level.') : '.') + ' Marketable securities are not counted as cash here.']);
     } else {
       var roe = a.roe, bv0 = i >= 3 ? f.eq[i - 3] : null;
       pts.push(['Returns', 'Return on equity has averaged <b>' + pc(roe) + '</b> over three years, against a cost of equity of about ' + pc(ke(a)) + '. ' + (roe > ke(a) ? 'It earns more than investors require, which justifies a price above book value.' : 'It earns less than investors require, which argues for a price below book value.')]);

@@ -12,5 +12,8 @@
       "source": "Berkshire Hathaway 10-Q for the quarter ended June 30, 2026, cover page"
     }
   },
-  "shareClassFactor": {}
+  "shareClassFactor": {},
+  "debtTags": {
+    "_note": "ticker: list of XBRL tags (namespace:Tag, us-gaap by default) whose values add up to total debt, for companies that report debt under their own tag names. data/co/_quality.json lists candidates after each refresh."
+  }
 }

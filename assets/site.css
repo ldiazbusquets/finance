@@ -214,10 +214,15 @@ html.lt .billtx h2 { color: var(--ink); } html.lt .billtx h2 em { color: var(--a
 .src dt { color: var(--ink); } .src dd { margin: 0; color: var(--t2); }
 .src a { color: var(--acc); }
 
-footer { padding: 70px 0 50px; color: var(--t3); font-size: 13.5px; }
-footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 28px; }
-footer a:hover { color: var(--ink); }
-footer .fl { display: flex; gap: 18px; flex-wrap: wrap; }
+footer { padding: 90px 0 96px; color: var(--t3); font-size: 13.5px; }   /* bottom room so the Ask AI button never covers the last line */
+footer .fgrid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 32px; border-top: 1px solid var(--line); padding-top: 56px; }
+footer .fgrid h5 { font: 400 11.5px var(--mono); color: var(--t3); margin: 0 0 16px; letter-spacing: .02em; }
+footer .fgrid p { margin: 0 0 11px; font-size: 14.5px; color: var(--t2); }
+footer .fgrid a { color: var(--t2); text-decoration: none; } footer .fgrid a:hover { color: var(--ink); }
+footer .fgrid p.big4 { font: 300 clamp(26px, 2.5vw, 32px)/1.2 var(--sans); letter-spacing: -.02em; color: var(--ink) !important; margin: 0 !important; }
+footer .big4 em { font-style: normal; color: var(--t3); }
+footer .fbar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); margin-top: 56px; padding-top: 22px; font-size: 13px; color: var(--t3); }
+@media (max-width: 860px) { footer .fgrid { grid-template-columns: 1fr 1fr; } footer .fgrid > div:first-child { grid-column: 1 / -1; } }
 
 @media (max-width: 1080px) {
   .co { grid-template-columns: 1.2fr repeat(3, 1fr); }
@@ -400,7 +405,7 @@ html.lt .sug { box-shadow: 0 24px 60px rgba(60,35,15,.14); }
 @media (max-width: 860px) { .scn { grid-template-columns: 1fr; } .pw { text-align: left; } }
 
 /* ---------- research snapshot ---------- */
-.snapcta { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; border-radius: 20px; border: 1px solid var(--line2); background: var(--s1); text-decoration: none; color: var(--ink); flex-wrap: wrap; }
+.snapcta { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; border-radius: 20px; border: 1px solid var(--line2); background: var(--s1); text-decoration: none; color: var(--ink); flex-wrap: wrap; }
 .snapcta:hover { border-color: color-mix(in srgb, var(--acc) 50%, transparent); }
 .snapcta .mono { font-size: 11px; color: var(--acc); } .snapcta b { display: block; font: 400 22px/1.25 var(--sans); letter-spacing: -.015em; margin-top: 6px; } .snapcta p { margin: 6px 0 0; color: var(--t2); font-size: 14px; max-width: 60ch; }
 .snapv { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 1px; margin-top: 26px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }

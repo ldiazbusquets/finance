@@ -126,6 +126,13 @@ STOCK = {
     'ltdnc':  ['LongTermDebtNoncurrent', 'LongTermDebtAndCapitalLeaseObligations'],
     'ltdc':   ['LongTermDebtCurrent', 'LongTermDebtAndCapitalLeaseObligationsCurrent'],
     'debtc':  ['DebtCurrent'],
+    # single totals some filers use instead of LongTermDebt
+    'debtall': ['DebtLongtermAndShorttermCombinedAmount', 'DebtAndCapitalLeaseObligations', 'DebtInstrumentCarryingAmount'],
+    # pieces, used only when nothing above is tagged; the largest one is taken, so overlapping tags never add up twice
+    'notes':  ['SeniorNotes', 'NotesPayable', 'LongTermNotesPayable', 'ConvertibleNotesPayable', 'ConvertibleDebtNoncurrent',
+               'OtherLongTermDebtNoncurrent', 'LongTermLineOfCredit'],
+    'secured': ['SecuredDebt'],
+    'unsec':  ['UnsecuredDebt'],
     'stb':    ['ShortTermBorrowings', 'CommercialPaper', 'LoansAndNotesPayable'],
     'eq':     ['StockholdersEquity', 'StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest'],
     'assets': ['Assets'],
@@ -166,6 +173,47 @@ def _annual(g, tags, unit, instant):
     return out
 
 
+def debt_of(s, extra=None):
+    """(total debt, current part) from one balance-sheet date, without double counting:
+    LongTermDebt includes its current part; DebtCurrent already includes short-term
+    borrowings and commercial paper. Falls back to single totals, then to the largest
+    tagged piece (secured plus unsecured for REITs), then to hand-mapped company tags."""
+    stb = s.get('stb') or 0
+    if s.get('ltd') is not None:
+        return s['ltd'] + stb, (s.get('ltdc') or 0) + stb
+    if s.get('ltdnc') is not None or s.get('debtc') is not None or s.get('ltdc') is not None:
+        cur = s['debtc'] if s.get('debtc') is not None else (s.get('ltdc') or 0) + stb
+        return (s.get('ltdnc') or 0) + cur, cur
+    if s.get('debtall') is not None:
+        return s['debtall'], (s.get('debtc') or 0) + stb
+    if extra:
+        return extra, None
+    su = (s.get('secured') or 0) + (s.get('unsec') or 0) if s.get('secured') is not None or s.get('unsec') is not None else None
+    pieces = [x for x in (s.get('notes'), su) if x is not None]
+    if pieces:
+        return max(pieces) + stb, stb or None
+    if s.get('stb'):
+        return stb, stb
+    return None, None
+
+
+def extra_debt(facts, tags, e, days=10):
+    """sum of hand-mapped tags (any namespace) at one balance-sheet date, e.g. a carmaker's
+    automotive and finance-arm debt, which it reports under its own tag names"""
+    if not tags:
+        return None
+    tot, hit = 0, False
+    for ns, tag in tags:
+        best = None
+        for unit_rows in facts.get('facts', {}).get(ns, {}).get(tag, {}).get('units', {}).values():
+            for r in unit_rows:
+                if 'end' in r and abs(_days(r['end'], e)) <= days and (best is None or r.get('filed', '') > best.get('filed', '')):
+                    best = r
+        if best:
+            tot += best['val']; hit = True
+    return tot if hit else None
+
+
 def fundamentals(facts):
     g = facts.get('facts', {}).get('us-gaap', {})
     flow = {k: _annual(g, v, 'USD', False) for k, v in FLOW.items()}
@@ -196,16 +244,7 @@ def fundamentals(facts):
         for k in list(FLOW) + list(PERSHARE) + list(SHARES):
             f[k].append(near(flow[k], e))
         s = {k: near(v, e) for k, v in stock.items()}
-        # total debt without double counting: LongTermDebt includes its current part;
-        # DebtCurrent already includes short-term borrowings and commercial paper
-        if s['ltd'] is not None:
-            debt = s['ltd'] + (s['stb'] or 0)
-            cur = (s['ltdc'] or 0) + (s['stb'] or 0)
-        elif s['ltdnc'] is not None or s['debtc'] is not None or s['ltdc'] is not None:
-            cur = s['debtc'] if s['debtc'] is not None else (s['ltdc'] or 0) + (s['stb'] or 0)
-            debt = (s['ltdnc'] or 0) + cur
-        else:
-            debt, cur = None, None
+        debt, cur = debt_of(s, extra_debt(facts, DEBTTAGS.get(CUR_T), e))
         f['debt'].append(debt)
         f['debtcur'].append(cur)
         f['cash'].append(None if s['cash'] is None else s['cash'] + (s['stinv'] or 0))
@@ -286,6 +325,22 @@ def _ttm_from_quarters(qd, qs):
             qd['ttm'][k] = sum(v)
 
 
+def debt_candidates(facts, e):
+    out = []
+    for ns, tags in facts.get('facts', {}).items():
+        for tag, body in tags.items():
+            if not re.search(r'Debt|Borrowing|NotesPayable|Notes|Loans?Payable|CreditFacilit', tag) or re.search(r'Securities|Investment|Receivable|Proceeds|Repayment|Payments|Issuance|Interest|Gain|Loss|Expense|Amortiz|Fair', tag):
+                continue
+            best = None
+            for rows in body.get('units', {}).values():
+                for r in rows:
+                    if 'end' in r and 'start' not in r and abs(_days(r['end'], e)) <= 10 and (best is None or r.get('filed', '') > best.get('filed', '')):
+                        best = r
+            if best:
+                out.append([f'{ns}:{tag}', best['val']])
+    return sorted(out, key=lambda x: -abs(x[1]))[:25]
+
+
 def quarterly(facts, ends):
     """Figures from the latest 10-Q when it is newer than the last 10-K:
     trailing-twelve-month flows and the latest balance sheet."""
@@ -322,13 +377,7 @@ def quarterly(facts, ends):
             r = _pick(_rows(g, tag, 'USD', True), lambda r: r['end'] == E)
             if r:
                 s[k] = r['val']; break
-    if s['ltd'] is not None:
-        debt, cur = s['ltd'] + (s['stb'] or 0), (s['ltdc'] or 0) + (s['stb'] or 0)
-    elif s['ltdnc'] is not None or s['debtc'] is not None or s['ltdc'] is not None:
-        cur = s['debtc'] if s['debtc'] is not None else (s['ltdc'] or 0) + (s['stb'] or 0)
-        debt = (s['ltdnc'] or 0) + cur
-    else:
-        debt = cur = None
+    debt, cur = debt_of(s, extra_debt(facts, DEBTTAGS.get(CUR_T), E))
     bs = {'debt': debt, 'debtcur': cur, 'cash': None if s['cash'] is None else s['cash'] + (s['stinv'] or 0),
           'eq': s['eq'], 'assets': s['assets'], 'ca': s['ca'], 'cl': s['cl']}
     if ttm.get('rev') is None and ttm.get('ni') is None:
@@ -458,12 +507,7 @@ def quarters(facts, ends, n=8, frev=None):
                 r = _pick(_rows(g, tag, 'USD', True), lambda r: abs(_days(r['end'], e)) <= 3)
                 if r:
                     s[k] = r['val']; break
-        if s['ltd'] is not None:
-            debt = s['ltd'] + (s['stb'] or 0)
-        elif s['ltdnc'] is not None or s['debtc'] is not None or s['ltdc'] is not None:
-            debt = (s['ltdnc'] or 0) + (s['debtc'] if s['debtc'] is not None else (s['ltdc'] or 0) + (s['stb'] or 0))
-        else:
-            debt = None
+        debt, _ = debt_of(s, extra_debt(facts, DEBTTAGS.get(CUR_T), e, days=3))
         bs['cash'].append(None if s['cash'] is None else s['cash'] + (s['stinv'] or 0))
         bs['debt'].append(debt)
         bs['eq'].append(s['eq'])
@@ -523,7 +567,9 @@ def model_of(sector, sub):
 EXTRA = {}
 SHAREFAC = {}
 SHARESOV = {}
-FVER = 10   # bump when the extraction rules change, so every file is rebuilt
+DEBTTAGS = {}
+CUR_T = None
+FVER = 11   # bump when the extraction rules change, so every file is rebuilt
 
 
 def sig(t):
@@ -547,8 +593,10 @@ def update_fundamentals(cos, ua, limit):
     ov = load(os.path.join(DATA, 'overrides.json'), {})
     EXTRA = ov.get('predecessorCik', {})
     SHAREFAC = ov.get('shareClassFactor', {})
-    global SHARESOV
+    global SHARESOV, DEBTTAGS, CUR_T
     SHARESOV = ov.get('sharesOutstanding', {})
+    DEBTTAGS = {t: [tuple(x.split(':', 1)) if ':' in x else ('us-gaap', x) for x in v] for t, v in ov.get('debtTags', {}).items() if not t.startswith('_')}
+    quality = {}
     hdr = {'User-Agent': ua, 'Accept-Encoding': 'identity'}
     due = []
     for t, name, sec, sub, cik in cos:
@@ -579,6 +627,7 @@ def update_fundamentals(cos, ua, limit):
             if not any(x['form'] == '10-K' for x in fil) and EXTRA.get(t):
                 old = EXTRA[t][0]
                 fil += [x for x in filings_of(json.loads(get(f'https://data.sec.gov/submissions/CIK{old:010d}.json', hdr, tries=2, timeout=30)), old) if x['form'] == '10-K']
+            CUR_T = t
             ends, f, shares = fundamentals(facts)
             fac = SHAREFAC.get(t)
             if fac:
@@ -620,12 +669,20 @@ def update_fundamentals(cos, ua, limit):
                       'ends': ends, 'f': f, 'sh': shares, 'q': qd, 'qs': qs, 'filings': fil, 'fupd': STAMP, 'fver': FVER, 'ovsig': sig(t)})
             save(path, d)
             done += 1
+            if last(f['debt']) is None and (last(f['intexp']) or 0) > 0:
+                quality[t] = debt_candidates(facts, ends[-1])
         except Exception as e:
             fails += 1
             print(f'  FAIL facts {t:6} {str(e)[:120]}', file=sys.stderr)
             if fails >= 15 and not done:
                 print('  SEC is not answering; stopping company figures for this run.', file=sys.stderr)
                 break
+    if done:     # companies paying interest with no debt found: the tags they do use, to map in data/overrides.json (debtTags)
+        qp = os.path.join(CO, '_quality.json')
+        old = load(qp, {}).get('debtMissing', {})
+        old = {k: v for k, v in old.items() if k not in {x[1] for x in due[:limit]}}
+        old.update(quality)
+        save(qp, {'note': 'Companies that report interest expense but no debt under the tags the pipeline reads, with the debt-like tags they do use. Map them in data/overrides.json under debtTags.', 'debtMissing': old})
     print(f'  ok   fundamentals refreshed {done}, failed {fails}, still due {max(0, len(due) - limit)}')
     return done
 

@@ -365,9 +365,9 @@ def make_lhx():
 
 def make_ba():
     wb = Workbook()
-    S, out = summary(wb, 'Boeing (BA)', 'Ten-year discounted free cash flow to the firm as production recovers', 190.47, 'ba',
-                     wacc=dict(beta=1.35, price=190.47, shares=0.7906, debt=45.6, kd=.06), scen_sheets=None, ps_cells=['', '', ''])
-    cases = {'Base': ((2, 6, 9, 10.5, 11.5), 0), 'Bear': ((0.5, 3, 5, 6.5, 7.5), .01), 'Bull': ((3, 8, 11, 13, 14), -.01)}
+    S, out = summary(wb, 'Boeing (BA)', 'Ten-year discounted free cash flow to the firm as production recovers', 168.18, 'ba',
+                     wacc=dict(beta=1.35, price=168.18, shares=0.7906, debt=45.9, kd=.06), scen_sheets=None, ps_cells=['', '', ''])
+    cases = {'Base': ((2, 3, 6, 10, 11.5), 0), 'Bear': ((1.5, 1, 3, 5, 7.5), .01), 'Bull': ((2.5, 4.5, 8, 12, 14), -.01)}
     info = {}
     for name, (path, shift) in cases.items():
         X = Sheet(wb, name, 'Boeing (BA)', name + ' case: free cash flow back to normal, $ billions', 12); X.widths(40, 11, {'L': 40})
@@ -377,7 +377,7 @@ def make_ba():
         gT = X.row('Terminal growth', [.03], 'pct', 'i')
         sh_ = X.row('Discount rate shift for this case', [shift], 'pct2', 'i')
         W = X.row('Discount rate', [f'={out["W"]}+B{sh_}'], 'pct2', 'l')
-        net = X.row('Net debt ($B)', [-25.6], 'b', 'i', 'Latest balance sheet')
+        net = X.row('Net debt ($B)', [-25.2], 'b', 'i', 'Latest balance sheet')
         sh = X.row('Diluted shares (billions)', [0.7906], FMT['n4'], 'i')
         X.gap(); X.section('Projection'); X.header(['Year'] + [str(2026 + t) for t in range(1, 11)])
         t = X.row('Year number', list(range(1, 11)), '0')

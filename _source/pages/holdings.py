@@ -409,49 +409,53 @@ R['AWK'] = dict(
     ])
 
 # ---------------------------------------------------------------- Boeing
-BO = 'https://finance.biggo.com/news/US_BA_2026-07-28'
+BO = 'https://investors.boeing.com/investors/news/press-release-details/2026/Boeing-Reports-Third-Quarter-Results/default.aspx'
+BO_CALL = 'https://www.investing.com/news/transcripts/earnings-call-transcript-boeing-q3-2026-misses-profit-view-as-shares-slide-93CH-4976410'
+BO_FCF = 'https://www.tradingkey.com/news/transcripts/262243052-tradingkey'
 R['BA'] = dict(
-    t='BA', slug='boeing', name='Boeing', h1='Boeing', sector='Aerospace &amp; defense', date=DATE, timing=LATER,
-    sub='Boeing is two years into a turnaround after the 737 MAX door-plug accident. Deliveries are at their highest since 2018, cash flow has turned positive and the backlog is a record $715 billion. The price assumes the recovery reaches roughly $11 billion of annual free cash flow, which is about what the model expects.',
-    call='Hold', method='Cash-flow model', price=190.47, base=197, bear=105, bull=291, wt=197, max=400, tick=50,
+    t='BA', slug='boeing', name='Boeing', h1='Boeing', sector='Aerospace &amp; defense', date='October 28, 2026', timing=', the day after its third-quarter results',
+    sub='Boeing is two years into a turnaround after the 737 MAX door-plug accident. The backlog is a record $745 billion and cash flow is positive, but the third quarter showed the recovery running about a year behind plan: the $10 billion cash target moved to 2029. The shares fell 11% to $168, below what the model gives.',
+    call='Buy', method='Cash-flow model', price=168.18, pricenote='Close, October 27, 2026', base=197, bear=104, bull=292, wt=197, max=400, tick=50,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 105, 291, 197, '$105 to $291, base $197'), ('Probability-weighted', None, None, 197, '$197'),
-           ('Price at writing', None, None, 190.47, '$190.47'), ('52-week range', 177, 254, None, '$177 to $254')],
+    field=[('Cash-flow model', 104, 292, 197, '$104 to $292, base $197'), ('Probability-weighted', None, None, 197, '$197'),
+           ('Price at writing', None, None, 168.18, '$168.18'), ('52-week range', 168, 254, None, '$168 to $254')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Half of the world&rsquo;s <em>big-jet duopoly.</em>',
          prose('Boeing Commercial Airplanes builds the 737, 767, 777 and 787; Defense, Space &amp; Security builds military aircraft, satellites and weapons; Global Services supports both fleets with parts and maintenance, its most profitable unit. With Airbus it shares a duopoly in large passenger jets, so demand is not the problem: production is.')),
-        ('results', 'Latest results', 'Most deliveries <em>since 2018.</em>',
-         stats([('$24.6B', 'Revenue, Q2 2026, +8%'), ('171', 'Jets delivered'), ('+$0.6B', 'Free cash flow, first positive in a while'), ('$715B', 'Record backlog'), ('$1&ndash;3B', '2026 free cash flow guidance'), ('&minus;$0.76', 'Core loss per share')])
-         + prose('Boeing delivered 171 aircraft in the second quarter, including 129 737 MAXs, and free cash flow turned positive at $631 million. It still reported a core loss, including a $280 million charge on the Air Force One program. The 737 is ramping toward 47 a month, with a new line in Everett and a next step to 52; the 787 is at 8 a month, held back by engine supply; the 777X remains on track for first delivery in 2027.')
-         + src([('Q2 2026 results summary', BO)])),
+        ('results', 'Latest results', 'Record backlog, <em>a slower ramp.</em>',
+         stats([('$24.2B', 'Revenue, Q3 2026, +4%'), ('161', 'Jets delivered'), ('+$0.5B', 'Free cash flow, after $0.7B of settlement payments'), ('$745B', 'Record backlog'), ('~$2B', '2026 free cash flow guidance'), ('&minus;$0.34', 'Core loss per share')])
+         + prose('Boeing delivered 161 aircraft in the third quarter, including 124 737s, and free cash flow was $464 million after about $0.7 billion of Justice Department settlement payments. The core loss of $0.34 a share was wider than the $0.24 analysts expected, and revenue of $24.2 billion was slightly below estimates. Commercial Airplanes lost 6.5% on sales as supply-chain and rate-change costs rose; defense earned 6.2%, helped by a $252 million gain on selling HRL Laboratories, and services 18.3%. The backlog reached a record $745 billion, not yet counting the Navy&rsquo;s F/A-XX fighter, and the 737-7 and 737-10 were certified.')
+         + prose('The news was the timetable. Stabilising the 737 at 47 a month will run into 2027, with the step to 52 in the second half of 2027; the 787 move from 8 to 10 a month slipped to the end of 2026, so 787 deliveries will be at the low end of 90 to 100. Management narrowed 2026 free cash flow to about $2 billion and set about $3 billion for 2027 and $6 billion for 2028, with the $10 billion target now in 2029, about a year later than before. The 777X is still due for first delivery in 2027.')
+         + src([('Q3 2026 results, Boeing', BO), ('Earnings call', BO_CALL), ('Cash-flow outlook from the call', BO_FCF)])),
         ('fin', 'Five years', 'Losses since 2019, <em>a profit in 2025.</em>',
          fin_table('BA') + prose('Boeing lost money every year from 2019 to 2024. The 2025 profit includes the gain on selling its Jeppesen navigation business, so the turnaround shows up more clearly in cash flow than in earnings.')
          + src([('Boeing filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000012927&type=10-K')])),
-        ('capital', 'Balance sheet', 'Heavy debt, <em>falling.</em>',
-         prose('Debt is about $45.6 billion against $20.0 billion of cash in June, down from over $50 billion. Shareholders&rsquo; equity only recently turned positive after years of losses. The 2024 equity raise and asset sales were used to protect the investment-grade rating.')),
+        ('capital', 'Balance sheet', 'Heavy debt, <em>no longer rising.</em>',
+         prose('Debt was $45.9 billion against $20.7 billion of cash and investments at the end of September, with $10 billion of undrawn credit lines; debt is down from over $50 billion. Shareholders&rsquo; equity only recently turned positive after years of losses. The 2024 equity raise and asset sales were used to protect the investment-grade rating.')
+         + src([('Q3 2026 results, Boeing', BO)])),
         ('value', 'Valuation', 'The model gives <em>$197 a share.</em>',
-         prose('Boeing&rsquo;s profits are still distorted by the recovery, so the model works from a free cash flow path.')
+         prose('Boeing&rsquo;s profits are still distorted by the recovery, so the model works from a free cash flow path. This update moves that path a year later, in line with the new outlook; the lower share price also lowers the discount rate slightly, because debt is now a larger share of the company&rsquo;s value, which offsets most of the delay.')
          + table(['Assumption', 'Base case', 'Basis'], [
-             ['Free cash flow, 2026&ndash;2030', '$2B, $6B, $9B, $10.5B, $11.5B', '2026 guidance, then production ramps toward 47&ndash;52 a month'],
+             ['Free cash flow, 2026&ndash;2030', '$2B, $3B, $6B, $10B, $11.5B', 'Company outlook to 2029, then 737 at 52 a month and 787 near 12'],
              ['Then', 'Grows 6%, fading to 3% by year 10', 'Deliveries level off, then long-run economic growth'],
-             ['Discount rate', '9.7%', 'Beta 1.35, about 23% debt at 6%'],
-             ['Net debt', '$25.6B', 'June 30, 2026'],
+             ['Discount rate', '9.6%', 'Beta 1.35, about 26% debt at 6%'],
+             ['Net debt', '$25.2B', 'September 30, 2026'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$76B'), ('PV of terminal value', '$105B'), ('Enterprise value', '$181B'), ('Less net debt', '$25.6B'), ('Equity value', '$156B'), ('Shares', '791M')], '$197')
+         + bridge([('PV of 10 years of cash flow', '$71B'), ('PV of terminal value', '$109B'), ('Enterprise value', '$181B'), ('Less net debt', '$25.2B'), ('Equity value', '$155B'), ('Shares', '791M')], '$197')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
-             ['Free cash flow by 2030', '$7.5B', '$11.5B', '$14B'], ['Discount rate', '10.7%', '9.7%', '8.7%'],
-             ['Value per share', '$105', '$197', '$291'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$197</b>.') + sens('Discount rate', ['8.0%', '8.5%', '9.0%', '9.5%'], ['$280', '$251', '$226', '$205'])),
-        ('implied', 'What the price assumes', 'At $190, <em>about $11 billion of cash by 2030.</em>',
-         prose('The price implies free cash flow of roughly <b>$11 billion a year by 2030</b>, almost exactly the base case and close to the level Boeing reached before 2019. The market is pricing in a successful recovery, but not more than that.')),
+             ['Free cash flow by 2030', '$7.5B', '$11.5B', '$14B'], ['Discount rate', '10.6%', '9.6%', '8.6%'],
+             ['Value per share', '$104', '$197', '$292'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$197</b>.') + sens('Discount rate', ['8.0%', '8.5%', '9.0%', '9.5%'], ['$274', '$244', '$220', '$199'])),
+        ('implied', 'What the price assumes', 'At $168, <em>about $10 billion of cash by 2030.</em>',
+         prose('The price implies free cash flow of roughly <b>$10 billion a year by 2030</b>, about 15% below the base case at every step, or about what Boeing now targets for 2029 with no growth after it. The market is pricing a recovery that arrives late and stops short of the pre-2019 level.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
-             ['Quality and the FAA', 'Any new incident could halt the production ramp again.'],
-             ['Supply chain', 'Engines (787) and parts beyond 52 a month on the 737.'],
+             ['Quality and the FAA', 'Any new incident could halt the production ramp again; the 777X still needs approval for the rest of its flight tests.'],
+             ['Supply chain', 'Wings are the main limit on the 737, a wing-part supplier problem will add costs for several quarters, and engines pace the 787.'],
+             ['Customer deposits', 'Lower advance payments from airlines are one reason 2027 cash flow is guided to only $3 billion.'],
              ['Fixed-price defense programs', 'Air Force One and others have produced repeated charges.'],
-             ['Labor', 'Engineering union talks ahead of an October contract expiry.'],
-         ]) + prose('<b>Upside:</b> faster rate increases, the 737-7 and -10 certifications, and the 777X entering service in 2027.')),
-        ('rec', 'Rating', 'Hold. <em>Fairly priced for the recovery.</em>',
-         prose('At $190.47 against a base case of $197, Boeing is roughly fairly valued: the price assumes the turnaround works, no more. The call is <b>Hold</b>. The upside depends on beating the plan; a stumble on quality or production would hit the shares hard.')
-         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The recovery is priced in. <em>Execution decides the rest.</em></h2><p>Demand is guaranteed by the backlog; Boeing has to build the planes.</p></div>'),
+         ]) + prose('<b>Upside:</b> the F/A-XX contract entering the backlog, defense growth that management now expects in the mid-single digits or higher, and the 777X entering service in 2027.')),
+        ('rec', 'Rating', 'Below the model, <em>a year behind plan.</em>',
+         prose('At $168.18 against a base case of $197, the shares now trade below the model, which already uses the later timetable. The upside depends on Boeing meeting the new dates; another slip, or a stumble on quality, would cut the value.')
+         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The recovery is late. <em>The price now allows for it.</em></h2><p>Demand is guaranteed by the backlog; Boeing has to build the planes.</p></div>'),
     ])

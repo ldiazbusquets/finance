@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-27T23:10:20Z",
- "today": "2026-10-27",
+ "updated": "2026-10-28T08:19:15Z",
+ "today": "2026-10-28",
  "rules": {
   "band": 0.15,
   "near": 0.03,
@@ -102,15 +102,33 @@
    "move": 0.0246,
    "call_now": "Sell",
    "rel_now": -0.1667,
-   "due": "2026-10-28",
    "flags": [
     [
      "rating",
      "At today&rsquo;s price the rule gives Sell, not Hold"
     ],
     [
-     "due",
-     "Results due 2026-10-28"
+     "results",
+     "Results reported 2026-10-28, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "reports/american-water.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 135.79,
+   "now": 141.1,
+   "asof": "2026-10-27",
+   "move": 0.0391,
+   "call_now": "Hold",
+   "rel_now": 0.0227,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-28, after the report"
     ]
    ]
   },
@@ -125,11 +143,68 @@
    "asof": "2026-10-27",
    "move": -0.117,
    "call_now": "Buy",
-   "rel_now": 0.6839,
+   "rel_now": 0.6817,
    "flags": [
     [
      "results",
      "Results reported 2026-10-27, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "GEV",
+   "name": "GE Vernova",
+   "page": "reports/gev.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 890.33,
+   "now": 895.08,
+   "asof": "2026-10-27",
+   "move": 0.0053,
+   "call_now": "Sell",
+   "rel_now": -0.2611,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-28, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "reports/alphabet.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 324.22,
+   "now": 320.58,
+   "asof": "2026-10-27",
+   "move": -0.0112,
+   "call_now": "Hold",
+   "rel_now": 0.1144,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-28, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "MSFT",
+   "name": "Microsoft",
+   "page": "reports/microsoft.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 521.08,
+   "now": 531.33,
+   "asof": "2026-10-27",
+   "move": 0.0197,
+   "call_now": "Hold",
+   "rel_now": 0.0368,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-28, after the report"
     ]
    ]
   },
@@ -212,26 +287,6 @@
    ]
   },
   {
-   "t": "AWK",
-   "name": "American Water Works",
-   "page": "reports/american-water.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 135.79,
-   "now": 141.1,
-   "asof": "2026-10-27",
-   "move": 0.0391,
-   "call_now": "Hold",
-   "rel_now": 0.0227,
-   "due": "2026-10-28",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-28"
-    ]
-   ]
-  },
-  {
    "t": "CAT",
    "name": "Caterpillar",
    "page": "reports/caterpillar.html",
@@ -272,46 +327,6 @@
    ]
   },
   {
-   "t": "GEV",
-   "name": "GE Vernova",
-   "page": "reports/gev.html",
-   "call": "Sell",
-   "rated": "2026-10-22",
-   "price": 890.33,
-   "now": 895.08,
-   "asof": "2026-10-27",
-   "move": 0.0053,
-   "call_now": "Sell",
-   "rel_now": -0.2611,
-   "due": "2026-10-28",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-28"
-    ]
-   ]
-  },
-  {
-   "t": "GOOGL",
-   "name": "Alphabet",
-   "page": "reports/alphabet.html",
-   "call": "Hold",
-   "rated": "2026-10-23",
-   "price": 324.22,
-   "now": 320.58,
-   "asof": "2026-10-27",
-   "move": -0.0112,
-   "call_now": "Hold",
-   "rel_now": 0.1144,
-   "due": "2026-10-28",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-28"
-    ]
-   ]
-  },
-  {
    "t": "KTOS",
    "name": "Kratos Defense",
    "page": "reports/kratos.html",
@@ -348,26 +363,6 @@
     [
      "due",
      "Results due 2026-10-29"
-    ]
-   ]
-  },
-  {
-   "t": "MSFT",
-   "name": "Microsoft",
-   "page": "reports/microsoft.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 521.08,
-   "now": 531.33,
-   "asof": "2026-10-27",
-   "move": 0.0197,
-   "call_now": "Hold",
-   "rel_now": 0.0368,
-   "due": "2026-10-28",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-28"
     ]
    ]
   },

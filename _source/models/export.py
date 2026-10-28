@@ -146,10 +146,10 @@ def main():
     ns = run('ba'); ba = ns['ba']; b = ba(); L = dict(ns['LAST'])
     rows = [[2026 + t, B(x), round(1 / (1 + L['W']) ** (t - .5), 4), B(x / (1 + L['W']) ** (t - .5))] for t, x in enumerate(L['flows'], 1)]
     write('boeing', 'Boeing (BA)', 'Ten-year discounted free cash flow to the firm as production recovers',
-          [['Free cash flow path, years 1-5 ($B)', '2 / 6 / 9 / 10.5 / 11.5', 'Plus about $2B of after-tax interest to reach cash flow to the firm'], ['Growth, years 6-10 %', '6 fading to 3', ''],
-           ['Discount rate (WACC) %', P(L['W']), 'CAPM beta 1.35 with $45.6B of debt'], ['Terminal growth %', 3, ''], ['Net debt', -25.6, 'Latest balance sheet'], ['Diluted shares (billions)', 0.7906, '']],
+          [['Free cash flow path, years 1-5 ($B)', '2 / 3 / 6 / 10 / 11.5', 'Plus about $2B of after-tax interest to reach cash flow to the firm'], ['Growth, years 6-10 %', '6 fading to 3', ''],
+           ['Discount rate (WACC) %', P(L['W']), 'CAPM beta 1.35 with $45.9B of debt'], ['Terminal growth %', 3, ''], ['Net debt', -25.2, 'Latest balance sheet'], ['Diluted shares (billions)', 0.7906, '']],
           ['Year', 'Free cash flow to the firm', 'Discount factor (mid-year)', 'Present value'], rows,
-          [['Present value of 10 years of cash flow', B(L['pv'])], ['Terminal value = FCFF10 x (1+g) / (WACC - g)', B(L['tv'])], ['Present value of terminal value', B(L['pvtv'])], ['Enterprise value', B(L['ev'])], ['Less net debt', -25.6], ['Equity value', B(L['eq'])], ['Value per share ($)', round(b, 2)]],
+          [['Present value of 10 years of cash flow', B(L['pv'])], ['Terminal value = FCFF10 x (1+g) / (WACC - g)', B(L['tv'])], ['Present value of terminal value', B(L['pvtv'])], ['Enterprise value', B(L['ev'])], ['Less net debt', -25.2], ['Equity value', B(L['eq'])], ['Value per share ($)', round(b, 2)]],
           [['Value per share ($)', round(ns['bear'], 2), round(b, 2), round(ns['bull'], 2)], ['Probability', 25, 50, 25], ['Probability-weighted value ($)', '', round(wsum(ns['bear'], b, ns['bull']), 2), '']],
           [(f'Discount rate {P(Wx)}%', round(ba(W=Wx), 2)) for Wx in (.08, .085, .09, .095)], 'Model script: _source/models/ba.py')
     vals['BA'] = (b, ns['bear'], ns['bull'])

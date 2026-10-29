@@ -302,8 +302,8 @@ def build():
 
     # ---------------- research ----------------
     ORDER = ['LHX', 'VRT', 'AWK', 'AMZN', 'META', 'JPM', 'GEV', 'NVDA', 'BA', 'SPCX', 'FLY']
-    CARDS = {'LHX': 'Record backlog and missile demand, shares down a third on a CEO exit.', 'VRT': 'Power and cooling for AI data centers, after a growth miss.', 'AWK': 'The largest U.S. water utility, merging with Essential.', 'AMZN': 'AWS growing 37% while capex turns free cash flow negative.', 'META': 'Ads up 26%, free cash flow turned negative by AI spending.', 'JPM': 'The most profitable big bank, valued on return on equity.', 'GEV': 'A record order book valued on its own 2028 targets.', 'NVDA': 'The AI chip leader, priced for a long boom.', 'BA': 'A turnaround with record backlog and positive cash flow.', 'SPCX': 'Rockets, Starlink and now an AI cloud, revenue up 161%.', 'FLY': 'Moon landers and small rockets, down 70% from its high.'}
-    META_R = dict(holdings.R); META_R.update({k: coverage.R[k] for k in ('SPCX', 'FLY')}); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call=GEV_CALL, base=442, price=890.33)
+    CARDS = {'LHX': 'Record backlog and missile demand, shares down a third on a CEO exit.', 'VRT': 'Power and cooling for AI data centers, sales up 61% and orders doubled.', 'AWK': 'The largest U.S. water utility, merging with Essential.', 'AMZN': 'AWS growing 37% while capex turns free cash flow negative.', 'META': 'Ads up 26%, free cash flow turned negative by AI spending.', 'JPM': 'The most profitable big bank, valued on return on equity.', 'GEV': 'A record order book valued on its own 2028 targets.', 'NVDA': 'The AI chip leader, priced for a long boom.', 'BA': 'A turnaround with record backlog and positive cash flow.', 'SPCX': 'Rockets, Starlink and now an AI cloud, revenue up 161%.', 'FLY': 'Moon landers and small rockets, down 70% from its high.'}
+    META_R = dict(holdings.R); META_R.update({k: coverage.R[k] for k in ('SPCX', 'FLY')}); META_R['GEV'] = dict(t='GEV', slug='gev', name='GE Vernova', call=GEV_CALL, base=465, price=878.03)
     def hcard(t):
         r = META_R[t]; href = 'gev.html' if t == 'GEV' else r['slug'] + '.html'
         up = r['base'] / r['price'] - 1
@@ -437,7 +437,7 @@ def build():
     cur_calls = []
     for t, r in list(holdings.R.items()) + [(k, v) for k, v in coverage.R.items() if not v.get('private')]:
         cur_calls.append({'t': t, 'name': html_mod.unescape(r['name']), 'page': MOVED[r['slug'] + '.html'], 'date': iso(r.get('rated') or r['date']), 'call': r['call'], 'value': r['base'], 'price': r['price'], 'held': bool(wlh.get(t, {}).get('holding'))})
-    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': MOVED['gev.html'], 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 442, 'price': 890.33, 'held': True})
+    cur_calls.append({'t': 'GEV', 'name': 'GE Vernova', 'page': MOVED['gev.html'], 'date': iso(ratings.RATED), 'call': GEV_CALL, 'value': 465, 'price': 878.03, 'held': True})
     with open(os.path.join(OUT, 'assets', 'ctx.json'), 'w') as f:
         json.dump({'method': 'Every report values the company with the same cash-flow method (5.15% Treasury yield, 4.5% equity premium). On those assumptions the S&P 500 itself is worth about 68% of its price, so each stock is compared with that: Buy if at least 15% cheaper than the market on this basis, Sell if at least 15% dearer, Hold in between. The rating is relative to the market; separately, a stock is undervalued on its own if its value is at least 10% above its price, overvalued if at least 10% below, otherwise near fair value. A Buy can still be overvalued on its own. Private companies are not rated. Value is the expected value from 4,000 simulations of the report\'s model, with bear and bull cases as the 10th and 90th percentiles.',
                    'ratings': [{'t': c['t'], 'name': c['name'], 'page': c['page'], 'call': c['call'], 'value': round((coverage.R.get(c['t']) or holdings.R.get(c['t']) or {}).get('expected') or c['value']), 'price': c['price']} for c in cur_calls]}, f, indent=0)
@@ -925,7 +925,7 @@ def build():
             page(r['slug'] + '.html', 'research.html', f"{r['name']} research", f"{r['name']} (private) valued on 2030 earning power: about ${r['base']:,}B against ${r['price']:,}B at its latest valuation.", 'report', rep.body(r))
         else:
             page(r['slug'] + '.html', 'research.html', f"{r['name']} ({t}) research", f"{r['name']} valued with a {r['method'].lower()}: ${r['base']:,} a share against ${r['price']:,.2f} at writing. {r['call']}.", 'report', rep.body(r), attrs=f' data-ticker="{t}" data-then="{r["price"]}" data-val="{r["base"]}"')
-    page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book, a cash-flow value of $442 a share and a Hold.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="890.33" data-val="442"')
+    page('gev.html', 'research.html', 'GE Vernova (GEV) research', 'GE Vernova valued on its own 2028 targets: a record order book and a cash-flow value of $465 a share.', 'report', gev.body(), attrs=' data-ticker="GEV" data-then="878.03" data-val="465"')
 
     # ---------------- sitemap ----------------
     pages = sorted([f for f in os.listdir(OUT) if f.endswith('.html') and f != '404.html'] + [v for v in MOVED.values() if os.path.exists(os.path.join(OUT, v))])

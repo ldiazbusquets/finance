@@ -82,6 +82,16 @@
     "file": "archive/vertiv/2026-10-23.html",
     "frozen": "2026-10-23",
     "name": "Vertiv"
+   },
+   {
+    "date": "October 29, 2026",
+    "call": "Sell",
+    "base": 131,
+    "wt": 136,
+    "price": 242.94,
+    "file": "archive/vertiv/2026-10-29.html",
+    "frozen": "2026-10-29",
+    "name": "Vertiv"
    }
   ],
   "l3harris": [
@@ -105,6 +115,16 @@
     "price": 135.79,
     "file": "archive/american-water/2026-10-23.html",
     "frozen": "2026-10-23",
+    "name": "American Water Works"
+   },
+   {
+    "date": "October 29, 2026",
+    "call": "Hold",
+    "base": 100,
+    "wt": 101,
+    "price": 139.79,
+    "file": "archive/american-water/2026-10-29.html",
+    "frozen": "2026-10-29",
     "name": "American Water Works"
    }
   ],

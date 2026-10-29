@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-28T23:17:29Z",
- "today": "2026-10-28",
+ "updated": "2026-10-29T08:27:16Z",
+ "today": "2026-10-29",
  "rules": {
   "band": 0.15,
   "near": 0.03,
@@ -71,29 +71,21 @@
    ]
   },
   {
-   "t": "VRT",
-   "name": "Vertiv",
-   "page": "reports/vertiv.html",
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "reports/amazon.html",
    "call": "Hold",
    "rated": "2026-10-22",
-   "price": 203.56,
-   "now": 242.94,
+   "price": 262.63,
+   "now": 254.6,
    "asof": "2026-10-28",
-   "move": 0.1935,
-   "call_now": "Sell",
-   "rel_now": -0.2846,
+   "move": -0.0306,
+   "call_now": "Hold",
+   "rel_now": -0.0939,
    "flags": [
     [
-     "price",
-     "Price up 19% since the report"
-    ],
-    [
-     "rating",
-     "At today&rsquo;s price the rule gives Sell, not Hold"
-    ],
-    [
      "results",
-     "Results reported 2026-10-28, after the report"
+     "Results reported 2026-10-29, after the report"
     ]
    ]
   },
@@ -141,6 +133,25 @@
    ]
   },
   {
+   "t": "CAT",
+   "name": "Caterpillar",
+   "page": "reports/caterpillar.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 703.84,
+   "now": 713.38,
+   "asof": "2026-10-28",
+   "move": 0.0136,
+   "call_now": "Hold",
+   "rel_now": -0.0919,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-29, after the report"
+    ]
+   ]
+  },
+  {
    "t": "GEV",
    "name": "GE Vernova",
    "page": "reports/gev.html",
@@ -151,7 +162,7 @@
    "asof": "2026-10-28",
    "move": -0.0138,
    "call_now": "Sell",
-   "rel_now": -0.2468,
+   "rel_now": -0.205,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -184,6 +195,25 @@
    ]
   },
   {
+   "t": "LHX",
+   "name": "L3Harris",
+   "page": "reports/l3harris.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 248.77,
+   "now": 260.61,
+   "asof": "2026-10-28",
+   "move": 0.0476,
+   "call_now": "Buy",
+   "rel_now": 1.4051,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-29, after the report"
+    ]
+   ]
+  },
+  {
    "t": "MSFT",
    "name": "Microsoft",
    "page": "reports/microsoft.html",
@@ -203,6 +233,25 @@
    ]
   },
   {
+   "t": "SNDK",
+   "name": "Sandisk",
+   "page": "reports/sandisk.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 1378.22,
+   "now": 1404.77,
+   "asof": "2026-10-28",
+   "move": 0.0193,
+   "call_now": "Sell",
+   "rel_now": -0.21,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-29, after the report"
+    ]
+   ]
+  },
+  {
    "t": "AXON",
    "name": "Axon Enterprise",
    "page": "reports/axon.html",
@@ -214,10 +263,15 @@
    "move": 0.0678,
    "call_now": "Buy",
    "rel_now": 0.1556,
+   "due": "2026-11-05",
    "flags": [
     [
      "near",
      "Within 3 points of the Buy line at today&rsquo;s price"
+    ],
+    [
+     "due",
+     "Results due 2026-11-05"
     ]
    ]
   },
@@ -238,46 +292,6 @@
     [
      "due",
      "Results due 2026-11-03"
-    ]
-   ]
-  },
-  {
-   "t": "AMZN",
-   "name": "Amazon",
-   "page": "reports/amazon.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 262.63,
-   "now": 254.6,
-   "asof": "2026-10-28",
-   "move": -0.0306,
-   "call_now": "Hold",
-   "rel_now": -0.0939,
-   "due": "2026-10-29",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-29"
-    ]
-   ]
-  },
-  {
-   "t": "CAT",
-   "name": "Caterpillar",
-   "page": "reports/caterpillar.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 703.84,
-   "now": 713.38,
-   "asof": "2026-10-28",
-   "move": 0.0136,
-   "call_now": "Hold",
-   "rel_now": -0.0919,
-   "due": "2026-10-29",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-29"
     ]
    ]
   },
@@ -322,26 +336,6 @@
    ]
   },
   {
-   "t": "LHX",
-   "name": "L3Harris",
-   "page": "reports/l3harris.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 248.77,
-   "now": 260.61,
-   "asof": "2026-10-28",
-   "move": 0.0476,
-   "call_now": "Buy",
-   "rel_now": 1.4051,
-   "due": "2026-10-29",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-29"
-    ]
-   ]
-  },
-  {
    "t": "PLTR",
    "name": "Palantir Technologies",
    "page": "reports/palantir.html",
@@ -358,26 +352,6 @@
     [
      "due",
      "Results due 2026-11-02"
-    ]
-   ]
-  },
-  {
-   "t": "SNDK",
-   "name": "Sandisk",
-   "page": "reports/sandisk.html",
-   "call": "Sell",
-   "rated": "2026-10-22",
-   "price": 1378.22,
-   "now": 1404.77,
-   "asof": "2026-10-28",
-   "move": 0.0193,
-   "call_now": "Sell",
-   "rel_now": -0.21,
-   "due": "2026-10-29",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-29"
     ]
    ]
   },
@@ -595,6 +569,20 @@
    "move": -0.033,
    "call_now": "Hold",
    "rel_now": 0.0608,
+   "flags": []
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "reports/vertiv.html",
+   "call": "Sell",
+   "rated": "2026-10-29",
+   "price": 242.94,
+   "now": 242.94,
+   "asof": "2026-10-28",
+   "move": 0.0,
+   "call_now": "Sell",
+   "rel_now": -0.2036,
    "flags": []
   }
  ]

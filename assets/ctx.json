@@ -37,9 +37,9 @@
 "t": "VRT",
 "name": "Vertiv",
 "page": "reports/vertiv.html",
-"call": "Hold",
-"value": 118,
-"price": 203.56
+"call": "Sell",
+"value": 131,
+"price": 242.94
 },
 {
 "t": "LHX",
@@ -55,7 +55,7 @@
 "page": "reports/american-water.html",
 "call": "Hold",
 "value": 98,
-"price": 135.79
+"price": 139.79
 },
 {
 "t": "BA",
@@ -262,8 +262,8 @@
 "name": "GE Vernova",
 "page": "reports/gev.html",
 "call": "Sell",
-"value": 442,
-"price": 890.33
+"value": 465,
+"price": 878.03
 }
 ]
 }

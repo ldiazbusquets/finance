@@ -1,5 +1,5 @@
 exec(open('val_all.py').read())
-P=135.79
+P=139.79
 def ddm(g=.08,yrs=5,gT=.035,k=None,d0=3.58,show=False):
     k=k or ke(0.70); d=d0; pv=0; gs=[g]*yrs+[g+(gT-g)*i/(10-yrs) for i in range(1,11-yrs)]
     for t,gg in enumerate(gs,1):

@@ -1,8 +1,8 @@
 import json
 LAST = {}
-SH=266.3e6; NETCASH=13.12e9-2.85e9   # Jun 30 2026 balance sheet (cash, debt)
-def run(g27=.12,g28=.10,gT=.03,mT=.20,da=.022,s2c=4,W=.107,tax=.21,ronic=.20,m26=.13, show=False):
-    rev=46.0e9; rows=[]; pv=0
+SH=264.7e6; NETCASH=16.76e9-2.85e9   # Sep 30 2026 balance sheet (cash, debt)
+def run(g27=.11,g28=.10,gT=.03,mT=.20,da=.022,s2c=4,W=.107,tax=.21,ronic=.20,m26=.14, show=False):
+    rev=47.0e9; rows=[]; pv=0
     gs=[g27,g28]+[g28+(gT-g28)*k/8 for k in range(1,9)]   # 2027..2036
     for t,g in enumerate(gs,1):
         r0=rev; rev*=1+g

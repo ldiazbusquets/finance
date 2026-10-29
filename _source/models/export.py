@@ -82,8 +82,8 @@ def main():
                                810e9, .19, .03, .20, -10e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '12 / 11', 'Then fades to 3% by year 10'], ['Operating margin %', '13 rising to 18 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '130 / 100 / 70 / 50', 'Then reinvestment = revenue growth / 2.0']], 'amzn')
     vals['META'] = generic_dcf('META', 'meta', 'Meta Platforms (META)', 'mt', ((.10, .08, .30, .30), {'heavy': (130, 110, 80, 60)}), ((.24, .18, .36, .44), {'heavy': (90, 70, 40, 25)}),
                                256e9, .16, .03, .25, 1.5e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '18 / 14', 'Then fades to 3% by year 10'], ['Operating margin %', '34 rising to 38 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '110 / 90 / 60 / 40', 'Then reinvestment = revenue growth / 2.0']], 'meta')
-    vals['VRT'] = generic_dcf('VRT', 'vertiv', 'Vertiv (VRT)', 'vr', ((.12, .08, .21, .21), {}), ((.35, .22, .235, .27), {}),
-                              14.0e9, .21, .03, .25, -0.13e9, [.09, .10, .11, .12], [['Revenue growth, years 1-2 %', '25 / 16', 'Then fades to 3% by year 10'], ['Operating margin %', '22.5 rising to 24.5 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3']], 'vrt')
+    vals['VRT'] = generic_dcf('VRT', 'vertiv', 'Vertiv (VRT)', 'vr', ((.15, .08, .215, .21), {}), ((.40, .22, .24, .275), {}),
+                              14.65e9, .21, .03, .25, 0.78e9, [.09, .10, .11, .12], [['Revenue growth, years 1-2 %', '30 / 16', 'Then fades to 3% by year 10'], ['Operating margin %', '23 rising to 25 by year 3', ''], ['Sales to capital', 3, 'Reinvestment = revenue growth / 3']], 'vrt')
     vals['LMT'] = generic_dcf('LMT', 'lockheed-martin', 'Lockheed Martin (LMT)', 'lm', None, None, 81.0e9, .16, .03, .15, -14.5e9, [.07, .075, .08, .085, .09],
                               [['Revenue growth, years 1-2 %', '7 / 6', 'Then fades to 3% by year 10'], ['Operating margin %', '11.5 rising to 12 by year 4', ''], ['Sales to capital', 4, 'Reinvestment = revenue growth / 4'], ['Beta', 0.80, 'Defense peers; measured 0.48']], 'lmt')
     vals['NOC'] = generic_dcf('NOC', 'northrop-grumman', 'Northrop Grumman (NOC)', 'nc', None, None, 44.0e9, .16, .03, .15, -11.5e9, [.07, .075, .08, .085, .09],
@@ -157,9 +157,9 @@ def main():
     ns = run('gev'); g = ns['run']; b = g(); L = dict(ns['LAST'])
     rows = [[r[0], P(r[1]), B(r[2]), P(r[3]), B(r[4]), B(r[5]), B(r[6]), B(r[7]), round(1 / (1 + L['W']) ** (i + .5), 4), B(r[7] / (1 + L['W']) ** (i + .5))] for i, r in enumerate(L['rows'])]
     write('gev', 'GE Vernova (GEV)', 'Ten-year discounted cash flow on the company’s 2028 targets',
-          [['Revenue, 2026', 46.0, 'Guidance'], ['Growth, 2027 and 2028 %', '12 / 10', 'Then fades to 3% by 2036'], ['EBITDA margin %', '13 in 2026, 20 by 2028', 'Company 2028 target'], ['Depreciation % of revenue', 2.2, ''],
+          [['Revenue, 2026', 47.0, 'Guidance'], ['Growth, 2027 and 2028 %', '11 / 10', 'Then fades to 3% by 2036'], ['EBITDA margin %', '14 in 2026, 20 by 2028', 'Company 2028 target'], ['Depreciation % of revenue', 2.2, ''],
            ['Sales to capital', 4, 'Reinvestment = revenue growth / 4'], ['Tax rate %', 21, ''], ['Discount rate %', 10.7, 'CAPM with beta about 1.2; no net debt'], ['Terminal growth %', 3, ''], ['Return on new capital %', 20, ''],
-           ['Net cash', B(L['net']), 'Jun 30 2026: $13.12B cash less $2.85B debt'], ['Diluted shares (billions)', 0.2663, '']],
+           ['Net cash', B(L['net']), 'Sep 30 2026: $16.76B cash less $2.85B debt'], ['Diluted shares (billions)', 0.2647, '']],
           ['Year', 'Revenue growth %', 'Revenue', 'EBITDA margin %', 'Operating income', 'After-tax operating income', 'Reinvestment', 'Free cash flow to the firm', 'Discount factor (mid-year)', 'Present value'], rows,
           [['Present value of 10 years of cash flow', B(L['pv'])], ['Present value of terminal value', B(L['pvtv'])], ['Enterprise value', B(L['ev'])], ['Plus net cash', B(L['net'])], ['Equity value', B(L['eq'])], ['Value per share ($)', round(b, 2)]],
           [['Value per share ($)', round(ns['bear'], 2), round(b, 2), round(ns['bull'], 2)], ['Probability', 25, 50, 25], ['Probability-weighted value ($)', '', round(wsum(ns['bear'], b, ns['bull']), 2), '']],
@@ -248,7 +248,7 @@ def main():
 def check(vals):
     import holdings, coverage
     R = dict(holdings.R); R.update(coverage.R)
-    R['GEV'] = {'base': 442, 'bear': 272, 'bull': 682, 'wt': 460}
+    R['GEV'] = {'base': 465, 'bear': 293, 'bull': 715, 'wt': 485}
     bad = 0
     for t, (b, be, bu) in vals.items():
         r = R[t]; w = wsum(be, b, bu)

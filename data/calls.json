@@ -530,6 +530,16 @@
    "value": 146,
    "price": 194.745,
    "held": false
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "reports/vertiv.html",
+   "date": "2026-10-29",
+   "call": "Sell",
+   "value": 131,
+   "price": 242.94,
+   "held": true
   }
  ]
 }

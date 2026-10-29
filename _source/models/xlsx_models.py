@@ -233,10 +233,10 @@ def generic_cases():
                      wacc=dict(beta=1.58),
                      base=dict(rev0=404, g1=.40, g2=.15, m0=.63, mT=.55, ny=7, tax=.17, s2c=2.5, ronic=.25, net=0, shares=24.3, shift=0),
                      bear=dict(g1=.20, g2=.05, m0=.60, mT=.45, shift=.01), bull=dict(g1=.55, g2=.25, m0=.65, mT=.60, shift=-.01)),
-        'VRT': dict(slug='vertiv', title='Vertiv (VRT)', script='vrt', rev0n='2026 guidance midpoint, $14.0B', price=203.56, W=[.09, .10, .11, .12],
-                    wacc=dict(beta=1.83, price=203.56, shares=0.393, debt=2.94, kd=.055),
-                    base=dict(rev0=14.0, g1=.25, g2=.16, m0=.225, mT=.245, ny=3, tax=.21, s2c=3, ronic=.25, net=-0.13, shares=0.393, shift=0),
-                    bear=dict(g1=.12, g2=.08, m0=.21, mT=.21, shift=.01), bull=dict(g1=.35, g2=.22, m0=.235, mT=.27, shift=-.01)),
+        'VRT': dict(slug='vertiv', title='Vertiv (VRT)', script='vrt', rev0n='2026 guidance midpoint, $14.65B', price=242.94, W=[.09, .10, .11, .12],
+                    wacc=dict(beta=1.83, price=242.94, shares=0.393, debt=2.93, kd=.055),
+                    base=dict(rev0=14.65, g1=.30, g2=.16, m0=.23, mT=.25, ny=3, tax=.21, s2c=3, ronic=.25, net=0.78, shares=0.393, shift=0),
+                    bear=dict(g1=.15, g2=.08, m0=.215, mT=.21, shift=.01), bull=dict(g1=.40, g2=.22, m0=.24, mT=.275, shift=-.01)),
         'LMT': dict(slug='lockheed-martin', title='Lockheed Martin (LMT)', script='lmt', rev0n='2026 guidance midpoint, $81.0B', price=590.20, W=[.07, .075, .08, .085, .09],
                     wacc=dict(beta=0.80, price=590.20, shares=0.2315, debt=20.5, kd=.05),
                     base=dict(rev0=81.0, g1=.07, g2=.06, m0=.115, mT=.12, ny=4, tax=.16, s2c=4, ronic=.15, net=-14.5, shares=0.2315, shift=0),
@@ -402,23 +402,23 @@ def make_ba():
 
 def make_gev():
     wb = Workbook()
-    S, out = summary(wb, 'GE Vernova (GEV)', 'Ten-year discounted cash flow on the company’s 2028 targets', 890.33, 'gev', scen_sheets=None, ps_cells=['', '', ''])
-    cases = {'Base': (.12, .10, .20, .107), 'Bear': (.07, .05, .16, .115), 'Bull': (.16, .14, .23, .097)}
+    S, out = summary(wb, 'GE Vernova (GEV)', 'Ten-year discounted cash flow on the company’s 2028 targets', 878.03, 'gev', scen_sheets=None, ps_cells=['', '', ''])
+    cases = {'Base': (.11, .10, .20, .107), 'Bear': (.07, .05, .16, .115), 'Bull': (.16, .14, .23, .097)}
     info = {}
     for name, (g27, g28, mT, Wv) in cases.items():
         X = Sheet(wb, name, 'GE Vernova (GEV)', name + ' case: ten-year free cash flow to the firm, $ billions', 12); X.widths(40, 11, {'L': 40})
         X.section('Inputs')
-        rev0 = X.row('Revenue, 2026 ($B)', [46.0], 'b1', 'i', 'Guidance')
+        rev0 = X.row('Revenue, 2026 ($B)', [47.0], 'b1', 'i', 'Guidance')
         a1 = X.row('Revenue growth, 2027', [g27], 'pct', 'i'); a2 = X.row('Revenue growth, 2028', [g28], 'pct', 'i', 'Then fades to terminal growth by 2036')
         gT = X.row('Terminal growth', [.03], 'pct', 'i')
-        m0 = X.row('EBITDA margin, 2026', [.13], 'pct', 'i'); mt = X.row('EBITDA margin, 2028 target', [mT], 'pct', 'i', 'Company 2028 target, reached in two years')
+        m0 = X.row('EBITDA margin, 2026', [.14], 'pct', 'i'); mt = X.row('EBITDA margin, 2028 target', [mT], 'pct', 'i', 'Company 2028 target, reached in two years')
         da = X.row('Depreciation, share of revenue', [.022], 'pct', 'i')
         s2c = X.row('Sales to capital', [4], '0.0', 'i', 'Reinvestment = revenue growth / 4')
         tax = X.row('Tax rate', [.21], 'pct', 'i')
         ron = X.row('Return on new capital, after year 10', [.20], 'pct', 'i')
         W = X.row('Discount rate', [Wv], 'pct2', 'i', 'CAPM with beta about 1.2; no net debt')
-        net = X.row('Net cash ($B)', [10.27], 'b', 'i', 'Jun 30 2026: $13.12B cash less $2.85B debt')
-        sh = X.row('Diluted shares (billions)', [0.2663], FMT['n4'], 'i')
+        net = X.row('Net cash ($B)', [13.91], 'b', 'i', 'Sep 30 2026: $16.76B cash less $2.85B debt')
+        sh = X.row('Diluted shares (billions)', [0.2647], FMT['n4'], 'i')
         X.gap(); X.section('Projection'); X.header(['Year'] + [str(2026 + t) for t in range(1, 11)])
         t = X.row('Year number', list(range(1, 11)), '0')
         g = X.row('Revenue growth', [f'=$B${a1}', f'=$B${a2}'] + [f'=$B${a2}+($B${gT}-$B${a2})*({L(c)}{t}-2)/8' for c in range(4, 12)], 'pct')
@@ -447,7 +447,7 @@ def make_gev():
 
 def make_awk():
     wb = Workbook()
-    S, out = summary(wb, 'American Water Works (AWK)', 'Dividend discount model', 135.79, 'awk', ke=0.70, scen_sheets=None, ps_cells=['', '', ''])
+    S, out = summary(wb, 'American Water Works (AWK)', 'Dividend discount model', 139.79, 'awk', ke=0.70, scen_sheets=None, ps_cells=['', '', ''])
     cases = {'Base': (.08, .035, 0), 'Bear': (.06, .03, .01), 'Bull': (.09, .04, -.005)}
     info = {}
     for name, (g, gT_, shift) in cases.items():

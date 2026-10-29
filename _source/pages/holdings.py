@@ -252,55 +252,59 @@ R['JPM'] = dict(
     ])
 
 # ---------------------------------------------------------------- Vertiv
-VR = 'https://www.nasdaq.com/press-release/vertiv-reports-strong-second-quarter-2026-diluted-eps-growth-53-adjusted-diluted-eps'
+VR = 'https://www.prnewswire.com/news-releases/vertiv-reports-strong-third-quarter-2026-with-net-sales-growth-of-61-organic-orders-growth-over-100-and-diluted-eps-growth-of-91-adjusted-diluted-eps-growth-of-78-raises-full-year-2026-guidance-across-all-key-metrics-302921936.html'
+VR_CALL = 'https://finance.biggo.com/news/US_VRT_2026-10-28'
+VR_Q2 = 'https://www.nasdaq.com/press-release/vertiv-reports-strong-second-quarter-2026-diluted-eps-growth-53-adjusted-diluted-eps'
 R['VRT'] = dict(
-    t='VRT', slug='vertiv', name='Vertiv', h1='Vertiv', sector='Electrical equipment', date=DATE, timing=LATER,
-    sub='Vertiv makes the power and cooling equipment inside data centers, from backup power to the liquid cooling that AI chips now need. Sales are guided up 30% this year, but the shares have fallen by almost half from their peak after a quarter that missed the company&rsquo;s own growth range.',
-    call='Hold', method='Cash-flow model', price=203.56, base=117, bear=65, bull=188, wt=122, max=400, tick=50,
+    t='VRT', slug='vertiv', name='Vertiv', h1='Vertiv', sector='Electrical equipment', date='October 29, 2026', timing=', the day after its third-quarter results',
+    sub='Vertiv makes the power and cooling equipment inside data centers, from backup power to the liquid cooling that AI chips now need. After a second-quarter miss, the third quarter answered the doubts: sales up 61%, orders more than doubled and guidance raised again. The shares jumped 16% to $243, which still prices in far more growth than the model.',
+    call='Sell', method='Cash-flow model', price=242.94, pricenote='Close, October 28, 2026', base=131, bear=72, bull=208, wt=136, max=400, tick=50,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 65, 188, 117, '$65 to $188, base $117'), ('Probability-weighted', None, None, 122, '$122'),
-           ('Price at writing', None, None, 203.56, '$203.56'), ('52-week range', 148, 380, None, '$148 to $380')],
+    field=[('Cash-flow model', 72, 208, 131, '$72 to $208, base $131'), ('Probability-weighted', None, None, 136, '$136'),
+           ('Price at writing', None, None, 242.94, '$242.94'), ('52-week range', 148, 380, None, '$148 to $380')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Keeping AI chips <em>powered and cool.</em>',
          prose('Vertiv sells uninterruptible power supplies, switchgear and power distribution, thermal management (including liquid cooling for GPUs), and the service that keeps them running. Its customers are cloud companies, colocation operators and enterprises building data centers, now increasingly for AI.',
                  'As each rack of AI chips draws more power and generates more heat, the equipment Vertiv sells per megawatt rises. Its main competitors are Schneider Electric and Eaton.')),
-        ('results', 'Latest results', 'Profit up 50%, <em>growth below plan.</em>',
-         stats([('$3.27B', 'Sales, Q2 2026, +24%'), ('17.8%', 'Organic growth, vs 20&ndash;24% guided'), ('22.6%', 'Adjusted operating margin'), ('$0.93B', 'Adjusted free cash flow'), ('$13.8&ndash;14.2B', '2026 sales guidance'), ('30&ndash;32%', '2026 organic growth guidance')])
-         + prose('Second-quarter sales rose 24% to $3.27 billion and adjusted EPS rose 60%, but organic growth of 17.8% fell short of the 20&ndash;24% the company itself had guided. Management blamed the timing of multi-phase projects and supply-chain sequencing and declined to size the shortfall; the stock fell 17% that day. It has also stopped disclosing orders and backlog.',
-                 'At the same time it raised full-year guidance: sales of $13.8&ndash;14.2 billion, 30&ndash;32% organic growth and adjusted EPS of $6.65&ndash;6.75. That implies about 40% organic growth in the second half, which the third-quarter report will test.')
-         + src([('Q2 2026 results', VR), ('Analysis of the miss', 'https://research.aardvarklabs.co/research/vrt/earnings/2026-q2/vrt-2026-q2-recap')])),
+        ('results', 'Latest results', 'Sales up 61%, <em>orders more than doubled.</em>',
+         stats([('$4.31B', 'Sales, Q3 2026, +61%'), ('55%', 'Organic growth'), ('100%+', 'Organic order growth'), ('25.2%', 'Adjusted operating margin'), ('$14.45&ndash;14.85B', '2026 sales guidance, from $13.8&ndash;14.2B'), ('$7.10&ndash;7.20', '2026 adjusted EPS guidance, from $6.65&ndash;6.75')])
+         + prose('Third-quarter sales rose 61% to $4.31 billion, 55% organically, and adjusted EPS rose 78% to $2.21, $0.41 above the company&rsquo;s own guidance. Management said $100&ndash;150 million of sales that slipped out of the second quarter were delivered in this one, so part of the beat is the earlier miss catching up. Organic orders more than doubled, though Vertiv gave only the growth rate and said it will stop disclosing order figures. Adjusted operating margin was 25.2%, and adjusted free cash flow $652 million.',
+                 'Full-year guidance rose again: sales of $14.45&ndash;14.85 billion, 37&ndash;39% organic growth, a 24% adjusted operating margin, adjusted EPS of $7.10&ndash;7.20 and $2.6&ndash;2.8 billion of adjusted free cash flow. The fourth quarter is guided to about $4.4 billion of sales, up about 50% organically. Management would not give 2027 numbers but expects growth well above the market. The shares rose 16% on the day.')
+         + src([('Q3 2026 results', VR), ('Earnings call summary', VR_CALL), ('Q2 2026 results', VR_Q2)])),
         ('fin', 'Five years', 'Sales doubled; <em>margins nearly tripled.</em>',
          fin_table('VRT') + prose('Operating margin rose from about 4% in 2022 to near 19% in the last twelve months, and free cash flow went from negative to over $2.9 billion.')
          + src([('Vertiv filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001674101&type=10-K')])),
         ('capital', 'Balance sheet', 'From leveraged <em>to net cash.</em>',
-         prose('Vertiv was formed from a private-equity buyout and carried heavy debt. It now holds about $2.8 billion of cash against $2.9 billion of debt, essentially net cash neutral, with $5.6 billion of liquidity. It is spending on bolt-on acquisitions in liquid cooling and services.')),
-        ('value', 'Valuation', 'The model gives <em>$117 a share.</em>',
-         table(['Assumption', 'Base case', 'Basis'], [
-             ['Sales, 2026', '$14.0B', 'Guidance midpoint'],
-             ['Growth, 2027 and 2028', '25%, then 16%', 'AI build-out continues, then slows'],
-             ['Operating margin', '22.5% rising to 24.5%', 'Adjusted margin less acquisition amortization'],
+         prose('Vertiv was formed from a private-equity buyout and carried heavy debt. At the end of September it held $3.7 billion of cash and short-term investments against $2.9 billion of debt, about $0.8 billion of net cash, with $6.2 billion of liquidity. It keeps buying bolt-on businesses: in the quarter it announced UtilityInnovation Group (microgrids and power controls) and King Environmental Services (load testing in Europe).')
+         + src([('Q3 2026 results', VR)])),
+        ('value', 'Valuation', 'The model gives <em>$131 a share.</em>',
+         prose('This update starts from the higher 2026 guidance and assumes faster growth in 2027: the fourth-quarter guidance alone is a run-rate of about $17.6 billion a year, 20% above 2026, and orders doubled. The margin path moves up half a point in line with the new guidance.')
+         + table(['Assumption', 'Base case', 'Basis'], [
+             ['Sales, 2026', '$14.65B', 'Guidance midpoint'],
+             ['Growth, 2027 and 2028', '30%, then 16%', 'Orders doubled and a fourth-quarter run-rate 20% above 2026, then slowing'],
+             ['Operating margin', '23% rising to 25%', 'Adjusted margin less acquisition amortization'],
              ['Reinvestment', '$1 for every $3 of new sales', 'Factories, working capital and acquisitions to add capacity'],
              ['Discount rate', '13.1%', 'Beta 1.83, 4.5% premium'],
              ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$25B'), ('PV of terminal value', '$21B'), ('Enterprise value', '$46B'), ('Net debt', '&asymp; $0'), ('Equity value', '$46B'), ('Shares', '393M')], '$117')
+         + bridge([('PV of 10 years of cash flow', '$27B'), ('PV of terminal value', '$23B'), ('Enterprise value', '$51B'), ('Plus net cash', '$0.8B'), ('Equity value', '$52B'), ('Shares', '393M')], '$131')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
-             ['Growth, 2027 / 2028', '12% / 8%', '25% / 16%', '35% / 22%'], ['Long-run operating margin', '21%', '24.5%', '27%'],
-             ['Discount rate', '14.1%', '13.1%', '12.1%'], ['Value per share', '$65', '$117', '$188'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$122</b>.') + sens('Discount rate', ['9.0%', '10.0%', '11.0%', '12.0%'], ['$205', '$174', '$150', '$132'])
+             ['Growth, 2027 / 2028', '15% / 8%', '30% / 16%', '40% / 22%'], ['Long-run operating margin', '21%', '25%', '27.5%'],
+             ['Discount rate', '14.1%', '13.1%', '12.1%'], ['Value per share', '$72', '$131', '$208'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$136</b>.') + sens('Discount rate', ['9.0%', '10.0%', '11.0%', '12.0%'], ['$230', '$195', '$169', '$149'])
          + key('Read', 'Vertiv&rsquo;s beta of 1.83 gives it the highest discount rate of any holding. At 9%, the price is about fair.')),
-        ('implied', 'What the price assumes', 'At $204, <em>33% growth for two years.</em>',
-         implied([['Sales growth of about 33% a year in 2027 and 2028', '25% and 16%'], ['A long-run operating margin near 42%', '24.5%'], ['A discount rate of about 9.0%', '13.1%']])),
+        ('implied', 'What the price assumes', 'At $243, <em>36% growth for two years.</em>',
+         implied([['Sales growth of about 36% a year in 2027 and 2028', '30% and 16%'], ['A long-run operating margin near 46%', '25%'], ['A discount rate of about 8.7%', '13.1%']])),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
-             ['Execution', 'One quarter already missed its own range; another would hurt credibility further.'],
-             ['Visibility', 'With orders and backlog no longer disclosed, demand is harder to check.'],
+             ['Execution', 'The third quarter recovered the second-quarter shortfall; the fourth quarter has to deliver about 50% organic growth.'],
+             ['Visibility', 'Vertiv now gives only the growth rate of orders and will stop disclosing them, so demand is harder to check.'],
              ['Data-center spending', 'Results depend on a small number of very large customers&rsquo; build plans.'],
              ['Competition', 'Schneider, Eaton and new liquid-cooling entrants are chasing the same projects.'],
-         ]) + prose('<b>Upside:</b> a third quarter that delivers the guided 34&ndash;36% organic growth would show the miss was timing, and the stock is already 46% below its high.')),
-        ('rec', 'Rating', 'Hold. <em>Down a lot, still not cheap at its risk.</em>',
-         prose('At $203.56 against a base case of $117 ($122 weighted), Vertiv is fully valued at its high cost of capital, though the bull case ($188) is close to the price. The call is <b>Hold</b>; add only after a clean third quarter.')
-         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The right market, <em>prove the execution.</em></h2><p>Demand is not the issue; delivering it on schedule is.</p></div>'),
+         ]) + prose('<b>Upside:</b> orders that doubled point to 2027 growth above the base case, and 800-volt DC power products, due to start earning revenue in 2027, could raise content per data center.')),
+        ('rec', 'Rating', 'A clean quarter, <em>a full price.</em>',
+         prose('At $242.94 against a base case of $131 ($136 weighted), the shares price in growth and margins well above even this update&rsquo;s higher assumptions; the bull case ($208) is still below the price. The quarter removed the execution doubt, and the price rose by more than the value.')
+         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The execution is back. <em>The price ran ahead of it.</em></h2><p>Demand is not the issue; the price already assumes it lasts.</p></div>'),
     ])
 
 # ---------------------------------------------------------------- L3Harris
@@ -358,28 +362,30 @@ R['LHX'] = dict(
     ])
 
 # ---------------------------------------------------------------- American Water
-AW = 'https://newsroom.amwater.com/2026-07-29-AMERICAN-WATER-REPORTS-SOLID-SECOND-QUARTER-2026-RESULTS-AFFIRMS-2026-EPS-GUIDANCE-AND-LONG-TERM-TARGETS'
+AW = 'https://www.prnewswire.com/news-releases/american-water-reports-solid-third-quarter-2026-results-narrows-2026-eps-guidance-to-top-half-of-range-affirms-long-term-targets-initiates-standalone-2027-eps-guidance-reflecting-growth-of-8-302922714.html'
+AW_EST = 'https://247wallst.com/cards/american-water-works-q3-2026-earnings-awk-01m624j0fkt4khpx9vmns0xqts'
 R['AWK'] = dict(
-    t='AWK', slug='american-water', name='American Water Works', h1='American <em>Water</em>', sector='Utilities', date=DATE, timing=LATER,
-    sub='American Water is the largest U.S. water utility, and it is merging with Essential Utilities. Regulated returns make its earnings steady, growing 7&ndash;9% a year. But its 2.6% dividend yield is half what a 10-year Treasury pays today, which makes it hard to justify the price on dividends alone.',
-    call='Hold', method='Dividend model', price=135.79, base=100, bear=69, bull=132, wt=101, max=200, tick=25,
+    t='AWK', slug='american-water', name='American Water Works', h1='American <em>Water</em>', sector='Utilities', date='October 29, 2026', timing=', the day after its third-quarter results',
+    sub='American Water is the largest U.S. water utility, and it is merging with Essential Utilities. Regulated returns make its earnings steady: the third quarter was on plan, and the first 2027 guidance points to 8% growth. But its 2.6% dividend yield is half what a 10-year Treasury pays today, which makes it hard to justify the price on dividends alone.',
+    call='Hold', method='Dividend model', price=139.79, pricenote='Close, October 28, 2026, before the results', base=100, bear=69, bull=132, wt=101, max=200, tick=25,
     fieldnote='The dividend model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
     field=[('Dividend model', 69, 132, 100, '$69 to $132, base $100'), ('Probability-weighted', None, None, 101, '$101'),
-           ('Price at writing', None, None, 135.79, '$135.79'), ('52-week range', 121, 146, None, '$121 to $146')],
+           ('Price at writing', None, None, 139.79, '$139.79'), ('52-week range', 121, 144, None, '$121 to $144')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Regulated pipes, <em>regulated returns.</em>',
          prose('American Water supplies drinking water and wastewater service in 14 states and to military bases. State regulators set its prices to allow a fair return on the money it invests (its rate base), so profits grow as it replaces old pipes and treatment plants.',
-                 'In October 2025 it agreed an all-stock merger with Essential Utilities (0.305 American Water shares per Essential share; about 69/31 ownership), creating a company with roughly $29 billion of rate base. Closing is expected by the end of the first quarter of 2027.')
+                 'In October 2025 it agreed an all-stock merger with Essential Utilities (0.305 American Water shares per Essential share; about 69/31 ownership), creating a company with roughly $29 billion of rate base. Three states have approved it and settlements have been reached in Pennsylvania, North Carolina and Texas; closing is still expected by the end of the first quarter of 2027.')
          + src([('Merger terms', 'https://www.nasdaq.com/articles/american-water-works-essential-utilities-merge-all-stock-deal')])),
         ('results', 'Latest results', 'On plan, <em>as usual.</em>',
-         stats([('$1.61', 'EPS, Q2 2026, from $1.49'), ('$6.02&ndash;6.12', '2026 EPS guidance'), ('7&ndash;9%', 'Long-term EPS and dividend growth'), ('$3.58', 'Annual dividend rate'), ('$3.7B', '2026 capital investment'), ('$494M', 'Rate increases still pending')])
-         + prose('Second-quarter EPS rose 8% and full-year guidance was affirmed. Regulators have approved $216 million of annual revenue increases this year, and requests for another $494 million are pending in six states. The merger has three state approvals so far.')
-         + src([('Q2 2026 results', AW)])),
+         stats([('$2.00', 'Adjusted EPS, Q3 2026, from $1.89'), ('$6.07&ndash;6.12', '2026 EPS guidance, top half of the range'), ('$6.53&ndash;6.63', 'First 2027 guidance, about +8%'), ('$3.58', 'Annual dividend rate'), ('$4.1B', '2027 capital investment'), ('$360M', 'Rate increases still pending')])
+         + prose('Third-quarter adjusted EPS rose 6% to $2.00 (reported EPS was flat at $1.94, after merger costs), slightly below the $2.11 analysts expected because of weather and higher costs. Revenue rose 4% to $1.51 billion. Full-year guidance was narrowed to the top half of its range, $6.07&ndash;6.12, and the company gave its first 2027 guidance, $6.53&ndash;6.63 on its own, about 8% growth. The 7&ndash;9% long-term targets for earnings and dividends were affirmed.',
+                 'Regulators have approved $284 million of annual revenue increases this year, including new rates in Pennsylvania and New Jersey in the quarter, and requests for another $360 million are pending. Capital spending is about $3.7 billion this year and $4.1 billion in 2027, and the five-year plan is now more than $20 billion.')
+         + src([('Q3 2026 results', AW), ('Against estimates', AW_EST)])),
         ('fin', 'Five years', 'Steady earnings, <em>negative free cash flow.</em>',
          fin_table('AWK') + prose('Operating cash flow covers only about two-thirds of capital spending, so free cash flow is negative every year. That is normal for a utility: the gap is funded with new debt and occasional equity, and the investment earns a regulated return.')
          + src([('American Water filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001410636&type=10-K')])),
         ('capital', 'Balance sheet', 'Debt-funded growth, <em>by design.</em>',
-         prose('Debt is about $16 billion against $11.7 billion of equity. The company sold forward 8.1 million shares in 2025 at about $140 and still has 4.7 million to settle by year-end, so modest dilution is part of the plan.')),
+         prose('Debt was about $16.3 billion at the end of September, up from $15.8 billion at the start of the year as the company borrows to fund its pipe and plant program. The company sold forward 8.1 million shares in 2025 at about $140 and still has 4.7 million to settle by year-end, so modest dilution is part of the plan.')),
         ('value', 'Valuation', 'The dividend model gives <em>$100 a share.</em>',
          prose('For a regulated utility that funds growth with debt, a free-cash-flow model does not work; the dividend is the cleanest measure of what owners receive.')
          + table(['Assumption', 'Base case', 'Basis'], [
@@ -388,13 +394,13 @@ R['AWK'] = dict(
              ['Then', 'Fades to 3.5% by year 10', 'Long-run nominal growth'],
              ['Cost of equity', '8.3%', '5.15% Treasury, beta 0.70 (utility average), 4.5% premium'],
          ], 'mid')
-         + bridge([('PV of 10 years of dividends', '$34.3'), ('PV of terminal value', '$66.1'), ('Dividend yield today', '2.6%'), ('10-year Treasury', '5.15%'), ('P/E on 2026 guidance', '22.4&times;'), ('Payout ratio', '~59%')], '$100')
+         + bridge([('PV of 10 years of dividends', '$34.3'), ('PV of terminal value', '$66.1'), ('Dividend yield today', '2.6%'), ('10-year Treasury', '5.15%'), ('P/E on 2026 guidance', '22.9&times;'), ('Payout ratio', '~59%')], '$100')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
              ['Dividend growth, 5 years', '6%', '8%', '9%'], ['Long-run growth', '3.0%', '3.5%', '4.0%'],
              ['Cost of equity', '9.3%', '8.3%', '7.8%'], ['Value per share', '$69', '$100', '$132'], ['Probability', '25%', '50%', '25%']])
          + prose('Weighted 25/50/25: <b>$101</b>.') + sens('Cost of equity', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$139', '$121', '$107', '$96', '$87'])),
-        ('implied', 'What the price assumes', 'At $136, <em>a 7% cost of equity.</em>',
-         implied([['A cost of equity of about 7.1%', '8.3%, with Treasuries at 5.15%'], ['Or dividends growing about 5% a year forever', '3.5% long run']])
+        ('implied', 'What the price assumes', 'At $140, <em>a 7% cost of equity.</em>',
+         implied([['A cost of equity of about 7.0%', '8.3%, with Treasuries at 5.15%'], ['Or dividends growing about 5.1% a year forever', '3.5% long run']])
          + prose('Investors are treating American Water almost like a bond. That works when interest rates fall; with the 10-year Treasury above 5%, it is a stretch.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
@@ -404,7 +410,7 @@ R['AWK'] = dict(
              ['Contamination rules', 'PFAS treatment requirements raise costs, though usually recoverable in rates.'],
          ]) + prose('<b>Upside:</b> falling interest rates would lift the value quickly: at a 7% cost of equity the model gives $139.')),
         ('rec', 'Rating', 'Hold. <em>A defensive anchor, priced for lower rates.</em>',
-         prose('At $135.79 against a base case of $100, the shares price in a cost of equity well below what today&rsquo;s Treasury yields justify. As a stable, low-volatility holding it still does its job in the portfolio. The call is <b>Hold</b>; it becomes attractive if rates fall or the price drops toward the low $100s.')
+         prose('At $139.79 against a base case of $100, the shares price in a cost of equity well below what today&rsquo;s Treasury yields justify. As a stable, low-volatility holding it still does its job in the portfolio. The third quarter changed nothing in the model: the dividend and its 7&ndash;9% growth target are the same. The shares become attractive if rates fall or the price drops toward the low $100s.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Safe business, <em>rate-sensitive price.</em></h2><p>The earnings are reliable; the valuation is a bet on interest rates.</p></div>'),
     ])
 

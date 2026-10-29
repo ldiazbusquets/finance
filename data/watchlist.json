@@ -19,9 +19,9 @@
       "status": "live",
       "page": "reports/vertiv.html",
       "holding": true,
-      "call": "Hold",
-      "value": 117,
-      "date": "Oct 20, 2026"
+      "call": "Sell",
+      "value": 131,
+      "date": "Oct 29, 2026"
     },
     {
       "ticker": "AWK",
@@ -75,8 +75,8 @@
       "page": "reports/gev.html",
       "holding": true,
       "call": "Sell",
-      "value": 442,
-      "date": "Oct 20, 2026"
+      "value": 465,
+      "date": "Oct 29, 2026"
     },
     {
       "ticker": "NVDA",

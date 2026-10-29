@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T08:27:16Z",
+ "updated": "2026-10-29T23:16:54Z",
  "today": "2026-10-29",
  "rules": {
   "band": 0.15,
@@ -10,17 +10,60 @@
  },
  "rows": [
   {
+   "t": "AXON",
+   "name": "Axon Enterprise",
+   "page": "reports/axon.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 396.3,
+   "now": 438.05,
+   "asof": "2026-10-29",
+   "move": 0.1053,
+   "call_now": "Hold",
+   "rel_now": 0.1163,
+   "due": "2026-11-05",
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Hold, not Buy"
+    ],
+    [
+     "due",
+     "Results due 2026-11-05"
+    ]
+   ]
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "page": "reports/alphabet.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 324.22,
+   "now": 283.82,
+   "asof": "2026-10-29",
+   "move": -0.1246,
+   "call_now": "Buy",
+   "rel_now": 0.2588,
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Buy, not Hold"
+    ]
+   ]
+  },
+  {
    "t": "META",
    "name": "Meta Platforms",
    "page": "reports/meta.html",
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 697.52,
-   "now": 612.49,
-   "asof": "2026-10-28",
-   "move": -0.1219,
+   "now": 624.52,
+   "asof": "2026-10-29",
+   "move": -0.1047,
    "call_now": "Buy",
-   "rel_now": 0.2708,
+   "rel_now": 0.2463,
    "flags": [
     [
      "rating",
@@ -35,11 +78,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 913.67,
-   "now": 983.23,
-   "asof": "2026-10-28",
-   "move": 0.0761,
+   "now": 934.27,
+   "asof": "2026-10-29",
+   "move": 0.0225,
    "call_now": "Hold",
-   "rel_now": 0.0698,
+   "rel_now": 0.1258,
    "flags": [
     [
      "rating",
@@ -54,15 +97,15 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 131.69,
-   "now": 164.7,
-   "asof": "2026-10-28",
-   "move": 0.2507,
+   "now": 162.09,
+   "asof": "2026-10-29",
+   "move": 0.2308,
    "call_now": "Hold",
-   "rel_now": 0.1,
+   "rel_now": 0.1177,
    "flags": [
     [
      "price",
-     "Price up 25% since the report"
+     "Price up 23% since the report"
     ],
     [
      "rating",
@@ -77,34 +120,15 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 262.63,
-   "now": 254.6,
-   "asof": "2026-10-28",
-   "move": -0.0306,
+   "now": 243.79,
+   "asof": "2026-10-29",
+   "move": -0.0717,
    "call_now": "Hold",
-   "rel_now": -0.0939,
+   "rel_now": -0.0537,
    "flags": [
     [
      "results",
      "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
-   "t": "AWK",
-   "name": "American Water Works",
-   "page": "reports/american-water.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 135.79,
-   "now": 139.79,
-   "asof": "2026-10-28",
-   "move": 0.0295,
-   "call_now": "Hold",
-   "rel_now": 0.0323,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-28, after the report"
     ]
    ]
   },
@@ -115,11 +139,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 190.47,
-   "now": 167.14,
-   "asof": "2026-10-28",
-   "move": -0.1225,
+   "now": 172.65,
+   "asof": "2026-10-29",
+   "move": -0.0936,
    "call_now": "Buy",
-   "rel_now": 0.6922,
+   "rel_now": 0.6382,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-27",
@@ -139,11 +163,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 703.84,
-   "now": 713.38,
-   "asof": "2026-10-28",
-   "move": 0.0136,
+   "now": 647.39,
+   "asof": "2026-10-29",
+   "move": -0.0802,
    "call_now": "Hold",
-   "rel_now": -0.0919,
+   "rel_now": 0.0006,
    "flags": [
     [
      "results",
@@ -158,11 +182,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 890.33,
-   "now": 878.03,
-   "asof": "2026-10-28",
-   "move": -0.0138,
+   "now": 887.85,
+   "asof": "2026-10-29",
+   "move": -0.0028,
    "call_now": "Sell",
-   "rel_now": -0.205,
+   "rel_now": -0.2138,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -176,59 +200,21 @@
    ]
   },
   {
-   "t": "GOOGL",
-   "name": "Alphabet",
-   "page": "reports/alphabet.html",
-   "call": "Hold",
-   "rated": "2026-10-23",
-   "price": 324.22,
-   "now": 324.89,
-   "asof": "2026-10-28",
-   "move": 0.0021,
-   "call_now": "Hold",
-   "rel_now": 0.0996,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-28, after the report"
-    ]
-   ]
-  },
-  {
    "t": "LHX",
    "name": "L3Harris",
    "page": "reports/l3harris.html",
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 248.77,
-   "now": 260.61,
-   "asof": "2026-10-28",
-   "move": 0.0476,
+   "now": 278.43,
+   "asof": "2026-10-29",
+   "move": 0.1192,
    "call_now": "Buy",
-   "rel_now": 1.4051,
+   "rel_now": 1.2512,
    "flags": [
     [
      "results",
      "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
-   "t": "MSFT",
-   "name": "Microsoft",
-   "page": "reports/microsoft.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 521.08,
-   "now": 531.01,
-   "asof": "2026-10-28",
-   "move": 0.0191,
-   "call_now": "Hold",
-   "rel_now": 0.0374,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-28, after the report"
     ]
    ]
   },
@@ -239,39 +225,19 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 1378.22,
-   "now": 1404.77,
-   "asof": "2026-10-28",
-   "move": 0.0193,
+   "now": 1330.05,
+   "asof": "2026-10-29",
+   "move": -0.035,
    "call_now": "Sell",
-   "rel_now": -0.21,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
-   "t": "AXON",
-   "name": "Axon Enterprise",
-   "page": "reports/axon.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 396.3,
-   "now": 423.17,
-   "asof": "2026-10-28",
-   "move": 0.0678,
-   "call_now": "Buy",
-   "rel_now": 0.1556,
-   "due": "2026-11-05",
+   "rel_now": -0.1656,
    "flags": [
     [
      "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
+     "Within 3 points of the Sell line at today&rsquo;s price"
     ],
     [
-     "due",
-     "Results due 2026-11-05"
+     "results",
+     "Results reported 2026-10-29, after the report"
     ]
    ]
   },
@@ -282,11 +248,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 552.72,
-   "now": 578.44,
-   "asof": "2026-10-28",
-   "move": 0.0465,
+   "now": 566.42,
+   "asof": "2026-10-29",
+   "move": 0.0248,
    "call_now": "Hold",
-   "rel_now": -0.066,
+   "rel_now": -0.0462,
    "due": "2026-11-03",
    "flags": [
     [
@@ -302,11 +268,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 350.755,
-   "now": 354.35,
-   "asof": "2026-10-28",
-   "move": 0.0102,
+   "now": 370.82,
+   "asof": "2026-10-29",
+   "move": 0.0572,
    "call_now": "Buy",
-   "rel_now": 0.4241,
+   "rel_now": 0.3609,
    "due": "2026-10-30",
    "flags": [
     [
@@ -322,11 +288,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 38.81,
-   "now": 41.17,
-   "asof": "2026-10-28",
-   "move": 0.0608,
+   "now": 43.59,
+   "asof": "2026-10-29",
+   "move": 0.1232,
    "call_now": "Hold",
-   "rel_now": -0.0575,
+   "rel_now": -0.1098,
    "due": "2026-11-03",
    "flags": [
     [
@@ -342,11 +308,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 201.72,
-   "now": 196.81,
-   "asof": "2026-10-28",
-   "move": -0.0243,
+   "now": 196.42,
+   "asof": "2026-10-29",
+   "move": -0.0263,
    "call_now": "Sell",
-   "rel_now": -0.1976,
+   "rel_now": -0.196,
    "due": "2026-11-02",
    "flags": [
     [
@@ -362,11 +328,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 178.19,
-   "now": 182.02,
-   "asof": "2026-10-28",
-   "move": 0.0215,
+   "now": 183.29,
+   "asof": "2026-10-29",
+   "move": 0.0286,
    "call_now": "Sell",
-   "rel_now": -0.2476,
+   "rel_now": -0.2528,
    "due": "2026-10-30",
    "flags": [
     [
@@ -382,11 +348,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 1560.54,
-   "now": 1662.85,
-   "asof": "2026-10-28",
-   "move": 0.0656,
+   "now": 1675.7,
+   "asof": "2026-10-29",
+   "move": 0.0738,
    "call_now": "Hold",
-   "rel_now": -0.0824,
+   "rel_now": -0.0894,
    "flags": []
   },
   {
@@ -396,11 +362,25 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 323.24,
-   "now": 351.81,
-   "asof": "2026-10-28",
-   "move": 0.0884,
+   "now": 345.0,
+   "asof": "2026-10-29",
+   "move": 0.0673,
    "call_now": "Buy",
-   "rel_now": 0.6677,
+   "rel_now": 0.7007,
+   "flags": []
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "reports/american-water.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 135.79,
+   "now": 142.21,
+   "asof": "2026-10-29",
+   "move": 0.0473,
+   "call_now": "Hold",
+   "rel_now": 0.0147,
    "flags": []
   },
   {
@@ -410,11 +390,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 255.21,
-   "now": 258.08,
-   "asof": "2026-10-28",
-   "move": 0.0112,
+   "now": 264.58,
+   "asof": "2026-10-29",
+   "move": 0.0367,
    "call_now": "Hold",
-   "rel_now": 0.0802,
+   "rel_now": 0.0536,
    "flags": []
   },
   {
@@ -424,11 +404,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 17.41,
-   "now": 19.85,
-   "asof": "2026-10-28",
-   "move": 0.1401,
+   "now": 19.87,
+   "asof": "2026-10-29",
+   "move": 0.1413,
    "call_now": "Buy",
-   "rel_now": 0.6331,
+   "rel_now": 0.6314,
    "flags": []
   },
   {
@@ -438,11 +418,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 267.68,
-   "now": 271.04,
-   "asof": "2026-10-28",
-   "move": 0.0126,
+   "now": 275.2,
+   "asof": "2026-10-29",
+   "move": 0.0281,
    "call_now": "Hold",
-   "rel_now": 0.0511,
+   "rel_now": 0.0352,
    "flags": []
   },
   {
@@ -452,11 +432,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 335.26,
-   "now": 339.3,
-   "asof": "2026-10-28",
-   "move": 0.0121,
+   "now": 343.58,
+   "asof": "2026-10-29",
+   "move": 0.0248,
    "call_now": "Buy",
-   "rel_now": 0.2579,
+   "rel_now": 0.2422,
    "flags": []
   },
   {
@@ -466,11 +446,25 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 590.2,
-   "now": 629.75,
-   "asof": "2026-10-28",
-   "move": 0.067,
+   "now": 643.59,
+   "asof": "2026-10-29",
+   "move": 0.0905,
    "call_now": "Buy",
-   "rel_now": 0.5236,
+   "rel_now": 0.4908,
+   "flags": []
+  },
+  {
+   "t": "MSFT",
+   "name": "Microsoft",
+   "page": "reports/microsoft.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 521.08,
+   "now": 530.14,
+   "asof": "2026-10-29",
+   "move": 0.0174,
+   "call_now": "Hold",
+   "rel_now": 0.0391,
    "flags": []
   },
   {
@@ -480,11 +474,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 552.53,
-   "now": 552.77,
-   "asof": "2026-10-28",
-   "move": 0.0004,
+   "now": 562.36,
+   "asof": "2026-10-29",
+   "move": 0.0178,
    "call_now": "Buy",
-   "rel_now": 0.5062,
+   "rel_now": 0.4805,
    "flags": []
   },
   {
@@ -494,11 +488,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 216.47,
-   "now": 215.38,
-   "asof": "2026-10-28",
-   "move": -0.005,
+   "now": 213.66,
+   "asof": "2026-10-29",
+   "move": -0.013,
    "call_now": "Buy",
-   "rel_now": 0.1854,
+   "rel_now": 0.1949,
    "flags": []
   },
   {
@@ -508,11 +502,11 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 194.745,
-   "now": 195.84,
-   "asof": "2026-10-28",
-   "move": 0.0056,
+   "now": 199.4,
+   "asof": "2026-10-29",
+   "move": 0.0239,
    "call_now": "Hold",
-   "rel_now": 0.1106,
+   "rel_now": 0.0907,
    "flags": []
   },
   {
@@ -522,11 +516,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 162.57,
-   "now": 145.23,
-   "asof": "2026-10-28",
-   "move": -0.1067,
+   "now": 143.89,
+   "asof": "2026-10-29",
+   "move": -0.1149,
    "call_now": "Buy",
-   "rel_now": 0.4613,
+   "rel_now": 0.4749,
    "flags": []
   },
   {
@@ -536,11 +530,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 412.35,
-   "now": 439.51,
-   "asof": "2026-10-28",
-   "move": 0.0659,
+   "now": 431.81,
+   "asof": "2026-10-29",
+   "move": 0.0472,
    "call_now": "Buy",
-   "rel_now": 0.3222,
+   "rel_now": 0.3458,
    "flags": []
   },
   {
@@ -550,11 +544,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 425.06,
-   "now": 407.1,
-   "asof": "2026-10-28",
-   "move": -0.0423,
+   "now": 410.91,
+   "asof": "2026-10-29",
+   "move": -0.0333,
    "call_now": "Buy",
-   "rel_now": 0.8808,
+   "rel_now": 0.8634,
    "flags": []
   },
   {
@@ -564,11 +558,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 414.26,
-   "now": 400.6,
-   "asof": "2026-10-28",
-   "move": -0.033,
+   "now": 410.54,
+   "asof": "2026-10-29",
+   "move": -0.009,
    "call_now": "Hold",
-   "rel_now": 0.0608,
+   "rel_now": 0.0351,
    "flags": []
   },
   {
@@ -578,11 +572,11 @@
    "call": "Sell",
    "rated": "2026-10-29",
    "price": 242.94,
-   "now": 242.94,
-   "asof": "2026-10-28",
-   "move": 0.0,
+   "now": 245.92,
+   "asof": "2026-10-29",
+   "move": 0.0123,
    "call_now": "Sell",
-   "rel_now": -0.2036,
+   "rel_now": -0.2132,
    "flags": []
   }
  ]

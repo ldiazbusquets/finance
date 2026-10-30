@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T08:22:54Z",
+ "updated": "2026-10-30T23:12:34Z",
  "today": "2026-10-30",
  "rules": {
   "band": 0.15,
@@ -16,11 +16,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 396.3,
-   "now": 438.05,
-   "asof": "2026-10-29",
-   "move": 0.1053,
+   "now": 427.77,
+   "asof": "2026-10-30",
+   "move": 0.0794,
    "call_now": "Hold",
-   "rel_now": 0.1163,
+   "rel_now": 0.1431,
    "due": "2026-11-05",
    "flags": [
     [
@@ -40,11 +40,11 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 324.22,
-   "now": 283.82,
-   "asof": "2026-10-29",
-   "move": -0.1246,
+   "now": 279.84,
+   "asof": "2026-10-30",
+   "move": -0.1369,
    "call_now": "Buy",
-   "rel_now": 0.2588,
+   "rel_now": 0.2767,
    "flags": [
     [
      "rating",
@@ -59,11 +59,11 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 697.52,
-   "now": 624.52,
-   "asof": "2026-10-29",
-   "move": -0.1047,
+   "now": 614.99,
+   "asof": "2026-10-30",
+   "move": -0.1183,
    "call_now": "Buy",
-   "rel_now": 0.2463,
+   "rel_now": 0.2657,
    "flags": [
     [
      "rating",
@@ -72,63 +72,49 @@
    ]
   },
   {
-   "t": "MU",
-   "name": "Micron Technology",
-   "page": "reports/micron.html",
-   "call": "Buy",
+   "t": "PLTR",
+   "name": "Palantir Technologies",
+   "page": "reports/palantir.html",
+   "call": "Sell",
    "rated": "2026-10-22",
-   "price": 913.67,
-   "now": 934.27,
-   "asof": "2026-10-29",
-   "move": 0.0225,
+   "price": 201.72,
+   "now": 184.11,
+   "asof": "2026-10-30",
+   "move": -0.0873,
    "call_now": "Hold",
-   "rel_now": 0.1258,
+   "rel_now": -0.1423,
+   "due": "2026-11-02",
    "flags": [
     [
      "rating",
-     "At today&rsquo;s price the rule gives Hold, not Buy"
+     "At today&rsquo;s price the rule gives Hold, not Sell"
+    ],
+    [
+     "due",
+     "Results due 2026-11-02"
     ]
    ]
   },
   {
-   "t": "SKHY",
-   "name": "SK hynix",
-   "page": "reports/sk-hynix.html",
-   "call": "Buy",
+   "t": "SNDK",
+   "name": "Sandisk",
+   "page": "reports/sandisk.html",
+   "call": "Sell",
    "rated": "2026-10-22",
-   "price": 131.69,
-   "now": 162.09,
-   "asof": "2026-10-29",
-   "move": 0.2308,
+   "price": 1378.22,
+   "now": 1150.89,
+   "asof": "2026-10-30",
+   "move": -0.1649,
    "call_now": "Hold",
-   "rel_now": 0.1177,
+   "rel_now": -0.0357,
    "flags": [
     [
      "price",
-     "Price up 23% since the report"
+     "Price down 16% since the report"
     ],
     [
      "rating",
-     "At today&rsquo;s price the rule gives Hold, not Buy"
-    ]
-   ]
-  },
-  {
-   "t": "AMZN",
-   "name": "Amazon",
-   "page": "reports/amazon.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 262.63,
-   "now": 243.79,
-   "asof": "2026-10-29",
-   "move": -0.0717,
-   "call_now": "Hold",
-   "rel_now": -0.0492,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-29, after the report"
+     "At today&rsquo;s price the rule gives Hold, not Sell"
     ]
    ]
   },
@@ -139,11 +125,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 190.47,
-   "now": 172.65,
-   "asof": "2026-10-29",
-   "move": -0.0936,
+   "now": 171.55,
+   "asof": "2026-10-30",
+   "move": -0.0993,
    "call_now": "Buy",
-   "rel_now": 0.6382,
+   "rel_now": 0.6487,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-27",
@@ -157,36 +143,17 @@
    ]
   },
   {
-   "t": "CAT",
-   "name": "Caterpillar",
-   "page": "reports/caterpillar.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 703.84,
-   "now": 647.39,
-   "asof": "2026-10-29",
-   "move": -0.0802,
-   "call_now": "Hold",
-   "rel_now": 0.0006,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
    "t": "GD",
    "name": "General Dynamics",
    "page": "reports/general-dynamics.html",
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 350.755,
-   "now": 370.82,
-   "asof": "2026-10-29",
-   "move": 0.0572,
+   "now": 372.59,
+   "asof": "2026-10-30",
+   "move": 0.0623,
    "call_now": "Buy",
-   "rel_now": 0.3609,
+   "rel_now": 0.3544,
    "flags": [
     [
      "results",
@@ -201,11 +168,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 890.33,
-   "now": 887.85,
-   "asof": "2026-10-29",
-   "move": -0.0028,
+   "now": 857.87,
+   "asof": "2026-10-30",
+   "move": -0.0365,
    "call_now": "Sell",
-   "rel_now": -0.2138,
+   "rel_now": -0.1863,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -219,63 +186,59 @@
    ]
   },
   {
-   "t": "LHX",
-   "name": "L3Harris",
-   "page": "reports/l3harris.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 248.77,
-   "now": 278.43,
-   "asof": "2026-10-29",
-   "move": 0.1192,
-   "call_now": "Buy",
-   "rel_now": 1.1102,
-   "flags": [
-    [
-     "results",
-     "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
-   "t": "SNDK",
-   "name": "Sandisk",
-   "page": "reports/sandisk.html",
-   "call": "Sell",
-   "rated": "2026-10-22",
-   "price": 1378.22,
-   "now": 1330.05,
-   "asof": "2026-10-29",
-   "move": -0.035,
-   "call_now": "Sell",
-   "rel_now": -0.1656,
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Sell line at today&rsquo;s price"
-    ],
-    [
-     "results",
-     "Results reported 2026-10-29, after the report"
-    ]
-   ]
-  },
-  {
    "t": "XOM",
    "name": "ExxonMobil",
    "page": "reports/exxonmobil.html",
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 178.19,
-   "now": 183.29,
-   "asof": "2026-10-29",
-   "move": 0.0286,
+   "now": 187.25,
+   "asof": "2026-10-30",
+   "move": 0.0508,
    "call_now": "Sell",
-   "rel_now": -0.2528,
+   "rel_now": -0.2686,
    "flags": [
     [
      "results",
      "Results reported 2026-10-30, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "SPCX",
+   "name": "SpaceX",
+   "page": "reports/spacex.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 162.57,
+   "now": 134.72,
+   "asof": "2026-10-30",
+   "move": -0.1713,
+   "call_now": "Buy",
+   "rel_now": 0.5753,
+   "flags": [
+    [
+     "price",
+     "Price down 17% since the report"
+    ]
+   ]
+  },
+  {
+   "t": "VRT",
+   "name": "Vertiv",
+   "page": "reports/vertiv.html",
+   "call": "Sell",
+   "rated": "2026-10-29",
+   "price": 242.94,
+   "now": 232.5,
+   "asof": "2026-10-30",
+   "move": -0.043,
+   "call_now": "Sell",
+   "rel_now": -0.1678,
+   "flags": [
+    [
+     "near",
+     "Within 3 points of the Sell line at today&rsquo;s price"
     ]
    ]
   },
@@ -286,11 +249,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 552.72,
-   "now": 566.42,
-   "asof": "2026-10-29",
-   "move": 0.0248,
+   "now": 504.8,
+   "asof": "2026-10-30",
+   "move": -0.0867,
    "call_now": "Hold",
-   "rel_now": -0.0462,
+   "rel_now": 0.0702,
    "due": "2026-11-03",
    "flags": [
     [
@@ -306,11 +269,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 38.81,
-   "now": 43.59,
-   "asof": "2026-10-29",
-   "move": 0.1232,
+   "now": 41.09,
+   "asof": "2026-10-30",
+   "move": 0.0587,
    "call_now": "Hold",
-   "rel_now": -0.1098,
+   "rel_now": -0.0557,
    "due": "2026-11-03",
    "flags": [
     [
@@ -320,24 +283,18 @@
    ]
   },
   {
-   "t": "PLTR",
-   "name": "Palantir Technologies",
-   "page": "reports/palantir.html",
-   "call": "Sell",
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "reports/amazon.html",
+   "call": "Hold",
    "rated": "2026-10-22",
-   "price": 201.72,
-   "now": 196.42,
-   "asof": "2026-10-29",
-   "move": -0.0263,
-   "call_now": "Sell",
-   "rel_now": -0.196,
-   "due": "2026-11-02",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-11-02"
-    ]
-   ]
+   "price": 262.63,
+   "now": 240.35,
+   "asof": "2026-10-30",
+   "move": -0.0848,
+   "call_now": "Hold",
+   "rel_now": -0.0356,
+   "flags": []
   },
   {
    "t": "ASML",
@@ -346,11 +303,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 1560.54,
-   "now": 1675.7,
-   "asof": "2026-10-29",
-   "move": 0.0738,
+   "now": 1565.9,
+   "asof": "2026-10-30",
+   "move": 0.0034,
    "call_now": "Hold",
-   "rel_now": -0.0894,
+   "rel_now": -0.0256,
    "flags": []
   },
   {
@@ -360,11 +317,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 323.24,
-   "now": 345.0,
-   "asof": "2026-10-29",
-   "move": 0.0673,
+   "now": 326.08,
+   "asof": "2026-10-30",
+   "move": 0.0088,
    "call_now": "Buy",
-   "rel_now": 0.7007,
+   "rel_now": 0.7993,
    "flags": []
   },
   {
@@ -374,11 +331,25 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 135.79,
-   "now": 142.21,
-   "asof": "2026-10-29",
-   "move": 0.0473,
+   "now": 144.37,
+   "asof": "2026-10-30",
+   "move": 0.0632,
    "call_now": "Hold",
-   "rel_now": 0.0147,
+   "rel_now": -0.0004,
+   "flags": []
+  },
+  {
+   "t": "CAT",
+   "name": "Caterpillar",
+   "page": "reports/caterpillar.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 703.84,
+   "now": 622.75,
+   "asof": "2026-10-30",
+   "move": -0.1152,
+   "call_now": "Hold",
+   "rel_now": 0.0402,
    "flags": []
   },
   {
@@ -388,11 +359,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 255.21,
-   "now": 264.58,
-   "asof": "2026-10-29",
-   "move": 0.0367,
+   "now": 262.38,
+   "asof": "2026-10-30",
+   "move": 0.0281,
    "call_now": "Hold",
-   "rel_now": 0.0536,
+   "rel_now": 0.0625,
    "flags": []
   },
   {
@@ -402,11 +373,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 17.41,
-   "now": 19.87,
-   "asof": "2026-10-29",
-   "move": 0.1413,
+   "now": 17.935,
+   "asof": "2026-10-30",
+   "move": 0.0302,
    "call_now": "Buy",
-   "rel_now": 0.6314,
+   "rel_now": 0.8074,
    "flags": []
   },
   {
@@ -416,11 +387,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 267.68,
-   "now": 275.2,
-   "asof": "2026-10-29",
-   "move": 0.0281,
+   "now": 273.2,
+   "asof": "2026-10-30",
+   "move": 0.0206,
    "call_now": "Hold",
-   "rel_now": 0.0352,
+   "rel_now": 0.0427,
    "flags": []
   },
   {
@@ -430,11 +401,25 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 335.26,
-   "now": 343.58,
-   "asof": "2026-10-29",
-   "move": 0.0248,
+   "now": 337.04,
+   "asof": "2026-10-30",
+   "move": 0.0053,
    "call_now": "Buy",
-   "rel_now": 0.2422,
+   "rel_now": 0.2663,
+   "flags": []
+  },
+  {
+   "t": "LHX",
+   "name": "L3Harris",
+   "page": "reports/l3harris.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 248.77,
+   "now": 277.61,
+   "asof": "2026-10-30",
+   "move": 0.1159,
+   "call_now": "Buy",
+   "rel_now": 1.1164,
    "flags": []
   },
   {
@@ -444,11 +429,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 590.2,
-   "now": 643.59,
-   "asof": "2026-10-29",
-   "move": 0.0905,
+   "now": 636.95,
+   "asof": "2026-10-30",
+   "move": 0.0792,
    "call_now": "Buy",
-   "rel_now": 0.4908,
+   "rel_now": 0.5063,
    "flags": []
   },
   {
@@ -458,11 +443,25 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 521.08,
-   "now": 530.14,
-   "asof": "2026-10-29",
-   "move": 0.0174,
+   "now": 521.91,
+   "asof": "2026-10-30",
+   "move": 0.0016,
    "call_now": "Hold",
-   "rel_now": 0.0391,
+   "rel_now": 0.0555,
+   "flags": []
+  },
+  {
+   "t": "MU",
+   "name": "Micron Technology",
+   "page": "reports/micron.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 913.67,
+   "now": 884.74,
+   "asof": "2026-10-30",
+   "move": -0.0317,
+   "call_now": "Buy",
+   "rel_now": 0.1888,
    "flags": []
   },
   {
@@ -472,11 +471,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 552.53,
-   "now": 562.36,
-   "asof": "2026-10-29",
-   "move": 0.0178,
+   "now": 557.54,
+   "asof": "2026-10-30",
+   "move": 0.0091,
    "call_now": "Buy",
-   "rel_now": 0.4805,
+   "rel_now": 0.4933,
    "flags": []
   },
   {
@@ -486,11 +485,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 216.47,
-   "now": 213.66,
-   "asof": "2026-10-29",
-   "move": -0.013,
+   "now": 204.64,
+   "asof": "2026-10-30",
+   "move": -0.0546,
    "call_now": "Buy",
-   "rel_now": 0.1949,
+   "rel_now": 0.2476,
    "flags": []
   },
   {
@@ -500,25 +499,25 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 194.745,
-   "now": 199.4,
-   "asof": "2026-10-29",
-   "move": 0.0239,
+   "now": 199.8,
+   "asof": "2026-10-30",
+   "move": 0.026,
    "call_now": "Hold",
-   "rel_now": 0.0907,
+   "rel_now": 0.0886,
    "flags": []
   },
   {
-   "t": "SPCX",
-   "name": "SpaceX",
-   "page": "reports/spacex.html",
+   "t": "SKHY",
+   "name": "SK hynix",
+   "page": "reports/sk-hynix.html",
    "call": "Buy",
    "rated": "2026-10-22",
-   "price": 162.57,
-   "now": 143.89,
-   "asof": "2026-10-29",
-   "move": -0.1149,
+   "price": 131.69,
+   "now": 149.21,
+   "asof": "2026-10-30",
+   "move": 0.133,
    "call_now": "Buy",
-   "rel_now": 0.4749,
+   "rel_now": 0.2142,
    "flags": []
   },
   {
@@ -528,11 +527,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 412.35,
-   "now": 431.81,
-   "asof": "2026-10-29",
-   "move": 0.0472,
+   "now": 406.13,
+   "asof": "2026-10-30",
+   "move": -0.0151,
    "call_now": "Buy",
-   "rel_now": 0.3458,
+   "rel_now": 0.4309,
    "flags": []
   },
   {
@@ -542,11 +541,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 425.06,
-   "now": 410.91,
-   "asof": "2026-10-29",
-   "move": -0.0333,
+   "now": 406.97,
+   "asof": "2026-10-30",
+   "move": -0.0426,
    "call_now": "Buy",
-   "rel_now": 0.8634,
+   "rel_now": 0.8814,
    "flags": []
   },
   {
@@ -556,25 +555,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 414.26,
-   "now": 410.54,
-   "asof": "2026-10-29",
-   "move": -0.009,
+   "now": 413.59,
+   "asof": "2026-10-30",
+   "move": -0.0016,
    "call_now": "Hold",
-   "rel_now": 0.0351,
-   "flags": []
-  },
-  {
-   "t": "VRT",
-   "name": "Vertiv",
-   "page": "reports/vertiv.html",
-   "call": "Sell",
-   "rated": "2026-10-29",
-   "price": 242.94,
-   "now": 245.92,
-   "asof": "2026-10-29",
-   "move": 0.0123,
-   "call_now": "Sell",
-   "rel_now": -0.2132,
+   "rel_now": 0.0275,
    "flags": []
   }
  ]

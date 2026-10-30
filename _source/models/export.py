@@ -78,8 +78,8 @@ def generic_dcf(key, slug, title, fn, args_bear, args_bull, rev0, tax, gT, ronic
 def main():
     vals = {}
     # Amazon, Meta, Nvidia and Vertiv share the same cash-flow engine
-    vals['AMZN'] = generic_dcf('AMZN', 'amazon', 'Amazon (AMZN)', 'am', ((.08, .07, .12, .14), {'W': None, 'heavy': (150, 120, 90, 60)}), ((.15, .14, .14, .22), {'heavy': (110, 80, 50, 30)}),
-                               810e9, .19, .03, .20, -10e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '12 / 11', 'Then fades to 3% by year 10'], ['Operating margin %', '13 rising to 18 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '130 / 100 / 70 / 50', 'Then reinvestment = revenue growth / 2.0']], 'amzn')
+    vals['AMZN'] = generic_dcf('AMZN', 'amazon', 'Amazon (AMZN)', 'am', ((.08, .07, .12, .14), {'W': None, 'heavy': (190, 150, 110, 70)}), ((.16, .15, .14, .22), {'heavy': (150, 110, 70, 40)}),
+                               828e9, .19, .03, .20, -59e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '13 / 12', 'Then fades to 3% by year 10'], ['Operating margin %', '13 rising to 18 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '170 / 130 / 90 / 60', 'Then reinvestment = revenue growth / 2.0']], 'amzn')
     vals['META'] = generic_dcf('META', 'meta', 'Meta Platforms (META)', 'mt', ((.10, .08, .30, .30), {'heavy': (130, 110, 80, 60)}), ((.24, .18, .36, .44), {'heavy': (90, 70, 40, 25)}),
                                256e9, .16, .03, .25, 1.5e9, [.085, .09, .095, .10], [['Revenue growth, years 1-2 %', '18 / 14', 'Then fades to 3% by year 10'], ['Operating margin %', '34 rising to 38 by year 5', ''], ['Heavy AI capex, years 1-4 ($B)', '110 / 90 / 60 / 40', 'Then reinvestment = revenue growth / 2.0']], 'meta')
     vals['VRT'] = generic_dcf('VRT', 'vertiv', 'Vertiv (VRT)', 'vr', ((.15, .08, .215, .21), {}), ((.40, .22, .24, .275), {}),
@@ -134,11 +134,11 @@ def main():
     ns = run('lhx'); lh = ns['lh']; b = lh(); L = dict(ns['LAST'])
     rows = [[2026 + r[0], P(r[1]), B(r[2]), B(r[3]), round(1 / (1 + L['W']) ** (r[0] - .5), 4), B(r[3] / (1 + L['W']) ** (r[0] - .5))] for r in L['rows']]
     write('l3harris', 'L3Harris (LHX)', 'Ten-year discounted free cash flow to the firm, following the 2028 framework',
-          [['Revenue, 2026 (guidance midpoint)', 23.45, 'Company guidance'], ['Growth, 2027 and 2028 %', '7.5 / 7.5', 'Reaches the $27B 2028 target; fades to 3% by year 10'],
-           ['Cash flow to the firm', '$3.65B, $3.95B, then 14.6% of revenue', 'Free cash flow guidance plus after-tax interest'], ['Discount rate (WACC) %', P(L['W']), 'Beta 0.80 (defense peers), about 19% debt'],
-           ['Terminal growth %', 3, ''], ['Net debt and preferred', -10.5, '$9.5B net debt + $1.0B Pentagon preferred'], ['Diluted shares (billions)', 0.1873, '']],
+          [['Revenue, 2026 (guidance midpoint)', 23.6, 'Company guidance'], ['Growth, 2027 and 2028 %', '7.5 / 7.5', 'About $27B by 2028; fades to 3% by year 10'],
+           ['Cash flow to the firm', '$3.40B, $3.50B, then 13.5% of revenue', 'The $3B+ 2028 free cash flow framework plus after-tax interest'], ['Discount rate (WACC) %', P(L['W']), 'Beta 0.80 (defense peers), about 17% debt'],
+           ['Terminal growth %', 3, ''], ['Net debt and preferred', -9.0, '$8.0B net debt + $1.0B Pentagon preferred'], ['Diluted shares (billions)', 0.1873, '']],
           ['Year', 'Revenue growth %', 'Revenue', 'Free cash flow to the firm', 'Discount factor (mid-year)', 'Present value'], rows,
-          [['Present value of 10 years of cash flow', B(L['pv'])], ['Terminal value = FCFF10 x (1+g) / (WACC - g)', B(L['tv'])], ['Present value of terminal value', B(L['pvtv'])], ['Enterprise value', B(L['ev'])], ['Less net debt and preferred', -10.5], ['Equity value', B(L['eq'])], ['Value per share ($)', round(b, 2)]],
+          [['Present value of 10 years of cash flow', B(L['pv'])], ['Terminal value = FCFF10 x (1+g) / (WACC - g)', B(L['tv'])], ['Present value of terminal value', B(L['pvtv'])], ['Enterprise value', B(L['ev'])], ['Less net debt and preferred', -9.0], ['Equity value', B(L['eq'])], ['Value per share ($)', round(b, 2)]],
           [['Value per share ($)', round(ns['bear'], 2), round(b, 2), round(ns['bull'], 2)], ['Probability', 25, 50, 25], ['Probability-weighted value ($)', '', round(wsum(ns['bear'], b, ns['bull']), 2), '']],
           [(f'Discount rate {P(Wx)}%', round(lh(W=Wx), 2)) for Wx in (.07, .075, .08, .085, .09)], 'Model script: _source/models/lhx.py')
     vals['LHX'] = (b, ns['bear'], ns['bull'])

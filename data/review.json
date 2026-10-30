@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-29T23:16:54Z",
- "today": "2026-10-29",
+ "updated": "2026-10-30T08:22:54Z",
+ "today": "2026-10-30",
  "rules": {
   "band": 0.15,
   "near": 0.03,
@@ -124,7 +124,7 @@
    "asof": "2026-10-29",
    "move": -0.0717,
    "call_now": "Hold",
-   "rel_now": -0.0537,
+   "rel_now": -0.0492,
    "flags": [
     [
      "results",
@@ -176,6 +176,25 @@
    ]
   },
   {
+   "t": "GD",
+   "name": "General Dynamics",
+   "page": "reports/general-dynamics.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 350.755,
+   "now": 370.82,
+   "asof": "2026-10-29",
+   "move": 0.0572,
+   "call_now": "Buy",
+   "rel_now": 0.3609,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-30, after the report"
+    ]
+   ]
+  },
+  {
    "t": "GEV",
    "name": "GE Vernova",
    "page": "reports/gev.html",
@@ -210,7 +229,7 @@
    "asof": "2026-10-29",
    "move": 0.1192,
    "call_now": "Buy",
-   "rel_now": 1.2512,
+   "rel_now": 1.1102,
    "flags": [
     [
      "results",
@@ -242,6 +261,25 @@
    ]
   },
   {
+   "t": "XOM",
+   "name": "ExxonMobil",
+   "page": "reports/exxonmobil.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 178.19,
+   "now": 183.29,
+   "asof": "2026-10-29",
+   "move": 0.0286,
+   "call_now": "Sell",
+   "rel_now": -0.2528,
+   "flags": [
+    [
+     "results",
+     "Results reported 2026-10-30, after the report"
+    ]
+   ]
+  },
+  {
    "t": "AMD",
    "name": "Advanced Micro Devices",
    "page": "reports/amd.html",
@@ -258,26 +296,6 @@
     [
      "due",
      "Results due 2026-11-03"
-    ]
-   ]
-  },
-  {
-   "t": "GD",
-   "name": "General Dynamics",
-   "page": "reports/general-dynamics.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 350.755,
-   "now": 370.82,
-   "asof": "2026-10-29",
-   "move": 0.0572,
-   "call_now": "Buy",
-   "rel_now": 0.3609,
-   "due": "2026-10-30",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-30"
     ]
    ]
   },
@@ -318,26 +336,6 @@
     [
      "due",
      "Results due 2026-11-02"
-    ]
-   ]
-  },
-  {
-   "t": "XOM",
-   "name": "ExxonMobil",
-   "page": "reports/exxonmobil.html",
-   "call": "Sell",
-   "rated": "2026-10-22",
-   "price": 178.19,
-   "now": 183.29,
-   "asof": "2026-10-29",
-   "move": 0.0286,
-   "call_now": "Sell",
-   "rel_now": -0.2528,
-   "due": "2026-10-30",
-   "flags": [
-    [
-     "due",
-     "Results due 2026-10-30"
     ]
    ]
   },

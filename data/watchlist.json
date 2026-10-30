@@ -9,8 +9,8 @@
       "page": "reports/l3harris.html",
       "holding": true,
       "call": "Buy",
-      "value": 436,
-      "date": "Oct 20, 2026"
+      "value": 402,
+      "date": "Oct 30, 2026"
     },
     {
       "ticker": "VRT",
@@ -42,8 +42,8 @@
       "page": "reports/amazon.html",
       "holding": true,
       "call": "Hold",
-      "value": 153,
-      "date": "Oct 20, 2026"
+      "value": 155,
+      "date": "Oct 30, 2026"
     },
     {
       "ticker": "META",

@@ -32,7 +32,7 @@ def test_wrong_weighted_value():
 
 
 def test_broken_bridge():
-    bad = PAGE.replace('<b class="num">$1.67T</b>', '<b class="num">$1.47T</b>')
+    bad = PAGE.replace('<b class="num">$1.69T</b>', '<b class="num">$1.49T</b>')
     assert bad != PAGE and any('bridge' in e for e in errs(page=bad))
 
 

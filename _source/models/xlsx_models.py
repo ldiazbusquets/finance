@@ -221,10 +221,10 @@ def dcf_sens(name, info, Wcells):
 def generic_cases():
     """the exact cases in amzn.py, meta.py, nvda.py, vrt.py, lmt.py, noc.py, cat.py and asml.py"""
     return {
-        'AMZN': dict(slug='amazon', title='Amazon (AMZN)', script='amzn', rev0n='Base revenue for 2026, $810B', price=262.63, W=[.085, .09, .095, .10],
-                     wacc=dict(beta=1.33, price=262.63, shares=10.9, debt=133, kd=.05),
-                     base=dict(rev0=810, g1=.12, g2=.11, m0=.13, mT=.18, ny=5, tax=.19, s2c=2.0, ronic=.20, net=-10, shares=10.9, heavy=(130, 100, 70, 50), shift=0),
-                     bear=dict(g1=.08, g2=.07, m0=.12, mT=.14, heavy=(150, 120, 90, 60), shift=.01), bull=dict(g1=.15, g2=.14, m0=.14, mT=.22, heavy=(110, 80, 50, 30), shift=-.01)),
+        'AMZN': dict(slug='amazon', title='Amazon (AMZN)', script='amzn', rev0n='Base revenue for 2026, $828B', price=243.79, W=[.085, .09, .095, .10],
+                     wacc=dict(beta=1.33, price=243.79, shares=10.9, debt=173, kd=.05),
+                     base=dict(rev0=828, g1=.13, g2=.12, m0=.13, mT=.18, ny=5, tax=.19, s2c=2.0, ronic=.20, net=-59, shares=10.9, heavy=(170, 130, 90, 60), shift=0),
+                     bear=dict(g1=.08, g2=.07, m0=.12, mT=.14, heavy=(190, 150, 110, 70), shift=.01), bull=dict(g1=.16, g2=.15, m0=.14, mT=.22, heavy=(150, 110, 70, 40), shift=-.01)),
         'META': dict(slug='meta', title='Meta Platforms (META)', script='meta', rev0n='Base revenue for 2026, $256B', price=697.52, W=[.085, .09, .095, .10],
                      wacc=dict(beta=1.42, price=697.52, shares=2.573, debt=80.92, kd=.05),
                      base=dict(rev0=256, g1=.18, g2=.14, m0=.34, mT=.38, ny=5, tax=.16, s2c=2.0, ronic=.25, net=1.5, shares=2.573, heavy=(110, 90, 60, 40), shift=0),
@@ -322,24 +322,24 @@ def make_generic(key, c):
 # ---------------------------------------------------------------- L3Harris, Boeing, GE Vernova, American Water, JPMorgan
 def make_lhx():
     wb = Workbook()
-    S, out = summary(wb, 'L3Harris (LHX)', 'Ten-year discounted free cash flow to the firm, following the 2028 framework', 248.77, 'lhx',
-                     wacc=dict(beta=0.80, price=248.77, shares=0.1873, debt=11.0, kd=.055, bnote='Defense peers; the measured 0.61 understates risk'), scen_sheets=None, ps_cells=['', '', ''])
-    cases = {'Base': (.075, .075, .146, 0), 'Bear': (.04, .03, .125, .01), 'Bull': (.10, .09, .155, -.01)}
+    S, out = summary(wb, 'L3Harris (LHX)', 'Ten-year discounted free cash flow to the firm, following the 2028 framework', 278.43, 'lhx',
+                     wacc=dict(beta=0.80, price=278.43, shares=0.1873, debt=11.0, kd=.055, bnote='Defense peers; the measured 0.61 understates risk'), scen_sheets=None, ps_cells=['', '', ''])
+    cases = {'Base': (.075, .075, .135, 0), 'Bear': (.04, .03, .115, .01), 'Bull': (.10, .09, .15, -.01)}
     info = {}
     for name, (g1, g2, conv, shift) in cases.items():
         X = Sheet(wb, name, 'L3Harris (LHX)', name + ' case: free cash flow to the firm from guidance, $ billions', 12); X.widths(40, 11, {'L': 40})
         X.section('Inputs')
-        rev0 = X.row('Revenue, 2026 ($B)', [23.45], 'b', 'i', 'Guidance midpoint')
+        rev0 = X.row('Revenue, 2026 ($B)', [23.6], 'b', 'i', 'Guidance midpoint')
         a1 = X.row('Revenue growth, 2027', [g1], 'pct', 'i'); a2 = X.row('Revenue growth, 2028', [g2], 'pct', 'i', 'Then fades to terminal growth by year 10')
         gT = X.row('Terminal growth', [.03], 'pct', 'i')
-        f1 = X.row('Free cash flow to the firm, 2027 guidance ($B)', [3.65], 'b', 'i', 'Free cash flow guidance plus after-tax interest')
-        r1 = X.row('Revenue behind that guidance, 2027 ($B)', [25.2], 'b', 'i')
-        f2 = X.row('Free cash flow to the firm, 2028 guidance ($B)', [3.95], 'b', 'i')
-        r2 = X.row('Revenue behind that guidance, 2028 ($B)', [27.1], 'b', 'i')
+        f1 = X.row('Free cash flow to the firm, 2027 guidance ($B)', [3.40], 'b', 'i', 'Free cash flow framework plus after-tax interest')
+        r1 = X.row('Revenue behind that guidance, 2027 ($B)', [25.4], 'b', 'i')
+        f2 = X.row('Free cash flow to the firm, 2028 guidance ($B)', [3.50], 'b', 'i')
+        r2 = X.row('Revenue behind that guidance, 2028 ($B)', [27.3], 'b', 'i')
         cv = X.row('Cash conversion after 2028 (share of revenue)', [conv], 'pct', 'i', 'Also caps 2027 and 2028')
         sh_ = X.row('Discount rate shift for this case', [shift], 'pct2', 'i')
         W = X.row('Discount rate', [f'={out["W"]}+B{sh_}'], 'pct2', 'l')
-        net = X.row('Net debt and preferred ($B)', [-10.5], 'b', 'i', '$9.5B net debt + $1.0B Pentagon preferred')
+        net = X.row('Net debt and preferred ($B)', [-9.0], 'b', 'i', '$8.0B net debt + $1.0B Pentagon preferred')
         sh = X.row('Diluted shares (billions)', [0.1873], FMT['n4'], 'i')
         X.gap(); X.section('Projection'); X.header(['Year'] + [str(2026 + t) for t in range(1, 11)])
         t = X.row('Year number', list(range(1, 11)), '0')

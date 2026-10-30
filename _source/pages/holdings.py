@@ -88,58 +88,62 @@ R['NVDA'] = dict(
     ])
 
 # ---------------------------------------------------------------- Amazon
-AM = 'https://www.aboutamazon.com/news/company-news/amazon-earnings-q2-2026-report'
+AM = 'https://www.sec.gov/Archives/edgar/data/0001018724/000101872426000038/amzn-20260930xex991.htm'
+AM_CALL = 'https://finance.yahoo.com/markets/stocks/articles/amazon-com-q3-earnings-call-001416198.html'
+AM_RX = 'https://www.forbes.com/sites/fionariley/2026/10/29/amazon-falls-short-of-overall-revenue-prediction-despite-aws-revenue-growth-nearing-40/'
 R['AMZN'] = dict(
-    t='AMZN', slug='amazon', name='Amazon', h1='Amazon', sector='Consumer &amp; cloud', date=DATE, timing=LATER,
-    sub='Amazon is three businesses in one: the largest online store, the largest cloud (AWS) and a fast-growing advertising arm. AWS is accelerating on AI demand, but Amazon is spending more than $200 billion a year to build data centers, which has pushed free cash flow below zero. The price assumes that spending pays off handsomely.',
-    call='Hold', method='Cash-flow model', price=262.63, base=153, bear=74, bull=267, wt=162, max=400, tick=50,
+    t='AMZN', slug='amazon', name='Amazon', h1='Amazon', sector='Consumer &amp; cloud', date='October 30, 2026', timing=', the morning after its third-quarter results',
+    sub='Amazon is three businesses in one: the largest online store, the largest cloud (AWS) and a fast-growing advertising arm. AWS growth sped up to 39% in the third quarter, its fastest in almost five years, but Amazon said spending will rise again in 2027 from about $220 billion this year, and it now borrows to pay for it. The price still assumes that spending pays off handsomely.',
+    call='Hold', method='Cash-flow model', price=243.79, pricenote='Close, October 29, 2026, before the results', base=155, bear=66, bull=279, wt=164, max=400, tick=50,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 74, 267, 153, '$74 to $267, base $153'), ('Probability-weighted', None, None, 162, '$162'),
-           ('Price at writing', None, None, 262.63, '$262.63'), ('52-week range', 196, 287, None, '$196 to $287')],
+    field=[('Cash-flow model', 66, 279, 155, '$66 to $279, base $155'), ('Probability-weighted', None, None, 164, '$164'),
+           ('Price at writing', None, None, 243.79, '$243.79'), ('52-week range', 196, 287, None, '$196 to $287')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'A store, a cloud <em>and an ad network.</em>',
          prose('Amazon reports three segments. <b>North America</b> and <b>International</b> are the store: first-party retail, third-party seller services, Prime subscriptions and advertising. <b>AWS</b> rents computing, storage and AI infrastructure to companies and governments.',
                'Most of the profit comes from AWS and advertising, which ride on the store&rsquo;s traffic. Retail itself earns thin margins but funds the logistics network that keeps customers loyal. Amazon also owns a large stake in Anthropic, the AI company, which it does not value in its operating results.')
          + key('Takeaway', 'Value comes mostly from AWS and ads; the store is the moat that feeds them.')),
-        ('results', 'Latest results', 'AWS is growing 37% <em>on a $170 billion base.</em>',
-         stats([('$200.6B', 'Revenue, Q2 2026, +20%'), ('+37%', 'AWS growth'), ('$27.5B', 'Operating income, +43%'), ('39%', 'AWS operating margin'), ('+26%', 'Advertising growth'), ('&minus;$7.6B', 'Free cash flow, last 12 months, as Amazon defines it')])
-         + prose('Second-quarter revenue rose 20% to $200.6 billion. AWS revenue grew 37% to $42.2 billion with $16.6 billion of operating income, and advertising grew 26%. Net income of $62.6 billion was swollen by a $53.4 billion gain, mostly from revaluing the Anthropic stake, so it says little about the business.',
-                 'The cost is in cash flow: free cash flow over the last twelve months was <b>negative $7.6 billion</b> as Amazon defines it, because capital spending (net of proceeds) rose $66 billion in a year, to $169 billion. Amazon nets $4.0 billion of proceeds from equipment sales and incentives against capital spending; the five-year table below uses gross capital spending ($173.0 billion), which gives negative $11.6 billion. Capital spending for 2026 is guided to about $220 billion. Guidance for the third quarter is $197&ndash;202 billion of revenue and $22.5&ndash;26.5 billion of operating income.')
-         + src([('Q2 2026 results', AM), ('Capex guidance', 'https://betafinch.com/blog/amazon-q2-2026-earnings-capex-guidance')])),
+        ('results', 'Latest results', 'AWS is growing 39% <em>on a $184 billion pace.</em>',
+         stats([('$201.9B', 'Revenue, Q3 2026, +12%'), ('+39%', 'AWS growth'), ('$28.1B', 'Operating income, +61%'), ('39%', 'AWS operating margin'), ('$578B', 'AWS backlog'), ('&minus;$42.4B', 'Free cash flow, last 12 months, as Amazon defines it')])
+         + prose('Third-quarter revenue rose 12% to $201.9 billion, slightly below the $202.3 billion analysts expected; moving Prime Day into the second quarter took about four points off growth. AWS revenue grew 39% to $46.0 billion with $17.8 billion of operating income, and its backlog reached $578 billion. Operating income of $28.1 billion, a record 13.9% margin, beat the $22.5&ndash;26.5 billion guidance; North America earned 7.7% on sales and International 3.7%. Advertising grew 11% to $19.6 billion. EPS of $1.89 was below the $1.96 expected.',
+                 'The cost is in cash flow: free cash flow over the last twelve months was <b>negative $42.4 billion</b> as Amazon defines it, because capital spending (net of proceeds) rose 82% in a year, to $211 billion. Capital spending is still guided to about $220 billion for 2026, and management said it will &ldquo;rise meaningfully&rdquo; in 2027. Long-term debt has risen to $173 billion from $66 billion at the end of 2025. Guidance for the fourth quarter is $240&ndash;247 billion of revenue and $28.5&ndash;33.5 billion of operating income. The shares, which closed at $243.79 before the report, fell about 6% in after-hours trading.')
+         + src([('Q3 2026 results, Amazon', AM), ('Earnings call highlights', AM_CALL), ('Market reaction', AM_RX)])),
         ('fin', 'Five years', 'Margins tripled; <em>cash flow went the other way.</em>',
          fin_table('AMZN') + prose('Operating margin rose from 2% in 2022 to about 12% as AWS and ads grew faster than retail. Net income in the last twelve months includes the Anthropic gains. Capital spending has more than doubled since 2024, so free cash flow has fallen even as profit rose.')
          + src([('Amazon filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K')])),
         ('capital', 'Balance sheet', 'Strong, <em>but now borrowing to build.</em>',
-         prose('Amazon held about $123 billion of cash against $133 billion of debt in June, so net debt is small. It pays no dividend and buys back little; every spare dollar goes into data centers, chips (Trainium) and the Leo satellite network. The Anthropic stake is a sizeable asset that is <b>not</b> included in this valuation, so it is upside to the numbers below.')),
-        ('value', 'Valuation', 'The model gives <em>$153 a share.</em>',
-         table(['Assumption', 'Base case', 'Basis'], [
-             ['Revenue, 2026', '$810B', 'First half plus Q3 guidance'],
-             ['Growth, 2027 and 2028', '12%, then 11%', 'AWS in the 20s, retail high single digits'],
+         prose('Amazon held about $114 billion of cash and marketable securities at the end of September against $173 billion of long-term debt, so net debt is now about $59 billion, up from roughly $10 billion in June. It pays no dividend and buys back little; every spare dollar goes into data centers, chips (Trainium) and the Leo satellite network. The Anthropic stake is a sizeable asset that is <b>not</b> included in this valuation, so it is upside to the numbers below; Anthropic&rsquo;s planned IPO would give it a market price.')
+         + src([('Q3 2026 results, Amazon', AM)])),
+        ('value', 'Valuation', 'The model gives <em>$155 a share.</em>',
+         prose('This update raises 2026 revenue to $828 billion and growth by a point a year, because AWS is growing faster with a larger backlog, and raises the investment path because 2027 spending will be higher. More net debt comes off the value. The changes roughly cancel out.')
+         + table(['Assumption', 'Base case', 'Basis'], [
+             ['Revenue, 2026', '$828B', 'Three quarters plus the Q4 guidance midpoint'],
+             ['Growth, 2027 and 2028', '13%, then 12%', 'AWS near 30% on its backlog, retail mid-to-high single digits'],
              ['Growth after that', 'Fades to 3% by year 10', 'A straight glide to long-run economic growth'],
              ['Operating margin', '13% rising to 18% by 2031', 'More AWS and advertising in the mix'],
-             ['Net investment', '$130B, $100B, $70B, $50B, then $1 per $2 of new revenue', 'The data-center build peaks, then normalises'],
+             ['Net investment', '$170B, $130B, $90B, $60B, then $1 per $2 of new revenue', 'Spending rises in 2027, then the build peaks and normalises'],
              ['Tax rate', '19%', 'Below the 21% federal rate after credits'],
-             ['Discount rate', '10.8%', 'Beta 1.33, 4.5% premium, a little debt'],
+             ['Discount rate', '10.7%', 'Beta 1.33, 4.5% premium, about 6% debt'],
              ['Terminal growth', '3.0%', 'With a 20% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$655B'), ('PV of terminal value', '$1.02T'), ('Enterprise value', '$1.68T'), ('Less net debt', '$10B'), ('Equity value', '$1.67T'), ('Shares', '10.9B')], '$153')
+         + bridge([('PV of 10 years of cash flow', '$623B'), ('PV of terminal value', '$1.13T'), ('Enterprise value', '$1.75T'), ('Less net debt', '$59B'), ('Equity value', '$1.69T'), ('Shares', '10.9B')], '$155')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
-             ['Growth, 2027 / 2028', '8% / 7%', '12% / 11%', '15% / 14%'], ['Long-run operating margin', '14%', '18%', '22%'],
-             ['Discount rate', '11.8%', '10.8%', '9.8%'], ['Value per share', '$74', '$153', '$267'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$162</b>.') + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%'], ['$231', '$209', '$190', '$175'])),
-        ('implied', 'What the price assumes', 'At $263, the build-out <em>has to earn a lot.</em>',
-         implied([['A long-run operating margin near 29%', '18%; Amazon&rsquo;s best year so far was about 12%'], ['Revenue growth of about 23% a year for two years', '12% and 11%'], ['A discount rate of about 7.9%', '10.8%']])
-         + prose('The market is betting that the $220 billion a year going into AI infrastructure earns AWS-like returns. The Anthropic stake, left out of the model, covers part of the gap.')),
+             ['Growth, 2027 / 2028', '8% / 7%', '13% / 12%', '16% / 15%'], ['Long-run operating margin', '14%', '18%', '22%'],
+             ['Discount rate', '11.7%', '10.7%', '9.7%'], ['Value per share', '$66', '$155', '$279'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$164</b>, up from $162.') + sens('Discount rate', ['8.5%', '9.0%', '9.5%', '10.0%'], ['$236', '$212', '$192', '$175'])),
+        ('implied', 'What the price assumes', 'At $244, the build-out <em>has to earn a lot.</em>',
+         implied([['A long-run operating margin near 26%', '18%; Amazon&rsquo;s best quarter so far was 13.9%'], ['Revenue growth of about 22% a year for two years', '13% and 12%'], ['A discount rate of about 8.3%', '10.7%']])
+         + prose('The market is betting that the $220 billion a year going into AI infrastructure, and more in 2027, earns AWS-like returns. The Anthropic stake, left out of the model, covers part of the gap.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
              ['AI returns', 'If AI demand cools, Amazon is left with expensive capacity and falling AWS margins.'],
-             ['Cash flow', 'Negative free cash flow leaves less room for error and more reliance on debt.'],
+             ['Cash flow and debt', 'Free cash flow is deeply negative and debt has more than doubled this year, leaving less room for error.'],
              ['Regulation', 'The U.S. antitrust case against the store, and scrutiny of AWS in Europe.'],
-             ['Consumer slowdown', 'Retail and ads both depend on spending.'],
-         ]) + prose('<b>Upside:</b> Trainium chips cutting AWS costs, advertising in Prime Video, Leo satellite internet and the value of the Anthropic stake.')),
-        ('rec', 'Rating', 'Hold. <em>A great company in an expensive building phase.</em>',
-         prose('At $262.63 against a base case of $153 ($162 weighted), the shares price in much higher long-run margins than Amazon has ever earned. The call is <b>Hold</b>: keep the core position, don&rsquo;t add until free cash flow turns back up or the price comes closer to the bull case.',
-               '<b>Watch in the third-quarter report:</b> AWS growth staying above 30%, operating income against the $22.5&ndash;26.5 billion guide, and any change to the $220 billion capex plan.')
+             ['Consumer slowdown', 'Retail and ads both depend on spending; advertising growth slowed to 11%.'],
+         ]) + prose('<b>Upside:</b> the $578 billion AWS backlog, Trainium chips cutting AWS costs and selling outside AWS from late 2027, Leo satellite internet starting service, and the value of the Anthropic stake.')),
+        ('rec', 'Rating', 'A great company <em>in an expensive building phase.</em>',
+         prose('At $243.79 against a base case of $155 ($164 weighted), the shares still price in much higher long-run margins than Amazon has ever earned, even after the drop. AWS is the strongest it has been in years; the question is what the spending earns, and the answer keeps being deferred as the bill rises.',
+               '<b>Watch in the fourth-quarter report:</b> the 2027 capital spending figure, AWS growth staying near 40%, and operating income against the $28.5&ndash;33.5 billion guide.')
          + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Own the platform, <em>wait for the cash.</em></h2><p>The spending is a bet on AI that only pays off if AWS keeps its margins as it grows.</p></div>'),
     ])
 
@@ -308,57 +312,60 @@ R['VRT'] = dict(
     ])
 
 # ---------------------------------------------------------------- L3Harris
-LH = 'https://www.nasdaq.com/press-release/l3harris-technologies-reports-robust-second-quarter-2026-results-2026-07-29'
+LH = 'https://www.sec.gov/Archives/edgar/data/0000202058/000020205826000084/exhibit991q3cy26earnings.htm'
+LH_CALL = 'https://ca.investing.com/news/stock-market-news/earnings-call-transcript-l3harris-tops-q3-2026-estimates-and-lifts-guidance-93CH-4914955'
+LH_SL = 'https://ca.investing.com/news/stock-market-news/l3harris-q3-2026-slides-record-backlog-drives-guidance-raise-93CH-4914984'
 R['LHX'] = dict(
-    t='LHX', slug='l3harris', name='L3Harris', h1='L3<em>Harris</em>', sector='Aerospace &amp; defense', date=DATE, timing=LATER,
-    sub='L3Harris makes satellites, secure communications, sensors and, since buying Aerojet Rocketdyne, the rocket motors inside U.S. missiles. Orders are at a record and missile demand is rising, yet the shares have fallen about a third from their high after a CEO exit and a delayed IPO. On its own cash-flow targets, the stock looks cheap.',
-    call='Buy', method='Cash-flow model', price=248.77, base=436, bear=231, bull=652, wt=439, max=800, tick=100,
+    t='LHX', slug='l3harris', name='L3Harris', h1='L3<em>Harris</em>', sector='Aerospace &amp; defense', date='October 30, 2026', timing=', the day after its third-quarter results',
+    sub='L3Harris makes satellites, secure communications, sensors and, since buying Aerojet Rocketdyne, the rocket motors inside U.S. missiles. In the third quarter about $11 billion of missile awards tripled its orders and lifted the backlog to a record $53 billion, but it also cut its 2028 cash target from $3.5 billion to about $3 billion. The shares rose 7% to $278, still well below what the model gives.',
+    call='Buy', method='Cash-flow model', price=278.43, pricenote='Close, October 29, 2026', base=402, bear=215, bull=626, wt=411, max=800, tick=100,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 231, 652, 436, '$231 to $652, base $436'), ('Probability-weighted', None, None, 439, '$439'),
-           ('Price at writing', None, None, 248.77, '$248.77'), ('52-week range', 232, 379, None, '$232 to $379')],
+    field=[('Cash-flow model', 215, 626, 402, '$215 to $626, base $402'), ('Probability-weighted', None, None, 411, '$411'),
+           ('Price at writing', None, None, 278.43, '$278.43'), ('52-week range', 232, 379, None, '$232 to $379')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'Space, communications <em>and missiles.</em>',
          prose('L3Harris has three segments. <b>Space &amp; Mission Systems</b> builds satellites, sensors and aircraft systems. <b>Communications &amp; Spectrum Dominance</b> makes tactical radios and electronic warfare equipment, its most profitable unit. <b>Missile Solutions</b> makes solid rocket motors and propulsion for interceptors such as THAAD and PAC-3, a bottleneck for U.S. munitions supply.',
-                 'In January 2026 the Pentagon committed a $1 billion investment in Missile Solutions ahead of a planned IPO of that business; L3Harris has since pushed the IPO to mid-2027.')),
-        ('results', 'Latest results', 'Record orders, <em>a raised outlook.</em>',
-         stats([('$5.88B', 'Revenue, Q2 2026, +8%'), ('1.2&times;', 'Book-to-bill'), ('$42B', 'Record backlog'), ('16.0%', 'Segment operating margin'), ('$23.2&ndash;23.7B', '2026 revenue guidance'), ('~$3.0B', '2026 free cash flow guidance')])
-         + prose('Second-quarter revenue rose 8%, orders of $7.3 billion took the backlog to a record $42 billion, and Missile Solutions grew 14%. The company raised its 2026 revenue and EPS guidance and kept free cash flow at about $3.0 billion. Its 2028 framework targets about $27 billion of revenue and $3.5 billion of free cash flow.',
-                 'The shares fell anyway, first on the IPO delay and debt, then in August when the board removed CEO Christopher Kubasik for a conduct violation and named insider Sam Mehta as his successor.')
-         + src([('Q2 2026 results', LH), ('CEO change, 8-K', 'https://www.sec.gov/Archives/edgar/data/0000202058/000020205826000066/lhxleadershipchangepressre.htm'), ('2028 framework', 'https://www.tikr.com/blog/the-pentagon-invested-1-billion-in-l3harris-heres-what-analysts-say')])),
+                 'In January 2026 the Pentagon committed a $1 billion investment in Missile Solutions ahead of a planned IPO of that business; L3Harris has since pushed the IPO to mid-2027 at the earliest and says it will only go ahead at an attractive valuation.')),
+        ('results', 'Latest results', 'Orders tripled, <em>a lower cash target.</em>',
+         stats([('$6.07B', 'Revenue, Q3 2026, +7% (+9% organic)'), ('3.2&times;', 'Book-to-bill, on $19.3B of orders'), ('$53.2B', 'Record backlog, +47% in a year'), ('15.9%', 'Segment operating margin'), ('$23.5&ndash;23.7B', '2026 revenue guidance, raised'), ('~$3.0B', '2026 free cash flow guidance, unchanged')])
+         + prose('Third-quarter revenue rose 7% to $6.07 billion, ahead of the $5.92 billion analysts expected, and EPS of $3.28 beat the $2.95 forecast. Orders of $19.3 billion, three times revenue, took the backlog to a record $53.2 billion; about $11 billion of that was PAC-3 and THAAD interceptor work. Missile Solutions grew 17% excluding a business it sold. Free cash flow was $1.26 billion in the quarter (the company no longer counts proceeds from asset sales), and 2026 EPS guidance was raised to $12.25&ndash;12.35.',
+                 'The less welcome news was in the 2028 framework. Growth of about 8% a year was kept, but the segment margin target slipped to about 16% from 16.3% and free cash flow to &ldquo;$3 billion or more&rdquo; from $3.5 billion, because the company will pay its 401(k) contributions in cash rather than stock, expects slightly lower margins and is spending faster on missile capacity. The shares rose 7% on the day.')
+         + src([('Q3 2026 results, L3Harris', LH), ('Earnings call', LH_CALL), ('2028 framework from the slides', LH_SL)])),
         ('fin', 'Five years', 'Steady growth, <em>rising cash.</em>',
          fin_table('LHX') + prose('Revenue jumped in 2023 with the Aerojet Rocketdyne purchase. Operating margin on a GAAP basis is held down by amortization of acquired intangibles; cash flow, which adds that back, is the better measure and has grown every year. The FY2025 revenue figure is from the company&rsquo;s release.')
          + src([('L3Harris filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000202058&type=10-K')])),
         ('capital', 'Balance sheet', 'Leveraged, <em>but deleveraging.</em>',
-         prose('Debt is about $11.0 billion against $1.5 billion of cash, mostly from the Aerojet deal, with net interest of about $560 million a year. The company also received $973 million from the Pentagon&rsquo;s preferred-stock investment in Missile Solutions, which the model treats like debt. It pays a $1.25 quarterly dividend ($5.00 a year, raised from $4.80 in January) and is buying back stock.')),
-        ('value', 'Valuation', 'The model gives <em>$436 a share.</em>',
-         prose('Because GAAP profit understates cash generation, this model works directly from free cash flow to the firm (free cash flow plus after-tax interest), following the company&rsquo;s own path to 2028.')
+         prose('Debt was about $11.0 billion at the start of October against $3.0 billion of cash and short-term investments, mostly from the Aerojet deal; the company plans to repay $800 million in the fourth quarter. It also holds $987 million from the Pentagon&rsquo;s preferred-stock investment in Missile Solutions, which the model treats like debt. It pays a $1.25 quarterly dividend ($5.00 a year) and management called buybacks &ldquo;highly attractive&rdquo; at the current price.')
+         + src([('Q3 2026 results, L3Harris', LH)])),
+        ('value', 'Valuation', 'The model gives <em>$402 a share.</em>',
+         prose('Because GAAP profit understates cash generation, this model works directly from free cash flow to the firm (free cash flow plus after-tax interest), following the company&rsquo;s own path to 2028. This update follows the lower 2028 cash target and lowers long-run cash flow from 14.6% to 13.5% of revenue: paying the 401(k) in cash and the lower margin are lasting, while the extra missile spending should fade. Lower net debt offsets part of the cut.')
          + table(['Assumption', 'Base case', 'Basis'], [
-             ['Revenue, 2026', '$23.45B', 'Guidance midpoint'],
-             ['Growth, 2027 and 2028', '7.5% a year', 'Reaches the $27B 2028 target'],
-             ['Cash flow to the firm', '$3.65B, then $3.95B, then 14.6% of revenue', '$3.0&ndash;3.5B free cash flow plus after-tax interest'],
+             ['Revenue, 2026', '$23.6B', 'Guidance midpoint'],
+             ['Growth, 2027 and 2028', '7.5% a year', 'About $27B by 2028, in line with the 8% organic framework'],
+             ['Cash flow to the firm', '$3.40B, then $3.50B, then 13.5% of revenue', '$3B+ free cash flow plus after-tax interest'],
              ['Growth after 2028', 'Fades to 3% by year 10', 'A straight glide to long-run economic growth'],
-             ['Discount rate', '7.9%', 'Beta 0.80 (defense peers; the measured 0.61 understates risk after this year), about 19% debt'],
+             ['Discount rate', '8.0%', 'Beta 0.80 (defense peers; the measured 0.61 understates risk after this year), about 17% debt'],
              ['Terminal growth', '3.0%', 'In line with long-run economic growth'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$32.7B'), ('PV of terminal value', '$59.3B'), ('Enterprise value', '$92.1B'), ('Less net debt and preferred', '$10.5B'), ('Equity value', '$81.6B'), ('Shares', '187M')], '$436')
+         + bridge([('PV of 10 years of cash flow', '$30.2B'), ('PV of terminal value', '$54.0B'), ('Enterprise value', '$84.3B'), ('Less net debt and preferred', '$9.0B'), ('Equity value', '$75.3B'), ('Shares', '187M')], '$402')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
-             ['Growth, 2027 / 2028', '4% / 3%', '7.5% / 7.5%', '10% / 9%'], ['Cash flow, share of revenue', '12.5%', '14.6%', '15.5%'],
-             ['Discount rate', '8.9%', '7.9%', '6.9%'], ['Value per share', '$231', '$436', '$652'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$439</b>.') + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$547', '$480', '$427', '$383', '$346'])),
-        ('implied', 'What the price assumes', 'At $249, the market <em>doubts the targets.</em>',
-         implied([['Long-run cash flow of only about 9% of revenue', '14.6%, in line with guidance'], ['Or a discount rate of about 10.9%', '7.9%']])
-         + prose('In other words, the price only makes sense if the 2028 cash targets are badly missed or defense is treated as being as risky as a tech stock.')),
+             ['Growth, 2027 / 2028', '4% / 3%', '7.5% / 7.5%', '10% / 9%'], ['Cash flow, share of revenue', '11.5%', '13.5%', '15%'],
+             ['Discount rate', '9.0%', '8.0%', '7.0%'], ['Value per share', '$215', '$402', '$626'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$411</b>, down from $439 before the results.') + sens('Discount rate', ['7.0%', '7.5%', '8.0%', '8.5%', '9.0%'], ['$513', '$450', '$400', '$359', '$325'])),
+        ('implied', 'What the price assumes', 'At $278, the market <em>still doubts the targets.</em>',
+         implied([['Long-run cash flow of only about 10% of revenue', '13.5%, in line with the new framework'], ['Or a discount rate of about 9.9%', '8.0%']])
+         + prose('In other words, the price only makes sense if the lowered 2028 cash target is itself badly missed, or defense is treated as far riskier than its contracts suggest.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
-             ['Leadership', 'A new CEO after a conduct-related exit, and shareholder law firms have opened investigations.'],
+             ['Cash conversion', 'The 2028 cash target was just cut once; missile capacity spending of about $3 billion could run longer or cost more.'],
              ['Execution', 'About 60 new production buildings and a missile ramp through 2029; fixed-price contracts can bring overruns.'],
-             ['Debt', 'Interest of about $560 million a year limits flexibility.'],
-             ['Budgets', 'Defense spending depends on Congress; the IPO depends on markets.'],
-         ]) + prose('<b>Upside:</b> missile demand, space programs, and the Missile Solutions IPO putting a public value on the fastest-growing part of the company.')),
-        ('rec', 'Rating', 'Buy. <em>A good business at a discounted price.</em>',
-         prose('At $248.77 against a base case of $436 ($439 weighted), even a 9% discount rate gives $346. The selloff reflects real but temporary problems: a CEO change and a delayed IPO. The call is <b>Buy</b>, with the bear case ($231) close to today&rsquo;s price as the main warning.',
-               '<b>What would change the view:</b> a cut to the $3.0 billion cash-flow guidance or new findings from the conduct investigation.')
-         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Headline risk, <em>not business risk.</em></h2><p>The backlog is at a record; the price reflects the boardroom, not the order book.</p></div>'),
+             ['Leadership', 'A new CEO after a conduct-related exit, and shareholder law firms have opened investigations.'],
+             ['Budgets', 'Defense spending depends on Congress; the Missile Solutions IPO depends on markets.'],
+         ]) + prose('<b>Upside:</b> the $53 billion backlog, more interceptor orders, buybacks at today&rsquo;s price, and the Missile Solutions IPO putting a public value on the fastest-growing part of the company.')),
+        ('rec', 'Rating', 'A good business <em>at a discounted price.</em>',
+         prose('At $278.43 against a base case of $402 ($411 weighted), even a 9% discount rate gives $325. The quarter confirmed demand: orders tripled and the backlog is at a record. The lower 2028 cash target trims the value by about 8%, but the price still assumes far less cash than the company now plans.',
+               '<b>What would change the view:</b> another cut to the cash outlook, cost overruns on the missile ramp, or new findings from the conduct investigation.')
+         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>Record orders, <em>a smaller cash target.</em></h2><p>The order book is the strongest it has been; the price still reflects doubt about turning it into cash.</p></div>'),
     ])
 
 # ---------------------------------------------------------------- American Water

@@ -46,6 +46,16 @@
     "file": "archive/amazon/2026-10-23.html",
     "frozen": "2026-10-23",
     "name": "Amazon"
+   },
+   {
+    "date": "October 30, 2026",
+    "call": "Hold",
+    "base": 155,
+    "wt": 164,
+    "price": 243.79,
+    "file": "archive/amazon/2026-10-30.html",
+    "frozen": "2026-10-30",
+    "name": "Amazon"
    }
   ],
   "meta": [
@@ -103,6 +113,16 @@
     "price": 248.77,
     "file": "archive/l3harris/2026-10-23.html",
     "frozen": "2026-10-23",
+    "name": "L3Harris"
+   },
+   {
+    "date": "October 30, 2026",
+    "call": "Buy",
+    "base": 402,
+    "wt": 411,
+    "price": 278.43,
+    "file": "archive/l3harris/2026-10-30.html",
+    "frozen": "2026-10-30",
     "name": "L3Harris"
    }
   ],

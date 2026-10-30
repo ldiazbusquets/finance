@@ -14,8 +14,8 @@
 "name": "Amazon",
 "page": "reports/amazon.html",
 "call": "Hold",
-"value": 156,
-"price": 262.63
+"value": 157,
+"price": 243.79
 },
 {
 "t": "META",
@@ -46,8 +46,8 @@
 "name": "L3Harris",
 "page": "reports/l3harris.html",
 "call": "Buy",
-"value": 425,
-"price": 248.77
+"value": 398,
+"price": 278.43
 },
 {
 "t": "AWK",

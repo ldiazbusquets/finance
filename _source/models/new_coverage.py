@@ -34,8 +34,10 @@ def show(name, cases, price=None, unit=1, label='per share'):
 # SpaceX: 13.57B shares, $89.9B cash, $38.8B debt (Sep 30), discount 12%
 N = 89.9e9 - 38.8e9
 show('SPCX', {'bear': (250e9, .22, 20, .12, 4, N, 13.57e9, 'pe', -68e9), 'base': (500e9, .28, 22, .12, 4, N, 13.57e9, 'pe', -68e9), 'bull': (900e9, .32, 25, .12, 4, N, 13.57e9, 'pe', -68e9)}, 162.57)
-# Firefly: 167.4M shares now, more later; discount 15%; exit EV/sales
-show('FLY', {'bear': (0.7e9, 0, 2, .15, 4, 0, 200e6, 'ps', -0.23e9), 'base': (1.2e9, 0, 5, .15, 4, .2e9, 185e6, 'ps', -0.23e9), 'bull': (2.0e9, 0, 8, .15, 4, .2e9, 180e6, 'ps', -0.23e9)}, 17.41)
+# Firefly (refreshed Nov 11, 2026 for Q3): 171.6M shares at Sep 30, more later; discount 15%; exit EV/sales
+# cash $535M (Sep 30) less ~$100M since June -> net .1e9 in base/bull; 2026 FCF ~-$0.35B (nine months -$270M);
+# 2030 revenue raised in base/bull for the $1.3B AST SpaceMobile engine deal and the $1.7B backlog; bear unchanged
+show('FLY', {'bear': (0.7e9, 0, 2, .15, 4, 0, 205e6, 'ps', -0.35e9), 'base': (1.3e9, 0, 5, .15, 4, .1e9, 190e6, 'ps', -0.35e9), 'bull': (2.2e9, 0, 8, .15, 4, .1e9, 185e6, 'ps', -0.35e9)}, 23.70)
 # Private companies: equity value in $B (shares = 1), discount 15% (13% Anduril)
 show('Anthropic', {'bear': (120e9, .15, 20, .15, 4, 0, 1), 'base': (250e9, .30, 25, .15, 4, 0, 1), 'bull': (450e9, .40, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')
 show('OpenAI', {'bear': (150e9, .10, 20, .15, 4, 0, 1), 'base': (280e9, .25, 25, .15, 4, 0, 1), 'bull': (450e9, .35, 25, .15, 4, 0, 1)}, unit=1e9, label='$B')

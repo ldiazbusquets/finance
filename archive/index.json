@@ -192,6 +192,16 @@
     "file": "archive/firefly/2026-10-23.html",
     "frozen": "2026-10-23",
     "name": "Firefly Aerospace"
+   },
+   {
+    "date": "November 11, 2026",
+    "call": "Buy",
+    "base": 18,
+    "wt": 23,
+    "price": 23.7,
+    "file": "archive/firefly/2026-11-11.html",
+    "frozen": "2026-11-11",
+    "name": "Firefly Aerospace"
    }
   ],
   "anthropic": [

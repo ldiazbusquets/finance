@@ -77,46 +77,53 @@ R['SPCX'] = dict(
     ])
 
 # ================================================================ Firefly
-FF = 'https://finance.biggo.com/news/US_FLY_2026-08-11'
+FF = 'https://www.globenewswire.com/news-release/2026/11/10/3400229/0/en/firefly-aerospace-announces-third-quarter-2026-financial-results-with-record-backlog-of-1-7-billion.html'
+FF_Q = 'https://www.sec.gov/Archives/edgar/data/0001860160/000186016026000031/fly-20260930.htm'
+FF_AST = 'https://newspaceeconomy.ca/2026/11/06/ast-spacemobile-is-buying-firefly-engines-and-the-right-to-build-them/'
+FF_RX = 'https://www.fool.com/investing/2026/11/06/why-firefly-aerospace-stock-went-to-the-moon-today/'
 R['FLY'] = dict(
-    t='FLY', slug='firefly', name='Firefly Aerospace', h1='Firefly <em>Aerospace</em>', sector='Space', date=DATE, timing=', before its third-quarter results in November',
-    sub='Firefly builds small rockets, the Blue Ghost lunar lander and spacecraft for NASA and the Pentagon. Revenue is growing fast and the backlog is $1.5 billion, but it loses money and its Alpha rocket has a mixed record. The shares are down about 70% from their high.',
-    call='Hold', method='Scenario model', price=17.41, pricenote='Midday, Oct 21, 2026', noauto=True, base=18, bear=3, bull=50, wt=22, max=70, tick=10,
+    t='FLY', slug='firefly', name='Firefly Aerospace', h1='Firefly <em>Aerospace</em>', sector='Space', date='November 11, 2026', timing=', the day after its third-quarter results',
+    sub='Firefly builds small rockets, the Blue Ghost lunar lander and spacecraft for NASA and the Pentagon. Revenue is growing fast, the backlog is a record $1.7 billion, and a $1.3 billion engine deal with AST SpaceMobile lifted the shares 37% in a day. It still loses money, and its Alpha rocket has a mixed record.',
+    call='Hold', method='Scenario model', price=23.70, pricenote='Close, Nov 10, 2026', noauto=True, base=18, bear=2, bull=53, wt=23, max=70, tick=10,
     fieldnote='The scenario model&rsquo;s bear-to-bull range, the probability-weighted value, the price, its 52-week range and the analysts&rsquo; average target.',
-    field=[('Scenario model', 3, 50, 18, '$3 to $50, base $18'), ('Probability-weighted', None, None, 22, '$22'),
-           ('Price at writing', None, None, 17.41, '$17.41'), ('52-week range', 16, 62, None, '$16 to $62'), ('Analyst average', None, None, 38, '$38')],
+    field=[('Scenario model', 2, 53, 18, '$2 to $53, base $18'), ('Probability-weighted', None, None, 23, '$23'),
+           ('Price at writing', None, None, 23.70, '$23.70'), ('52-week range', 14, 62, None, '$14 to $62'), ('Analyst average', None, None, 38, '$38')],
     toc=TOCP, chapters=[
         ('overview', 'The business', 'Rockets, moon landers <em>and missile defense.</em>',
          prose('Firefly, based in Cedar Park, Texas, has four product lines. <b>Alpha</b> is a small rocket that carries about a ton to low orbit. <b>Blue Ghost</b> is a lunar lander: in March 2025 it made the first fully successful commercial landing on the Moon. <b>Elytra</b> is a spacecraft that can serve as a satellite or carry payloads around the Moon. <b>Eclipse</b>, a larger rocket built with Northrop Grumman, is due to fly no earlier than 2027. Its SciTec division adds defense software for missile warning, which gives Firefly a role in the Golden Dome missile-defense program.',
-               'Firefly went public in August 2025 at $45 a share, raising $868 million at a valuation of about $10 billion.')),
-        ('results', 'Latest results', 'First $100 million quarter, <em>record backlog.</em>',
-         stats([('$117.7M', 'Revenue, Q2 2026, +659%'), ('$1.5B', 'Record backlog'), ('20.3%', 'Gross margin'), ('&minus;$61M', 'Adjusted EBITDA'), ('$940M', 'Liquidity, cash and credit line'), ('$420&ndash;450M', '2026 revenue guidance')])
-         + prose('Second-quarter revenue reached $117.7 million, almost all from spacecraft work for NASA lunar missions and defense. Launch revenue was only $9.4 million, because Alpha flies rarely. Net loss was $92.3 million. Management kept 2026 revenue guidance at $420&ndash;450 million, with 95% of the midpoint already booked, and plans three Alpha launches this year, with Flight 8 in the fourth quarter.')
-         + src([('Q2 2026 results summary', FF), ('Firefly investor news', 'https://investors.fireflyspace.com/news')])),
+               'Firefly went public in August 2025 at $45 a share, raising $868 million at a valuation of about $10 billion. In November 2026 it added a fifth line: selling its Miranda engines, and the right to build them, to AST SpaceMobile.')),
+        ('results', 'Latest results', 'A record backlog, <em>and an engine deal on top.</em>',
+         stats([('$110.7M', 'Revenue, Q3 2026, +259%'), ('$1.7B', 'Record backlog, Sep 30'), ('22.9%', 'Gross margin'), ('&minus;$69.5M', 'Adjusted EBITDA'), ('$535M', 'Cash and short-term investments'), ('$440&ndash;450M', '2026 revenue guidance, raised')])
+         + prose('Third-quarter revenue rose 259% to $110.7 million, slightly below the second quarter&rsquo;s $117.7 million, as spacecraft work for NASA lunar missions and defense continued. Gross margin improved to 22.9%. Net loss was $94.2 million ($0.56 a share) and free cash flow was &minus;$85.3 million; over nine months Firefly has used $270 million of free cash flow. Backlog reached a record $1.7 billion, up from $1.5 billion in June, helped by an extension with Lockheed Martin for up to 25 Alpha launches through 2031, up to 10 launches for Synspective, and its first European launch contracts, with SSC Space in Sweden. Management raised the bottom of its 2026 revenue guidance, to $440&ndash;450 million from $420&ndash;450 million.',
+                 'The bigger news came four days earlier. AST SpaceMobile agreed to buy 36 engines (27 Miranda and nine Vira, the vacuum version) for its planned heavy rocket, plus a license to build more and engineering support, in contracts valued above $1.3 billion over three years. That is more than three times this year&rsquo;s revenue, and it came after the quarter, so it is not in the $1.7 billion backlog. AST will pay partly in its own shares, which Firefly cannot sell freely, and the license is worth most only if AST&rsquo;s rocket works. The shares rose 37% that day, to $20.76, and closed at $23.70 on the day of the results. Alpha Block II, the upgraded rocket, is &ldquo;moving toward launch&rdquo;; the release gave no date for the next flight.')
+         + src([('Q3 2026 results, Firefly', FF), ('Q3 2026 10-Q', FF_Q), ('AST SpaceMobile engine deal', FF_AST), ('Market reaction', FF_RX)])),
         ('fin', 'The numbers', 'Growth is real; <em>profit is years away.</em>',
-         fin_table('FLY') + table(['', 'Latest'], [['Revenue, last twelve months', '$287M'], ['Net loss, last twelve months', '&minus;$370M'], ['Gross margin, Q2 2026', '20.3%'],
-                                ['Alpha flight record', '7 flights: 3 successes, 2 partial, 2 failures'], ['Blue Ghost', '1 landing, 1 success; Mission 2 and a far-side mission in development']], 'mid')
-         + prose('Alpha&rsquo;s record is the weak point: a failure in April 2025 and an explosion during a ground test in September 2025 grounded it until a successful flight in March 2026. Launch is what would lift margins, so the cadence of Alpha flights matters more than any single contract.')),
-        ('capital', 'Balance sheet and ownership', 'Enough cash, <em>with dilution along the way.</em>',
-         prose('Firefly had $635 million of cash and an undrawn $305 million credit line in June. It has sold shares twice since the IPO, including an offering at $48 in May 2026, and registered shares for resale by former SciTec owners, which has weighed on the price. Expect more share sales before it turns profitable. AE Industrial Partners is the largest investor; Northrop Grumman invested $50 million alongside the Eclipse partnership.')),
-        ('value', 'Valuation', 'Our scenarios give <em>$18 a share.</em>',
-         prose('With no profits yet, this report values Firefly on its 2030 revenue and the multiple of sales a profitable space company would command, discounted back at 15% a year, with more shares outstanding to fund the losses until then, and with the cash it burns until 2030 (about $0.2 billion this year, falling in a straight line to breakeven) subtracted.')
-         + scen([['Revenue in 2030', '$0.7B', '$1.2B', '$2.0B'], ['Exit value to sales', '2&times;', '5&times;', '8&times;'], ['Shares by 2030', '200M', '185M', '180M'],
-                 ['Value per share', '$3', '$18', '$50'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25: <b>$22</b>. The range is wide on purpose: this is a company where one failed launch or one large contract changes the answer.')),
-        ('implied', 'What the price assumes', 'At $17, <em>about $1 billion of revenue by 2030.</em>',
-         implied([['About $1.15 billion of revenue in 2030 at 5&times; sales', '$420&ndash;450 million guided for 2026'], ['Roughly 25% annual growth from here', '659% last quarter, from a small base']])
-         + prose('The market now prices Firefly slightly below the base case, a big change from the $62 high, when it priced something close to the bull case.')),
+         fin_table('FLY') + table(['', 'Latest'], [['Revenue, last twelve months', '$367M'], ['Net loss, nine months to September', '&minus;$283M'], ['Free cash flow, nine months', '&minus;$270M'], ['Gross margin, Q3 2026', '22.9%'],
+                                ['Alpha flight record', '7 flights: 3 successes, 2 partial, 2 failures'], ['Blue Ghost', '1 landing, 1 success; a faster near-side mission and a South Pole mission in development']], 'mid')
+         + prose('Alpha&rsquo;s record is the weak point: a failure in April 2025 and an explosion during a ground test in September 2025 grounded it until a successful flight in March 2026. Launch is what would lift margins, so the cadence of Alpha flights matters more than any single contract. The AST deal adds a second way to earn from the same engines without having to fly them.')),
+        ('capital', 'Balance sheet and ownership', 'Enough cash for now, <em>with dilution along the way.</em>',
+         prose('Firefly had $535 million of cash and short-term investments at the end of September, down from $635 million in June, against $25 million of notes. During the year it repaid the $260 million drawn on its credit facility. It has sold shares twice since the IPO, including an offering at $48 in May 2026, and shares outstanding rose to 171.6 million from 159.3 million at the end of 2025. Expect more share sales before it turns profitable, though AST&rsquo;s payments should help fund the engine factory. AE Industrial Partners is the largest investor; Northrop Grumman invested $50 million alongside the Eclipse partnership.')
+         + src([('Q3 2026 results, Firefly', FF)])),
+        ('value', 'Valuation', 'Our scenarios still give <em>$18 a share.</em>',
+         prose('With no profits yet, this report values Firefly on its 2030 revenue and the multiple of sales a profitable space company would command, discounted back at 15% a year, with more shares outstanding to fund the losses until then, and with the cash it burns until 2030 (about $0.35 billion this year, falling in a straight line to breakeven) subtracted.',
+               'This update raises 2030 revenue in the base and bull cases for the AST deal and the larger backlog, leaves the bear case alone (the deal depends on AST&rsquo;s rocket), and adds five million shares to each case for the higher share count. Against that, the cash burn is heavier than the October report assumed and there is about $100 million less cash. The two roughly cancel: the base case is unchanged.')
+         + scen([['Revenue in 2030', '$0.7B', '$1.3B', '$2.2B'], ['Exit value to sales', '2&times;', '5&times;', '8&times;'], ['Shares by 2030', '205M', '190M', '185M'],
+                 ['Value per share', '$2', '$18', '$53'], ['Probability', '25%', '50%', '25%']])
+         + prose('Weighted 25/50/25: <b>$23</b>, up from $22. The range is wide on purpose: this is a company where one failed launch or one large contract changes the answer.')),
+        ('implied', 'What the price assumes', 'At $24, <em>about $1.7 billion of revenue by 2030.</em>',
+         implied([['About $1.7 billion of revenue in 2030 at 5&times; sales', '$440&ndash;450 million guided for 2026'], ['Roughly 40% annual growth for four years', '259% last quarter, from a small base'], ['The AST deal delivered in full, and more like it', 'One contract, partly paid in AST shares']])
+         + prose('After the jump the market prices Firefly above the base case, about a third of the way to the bull case. It is a long way below the $62 high, when the price was close to the bull case.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
              ['Launch failures', 'Alpha has failed or partly failed four times in seven flights.'],
-             ['Losses and dilution', 'About $370 million lost in the last year; more share sales are likely.'],
+             ['Losses and dilution', 'About $270 million of cash burned in nine months; more share sales are likely.'],
+             ['One big customer', 'The AST deal depends on AST building its own rocket, and is paid partly in its shares.'],
              ['Competition', 'SpaceX rideshares undercut small rockets; Rocket Lab is further ahead.'],
              ['Government budgets', 'NASA and defense contracts drive most revenue.'],
-         ]) + prose('<b>Upside:</b> Golden Dome and missile-warning work through SciTec, more NASA lunar missions, and Eclipse giving Firefly a medium rocket in 2027.')),
-        ('rec', 'Rating', 'Hold. <em>Speculative, and priced like it.</em>',
-         prose('At $17.41 against a base case of $20 ($24 weighted), the price is close to fair for a business this uncertain, after a 70% fall. The call is <b>Hold</b>, kept within the speculative part of the portfolio. Alpha Flight 8 and the third-quarter results in November are the next tests.')
-         + band('A real business, <em>a risky stock.</em>', 'The backlog is strong; the rocket record and the cash burn decide the outcome.')),
+         ]) + prose('<b>Upside:</b> more engine sales to other rocket builders, Golden Dome and missile-warning work through SciTec, more NASA lunar missions, and Eclipse giving Firefly a medium rocket in 2027.')),
+        ('rec', 'Rating', 'Speculative, <em>and priced like it.</em>',
+         prose('At $23.70 against a base case of $18 ($23 weighted), the price sits a little above the base case after the AST jump, for a business this uncertain. Alpha Block II&rsquo;s first flight, progress on the AST engines and 2027 guidance in the fourth-quarter results are the next tests.')
+         + band('A real business, <em>a risky stock.</em>', 'The backlog and the engine deal are strong; the rocket record and the cash burn decide the outcome.')),
     ])
 
 # ================================================================ private companies

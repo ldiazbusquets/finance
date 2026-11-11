@@ -218,7 +218,7 @@ def run_all(mkt=None):
     jk = run_script('jpm')['k']
     out['JPM'] = dict(stats(vals, price, mkt), base=b, price=price, inputs=[['roe', .145, .16, .18], ['ke', _plain(jk + .005), _plain(jk), _plain(jk - .005)]])
     nc = run_script('new_coverage')
-    prices = {'SPCX': 162.57, 'FLY': 17.41, 'KTOS': 38.81, 'AXON': 396.30, 'PLTR': 201.72, 'AMD': 552.72, 'MU': 913.67, 'SNDK': 1378.22, 'SKHY': 131.69}
+    prices = {'SPCX': 162.57, 'FLY': 23.70, 'KTOS': 38.81, 'AXON': 396.30, 'PLTR': 201.72, 'AMD': 552.72, 'MU': 913.67, 'SNDK': 1378.22, 'SKHY': 131.69}
     for key in SCEN:
         vals, b = simulate_cases(key, nc['val'], nc['REG'][key])
         out[key] = dict(stats(vals, prices[key], mkt), base=b, price=prices[key], inputs=inputs_cases(nc['val'], nc['REG'][key]))

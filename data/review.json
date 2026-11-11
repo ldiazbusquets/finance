@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T04:25:01Z",
+ "updated": "2026-11-11T02:13:15Z",
  "today": "2026-11-10",
  "rules": {
   "band": 0.15,
@@ -10,17 +10,45 @@
  },
  "rows": [
   {
+   "t": "GEV",
+   "name": "GE Vernova",
+   "page": "reports/gev.html",
+   "call": "Sell",
+   "rated": "2026-10-22",
+   "price": 890.33,
+   "now": 797.04,
+   "asof": "2026-11-10",
+   "move": -0.1048,
+   "call_now": "Hold",
+   "rel_now": -0.1242,
+   "filing": {
+    "form": "10-Q",
+    "date": "2026-10-28",
+    "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000163/gev-20260930.htm"
+   },
+   "flags": [
+    [
+     "rating",
+     "At today&rsquo;s price the rule gives Hold, not Sell"
+    ],
+    [
+     "results",
+     "New 10-Q filed 2026-10-28, after the report"
+    ]
+   ]
+  },
+  {
    "t": "GOOGL",
    "name": "Alphabet",
    "page": "reports/alphabet.html",
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 324.22,
-   "now": 288.15,
-   "asof": "2026-11-09",
-   "move": -0.1113,
+   "now": 287.38,
+   "asof": "2026-11-10",
+   "move": -0.1136,
    "call_now": "Buy",
-   "rel_now": 0.2398,
+   "rel_now": 0.2432,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-29",
@@ -44,8 +72,8 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 697.52,
-   "now": 641.37,
-   "asof": "2026-11-09",
+   "now": 641.39,
+   "asof": "2026-11-10",
    "move": -0.0805,
    "call_now": "Buy",
    "rel_now": 0.2136,
@@ -63,11 +91,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 201.72,
-   "now": 169.2,
-   "asof": "2026-11-09",
-   "move": -0.1612,
+   "now": 168.82,
+   "asof": "2026-11-10",
+   "move": -0.1631,
    "call_now": "Hold",
-   "rel_now": -0.0667,
+   "rel_now": -0.0646,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -95,11 +123,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 1378.22,
-   "now": 886.51,
-   "asof": "2026-11-09",
-   "move": -0.3568,
+   "now": 859.99,
+   "asof": "2026-11-10",
+   "move": -0.376,
    "call_now": "Buy",
-   "rel_now": 0.2519,
+   "rel_now": 0.2905,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-30",
@@ -108,7 +136,7 @@
    "flags": [
     [
      "price",
-     "Price down 36% since the report"
+     "Price down 38% since the report"
     ],
     [
      "rating",
@@ -127,19 +155,95 @@
    "call": "Sell",
    "rated": "2026-10-29",
    "price": 242.94,
-   "now": 200.47,
-   "asof": "2026-11-09",
-   "move": -0.1748,
+   "now": 194.22,
+   "asof": "2026-11-10",
+   "move": -0.2005,
    "call_now": "Hold",
-   "rel_now": -0.0349,
+   "rel_now": -0.0038,
    "flags": [
     [
      "price",
-     "Price down 17% since the report"
+     "Price down 20% since the report"
     ],
     [
      "rating",
      "At today&rsquo;s price the rule gives Hold, not Sell"
+    ]
+   ]
+  },
+  {
+   "t": "AMD",
+   "name": "Advanced Micro Devices",
+   "page": "reports/amd.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 552.72,
+   "now": 515.21,
+   "asof": "2026-11-10",
+   "move": -0.0679,
+   "call_now": "Hold",
+   "rel_now": 0.0486,
+   "filing": {
+    "form": "10-Q",
+    "date": "2026-11-04",
+    "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm"
+   },
+   "flags": [
+    [
+     "results",
+     "New 10-Q filed 2026-11-04, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "AMZN",
+   "name": "Amazon",
+   "page": "reports/amazon.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 262.63,
+   "now": 270.87,
+   "asof": "2026-11-10",
+   "move": 0.0314,
+   "call_now": "Hold",
+   "rel_now": -0.1443,
+   "filing": {
+    "form": "10-Q",
+    "date": "2026-10-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+   },
+   "flags": [
+    [
+     "near",
+     "Within 3 points of the Sell line at today&rsquo;s price"
+    ],
+    [
+     "results",
+     "New 10-Q filed 2026-10-30, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "AWK",
+   "name": "American Water Works",
+   "page": "reports/american-water.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 135.79,
+   "now": 150.36,
+   "asof": "2026-11-10",
+   "move": 0.1073,
+   "call_now": "Hold",
+   "rel_now": -0.0403,
+   "filing": {
+    "form": "10-Q",
+    "date": "2026-10-28",
+    "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000149/awk-20260930.htm"
+   },
+   "flags": [
+    [
+     "results",
+     "New 10-Q filed 2026-10-28, after the report"
     ]
    ]
   },
@@ -150,11 +254,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 396.3,
-   "now": 303.18,
-   "asof": "2026-11-09",
-   "move": -0.235,
+   "now": 302.54,
+   "asof": "2026-11-10",
+   "move": -0.2366,
    "call_now": "Buy",
-   "rel_now": 0.6129,
+   "rel_now": 0.6163,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-06",
@@ -163,7 +267,7 @@
    "flags": [
     [
      "price",
-     "Price down 23% since the report"
+     "Price down 24% since the report"
     ],
     [
      "results",
@@ -178,11 +282,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 190.47,
-   "now": 172.38,
-   "asof": "2026-11-09",
-   "move": -0.095,
+   "now": 173.38,
+   "asof": "2026-11-10",
+   "move": -0.0897,
    "call_now": "Buy",
-   "rel_now": 0.6407,
+   "rel_now": 0.6313,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-27",
@@ -202,17 +306,21 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 703.84,
-   "now": 598.88,
-   "asof": "2026-11-09",
-   "move": -0.1491,
+   "now": 584.57,
+   "asof": "2026-11-10",
+   "move": -0.1695,
    "call_now": "Hold",
-   "rel_now": 0.0817,
+   "rel_now": 0.1082,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-04",
     "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000057/cat-20260930.htm"
    },
    "flags": [
+    [
+     "price",
+     "Price down 17% since the report"
+    ],
     [
      "results",
      "New 10-Q filed 2026-11-04, after the report"
@@ -226,11 +334,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 255.21,
-   "now": 276.09,
-   "asof": "2026-11-09",
-   "move": 0.0818,
+   "now": 267.76,
+   "asof": "2026-11-10",
+   "move": 0.0492,
    "call_now": "Hold",
-   "rel_now": 0.0097,
+   "rel_now": 0.0411,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-09",
@@ -244,40 +352,17 @@
    ]
   },
   {
-   "t": "FLY",
-   "name": "Firefly Aerospace",
-   "page": "reports/firefly.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 17.41,
-   "now": 24.31,
-   "asof": "2026-11-09",
-   "move": 0.3963,
-   "call_now": "Buy",
-   "rel_now": 0.3335,
-   "flags": [
-    [
-     "price",
-     "Price up 40% since the report"
-    ],
-    [
-     "results",
-     "Results reported 2026-11-10, after the report"
-    ]
-   ]
-  },
-  {
    "t": "GD",
    "name": "General Dynamics",
    "page": "reports/general-dynamics.html",
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 350.755,
-   "now": 362.07,
-   "asof": "2026-11-09",
-   "move": 0.0323,
+   "now": 367.44,
+   "asof": "2026-11-10",
+   "move": 0.0476,
    "call_now": "Buy",
-   "rel_now": 0.3937,
+   "rel_now": 0.3734,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-30",
@@ -291,45 +376,17 @@
    ]
   },
   {
-   "t": "GEV",
-   "name": "GE Vernova",
-   "page": "reports/gev.html",
-   "call": "Sell",
-   "rated": "2026-10-22",
-   "price": 890.33,
-   "now": 829.34,
-   "asof": "2026-11-09",
-   "move": -0.0685,
-   "call_now": "Sell",
-   "rel_now": -0.1583,
-   "filing": {
-    "form": "10-Q",
-    "date": "2026-10-28",
-    "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000163/gev-20260930.htm"
-   },
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Sell line at today&rsquo;s price"
-    ],
-    [
-     "results",
-     "New 10-Q filed 2026-10-28, after the report"
-    ]
-   ]
-  },
-  {
    "t": "JPM",
    "name": "JPMorgan Chase",
    "page": "reports/jpmorgan.html",
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 335.26,
-   "now": 342.08,
-   "asof": "2026-11-09",
+   "now": 342.07,
+   "asof": "2026-11-10",
    "move": 0.0203,
    "call_now": "Buy",
-   "rel_now": 0.2476,
+   "rel_now": 0.2477,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -349,11 +406,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 38.81,
-   "now": 37.69,
-   "asof": "2026-11-09",
-   "move": -0.0289,
+   "now": 36.72,
+   "asof": "2026-11-10",
+   "move": -0.0539,
    "call_now": "Hold",
-   "rel_now": 0.0295,
+   "rel_now": 0.0567,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-05",
@@ -373,11 +430,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 248.77,
-   "now": 271.42,
-   "asof": "2026-11-09",
-   "move": 0.091,
+   "now": 275.96,
+   "asof": "2026-11-10",
+   "move": 0.1093,
    "call_now": "Buy",
-   "rel_now": 1.1647,
+   "rel_now": 1.1291,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-29",
@@ -397,11 +454,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 521.08,
-   "now": 545.18,
-   "asof": "2026-11-09",
-   "move": 0.0463,
+   "now": 533.16,
+   "asof": "2026-11-10",
+   "move": 0.0232,
    "call_now": "Hold",
-   "rel_now": 0.0105,
+   "rel_now": 0.0332,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -421,11 +478,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 425.06,
-   "now": 397.62,
-   "asof": "2026-11-09",
-   "move": -0.0646,
+   "now": 405.12,
+   "asof": "2026-11-10",
+   "move": -0.0469,
    "call_now": "Buy",
-   "rel_now": 0.9257,
+   "rel_now": 0.89,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -445,11 +502,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 178.19,
-   "now": 164.73,
-   "asof": "2026-11-09",
-   "move": -0.0755,
+   "now": 164.47,
+   "asof": "2026-11-10",
+   "move": -0.077,
    "call_now": "Sell",
-   "rel_now": -0.1686,
+   "rel_now": -0.1673,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-02",
@@ -467,21 +524,40 @@
    ]
   },
   {
+   "t": "FLY",
+   "name": "Firefly Aerospace",
+   "page": "reports/firefly.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 17.41,
+   "now": 23.7,
+   "asof": "2026-11-10",
+   "move": 0.3613,
+   "call_now": "Buy",
+   "rel_now": 0.3678,
+   "flags": [
+    [
+     "price",
+     "Price up 36% since the report"
+    ]
+   ]
+  },
+  {
    "t": "MU",
    "name": "Micron Technology",
    "page": "reports/micron.html",
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 913.67,
-   "now": 733.15,
-   "asof": "2026-11-09",
-   "move": -0.1976,
+   "now": 725.11,
+   "asof": "2026-11-10",
+   "move": -0.2064,
    "call_now": "Buy",
-   "rel_now": 0.4347,
+   "rel_now": 0.4506,
    "flags": [
     [
      "price",
-     "Price down 20% since the report"
+     "Price down 21% since the report"
     ]
    ]
   },
@@ -492,55 +568,17 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 216.47,
-   "now": 178.67,
-   "asof": "2026-11-09",
-   "move": -0.1746,
+   "now": 168.89,
+   "asof": "2026-11-10",
+   "move": -0.2198,
    "call_now": "Buy",
-   "rel_now": 0.429,
-   "due": "2026-11-17",
+   "rel_now": 0.5117,
    "flags": [
     [
      "price",
-     "Price down 17% since the report"
-    ],
-    [
-     "due",
-     "Results due 2026-11-17"
+     "Price down 22% since the report"
     ]
    ]
-  },
-  {
-   "t": "AMZN",
-   "name": "Amazon",
-   "page": "reports/amazon.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 262.63,
-   "now": 266.93,
-   "asof": "2026-11-09",
-   "move": 0.0164,
-   "call_now": "Hold",
-   "rel_now": -0.1317,
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Sell line at today&rsquo;s price"
-    ]
-   ]
-  },
-  {
-   "t": "AMD",
-   "name": "Advanced Micro Devices",
-   "page": "reports/amd.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 552.72,
-   "now": 508.58,
-   "asof": "2026-11-09",
-   "move": -0.0799,
-   "call_now": "Hold",
-   "rel_now": 0.0623,
-   "flags": []
   },
   {
    "t": "ASML",
@@ -549,11 +587,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 1560.54,
-   "now": 1513.25,
-   "asof": "2026-11-09",
-   "move": -0.0303,
+   "now": 1507.85,
+   "asof": "2026-11-10",
+   "move": -0.0338,
    "call_now": "Hold",
-   "rel_now": 0.0083,
+   "rel_now": 0.0119,
    "flags": []
   },
   {
@@ -563,25 +601,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 323.24,
-   "now": 319.48,
-   "asof": "2026-11-09",
-   "move": -0.0116,
+   "now": 331.98,
+   "asof": "2026-11-10",
+   "move": 0.027,
    "call_now": "Buy",
-   "rel_now": 0.8365,
-   "flags": []
-  },
-  {
-   "t": "AWK",
-   "name": "American Water Works",
-   "page": "reports/american-water.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 135.79,
-   "now": 149.22,
-   "asof": "2026-11-09",
-   "move": 0.0989,
-   "call_now": "Hold",
-   "rel_now": -0.0329,
+   "rel_now": 0.7674,
    "flags": []
   },
   {
@@ -591,11 +615,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 267.68,
-   "now": 282.11,
-   "asof": "2026-11-09",
-   "move": 0.0539,
+   "now": 280.78,
+   "asof": "2026-11-10",
+   "move": 0.0489,
    "call_now": "Hold",
-   "rel_now": 0.0098,
+   "rel_now": 0.0146,
    "flags": []
   },
   {
@@ -605,11 +629,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 590.2,
-   "now": 588.19,
-   "asof": "2026-11-09",
-   "move": -0.0034,
+   "now": 603.12,
+   "asof": "2026-11-10",
+   "move": 0.0219,
    "call_now": "Buy",
-   "rel_now": 0.6312,
+   "rel_now": 0.5908,
    "flags": []
   },
   {
@@ -619,11 +643,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 552.53,
-   "now": 539.07,
-   "asof": "2026-11-09",
-   "move": -0.0244,
+   "now": 548.61,
+   "asof": "2026-11-10",
+   "move": -0.0071,
    "call_now": "Buy",
-   "rel_now": 0.5445,
+   "rel_now": 0.5176,
    "flags": []
   },
   {
@@ -633,11 +657,11 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 194.745,
-   "now": 196.31,
-   "asof": "2026-11-09",
-   "move": 0.008,
+   "now": 200.27,
+   "asof": "2026-11-10",
+   "move": 0.0284,
    "call_now": "Hold",
-   "rel_now": 0.1079,
+   "rel_now": 0.086,
    "flags": []
   },
   {
@@ -647,11 +671,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 131.69,
-   "now": 134.38,
-   "asof": "2026-11-09",
-   "move": 0.0204,
+   "now": 129.66,
+   "asof": "2026-11-10",
+   "move": -0.0154,
    "call_now": "Buy",
-   "rel_now": 0.3482,
+   "rel_now": 0.3973,
    "flags": []
   },
   {
@@ -661,11 +685,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 162.57,
-   "now": 142.07,
-   "asof": "2026-11-09",
-   "move": -0.1261,
+   "now": 143.09,
+   "asof": "2026-11-10",
+   "move": -0.1198,
    "call_now": "Buy",
-   "rel_now": 0.4938,
+   "rel_now": 0.4831,
    "flags": []
   },
   {
@@ -675,11 +699,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 412.35,
-   "now": 388.62,
-   "asof": "2026-11-09",
-   "move": -0.0575,
+   "now": 396.48,
+   "asof": "2026-11-10",
+   "move": -0.0385,
    "call_now": "Buy",
-   "rel_now": 0.4953,
+   "rel_now": 0.4657,
    "flags": []
   },
   {
@@ -689,11 +713,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 414.26,
-   "now": 422.16,
-   "asof": "2026-11-09",
-   "move": 0.0191,
+   "now": 423.0,
+   "asof": "2026-11-10",
+   "move": 0.0211,
    "call_now": "Hold",
-   "rel_now": 0.0066,
+   "rel_now": 0.0046,
    "flags": []
   }
  ]

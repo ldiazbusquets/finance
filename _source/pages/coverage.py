@@ -174,13 +174,13 @@ R['ANTHROPIC'] = dict(
     ])
 
 R['OPENAI'] = dict(
-    t='OPENAI', slug='openai', name='OpenAI', h1='Open<em>AI</em>', sector='AI (private)', date=DATE, timing='',
-    sub='OpenAI makes ChatGPT, used by more than a billion people a week. It is the most valuable private company in AI and is raising money at about $1.4 trillion, but it also expects to burn hundreds of billions of dollars before it turns a profit. An IPO is planned for 2027.',
-    call='Watch', private=True, price=852, base=790, max=2000, tick=250, suffix='B', disclosure=PRIV,
-    cells=[('Last valuation', '$852B', '$122B round, March 2026'), ('Annual revenue pace', '$50B', 'Company figure, October'), ('Model value', '$790B', 'Base case; $874B weighted')],
-    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, the March round and the round now being discussed.',
+    t='OPENAI', slug='openai', name='OpenAI', h1='Open<em>AI</em>', sector='AI (private)', date='November 12, 2026', timing=', after the first close of its new funding round',
+    sub='OpenAI makes ChatGPT, used by more than a billion people a week. It is the most valuable private company in AI and in November raised the first $11 billion of a new round at $1.25 trillion, but it also expects to burn hundreds of billions of dollars before it turns a profit. An IPO is planned for 2027.',
+    call='Watch', private=True, price=1250, base=790, max=2000, tick=250, suffix='B', disclosure=PRIV,
+    cells=[('Last valuation', '$1.25T', '$11B first close, November 2026'), ('Annual revenue pace', '$50B', 'Company figure, October'), ('Model value', '$790B', 'Base case; $874B weighted')],
+    fieldnote='Company values in billions: the scenario model&rsquo;s range, the probability-weighted value, the March round and the November first close.',
     field=[('Scenario model', 136, 1779, 790, '$136B to $1,779B, base $790B'), ('Probability-weighted', None, None, 874, '$874B'),
-           ('March 2026 round', None, None, 852, '$852B'), ('Round in talks', None, None, 1400, '$1.4T')],
+           ('March 2026 round', None, None, 852, '$852B'), ('November first close', None, None, 1250, '$1.25T')],
     toc=TOCV, chapters=[
         ('overview', 'The business', 'ChatGPT, <em>and everything built on it.</em>',
          prose('OpenAI sells ChatGPT subscriptions to consumers and businesses, API access to developers, and since 2026 advertising inside ChatGPT. It converted from a capped-profit structure into a public benefit corporation, OpenAI Group PBC, in October 2025. The nonprofit OpenAI Foundation controls it and owns about a quarter; Microsoft owns about 27%.')),
@@ -192,15 +192,16 @@ R['OPENAI'] = dict(
          table(['', 'Figure', 'Status'], [['Operating loss, 2025', 'About $21B', 'Leaked financials'], ['Expected cash burn, 2026&ndash;2030', 'About $278B in total', 'Leaked plan'],
                                           ['Compute plans', 'About $856B through 2030 (Azure, Oracle, Stargate)', 'Reported'], ['Profit', 'Not expected before 2029&ndash;2030', 'Reported plans']])
          + prose('OpenAI spends far more on computing than it earns. Its plan relies on partners (Microsoft, Oracle, SoftBank&rsquo;s Stargate venture) financing much of the infrastructure, and on raising new money roughly every year until revenue catches up.')),
-        ('capital', 'Funding and ownership', '$852 billion in March, <em>$1.4 trillion in talks.</em>',
-         prose('In March 2026 OpenAI closed a $122 billion round at $852 billion, anchored by Amazon ($50 billion), Nvidia ($30 billion) and SoftBank ($30 billion). In October it was reported to be raising about $30 billion more at a valuation above $1.4 trillion, before Anthropic&rsquo;s IPO. Sam Altman has said listing in 2026 would be ill-advised; the IPO is expected in 2027.')),
+        ('capital', 'Funding and ownership', '$852 billion in March, <em>$1.25 trillion in November.</em>',
+         prose('In March 2026 OpenAI closed a $122 billion round at $852 billion, anchored by Amazon ($50 billion), Nvidia ($30 billion) and SoftBank ($30 billion). In October it was reported to be raising about $30 billion more at a valuation above $1.4 trillion, before Anthropic&rsquo;s IPO. In November, Bloomberg reported that OpenAI had received a first close of about $11 billion at <b>$1.25 trillion</b>, below the $1.4 trillion it had sought, and that the round may reach about $20 billion in the coming weeks rather than $30 billion. Reports linked the smaller round to the AI-stock selloff and worries about data-center spending. OpenAI has filed confidentially for a U.S. listing; Sam Altman has said listing in 2026 would be ill-advised, and the IPO is expected in 2027.')
+         + src([('Reuters, citing Bloomberg', 'https://www.tradingview.com/news/reuters.com,2026:newsml_L6N46N1BR:0-openai-gets-11-billion-funding-at-1-25-trillion-valuation-bloomberg-news-reports/'), ('First close at $1.25T', 'https://techfundingnews.com/openai-closes-11b-first-tranche-at-1-25t-valuation-well-below-its-1-4t-ask/')])),
         ('value', 'Valuation', 'Our scenarios give <em>about $790 billion.</em>',
          prose('Valued on 2030 earning power and discounted at 15% a year, before the new shares OpenAI will issue to cover its cash burn, which would lower each existing share&rsquo;s value.')
          + scen([['Revenue in 2030', '$150B', '$280B', '$450B'], ['Operating margin', '10%', '25%', '35%'], ['Exit multiple', '20&times;', '25&times;', '25&times;'],
                  ['Company value today', '$136B', '$790B', '$1.78T'], ['Probability', '25%', '50%', '25%']])
          + prose('Weighted 25/50/25: <b>about $870 billion</b>, close to the March round.')),
-        ('implied', 'What the valuation assumes', 'At $1.4 trillion, <em>about $500 billion of revenue.</em>',
-         implied([['$852B: about $300B of revenue in 2030 at a 25% margin', 'About $50B annualised today'], ['$1.4T: about $500B', 'Above the base case']])),
+        ('implied', 'What the valuation assumes', 'At $1.25 trillion, <em>about $450 billion of revenue.</em>',
+         implied([['$852B: about $300B of revenue in 2030 at a 25% margin', 'About $50B annualised today'], ['$1.25T (November close): about $450B', 'The bull case&rsquo;s revenue'], ['$1.4T (the original ask): about $500B', 'Above the base case']])),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
              ['Cash burn', 'Hundreds of billions to fund before profit; each round dilutes.'],
@@ -209,7 +210,7 @@ R['OPENAI'] = dict(
              ['Governance', 'The nonprofit foundation controls the company.'],
          ]) + prose('<b>Upside:</b> the largest consumer AI audience, advertising, devices and agents could make ChatGPT the main way people use the internet.')),
         ('rec', 'Our view', 'Not investable yet; <em>fair near $850 billion.</em>',
-         prose('Until the 2027 IPO there is no way to buy OpenAI directly. The base case supports roughly the March valuation; the $1.4 trillion round prices in more than the base case. Indirect exposure already comes through Microsoft, Nvidia, Oracle and Amazon.')
+         prose('Until the 2027 IPO there is no way to buy OpenAI directly. The base case supports roughly the March valuation; the November round at $1.25 trillion is about 60% above our base value and needs bull-case revenue. That investors would not pay the $1.4 trillion first asked is a useful signal ahead of the IPO. Indirect exposure already comes through Microsoft, Nvidia, Oracle and Amazon.')
          + band('The biggest audience in AI, <em>the biggest bill.</em>', 'Its value depends on turning a billion users into profit before the money runs out.')),
     ])
 

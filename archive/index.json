@@ -226,6 +226,16 @@
     "file": "archive/openai/2026-10-23.html",
     "frozen": "2026-10-23",
     "name": "OpenAI"
+   },
+   {
+    "date": "November 12, 2026",
+    "call": "Not rated",
+    "base": 790,
+    "wt": null,
+    "price": 1250,
+    "file": "archive/openai/2026-11-12.html",
+    "frozen": "2026-11-12",
+    "name": "OpenAI"
    }
   ],
   "anduril": [

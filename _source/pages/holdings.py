@@ -27,36 +27,41 @@ TOC = [('overview', 'The business'), ('results', 'Latest results'), ('fin', 'Fiv
 R = {}
 
 # ---------------------------------------------------------------- NVIDIA
-NV = 'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027'
+NV = 'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027'
+NV_CALL = 'https://www.tradingkey.com/news/transcripts/262310584-'
+NV_RX = 'https://www.kiplinger.com/news/live/nvidia-earnings-live-updates-and-commentary-november-2026'
+NV_CEO = 'https://www.aljazeera.com/news/2026/11/12/why-did-nvidia-ceo-jensen-huang-resign-and-who-is-colette-kress'
 R['NVDA'] = dict(
-    t='NVDA', slug='nvidia', name='Nvidia', h1='Nvidia', sector='Semiconductors', date=DATE, timing=', before its fiscal third-quarter results in November',
-    sub='Nvidia sells the chips, networking and software that nearly every large AI model is trained and run on. Revenue doubled again this year and margins sit at 75%. The question is not the business but how long this level of spending lasts, and the price already assumes it lasts a long time.',
-    call='Hold', method='Cash-flow model', price=216.47, base=166, bear=82, bull=306, wt=180, max=400, tick=50,
+    t='NVDA', slug='nvidia', name='Nvidia', h1='Nvidia', sector='Semiconductors', date='November 18, 2026', timing=', the day after its fiscal third-quarter results',
+    sub='Nvidia sells the chips, networking and software that nearly every large AI model is trained and run on. Revenue more than doubled again in the third quarter and management expects about 75% growth next year. But the shares have fallen 28% in a month, on the AI-stock selloff and the sudden resignation of Jensen Huang as chief executive, and now sit below what the model supports.',
+    call='Buy', method='Cash-flow model', price=155.46, pricenote='Close, November 17, 2026, before the results', base=187, bear=86, bull=363, wt=206, max=400, tick=50,
     fieldnote='The cash-flow model&rsquo;s bear-to-bull range, the probability-weighted value, the price and its 52-week range.',
-    field=[('Cash-flow model', 82, 306, 166, '$82 to $306, base $166'), ('Probability-weighted', None, None, 180, '$180'),
-           ('Price at writing', None, None, 216.47, '$216.47'), ('52-week range', 164, 243, None, '$164 to $243')],
+    field=[('Cash-flow model', 86, 363, 187, '$86 to $363, base $187'), ('Probability-weighted', None, None, 206, '$206'),
+           ('Price at writing', None, None, 155.46, '$155.46'), ('52-week range', 155, 243, None, '$155 to $243')],
     toc=TOC, chapters=[
         ('overview', 'The business', 'The default supplier <em>of AI computing.</em>',
          prose('Nvidia designs graphics processors and the systems built around them: full racks of GPUs, CPUs and networking that data centers buy as one unit, plus CUDA, the software layer most AI developers write for. It does not own factories; TSMC makes its chips.',
-               'Data centers are now almost the whole company: <b>$89.0 billion of $96.2 billion</b> in revenue last quarter. Its biggest customers are the cloud companies (Microsoft, Google, Amazon, Oracle, Meta) and a fast-growing group of specialist AI clouds. Several of those customers also design their own chips, which is the main long-run competitive threat alongside AMD.')
-         + key('Takeaway', 'The lead rests on three things competitors have to match at once: the chip, the networking that ties thousands of them together, and the software developers already use.')
-         + src([('Q2 FY2027 results', NV)])),
-        ('results', 'Latest results', '$96 billion in a quarter, <em>up 106%.</em>',
-         stats([('$96.2B', 'Revenue, Q2 FY2027'), ('+106%', 'Growth from a year earlier'), ('$89.0B', 'Data center revenue, +117%'), ('75.0%', 'Gross margin'), ('$108B', 'Q3 revenue guidance'), ('$26B', 'Returned to shareholders in Q2')])
-         + prose('In the quarter to July, revenue rose 18% from the previous quarter and 106% from a year earlier. Operating income was $63.7 billion, about two-thirds of revenue. Management guided the next quarter to <b>$108 billion</b>, assuming no data-center sales to China, with gross margin of about 74%.',
-                 'The product cycle is moving to Vera Rubin, which the company says is in full production and ramping at cloud partners. Nvidia also returned about $26 billion through buybacks and dividends in the quarter and has about $99 billion left under its buyback authorization.')
-         + src([('Q2 FY2027 results', NV)])),
+               'Data centers are now almost the whole company: <b>$107.6 billion of $115.8 billion</b> in revenue last quarter. Its biggest customers are the cloud companies (Microsoft, Google, Amazon, Oracle, Meta) and a fast-growing group of specialist AI clouds. Several of those customers also design their own chips, which is the main long-run competitive threat alongside AMD.',
+               'On November 12 Jensen Huang, who co-founded Nvidia and ran it for 33 years, resigned as chief executive and left the board after reports about his personal conduct. Colette Kress, the finance chief since 2013, is interim chief executive while the board searches for a permanent one, and longtime director Harvey Jones became Nvidia&rsquo;s first board chair.')
+         + key('Takeaway', 'The lead rests on three things competitors have to match at once: the chip, the networking that ties thousands of them together, and the software developers already use. None of them left with the founder, but the next chief executive will have to defend all three.')
+         + src([('Q3 FY2027 results', NV), ('Huang&rsquo;s resignation, Al Jazeera', NV_CEO)])),
+        ('results', 'Latest results', '$116 billion in a quarter, <em>up 103%.</em>',
+         stats([('$115.8B', 'Revenue, Q3 FY2027'), ('+103%', 'Growth from a year earlier'), ('$107.6B', 'Data center revenue, +110%'), ('74.8%', 'Gross margin'), ('$130B', 'Q4 revenue guidance'), ('$43.8B', 'Free cash flow in the quarter')])
+         + prose('In the quarter to October, revenue rose 20% from the previous quarter and 103% from a year earlier, about $7 billion above the roughly $109 billion analysts expected and well above the company&rsquo;s own $108 billion guidance. Earnings per share were $2.70, or $2.68 on the company&rsquo;s adjusted measure against $2.47 expected. Networking passed $21 billion, and Vera Rubin, the new chip generation, brought in nearly $20 billion in its first quarter of shipments, which management called its fastest ramp ever.',
+                 'Management guided the fourth quarter to <b>$130 billion</b>, plus or minus 3%, a quarter that includes an extra week. The guidance again assumes no data-center computing sales to China, where Nvidia sold $2.4 billion of licensed chips this quarter but has stopped shipping. Gross margin is guided down to 71&ndash;72%, which management called the bottom, recovering to 72&ndash;73% next year. It raised its outlook for next year&rsquo;s revenue growth to about <b>75%</b>, from 70%. Nvidia returned $28 billion through buybacks and dividends and has about $227 billion left under its buyback authorization. The shares, which closed at $155.46 before the report, rose about 4% in after-hours trading.')
+         + src([('Q3 FY2027 results', NV), ('Earnings call', NV_CALL), ('Market reaction, Kiplinger', NV_RX)])),
         ('fin', 'Five years', 'From $27 billion to $300 billion <em>in four years.</em>',
          fin_table('NVDA') + prose('Revenue was flat in fiscal 2023, then took off with ChatGPT. Margins rose with it: operating margin went from 16% to above 60%, because each new chip generation sold at a higher price than it cost to make. Free cash flow follows profit closely; the business needs little capital because TSMC builds the factories.')
          + src([('Nvidia filings, SEC EDGAR', 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K')])),
-        ('capital', 'Balance sheet', 'Plenty of cash, <em>returned through buybacks.</em>',
-         prose('Debt is small next to a $5 trillion market value, and cash and investments roughly cover it, so the model ignores net debt. Almost all cash returns come through buybacks; the dividend is token. The bigger balance-sheet items are supply commitments: Nvidia pre-pays and commits to suppliers to secure chip and memory capacity, which would become a burden if demand fell quickly.')
-         + key('Read', 'No financial risk; the exposure is operational, through supply commitments made in a boom.')),
-        ('value', 'Valuation', 'The model gives <em>$166 a share.</em>',
-         prose('The base year is fiscal 2027 (to January 2027), estimated at <b>$404 billion</b> from the first two quarters, guidance and a modest fourth quarter. The model then assumes another strong year and a long fade.')
+        ('capital', 'Balance sheet', 'Plenty of cash, <em>but growing commitments.</em>',
+         prose('Debt is small next to a market value of nearly $4 trillion, and cash and investments roughly cover it, so the model ignores net debt. Almost all cash returns come through buybacks; the dividend is token. The bigger items sit off the balance sheet and are growing fast: purchase commitments to suppliers have reached about <b>$390 billion</b>, data-center lease and cloud-service commitments exceed $100 billion, and Nvidia has given about <b>$118 billion</b> of guarantees, most of it credit support for a single data-center campus. These would become a burden if demand fell quickly.')
+         + key('Read', 'No financial risk today; the exposure is operational and growing, through commitments and guarantees made in a boom.')
+         + src([('Earnings call', NV_CALL)])),
+        ('value', 'Valuation', 'The model gives <em>$187 a share.</em>',
+         prose('This update raises the base year, fiscal 2027 (to January 2027), to <b>$424 billion</b>: three reported quarters plus the fourth-quarter guidance. It also raises next year&rsquo;s growth from 40% to 50%. Management now expects about 75%, but the model takes only part of that: the fourth quarter has an extra week, China is excluded, and more of the demand rests on customers&rsquo; borrowing and on Nvidia&rsquo;s own commitments and guarantees. Everything after that is unchanged.')
          + table(['Assumption', 'Base case', 'Basis'], [
-             ['Revenue, FY2027', '$404B', 'Two reported quarters, Q3 guidance, a higher Q4'],
-             ['Growth, next two years', '40%, then 15%', 'The Rubin cycle, then normalising spending'],
+             ['Revenue, FY2027', '$424B', 'Three reported quarters and the Q4 guidance midpoint'],
+             ['Growth, next two years', '50%, then 15%', 'The Rubin cycle, below management&rsquo;s ~75%; then normalising spending'],
              ['Growth after that', 'Fades to 3% by year 10', 'AI spending matures'],
              ['Operating margin', '63% falling to 55% by year 7', 'Competition and custom chips take some pricing'],
              ['Tax rate', '17%', 'Company guidance of 16&ndash;18%'],
@@ -64,27 +69,29 @@ R['NVDA'] = dict(
              ['Discount rate', '12.3%', '5.15% Treasury, beta 1.58, 4.5% premium; almost no debt'],
              ['Terminal growth', '3.0%', 'With a 25% return on new capital'],
          ], 'mid')
-         + bridge([('PV of 10 years of cash flow', '$2.22T'), ('PV of terminal value', '$1.82T'), ('Enterprise value', '$4.04T'), ('Net cash', '&asymp; $0'), ('Equity value', '$4.04T'), ('Shares', '24.3B')], '$166')
+         + bridge([('PV of 10 years of cash flow', '$2.48T'), ('PV of terminal value', '$2.05T'), ('Enterprise value', '$4.53T'), ('Net cash', '&asymp; $0'), ('Equity value', '$4.53T'), ('Shares', '24.2B')], '$187')
          + '<h3 class="sec sm">Bear, base and bull</h3>' + scen([
-             ['Growth, next two years', '20% / 5%', '40% / 15%', '55% / 25%'], ['Long-run operating margin', '45%', '55%', '60%'],
-             ['Discount rate', '13.3%', '12.3%', '11.3%'], ['Value per share', '$82', '$166', '$306'], ['Probability', '25%', '50%', '25%']])
-         + prose('Weighted 25/50/25, the cases give <b>$180</b>.')
-         + sens('Discount rate', ['9.0%', '10.0%', '11.0%', '12.3%'], ['$258', '$221', '$193', '$166'])
-         + key('Read', 'The discount rate decides this one. At 10%, a common choice for a company this size, the price is about fair; at the 12.3% that Nvidia&rsquo;s beta implies, it is not.')),
-        ('implied', 'What the price assumes', 'At $216, the market prices in <em>a longer boom.</em>',
-         implied([['Revenue growth of about 84% next year, then 15%', '40%, then 15%'], ['A long-run operating margin near 73%', '55%'], ['A discount rate of about 10.1%', '12.3%']])
-         + prose('None of these is impossible for Nvidia; each has been beaten before. But the price needs the AI build-out to keep growing well past 2027 without customers&rsquo; own chips taking meaningful share.')),
+             ['Growth, next two years', '20% / 5%', '50% / 15%', '75% / 25%'], ['Long-run operating margin', '45%', '55%', '60%'],
+             ['Discount rate', '13.3%', '12.3%', '11.3%'], ['Value per share', '$86', '$187', '$363'], ['Probability', '25%', '50%', '25%']])
+         + prose('The bull case now uses management&rsquo;s own 75% for next year. Weighted 25/50/25, the cases give <b>$206</b>, up from $180.')
+         + sens('Discount rate', ['9.0%', '10.0%', '11.0%', '12.3%'], ['$291', '$249', '$217', '$187'])
+         + key('Read', 'In October the discount rate decided this one. After the fall, the price is below the value even at the 12.3% that Nvidia&rsquo;s beta implies.')),
+        ('implied', 'What the price assumes', 'At $155, the market prices in <em>a sharp slowdown.</em>',
+         implied([['Revenue growth of about 24% next year, then 15%', '50%, then 15%; management expects about 75%'], ['A long-run operating margin near 44%', '55%; the last quarter was above 60%'], ['A discount rate of about 14.1%', '12.3%']])
+         + prose('A month ago the price needed the boom to last well past 2027. Now it is consistent with growth halving from management&rsquo;s outlook next year, or with margins falling to levels Nvidia has not seen since before ChatGPT. Either could happen if cloud spending turns, but neither is what the company is reporting.')),
         ('risks', 'Risks', 'What could go wrong, <em>and what could go right.</em>',
          table(['Risk', 'Why it matters'], [
-             ['Customer spending slows', 'A handful of cloud companies buy most of the output. If their returns on AI disappoint, orders can fall quickly.'],
+             ['Leadership', 'Huang set the strategy and ran the customer relationships for 33 years. The search for a permanent chief executive has no timetable, and the board&rsquo;s investigation is not finished.'],
+             ['Customer spending slows', 'A handful of cloud companies buy most of the output, increasingly with borrowed money. If their returns on AI disappoint, orders can fall quickly.'],
+             ['Commitments and guarantees', 'About $390 billion of supply commitments and $118 billion of guarantees would weigh on cash flow if demand fell.'],
              ['Custom chips', 'Google, Amazon, Microsoft and Meta all design their own accelerators and would rather not pay Nvidia&rsquo;s margins.'],
-             ['China and export rules', 'Guidance assumes no data-center sales to China; policy can move either way.'],
+             ['China and export rules', 'Guidance assumes no data-center sales to China, and new U.S. export rules released this week are still being assessed.'],
              ['Supply chain', 'Dependence on TSMC and on memory supply; a disruption in Taiwan is the tail risk.'],
-         ]) + prose('<b>Upside:</b> AI moving from training into everyday use (inference), robotics and sovereign AI could extend the cycle further than the model allows.')),
-        ('rec', 'Rating', 'Hold. <em>Fair at a 10% discount rate, rich at 12%.</em>',
-         prose('At $216.47 against a base case of $166 ($180 weighted), Nvidia trades above what the model supports at its own cost of capital, but within reach of it at a lower rate. The business is in its strongest position ever. The call is <b>Hold</b>: keep the position, add only on a pullback toward the base case.',
-               '<b>What would change the view:</b> next-year guidance that points to growth well above 40% would move it toward Buy; signs that cloud spending is peaking would move it toward Sell. Watch fiscal third-quarter results in November against the $108 billion guidance.')
-         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The best business in tech, <em>priced like it.</em></h2><p>Nvidia earns more than almost any company in history; the price already counts on that continuing.</p></div>'),
+         ]) + prose('<b>Upside:</b> the Rubin ramp, AI moving from training into everyday use (inference), robotics and sovereign AI could extend the cycle further than the model allows; growth near management&rsquo;s 75% would put the value near the bull case.')),
+        ('rec', 'Rating', 'The best business in tech, <em>marked down.</em>',
+         prose('At $155.46 against a base case of $187 ($206 weighted), Nvidia now trades below what the model supports at its own cost of capital. The business is reporting its strongest numbers ever; the price reflects doubts about leadership and AI spending.',
+               '<b>What would change the view:</b> the choice of a permanent chief executive, fourth-quarter results against the $130 billion guidance, and whether next year&rsquo;s growth lands near the 75% management expects.')
+         + '<div class="band sm"><div class="eyebrow mono">Final view</div><h2>The best business in tech, <em>marked down.</em></h2><p>The numbers have never been stronger; the price now carries the doubts about who leads Nvidia and how long the spending lasts.</p></div>'),
     ])
 
 # ---------------------------------------------------------------- Amazon

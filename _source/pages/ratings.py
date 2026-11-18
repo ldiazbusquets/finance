@@ -27,9 +27,9 @@ def rate(wt, price):
 # Closing text: what the business is, what decides the outcome, and what would change the rating.
 # No mention of anyone's portfolio; ownership is stated once, in the disclosure line.
 REC = {
-    'NVDA': ('The best business in tech, <em>priced for it.</em>',
-             'Nvidia earns more than almost any company in history and still has most of the AI accelerator market. The model values it below the price at its own cost of capital, but by less than the market as a whole is valued below its price on the same assumptions.',
-             'Next-year guidance pointing to growth well above 40% would raise the value; signs that cloud AI spending is peaking would lower it. Fiscal third-quarter results in November, against $108 billion of guidance, are the next test.'),
+    'NVDA': ('The best business in tech, <em>marked down.</em>',
+             'Nvidia earns more than almost any company in history, and the third quarter, with revenue up 103% and a higher outlook for next year, showed demand still ahead of supply. After a 28% fall on the AI-stock selloff and its chief executive&rsquo;s resignation, the model values it above the price even at its own high cost of capital, and well above the market on the same assumptions.',
+             'The choice of a permanent chief executive, fourth-quarter results against the $130 billion guidance and whether next year&rsquo;s growth lands near the 75% management expects would move the value. Signs that cloud AI spending is peaking, or that supply commitments and guarantees are turning into losses, would lower it.'),
     'AMZN': ('A great company <em>in an expensive building phase.</em>',
              'AWS growth accelerated to 39% in the third quarter, but capital spending has turned free cash flow deeply negative and will rise again in 2027. The price assumes long-run margins higher than Amazon has ever earned.',
              'The size of the 2027 capital spending plan, AWS growth staying near 40%, and operating income against the fourth-quarter guidance would move the value.'),

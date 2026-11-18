@@ -119,12 +119,12 @@ def main():
         ns = run(script); vals[key] = (ns['b'], ns['bear'], ns['bull'])
     ns = run('nvda'); nv = ns['nv']; W0 = ns['ke'](1.58)
     with contextlib.redirect_stdout(io.StringIO()):
-        d = ns['dcf'](404e9, ns['fade']([.40, .15]), ns['ramp'](.63, .55, 7), .17, lambda t, r, dd: dd / 2.5, W0, .03, .25, 0, ns['SH'])
+        d = ns['dcf'](424e9, ns['fade']([.50, .15]), ns['ramp'](.63, .55, 7), .17, lambda t, r, dd: dd / 2.5, W0, .03, .25, 0, ns['SH'])
     n11 = d['rows'][-1][4] * 1.03 * .83
     write('nvidia', 'Nvidia (NVDA)', 'Ten-year discounted cash flow (free cash flow to the firm)',
-          [['Base revenue (fiscal 2027 run-rate)', 404, 'Company filings and guidance'], ['Tax rate %', 17, ''], ['Discount rate %', P(W0), 'CAPM cost of equity, beta 1.58 (no meaningful debt)'],
-           ['Terminal growth %', 3, ''], ['Return on new capital %', 25, ''], ['Net cash', 0, ''], ['Diluted shares (billions)', 24.3, ''],
-           ['Revenue growth, years 1-2 %', '40 / 15', 'Then fades to 3% by year 10'], ['Operating margin %', '63 easing to 55 by year 7', ''], ['Sales to capital', 2.5, 'Reinvestment = revenue growth / 2.5']],
+          [['Base revenue (fiscal 2027 estimate)', 424, 'Three reported quarters and fourth-quarter guidance'], ['Tax rate %', 17, ''], ['Discount rate %', P(W0), 'CAPM cost of equity, beta 1.58 (no meaningful debt)'],
+           ['Terminal growth %', 3, ''], ['Return on new capital %', 25, ''], ['Net cash', 0, ''], ['Diluted shares (billions)', 24.2, ''],
+           ['Revenue growth, years 1-2 %', '50 / 15', 'Then fades to 3% by year 10'], ['Operating margin %', '63 easing to 55 by year 7', ''], ['Sales to capital', 2.5, 'Reinvestment = revenue growth / 2.5']],
           DCF_HEAD, dcf_rows(d, W0),
           [['Present value of 10 years of cash flow', B(d['pv'])], ['Terminal value = NOPAT11 x (1 - g/RONIC) / (r - g)', B(n11 * (1 - .03 / .25) / (W0 - .03))], ['Present value of terminal value', B(d['pvtv'])], ['Enterprise value', B(d['ev'])], ['Equity value', B(d['eq'])], ['Value per share ($)', round(d['ps'], 2)]],
           [['Value per share ($)', round(ns['bear'], 2), round(ns['b'], 2), round(ns['bull'], 2)], ['Probability', 25, 50, 25], ['Probability-weighted value ($)', '', round(wsum(ns['bear'], ns['b'], ns['bull']), 2), '']],

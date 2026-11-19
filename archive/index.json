@@ -224,6 +224,16 @@
     "file": "archive/anthropic/2026-10-23.html",
     "frozen": "2026-10-23",
     "name": "Anthropic"
+   },
+   {
+    "date": "November 19, 2026",
+    "call": "Not rated",
+    "base": 847,
+    "wt": null,
+    "price": 1500,
+    "file": "archive/anthropic/2026-11-19.html",
+    "frozen": "2026-11-19",
+    "name": "Anthropic"
    }
   ],
   "openai": [

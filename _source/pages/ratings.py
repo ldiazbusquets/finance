@@ -127,9 +127,9 @@ REC = {
              'GE Vernova has a sold-out gas turbine franchise, a growing grid business, net cash and rising margins. On the company&rsquo;s own 2028 targets the shares trade at about twice the model&rsquo;s value.',
              'A 2028 margin target above 20% or gas pricing still climbing through 2027 would raise the value; slot reservations failing to become firm orders would lower it. Power exiting 2026 at a margin in the mid-20s, as management now expects, and new targets at the next investor day are the inputs to watch.'),
     # private companies: not rated
-    'ANTHROPIC': ('The fastest-growing software company, <em>at an unknown IPO price.</em>',
-                  'The base case supports roughly the May private valuation, about $1 trillion. A listing at $1.5&ndash;2 trillion would price in close to the bull case on its first day.',
-                  'The prospectus&rsquo;s margins, compute commitments and the IPO price are the numbers that decide whether the shares are worth buying.'),
+    'ANTHROPIC': ('The fastest-growing software company, <em>priced near the bull case.</em>',
+                  'The base case supports roughly the May private valuation, about $1 trillion, or about $1.07 trillion with the IPO cash. The IPO priced at $83 a share, about $1.5 trillion fully diluted, which is close to the bull case before the first trade. An entry near $1&ndash;1.2 trillion, roughly $55&ndash;66 a share, would leave room for things to go only moderately right.',
+                  'Revenue growth in the first quarterly reports as a public company, progress on margins, and whether about $900 billion of compute commitments stay matched by demand. Once ANT trades, the report could move to share-price coverage.'),
     'OPENAI': ('The biggest audience in AI, <em>the biggest bill.</em>',
                'There is no way to buy OpenAI directly before its expected 2027 IPO. The base case supports roughly the March valuation; the $1.4 trillion round prices in more than that, before the dilution its cash burn will require.',
                'Revenue growth against the $50 billion annual pace, progress on advertising, and the size of future funding rounds are the inputs to watch.'),

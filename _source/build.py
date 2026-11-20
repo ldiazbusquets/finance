@@ -309,7 +309,7 @@ def build():
         up = r['base'] / r['price'] - 1
         return card(href, f"{t} &middot; {r['call']}", r['name'], CARDS[t] + f" Value ${r['base']:,} against ${r['price']:,.0f}.", 'Read the report &rarr;', 'live')
     holding_cards = ''.join(hcard(t) for t in ORDER)
-    PCARDS = {'ANTHROPIC': 'The maker of Claude, growing more than tenfold a year ahead of a November IPO.', 'OPENAI': 'ChatGPT&rsquo;s billion weekly users, and hundreds of billions to spend before profit.', 'ANDURIL': 'Autonomous weapons growing like software, valued like it too.', 'BLOOMBERG': 'The Terminal and its newsroom: a cash machine that has never published its numbers.'}
+    PCARDS = {'ANTHROPIC': 'The maker of Claude, growing more than tenfold a year, listed as ANT since November 19.', 'OPENAI': 'ChatGPT&rsquo;s billion weekly users, and hundreds of billions to spend before profit.', 'ANDURIL': 'Autonomous weapons growing like software, valued like it too.', 'BLOOMBERG': 'The Terminal and its newsroom: a cash machine that has never published its numbers.'}
     def pcard(t):
         r = coverage.R[t]
         return card(r['slug'] + '.html', f"Private &middot; {r['call']}", r['name'], PCARDS[t] + f" Model value ${r['base']:,}B against ${r['price']:,}B.", 'Read the report &rarr;', 'live')

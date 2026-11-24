@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-21T03:31:27Z",
- "today": "2026-11-20",
+ "updated": "2026-11-24T06:25:54Z",
+ "today": "2026-11-24",
  "rules": {
   "band": 0.15,
   "near": 0.03,
@@ -16,11 +16,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 552.72,
-   "now": 424.39,
-   "asof": "2026-11-20",
-   "move": -0.2322,
+   "now": 453.46,
+   "asof": "2026-11-23",
+   "move": -0.1796,
    "call_now": "Buy",
-   "rel_now": 0.273,
+   "rel_now": 0.1914,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-04",
@@ -29,7 +29,7 @@
    "flags": [
     [
      "price",
-     "Price down 23% since the report"
+     "Price down 18% since the report"
     ],
     [
      "rating",
@@ -38,29 +38,6 @@
     [
      "results",
      "New 10-Q filed 2026-11-04, after the report"
-    ]
-   ]
-  },
-  {
-   "t": "ASML",
-   "name": "ASML Holding",
-   "page": "reports/asml.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 1560.54,
-   "now": 1266.22,
-   "asof": "2026-11-20",
-   "move": -0.1886,
-   "call_now": "Buy",
-   "rel_now": 0.205,
-   "flags": [
-    [
-     "price",
-     "Price down 19% since the report"
-    ],
-    [
-     "rating",
-     "At today&rsquo;s price the rule gives Buy, not Hold"
     ]
    ]
   },
@@ -71,11 +48,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 703.84,
-   "now": 510.45,
-   "asof": "2026-11-20",
-   "move": -0.2748,
+   "now": 547.04,
+   "asof": "2026-11-23",
+   "move": -0.2228,
    "call_now": "Buy",
-   "rel_now": 0.2691,
+   "rel_now": 0.1842,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-04",
@@ -84,7 +61,7 @@
    "flags": [
     [
      "price",
-     "Price down 27% since the report"
+     "Price down 22% since the report"
     ],
     [
      "rating",
@@ -97,45 +74,17 @@
    ]
   },
   {
-   "t": "CEG",
-   "name": "Constellation Energy",
-   "page": "reports/constellation-energy.html",
-   "call": "Hold",
-   "rated": "2026-10-22",
-   "price": 255.21,
-   "now": 237.41,
-   "asof": "2026-11-20",
-   "move": -0.0697,
-   "call_now": "Buy",
-   "rel_now": 0.1742,
-   "filing": {
-    "form": "10-Q",
-    "date": "2026-11-09",
-    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000119/ceg-20260930.htm"
-   },
-   "flags": [
-    [
-     "rating",
-     "At today&rsquo;s price the rule gives Buy, not Hold"
-    ],
-    [
-     "results",
-     "New 10-Q filed 2026-11-09, after the report"
-    ]
-   ]
-  },
-  {
    "t": "GEV",
    "name": "GE Vernova",
    "page": "reports/gev.html",
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 890.33,
-   "now": 699.33,
-   "asof": "2026-11-20",
-   "move": -0.2145,
+   "now": 756.71,
+   "asof": "2026-11-23",
+   "move": -0.1501,
    "call_now": "Hold",
-   "rel_now": -0.0018,
+   "rel_now": -0.0775,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -144,7 +93,7 @@
    "flags": [
     [
      "price",
-     "Price down 21% since the report"
+     "Price down 15% since the report"
     ],
     [
      "rating",
@@ -163,21 +112,17 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 324.22,
-   "now": 265.29,
-   "asof": "2026-11-20",
-   "move": -0.1818,
+   "now": 282.1,
+   "asof": "2026-11-23",
+   "move": -0.1299,
    "call_now": "Buy",
-   "rel_now": 0.3467,
+   "rel_now": 0.2664,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-29",
     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
    },
    "flags": [
-    [
-     "price",
-     "Price down 18% since the report"
-    ],
     [
      "rating",
      "At today&rsquo;s price the rule gives Buy, not Hold"
@@ -195,11 +140,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 38.81,
-   "now": 26.89,
-   "asof": "2026-11-20",
-   "move": -0.3071,
+   "now": 28.5,
+   "asof": "2026-11-23",
+   "move": -0.2657,
    "call_now": "Buy",
-   "rel_now": 0.443,
+   "rel_now": 0.3615,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-05",
@@ -208,7 +153,7 @@
    "flags": [
     [
      "price",
-     "Price down 31% since the report"
+     "Price down 27% since the report"
     ],
     [
      "rating",
@@ -227,16 +172,12 @@
    "call": "Hold",
    "rated": "2026-10-23",
    "price": 697.52,
-   "now": 560.84,
-   "asof": "2026-11-20",
-   "move": -0.196,
+   "now": 597.6,
+   "asof": "2026-11-23",
+   "move": -0.1433,
    "call_now": "Buy",
-   "rel_now": 0.3879,
+   "rel_now": 0.3025,
    "flags": [
-    [
-     "price",
-     "Price down 20% since the report"
-    ],
     [
      "rating",
      "At today&rsquo;s price the rule gives Buy, not Hold"
@@ -250,11 +191,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 201.72,
-   "now": 143.49,
-   "asof": "2026-11-20",
-   "move": -0.2887,
+   "now": 159.36,
+   "asof": "2026-11-23",
+   "move": -0.21,
    "call_now": "Hold",
-   "rel_now": 0.1005,
+   "rel_now": -0.0091,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -263,7 +204,7 @@
    "flags": [
     [
      "price",
-     "Price down 29% since the report"
+     "Price down 21% since the report"
     ],
     [
      "rating",
@@ -282,11 +223,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 1378.22,
-   "now": 79.24,
-   "asof": "2026-11-20",
-   "move": -0.9425,
+   "now": 87.71,
+   "asof": "2026-11-23",
+   "move": -0.9364,
    "call_now": "Buy",
-   "rel_now": 13.0054,
+   "rel_now": 11.653,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-30",
@@ -314,19 +255,19 @@
    "call": "Sell",
    "rated": "2026-10-29",
    "price": 242.94,
-   "now": 166.24,
-   "asof": "2026-11-20",
-   "move": -0.3157,
-   "call_now": "Buy",
-   "rel_now": 0.1639,
+   "now": 186.35,
+   "asof": "2026-11-23",
+   "move": -0.2329,
+   "call_now": "Hold",
+   "rel_now": 0.0383,
    "flags": [
     [
      "price",
-     "Price down 32% since the report"
+     "Price down 23% since the report"
     ],
     [
      "rating",
-     "At today&rsquo;s price the rule gives Buy, not Sell"
+     "At today&rsquo;s price the rule gives Hold, not Sell"
     ]
    ]
   },
@@ -337,11 +278,11 @@
    "call": "Sell",
    "rated": "2026-10-22",
    "price": 178.19,
-   "now": 159.99,
-   "asof": "2026-11-20",
-   "move": -0.1021,
+   "now": 156.9,
+   "asof": "2026-11-23",
+   "move": -0.1195,
    "call_now": "Hold",
-   "rel_now": -0.144,
+   "rel_now": -0.1271,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-02",
@@ -365,11 +306,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 262.63,
-   "now": 246.82,
-   "asof": "2026-11-20",
-   "move": -0.0602,
+   "now": 255.39,
+   "asof": "2026-11-23",
+   "move": -0.0276,
    "call_now": "Hold",
-   "rel_now": -0.0609,
+   "rel_now": -0.0924,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-30",
@@ -389,11 +330,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 135.79,
-   "now": 149.53,
-   "asof": "2026-11-20",
-   "move": 0.1012,
+   "now": 147.26,
+   "asof": "2026-11-23",
+   "move": 0.0845,
    "call_now": "Hold",
-   "rel_now": -0.0349,
+   "rel_now": -0.0201,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
@@ -413,11 +354,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 396.3,
-   "now": 291.14,
-   "asof": "2026-11-20",
-   "move": -0.2654,
+   "now": 307.6,
+   "asof": "2026-11-23",
+   "move": -0.2238,
    "call_now": "Buy",
-   "rel_now": 0.6796,
+   "rel_now": 0.5897,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-06",
@@ -426,7 +367,7 @@
    "flags": [
     [
      "price",
-     "Price down 27% since the report"
+     "Price down 22% since the report"
     ],
     [
      "results",
@@ -441,11 +382,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 190.47,
-   "now": 155.89,
-   "asof": "2026-11-20",
-   "move": -0.1816,
+   "now": 162.39,
+   "asof": "2026-11-23",
+   "move": -0.1474,
    "call_now": "Buy",
-   "rel_now": 0.8143,
+   "rel_now": 0.7417,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-27",
@@ -453,12 +394,32 @@
    },
    "flags": [
     [
-     "price",
-     "Price down 18% since the report"
-    ],
-    [
      "results",
      "New 10-Q filed 2026-10-27, after the report"
+    ]
+   ]
+  },
+  {
+   "t": "CEG",
+   "name": "Constellation Energy",
+   "page": "reports/constellation-energy.html",
+   "call": "Hold",
+   "rated": "2026-10-22",
+   "price": 255.21,
+   "now": 251.72,
+   "asof": "2026-11-23",
+   "move": -0.0137,
+   "call_now": "Hold",
+   "rel_now": 0.1075,
+   "filing": {
+    "form": "10-Q",
+    "date": "2026-11-09",
+    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000119/ceg-20260930.htm"
+   },
+   "flags": [
+    [
+     "results",
+     "New 10-Q filed 2026-11-09, after the report"
     ]
    ]
   },
@@ -469,11 +430,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 17.41,
-   "now": 17.69,
-   "asof": "2026-11-20",
-   "move": 0.0161,
+   "now": 19.14,
+   "asof": "2026-11-23",
+   "move": 0.0994,
    "call_now": "Buy",
-   "rel_now": 0.8477,
+   "rel_now": 0.7077,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-10",
@@ -493,11 +454,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 350.755,
-   "now": 341.5,
-   "asof": "2026-11-20",
-   "move": -0.0264,
+   "now": 347.84,
+   "asof": "2026-11-23",
+   "move": -0.0083,
    "call_now": "Buy",
-   "rel_now": 0.4777,
+   "rel_now": 0.4508,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-30",
@@ -517,11 +478,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 335.26,
-   "now": 310.53,
-   "asof": "2026-11-20",
-   "move": -0.0738,
+   "now": 316.66,
+   "asof": "2026-11-23",
+   "move": -0.0555,
    "call_now": "Buy",
-   "rel_now": 0.3744,
+   "rel_now": 0.3478,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -541,11 +502,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 248.77,
-   "now": 249.89,
-   "asof": "2026-11-20",
-   "move": 0.0045,
+   "now": 254.83,
+   "asof": "2026-11-23",
+   "move": 0.0244,
    "call_now": "Buy",
-   "rel_now": 1.3512,
+   "rel_now": 1.3056,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-29",
@@ -565,21 +526,17 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 521.08,
-   "now": 484.52,
-   "asof": "2026-11-20",
-   "move": -0.0702,
+   "now": 492.5,
+   "asof": "2026-11-23",
+   "move": -0.0548,
    "call_now": "Hold",
-   "rel_now": 0.137,
+   "rel_now": 0.1185,
    "filing": {
     "form": "10-Q",
     "date": "2026-10-28",
     "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm"
    },
    "flags": [
-    [
-     "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
-    ],
     [
      "results",
      "New 10-Q filed 2026-10-28, after the report"
@@ -593,11 +550,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 425.06,
-   "now": 339.85,
-   "asof": "2026-11-20",
-   "move": -0.2005,
+   "now": 336.08,
+   "asof": "2026-11-23",
+   "move": -0.2093,
    "call_now": "Buy",
-   "rel_now": 1.253,
+   "rel_now": 1.2783,
    "filing": {
     "form": "10-Q",
     "date": "2026-11-03",
@@ -606,7 +563,7 @@
    "flags": [
     [
      "price",
-     "Price down 20% since the report"
+     "Price down 21% since the report"
     ],
     [
      "results",
@@ -621,11 +578,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 414.26,
-   "now": 401.87,
-   "asof": "2026-11-20",
-   "move": -0.0299,
+   "now": 409.4,
+   "asof": "2026-11-23",
+   "move": -0.0117,
    "call_now": "Hold",
-   "rel_now": 0.0574,
+   "rel_now": 0.038,
    "filing": {
     "form": "10-K",
     "date": "2026-11-05",
@@ -645,15 +602,15 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 913.67,
-   "now": 594.51,
-   "asof": "2026-11-20",
-   "move": -0.3493,
+   "now": 707.7,
+   "asof": "2026-11-23",
+   "move": -0.2254,
    "call_now": "Buy",
-   "rel_now": 0.7692,
+   "rel_now": 0.4863,
    "flags": [
     [
      "price",
-     "Price down 35% since the report"
+     "Price down 23% since the report"
     ]
    ]
   },
@@ -664,34 +621,15 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 216.47,
-   "now": 125.53,
-   "asof": "2026-11-20",
-   "move": -0.4201,
+   "now": 165.05,
+   "asof": "2026-11-23",
+   "move": -0.2375,
    "call_now": "Buy",
-   "rel_now": 1.3149,
+   "rel_now": 0.7606,
    "flags": [
     [
      "price",
-     "Price down 42% since the report"
-    ]
-   ]
-  },
-  {
-   "t": "SKHY",
-   "name": "SK hynix",
-   "page": "reports/sk-hynix.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 131.69,
-   "now": 103.57,
-   "asof": "2026-11-20",
-   "move": -0.2135,
-   "call_now": "Buy",
-   "rel_now": 0.7493,
-   "flags": [
-    [
-     "price",
-     "Price down 21% since the report"
+     "Price down 24% since the report"
     ]
    ]
   },
@@ -702,55 +640,31 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 162.57,
-   "now": 127.79,
-   "asof": "2026-11-20",
-   "move": -0.2139,
+   "now": 133.35,
+   "asof": "2026-11-23",
+   "move": -0.1797,
    "call_now": "Buy",
-   "rel_now": 0.6607,
+   "rel_now": 0.5915,
    "flags": [
     [
      "price",
-     "Price down 21% since the report"
+     "Price down 18% since the report"
     ]
    ]
   },
   {
-   "t": "TSM",
-   "name": "TSMC",
-   "page": "reports/tsmc.html",
-   "call": "Buy",
-   "rated": "2026-10-22",
-   "price": 412.35,
-   "now": 318.71,
-   "asof": "2026-11-20",
-   "move": -0.2271,
-   "call_now": "Buy",
-   "rel_now": 0.8233,
-   "flags": [
-    [
-     "price",
-     "Price down 23% since the report"
-    ]
-   ]
-  },
-  {
-   "t": "RTX",
-   "name": "RTX",
-   "page": "reports/rtx.html",
+   "t": "ASML",
+   "name": "ASML Holding",
+   "page": "reports/asml.html",
    "call": "Hold",
-   "rated": "2026-10-23",
-   "price": 194.745,
-   "now": 190.17,
-   "asof": "2026-11-20",
-   "move": -0.0235,
+   "rated": "2026-10-22",
+   "price": 1560.54,
+   "now": 1383.78,
+   "asof": "2026-11-23",
+   "move": -0.1133,
    "call_now": "Hold",
-   "rel_now": 0.1437,
-   "flags": [
-    [
-     "near",
-     "Within 3 points of the Buy line at today&rsquo;s price"
-    ]
-   ]
+   "rel_now": 0.1026,
+   "flags": []
   },
   {
    "t": "AVGO",
@@ -759,11 +673,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 323.24,
-   "now": 304.41,
-   "asof": "2026-11-20",
-   "move": -0.0583,
+   "now": 313.55,
+   "asof": "2026-11-23",
+   "move": -0.03,
    "call_now": "Buy",
-   "rel_now": 0.9274,
+   "rel_now": 0.8712,
    "flags": []
   },
   {
@@ -773,11 +687,11 @@
    "call": "Hold",
    "rated": "2026-10-22",
    "price": 267.68,
-   "now": 270.47,
-   "asof": "2026-11-20",
-   "move": 0.0104,
+   "now": 270.05,
+   "asof": "2026-11-23",
+   "move": 0.0089,
    "call_now": "Hold",
-   "rel_now": 0.0533,
+   "rel_now": 0.0549,
    "flags": []
   },
   {
@@ -787,11 +701,11 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 590.2,
-   "now": 565.5,
-   "asof": "2026-11-20",
-   "move": -0.0419,
+   "now": 571.67,
+   "asof": "2026-11-23",
+   "move": -0.0314,
    "call_now": "Buy",
-   "rel_now": 0.6967,
+   "rel_now": 0.6783,
    "flags": []
   },
   {
@@ -801,11 +715,53 @@
    "call": "Buy",
    "rated": "2026-10-22",
    "price": 552.53,
-   "now": 534.31,
-   "asof": "2026-11-20",
-   "move": -0.033,
+   "now": 542.14,
+   "asof": "2026-11-23",
+   "move": -0.0188,
    "call_now": "Buy",
-   "rel_now": 0.5582,
+   "rel_now": 0.5357,
+   "flags": []
+  },
+  {
+   "t": "RTX",
+   "name": "RTX",
+   "page": "reports/rtx.html",
+   "call": "Hold",
+   "rated": "2026-10-23",
+   "price": 194.745,
+   "now": 194.77,
+   "asof": "2026-11-23",
+   "move": 0.0001,
+   "call_now": "Hold",
+   "rel_now": 0.1167,
+   "flags": []
+  },
+  {
+   "t": "SKHY",
+   "name": "SK hynix",
+   "page": "reports/sk-hynix.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 131.69,
+   "now": 124.28,
+   "asof": "2026-11-23",
+   "move": -0.0563,
+   "call_now": "Buy",
+   "rel_now": 0.4578,
+   "flags": []
+  },
+  {
+   "t": "TSM",
+   "name": "TSMC",
+   "page": "reports/tsmc.html",
+   "call": "Buy",
+   "rated": "2026-10-22",
+   "price": 412.35,
+   "now": 363.6,
+   "asof": "2026-11-23",
+   "move": -0.1182,
+   "call_now": "Buy",
+   "rel_now": 0.5982,
    "flags": []
   }
  ]
